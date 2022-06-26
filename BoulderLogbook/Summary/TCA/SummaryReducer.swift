@@ -22,5 +22,13 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
     case let .receiveLogbookEntries(result: .success(logbook)):
         state.logbook = logbook
         return .none
+        
+    case let .delete(indexSet, section):
+        return .merge(
+            environment
+                .delete(indexSet, section)
+                .fireAndForget(),
+            Effect(value: .fetch)
+        )
     }
 }

@@ -11,4 +11,5 @@ enum SummaryAction: Equatable {
     case onAppear
     case fetch
     case receiveLogbookEntries(result: Result<Logbook, Never>)
+    case delete(entry: IndexSet, section: Date)
 }

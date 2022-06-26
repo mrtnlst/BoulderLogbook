@@ -15,7 +15,10 @@ struct SummaryView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.logbook.logbookSections) { section in
-                    SummarySectionView(logbookSection: section)
+                    SummarySectionView(
+                        logbookSection: section,
+                        onDelete: { viewStore.send(.delete(entry: $0, section: section.date)) }
+                    )
                 }
             }
             .onAppear {
@@ -28,12 +31,14 @@ struct SummaryView: View {
 
 struct SummarySectionView: View {
     let logbookSection: LogbookSection
+    let onDelete: (IndexSet) -> Void
     
     var body: some View {
         Section {
-            ForEach(logbookSection.logbookEntries) { entry in
+            ForEach(logbookSection.logbookEntries.sorted(by: { $0.date > $1.date })) { entry in
                 SummaryEntryView(entry: entry)
             }
+            .onDelete(perform: onDelete)
         } header: {
             Text(logbookSection.date, style: .date)
         }
@@ -81,7 +86,8 @@ struct SummaryView_Previews: PreviewProvider {
                     reducer: summaryReducer,
                     environment: SummaryEnvironment(
                         mainQueue: .main,
-                        fetch: { return .none }
+                        fetch: { return .none },
+                        delete: { _, _ in return .none }
                     )
                 )
             )

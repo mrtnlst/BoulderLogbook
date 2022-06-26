@@ -12,6 +12,7 @@ import ComposableArchitecture
 protocol StorageServiceType {
     func fetch() -> Effect<Logbook, Never>
     func save(logbookEntry: LogbookEntry) -> Effect<Never, Never>
+    func delete(logbookEntries: IndexSet, in section: Date) -> Effect<Never, Never>
 }
 
 final class StorageService: StorageServiceType {
@@ -58,6 +59,22 @@ final class StorageService: StorageServiceType {
         }
         
         // Encode Logbook and save back to UserDefaults.
+        if let encodedLogbook = try? JSONEncoder().encode(logbook) {
+            UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
+        }
+        return Empty().eraseToAnyPublisher().eraseToEffect()
+    }
+    
+    func delete(logbookEntries: IndexSet, in section: Date) -> Effect<Never, Never> {
+        guard let logbookData = UserDefaults.standard.object(forKey: "Logbook") as? Data,
+              var logbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) else {
+            return Empty().eraseToAnyPublisher().eraseToEffect()
+        }
+        
+        if let sectionIndex = logbook.logbookSections.firstIndex(where: { $0.date == section }) {
+            logbook.logbookSections[sectionIndex].logbookEntries.remove(atOffsets: logbookEntries)
+        }
+        
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
             UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
         }
