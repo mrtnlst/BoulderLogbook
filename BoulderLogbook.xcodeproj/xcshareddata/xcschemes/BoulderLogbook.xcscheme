@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A9B07E452868579900AA6274"
-               BuildableName = "BoulderLogbook.app"
+               BuildableName = "Logbook.app"
                BlueprintName = "BoulderLogbook"
                ReferencedContainer = "container:BoulderLogbook.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A9B07E452868579900AA6274"
-            BuildableName = "BoulderLogbook.app"
+            BuildableName = "Logbook.app"
             BlueprintName = "BoulderLogbook"
             ReferencedContainer = "container:BoulderLogbook.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A9B07E452868579900AA6274"
-            BuildableName = "BoulderLogbook.app"
+            BuildableName = "Logbook.app"
             BlueprintName = "BoulderLogbook"
             ReferencedContainer = "container:BoulderLogbook.xcodeproj">
          </BuildableReference>

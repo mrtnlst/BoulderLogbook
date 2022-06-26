@@ -50,7 +50,7 @@
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A9B07E462868579900AA6274 /* BoulderLogbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoulderLogbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9B07E462868579900AA6274 /* Logbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Logbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B07E532868579900AA6274 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B07E572868579900AA6274 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		A9B07E472868579900AA6274 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9B07E462868579900AA6274 /* BoulderLogbook.app */,
+				A9B07E462868579900AA6274 /* Logbook.app */,
 				A9B07E532868579900AA6274 /* Tests iOS.xctest */,
 			);
 			name = Products;
@@ -235,7 +235,7 @@
 				A9B07E7C2868582700AA6274 /* ComposableArchitecture */,
 			);
 			productName = "BoulderLogbook (iOS)";
-			productReference = A9B07E462868579900AA6274 /* BoulderLogbook.app */;
+			productReference = A9B07E462868579900AA6274 /* Logbook.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A9B07E522868579900AA6274 /* Tests iOS */ = {
@@ -496,7 +496,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
-				PRODUCT_NAME = BoulderLogbook;
+				PRODUCT_NAME = Logbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -526,7 +526,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
-				PRODUCT_NAME = BoulderLogbook;
+				PRODUCT_NAME = Logbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

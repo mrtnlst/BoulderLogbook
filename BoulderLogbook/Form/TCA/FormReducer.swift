@@ -11,12 +11,9 @@ import ComposableArchitecture
 let formReducer = Reducer<FormState, FormAction, FormEnvironment> { state, action, environment in
     switch action {
     case .onAppear:
-        let currentDate = Calendar.current.date(
-            from: Calendar.current.dateComponents([.year, .month, .day], from: Date.now)
-        )
         state.logbookEntry = LogbookEntry(
             id: UUID(),
-            date: currentDate ?? .now,
+            date: .now,
             tops: []
         )
         return .none

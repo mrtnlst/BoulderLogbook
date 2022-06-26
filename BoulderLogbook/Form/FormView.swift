@@ -17,10 +17,15 @@ struct FormView: View {
                 Section {
                     Text("Enter the number of finished boulders!")
                 }
-                
                 Section {
                     ForEach(BoulderGrade.allCases, id: \.self) { grade in
-                        Stepper(viewStore.logbookEntry?.numberOfGrades(for: grade) ?? "") {
+                        Stepper {
+                            HStack {
+                                Image(systemName: grade == .white ? "circle" : "circle.fill")
+                                    .foregroundColor(grade == .white ? .none : grade.color)
+                                Text("× \(viewStore.logbookEntry?.numberOfGrades(for: grade) ?? 0)")
+                            }
+                        } onIncrement: {
                             viewStore.send(.increase(grade))
                         } onDecrement: {
                             viewStore.send(.decrease(grade))

@@ -39,13 +39,19 @@ final class StorageService: StorageServiceType {
             logbook = Logbook()
         }
         
+        guard let sectionDate = Calendar.current.date(
+            from: Calendar.current.dateComponents([.year, .month, .day], from: logbookEntry.date)
+        ) else {
+            fatalError("No Date could be saved")
+        }
+        
         // Add new entry to existing section or create new section by date.
-        if let sectionForDate = logbook?.logbookSections.firstIndex(where: { $0.date == logbookEntry.date }) {
+        if let sectionForDate = logbook?.logbookSections.firstIndex(where: { $0.date == sectionDate }) {
             logbook?.logbookSections[sectionForDate].logbookEntries.append(logbookEntry)
         } else {
             logbook?.logbookSections.append(
                 LogbookSection(
-                    date: logbookEntry.date,
+                    date: sectionDate,
                     logbookEntries: [logbookEntry]
                 )
             )

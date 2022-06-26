@@ -14,26 +14,11 @@ struct LogbookEntry: Codable, Identifiable, Equatable {
 }
 
 extension LogbookEntry {
-    var logText: String {
+    func numberOfGrades(for grade: BoulderGrade) -> Int {
         let dictionary = tops.reduce(into: [:]) { counts, number in
             counts[number, default: 0] += 1
         }
-        let keys = Array(dictionary.keys).sorted(by: { $0.rawValue > $1.rawValue })
-        var string = ""
-        keys.forEach { key in
-            string.append("\(key.gradeDescription): \(dictionary[key] ?? 0)")
-            if keys[keys.count - 1] != key {
-                string.append(", ")
-            }
-        }
-        return string
-    }
-    
-    func numberOfGrades(for grade: BoulderGrade) -> String {
-        let dictionary = tops.reduce(into: [:]) { counts, number in
-            counts[number, default: 0] += 1
-        }
-        return "\(grade.gradeDescription): \(dictionary[grade] ?? 0)"
+        return dictionary[grade] ?? 0
     }
 }
 

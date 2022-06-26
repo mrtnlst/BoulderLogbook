@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum BoulderGrade: Int, Codable, CaseIterable {
     case blue
@@ -23,6 +24,17 @@ enum BoulderGrade: Int, Codable, CaseIterable {
         case .black: return "Black"
         case .white: return "White"
         case .yellow: return "Yellow"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .blue: return .blue
+        case .red: return .red
+        case .orange: return .orange
+        case .black: return .black
+        case .white: return .white
+        case .yellow: return .yellow
         }
     }
 }

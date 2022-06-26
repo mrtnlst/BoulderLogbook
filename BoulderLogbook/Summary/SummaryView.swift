@@ -15,7 +15,7 @@ struct SummaryView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.logbook.logbookSections) { section in
-                    SummaryLogView(logbookSection: section)
+                    SummarySectionView(logbookSection: section)
                 }
             }
             .onAppear {
@@ -26,20 +26,43 @@ struct SummaryView: View {
     }
 }
 
-struct SummaryLogView: View {
+struct SummarySectionView: View {
     let logbookSection: LogbookSection
     
     var body: some View {
         Section {
             ForEach(logbookSection.logbookEntries) { entry in
-                Text(entry.logText)
+                SummaryEntryView(entry: entry)
             }
         } header: {
             Text(logbookSection.date, style: .date)
         }
+        .headerProminence(.increased)
     }
 }
 
+struct SummaryEntryView: View {
+    let entry: LogbookEntry
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                if #available(iOS 16, *) {
+                    Image(systemName: "figure.climbing")
+                } else {
+                    Image("figure.climbing")
+                }
+                Text(entry.date, style: .time)
+            }
+            HStack {
+                ForEach(entry.tops, id: \.self) { top in
+                    Image(systemName: top == .white ? "circle" : "circle.fill")
+                        .foregroundColor(top == .white ? .none : top.color)
+                }
+            }
+        }
+    }
+}
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
