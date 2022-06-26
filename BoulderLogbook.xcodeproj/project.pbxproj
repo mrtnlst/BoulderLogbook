@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BCD4A6E2868BC610005A1D9 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCD4A6D2868BC610005A1D9 /* ChartView.swift */; };
 		A936856128686B4F00E34B6C /* LogbookSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936856028686B4F00E34B6C /* LogbookSection.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5BCD4A6D2868BC610005A1D9 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		A936856028686B4F00E34B6C /* LogbookSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookSection.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				A9B07E7F2868588700AA6274 /* SummaryView.swift */,
+				5BCD4A6D2868BC610005A1D9 /* ChartView.swift */,
 				A9B07E802868588700AA6274 /* TCA */,
 			);
 			path = Summary;
@@ -328,6 +331,7 @@
 				A9B07EA12868588700AA6274 /* SummaryState.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
+				5BCD4A6E2868BC610005A1D9 /* ChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */,
