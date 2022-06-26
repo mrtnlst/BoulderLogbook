@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A936856128686B4F00E34B6C /* LogbookSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A936856028686B4F00E34B6C /* LogbookSection.swift */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
 		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A936856028686B4F00E34B6C /* LogbookSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookSection.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9B07E462868579900AA6274 /* BoulderLogbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoulderLogbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,8 +176,9 @@
 		A9B07E8C2868588700AA6274 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A9B07E8D2868588700AA6274 /* Logbook.swift */,
 				A9B07E8E2868588700AA6274 /* BoulderGrade.swift */,
+				A9B07E8D2868588700AA6274 /* Logbook.swift */,
+				A936856028686B4F00E34B6C /* LogbookSection.swift */,
 				A9B07E8F2868588700AA6274 /* LogbookEntry.swift */,
 			);
 			path = Models;
@@ -192,8 +195,8 @@
 		A9B07E922868588700AA6274 /* Form */ = {
 			isa = PBXGroup;
 			children = (
-				A9B07E932868588700AA6274 /* TCA */,
 				A9B07E982868588700AA6274 /* FormView.swift */,
+				A9B07E932868588700AA6274 /* TCA */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
 				A9B07E9B2868588700AA6274 /* SummaryEnvironment.swift in Sources */,
 				A9B07EB72868588700AA6274 /* FormReducer.swift in Sources */,
+				A936856128686B4F00E34B6C /* LogbookSection.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				A9B07EB52868588700AA6274 /* FormAction.swift in Sources */,
 				A9B07E9D2868588700AA6274 /* SummaryReducer.swift in Sources */,

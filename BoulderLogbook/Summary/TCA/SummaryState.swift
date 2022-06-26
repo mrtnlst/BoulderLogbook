@@ -8,5 +8,9 @@
 import Foundation
 
 struct SummaryState: Equatable {
-    var logbookEntries: [LogbookEntry] = []
+    var logbook: Logbook
+    
+    init(logbook: Logbook = Logbook(logbookSections: [])) {
+        self.logbook = logbook
+    }
 }

@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct Logbook: Codable {
-    var logbookEntries: [LogbookEntry]
+struct Logbook: Codable, Equatable {
+    var logbookSections: [LogbookSection]
+    
+    init(logbookSections: [LogbookSection] = []) {
+        self.logbookSections = logbookSections
+    }
 }

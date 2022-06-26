@@ -14,22 +14,32 @@ struct SummaryView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
-                Section {
-                    ForEach(viewStore.logbookEntries) { entry in
-                        SummaryLogView(logbookEntry: entry)
-                    }
-                } header: {
-                    Text("Logbook")
+                ForEach(viewStore.logbook.logbookSections) { section in
+                    SummaryLogView(logbookSection: section)
                 }
-                .onAppear {
-                    viewStore.send(.onAppear)
-                }
-                .headerProminence(.increased)
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
             }
             .navigationTitle("Summary")
         }
     }
 }
+
+struct SummaryLogView: View {
+    let logbookSection: LogbookSection
+    
+    var body: some View {
+        Section {
+            ForEach(logbookSection.logbookEntries) { entry in
+                Text(entry.logText)
+            }
+        } header: {
+            Text(logbookSection.date, style: .date)
+        }
+    }
+}
+
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
@@ -37,7 +47,7 @@ struct SummaryView_Previews: PreviewProvider {
             SummaryView(
                 store: Store(
                     initialState: SummaryState(
-                        logbookEntries: exampleLogbook
+                        logbook: exampleLogbook
                     ),
                     reducer: summaryReducer,
                     environment: SummaryEnvironment(
@@ -46,23 +56,6 @@ struct SummaryView_Previews: PreviewProvider {
                     )
                 )
             )
-        }
-    }
-}
-
-struct SummaryLogView: View {
-    let logbookEntry: LogbookEntry
-    
-    var body: some View {
-        HStack {
-            Text(logbookEntry.logText)
-            Spacer()
-            VStack {
-                Text(logbookEntry.date, style: .date)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-                Spacer()
-            }
         }
     }
 }

@@ -10,44 +10,50 @@ import Combine
 import ComposableArchitecture
 
 protocol StorageServiceType {
-    func fetch() -> Effect<[LogbookEntry], Never>
+    func fetch() -> Effect<Logbook, Never>
     func save(logbookEntry: LogbookEntry) -> Effect<Never, Never>
 }
 
 final class StorageService: StorageServiceType {
-    func fetch() -> Effect<[LogbookEntry], Never> {
+    func fetch() -> Effect<Logbook, Never> {
         let defaults = UserDefaults.standard
         let decoder = JSONDecoder()
         return Future { promise in
-            var logbookEntries: [LogbookEntry] = []
             if let logbookData = defaults.object(forKey: "Logbook") as? Data {
-                if let logbook = try? decoder.decode(Logbook.self, from: logbookData) {
-                    logbookEntries = logbook.logbookEntries
+                if let decodedLogbook = try? decoder.decode(Logbook.self, from: logbookData) {
+                    promise(.success(decodedLogbook))
                 }
             }
-            promise(.success(logbookEntries))
         }
         .eraseToAnyPublisher()
         .eraseToEffect()
     }
     
     func save(logbookEntry: LogbookEntry) -> ComposableArchitecture.Effect<Never, Never> {
-        let defaults = UserDefaults.standard
-        let encoder = JSONEncoder()
-        let decoder = JSONDecoder()
-        
-        if let logbookData = defaults.object(forKey: "Logbook") as? Data {
-            if var logbook = try? decoder.decode(Logbook.self, from: logbookData) {
-                logbook.logbookEntries.append(logbookEntry)
-                if let encoded = try? encoder.encode(logbook) {
-                    defaults.set(encoded, forKey: "Logbook")
-                }
-            }
+        // Obtain Logbook from UserDefaults or create new if unavailable.
+        var logbook: Logbook?
+        if let logbookData = UserDefaults.standard.object(forKey: "Logbook") as? Data,
+           let decodedLogbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) {
+            logbook = decodedLogbook
         } else {
-            let logbook = Logbook(logbookEntries: [logbookEntry])
-            if let encoded = try? encoder.encode(logbook) {
-                defaults.set(encoded, forKey: "Logbook")
-            }
+            logbook = Logbook()
+        }
+        
+        // Add new entry to existing section or create new section by date.
+        if let sectionForDate = logbook?.logbookSections.firstIndex(where: { $0.date == logbookEntry.date }) {
+            logbook?.logbookSections[sectionForDate].logbookEntries.append(logbookEntry)
+        } else {
+            logbook?.logbookSections.append(
+                LogbookSection(
+                    date: logbookEntry.date,
+                    logbookEntries: [logbookEntry]
+                )
+            )
+        }
+        
+        // Encode Logbook and save back to UserDefaults.
+        if let encodedLogbook = try? JSONEncoder().encode(logbook) {
+            UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
         }
         return Empty().eraseToAnyPublisher().eraseToEffect()
     }

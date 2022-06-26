@@ -37,20 +37,42 @@ extension LogbookEntry {
     }
 }
 
-let exampleLogbook: [LogbookEntry] = [
-    LogbookEntry(
-        id: UUID(),
-        date: .now,
-        tops: [.white, .white, .black, .black, .black]
-    ),
-    LogbookEntry(
-        id: UUID(),
-        date: Date(timeIntervalSinceNow: -86400),
-        tops: [.white, .black, .black, .black, .black]
-    ),
-    LogbookEntry(
-        id: UUID(),
-        date: Date(timeIntervalSinceNow: -86400 * 2),
-        tops: [.black, .black, .black, .orange, .orange]
-    )
-]
+let exampleLogbook: Logbook = Logbook(
+    logbookSections: [
+        LogbookSection(
+            date: .now,
+            logbookEntries: [
+                LogbookEntry(
+                    id: UUID(),
+                    date: .now,
+                    tops: [.white, .white, .black, .black, .black]
+                ),
+                LogbookEntry(
+                    id: UUID(),
+                    date: .now,
+                    tops: [.white, .black, .red, .red, .red, .blue]
+                )
+            ]
+        ),
+        LogbookSection(
+            date: Date(timeIntervalSinceNow: -86400),
+            logbookEntries: [
+                LogbookEntry(
+                    id: UUID(),
+                    date: Date(timeIntervalSinceNow: -86400),
+                    tops: [.white, .black, .black, .black, .black]
+                )
+            ]
+        ),
+        LogbookSection(
+            date: Date(timeIntervalSinceNow: -86400 * 2),
+            logbookEntries: [
+                LogbookEntry(
+                    id: UUID(),
+                    date: Date(timeIntervalSinceNow: -86400 * 2),
+                    tops: [.black, .black, .black, .orange, .orange]
+                )
+            ]
+        )
+    ]
+)

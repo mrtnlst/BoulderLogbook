@@ -19,8 +19,8 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
             .receive(on: environment.mainQueue)
             .catchToEffect(SummaryAction.receiveLogbookEntries)
     
-    case let .receiveLogbookEntries(result: .success(logbookEntries)):
-        state.logbookEntries = logbookEntries
+    case let .receiveLogbookEntries(result: .success(logbook)):
+        state.logbook = logbook
         return .none
     }
 }

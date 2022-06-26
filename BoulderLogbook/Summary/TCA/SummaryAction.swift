@@ -10,5 +10,5 @@ import Foundation
 enum SummaryAction: Equatable {
     case onAppear
     case fetch
-    case receiveLogbookEntries(result: Result<[LogbookEntry], Never>)
+    case receiveLogbookEntries(result: Result<Logbook, Never>)
 }
