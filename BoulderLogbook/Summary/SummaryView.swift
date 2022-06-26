@@ -55,9 +55,14 @@ struct SummaryEntryView: View {
                 Text(entry.date, style: .time)
             }
             HStack {
-                ForEach(entry.tops, id: \.self) { top in
-                    Image(systemName: top == .white ? "circle" : "circle.fill")
-                        .foregroundColor(top == .white ? .none : top.color)
+                ForEach(BoulderGrade.allCases.reverse() , id: \.self) { grade in
+                    let numberOfTops = entry.numberOfGrades(for: grade)
+                    if numberOfTops > 0 {
+                        Image(systemName: grade == .white ? "circle" : "circle.fill")
+                            .foregroundColor(grade == .white ? .none : grade.color)
+                        Text("× \(numberOfTops)")
+                        
+                    }
                 }
             }
         }
