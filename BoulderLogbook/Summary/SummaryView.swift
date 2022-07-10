@@ -14,7 +14,7 @@ struct SummaryView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
-                ForEach(viewStore.logbook.logbookSections) { section in
+                ForEach(viewStore.logbook.logbookSections.sorted(by: { $0.date > $1.date })) { section in
                     SummarySectionView(
                         logbookSection: section,
                         onDelete: { viewStore.send(.delete(entry: $0, section: section.date)) }
