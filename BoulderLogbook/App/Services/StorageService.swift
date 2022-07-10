@@ -73,6 +73,9 @@ final class StorageService: StorageServiceType {
         
         if let sectionIndex = logbook.logbookSections.firstIndex(where: { $0.date == section }) {
             logbook.logbookSections[sectionIndex].logbookEntries.remove(atOffsets: logbookEntries)
+            if logbook.logbookSections[sectionIndex].logbookEntries.isEmpty {
+                logbook.logbookSections.remove(at: sectionIndex)
+            }
         }
         
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
