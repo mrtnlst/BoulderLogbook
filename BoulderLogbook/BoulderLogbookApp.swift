@@ -23,6 +23,7 @@ struct BoulderLogbookApp: App {
             NavigationView {
                 AppView(store: Self.store)
             }
+            .navigationViewStyle(.stack)
         }
     }
 }
