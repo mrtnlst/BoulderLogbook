@@ -8,7 +8,6 @@
 import Foundation
 
 enum FormAction {
-    case onAppear
     case cancel
     case save
     case increase(BoulderGrade)

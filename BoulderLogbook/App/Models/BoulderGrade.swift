@@ -33,7 +33,7 @@ enum BoulderGrade: Int, Codable, CaseIterable {
         case .red: return .red
         case .orange: return .orange
         case .black: return .black
-        case .white: return .white
+        case .white: return .gray
         case .yellow: return .yellow
         }
     }

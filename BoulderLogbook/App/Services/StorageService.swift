@@ -40,17 +40,20 @@ final class StorageService: StorageServiceType {
             logbook = Logbook()
         }
         
-        if let existingEntry = logbook?.logbookEntries.firstIndex(where: { $0.date == logbookEntry.date }) {
+        if let existingEntry = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
             logbook?.logbookEntries[existingEntry].tops.append(contentsOf: logbookEntry.tops)
         } else {
             logbook?.logbookEntries.append(logbookEntry)
         }
+        logbook?.logbookEntries.sort(by: { $0.sectionDate > $1.sectionDate } )
         
         // Encode Logbook and save back to UserDefaults.
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
             UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
         }
-        return Empty().eraseToAnyPublisher().eraseToEffect()
+        return Empty()
+            .eraseToAnyPublisher()
+            .eraseToEffect()
     }
     
     func delete(logbookEntries: IndexSet) -> Effect<Never, Never> {
@@ -63,6 +66,8 @@ final class StorageService: StorageServiceType {
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
             UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
         }
-        return Empty().eraseToAnyPublisher().eraseToEffect()
+        return Empty()
+            .eraseToAnyPublisher()
+            .eraseToEffect()
     }
 }

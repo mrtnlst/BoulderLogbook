@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogbookEntry: Codable, Identifiable, Equatable {
+struct LogbookEntry: Codable, Identifiable, Equatable, Hashable {
     let id: UUID
     var date: Date
     var tops: [BoulderGrade]
@@ -20,6 +20,15 @@ struct LogbookEntry: Codable, Identifiable, Equatable {
 }
 
 extension LogbookEntry {
+    var sectionDate: Date {
+        guard let sectionDate = Calendar.current.date(
+            from: Calendar.current.dateComponents([.year, .month, .day], from: date)
+        ) else {
+            return date
+        }
+        return sectionDate
+    }
+    
     func numberOfGrades(for grade: BoulderGrade) -> Int {
         let dictionary = tops.reduce(into: [:]) { counts, number in
             counts[number, default: 0] += 1
@@ -33,7 +42,13 @@ let exampleLogbook: Logbook = Logbook(
         LogbookEntry(
 //            id: UUID(),
             date: .now,
-            tops: [.white, .white, .black, .black, .black]
+            tops: [.yellow,
+                   .white, .white,
+                   .black, .black, .black,
+                   .orange, .orange, .orange, .orange, .orange,
+                   .red, .red, .red, .red, .red, .red,
+                   .blue, .blue, .blue, .blue, .blue
+            ]
         ),
         LogbookEntry(
 //            id: UUID(),

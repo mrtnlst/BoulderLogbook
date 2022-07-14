@@ -41,6 +41,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
             state.isPresentingForm = false
             state.formState = nil
             return .none
+        
+        case let .setPath(path):
+            state.path = path
+            return .none
             
         case .form(.cancel):
             return Effect(value: .setIsPresentingForm(false))
@@ -52,6 +56,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
             )
             
         case .form(_):
+            return .none
+            
+        case .summary(.summaryDetailAction(id: _, action: .didSelectBackButton)):
+            state.path = []
             return .none
             
         case .summary(_):

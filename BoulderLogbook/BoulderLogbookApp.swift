@@ -20,10 +20,7 @@ struct BoulderLogbookApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                AppView(store: Self.store)
-            }
-            .navigationViewStyle(.stack)
+            AppView(store: Self.store)
         }
     }
 }

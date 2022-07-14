@@ -12,33 +12,75 @@ struct SummaryView: View {
     let store: Store<SummaryState, SummaryAction>
     
     var body: some View {
+        if #available(iOS 16.0, *) {
+            summaryListOniOS16(with: store)
+        } else {
+            summaryList(with: store)
+        }
+    }
+}
+
+extension SummaryView {
+    @available(iOS 16.0, *)
+    @ViewBuilder func summaryListOniOS16(with store: Store<SummaryState, SummaryAction>) -> some View {
+#if canImport(Charts)
         WithViewStore(store) { viewStore in
             List {
-                ForEach(viewStore.logbook.logbookEntries.sorted(by: { $0.date > $1.date })) { entry in
-                    SummarySectionView(
-                        logbookEntry: entry
-                    )
+                ForEachStore(
+                    store.scope(
+                        state: \.summaryDetails,
+                        action: SummaryAction.summaryDetailAction(id:action:))
+                ) { detailStore in
+                    Section {
+                        NavigationLink(value: detailStore) {
+                            SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+                        }
+                    } header: {
+                        Text(ViewStore(detailStore).logbookEntry.date, style: .date)
+                    }
+                    .headerProminence(.increased)
                 }
-                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
+            .navigationTitle("Summary")
+            .navigationDestination(
+                for: Store<SummaryDetailState, SummaryDetailAction>.self
+            ) { detailStore in
+                SummaryDetailView(store: detailStore)
+            }
+        }
+#else
+        EmptyView()
+#endif
+    }
+    
+    @ViewBuilder func summaryList(with store: Store<SummaryState, SummaryAction>) -> some View {
+        WithViewStore(store) { viewStore in
+            List {
+                ForEachStore(
+                    store.scope(
+                        state: \.summaryDetails,
+                        action: SummaryAction.summaryDetailAction(id:action:))
+                ) { detailStore in
+                    Section {
+                        NavigationLink {
+                            SummaryDetailView(store: detailStore)
+                        } label: {
+                            SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+                        }
+                    } header: {
+                        Text(ViewStore(detailStore).logbookEntry.date, style: .date)
+                    }
+                    .headerProminence(.increased)
+                }
             }
             .onAppear {
                 viewStore.send(.onAppear)
             }
             .navigationTitle("Summary")
         }
-    }
-}
-
-struct SummarySectionView: View {
-    let logbookEntry: LogbookEntry
-    
-    var body: some View {
-        Section {
-            SummaryEntryView(entry: logbookEntry)
-        } header: {
-            Text(logbookEntry.date, style: .date)
-        }
-        .headerProminence(.increased)
     }
 }
 
@@ -74,20 +116,40 @@ struct SummaryEntryView: View {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            SummaryView(
-                store: Store(
-                    initialState: SummaryState(
-                        logbook: exampleLogbook
-                    ),
-                    reducer: summaryReducer,
-                    environment: SummaryEnvironment(
-                        mainQueue: .main,
-                        fetch: { return .none },
-                        delete: { _ in return .none }
+        if #available(iOS 16.0, *) {
+#if canImport(Charts)
+            NavigationStack {
+                SummaryView(
+                    store: Store(
+                        initialState: SummaryState(
+                            logbook: exampleLogbook
+                        ),
+                        reducer: summaryReducer,
+                        environment: SummaryEnvironment(
+                            mainQueue: .main,
+                            fetch: { return .none },
+                            delete: { _ in return .none }
+                        )
                     )
                 )
-            )
+            }
+#else
+            NavigationView {
+                SummaryView(
+                    store: Store(
+                        initialState: SummaryState(
+                            logbook: exampleLogbook
+                        ),
+                        reducer: summaryReducer,
+                        environment: SummaryEnvironment(
+                            mainQueue: .main,
+                            fetch: { return .none },
+                            delete: { _ in return .none }
+                        )
+                    )
+                )
+            }
+#endif
         }
     }
 }

@@ -10,19 +10,10 @@ import ComposableArchitecture
 
 let formReducer = Reducer<FormState, FormAction, FormEnvironment> { state, action, environment in
     switch action {
-    case .onAppear:
-        return .none
-        
     case .cancel:
         return .none
         
     case .save:
-        guard let sectionDate = Calendar.current.date(
-            from: Calendar.current.dateComponents([.year, .month, .day], from: state.logbookEntry.date)
-        ) else {
-            return .none
-        }
-        state.logbookEntry.date = sectionDate
         return environment
             .save(state.logbookEntry)
             .fireAndForget()
@@ -38,12 +29,7 @@ let formReducer = Reducer<FormState, FormAction, FormEnvironment> { state, actio
         return .none
     
     case let .didSelectDate(date):
-        guard let sectionDate = Calendar.current.date(
-            from: Calendar.current.dateComponents([.year, .month, .day], from: date)
-        ) else {
-            fatalError("No Date could be saved")
-        }
-        state.logbookEntry.date = sectionDate
+        state.logbookEntry.date = date
         return .none
     }
 }

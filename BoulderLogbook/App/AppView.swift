@@ -12,6 +12,25 @@ struct AppView: View {
     let store: Store<AppState, AppAction>
     
     var body: some View {
+        if #available(iOS 16.0, *) {
+#if canImport(Charts)
+            NavigationStack(
+                path: ViewStore(store).binding(get: \.path, send: AppAction.setPath)
+            ) {
+                summaryView(with: store)
+            }
+#endif
+        } else {
+            NavigationView {
+                summaryView(with: store)
+            }
+            .navigationViewStyle(.stack)
+        }
+    }
+}
+
+extension AppView {
+    @ViewBuilder func summaryView(with store: Store<AppState, AppAction>) -> some View {
         WithViewStore(store) { viewStore in
             SummaryView(
                 store: store.scope(state: \.summaryState, action: AppAction.summary)

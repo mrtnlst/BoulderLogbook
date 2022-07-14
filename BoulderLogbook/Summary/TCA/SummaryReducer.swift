@@ -30,5 +30,8 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
                 .fireAndForget(),
             Effect(value: .fetch)
         )
+    
+    case .summaryDetailAction(id: _, action: _):
+        return .none
     }
 }

@@ -12,4 +12,5 @@ enum SummaryAction: Equatable {
     case fetch
     case receiveLogbookEntries(result: Result<Logbook, Never>)
     case delete(entry: IndexSet)
+    case summaryDetailAction(id: UUID, action: SummaryDetailAction)
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-#if swift(>=5.7)
+#if canImport(Charts)
 import Charts
 
 extension Logbook {
@@ -44,6 +44,7 @@ struct ChartView: View {
                     y: .value("Boulders", $0.count),
                     series: .value("Grades", $0.grade.gradeDescription)
                 )
+                .interpolationMethod(.catmullRom)
                 .foregroundStyle(by: .value("Grades", $0.grade.gradeDescription))
             }
             .chartForegroundStyleScale([
