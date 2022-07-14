@@ -44,7 +44,7 @@ struct FormView: View {
                             send: FormAction.didSelectDate
                         ),
                         in: ...Date(),
-                        displayedComponents: .date
+                        displayedComponents: [.hourAndMinute, .date]
                     ) {
                         HStack {
                             Image(systemName: "calendar")
