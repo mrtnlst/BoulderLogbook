@@ -40,6 +40,7 @@ extension SummaryView {
                     }
                     .headerProminence(.increased)
                 }
+                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -75,6 +76,7 @@ extension SummaryView {
                     }
                     .headerProminence(.increased)
                 }
+                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
             }
             .onAppear {
                 viewStore.send(.onAppear)
