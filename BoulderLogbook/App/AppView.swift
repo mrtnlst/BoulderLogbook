@@ -12,50 +12,50 @@ struct AppView: View {
     let store: Store<AppState, AppAction>
     
     var body: some View {
-        if #available(iOS 16.0, *) {
+        WithViewStore(store) { viewStore in
+            if #available(iOS 16.0, *) {
 #if canImport(Charts)
-            NavigationStack(
-                path: ViewStore(store).binding(get: \.path, send: AppAction.setPath)
-            ) {
-                summaryView(with: store)
-            }
+                NavigationStack(
+                    path: viewStore.binding(get: \.path, send: AppAction.setPath)
+                ) {
+                    summaryView(with: viewStore)
+                }
 #endif
-        } else {
-            NavigationView {
-                summaryView(with: store)
+            } else {
+                NavigationView {
+                    summaryView(with: viewStore)
+                }
+                .navigationViewStyle(.stack)
             }
-            .navigationViewStyle(.stack)
         }
     }
 }
 
 extension AppView {
-    @ViewBuilder func summaryView(with store: Store<AppState, AppAction>) -> some View {
-        WithViewStore(store) { viewStore in
-            SummaryView(
-                store: store.scope(state: \.summaryState, action: AppAction.summary)
-            )
-            .toolbar {
-                Button {
-                    viewStore.send(.setIsPresentingForm(true))
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                }
+    @ViewBuilder func summaryView(with viewStore: ViewStore<AppState, AppAction>) -> some View {
+        SummaryView(
+            store: store.scope(state: \.summaryState, action: AppAction.summary)
+        )
+        .toolbar {
+            Button {
+                viewStore.send(.setIsPresentingForm(true))
+            } label: {
+                Image(systemName: "plus.circle.fill")
             }
-            .sheet(
-                isPresented: viewStore.binding(
-                    get: \.isPresentingForm,
-                    send: AppAction.setIsPresentingForm
+        }
+        .sheet(
+            isPresented: viewStore.binding(
+                get: \.isPresentingForm,
+                send: AppAction.setIsPresentingForm
+            )
+        ) {
+            IfLetStore(
+                store.scope(
+                    state: \.formState,
+                    action: AppAction.form
                 )
-            ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.formState,
-                        action: AppAction.form
-                    )
-                ) { formStore in
-                    FormView(store: formStore)
-                }
+            ) { formStore in
+                FormView(store: formStore)
             }
         }
     }
