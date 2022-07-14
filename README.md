@@ -2,7 +2,7 @@
 
 An unofficial boulder logbook for Dresden's boulder gym [Mandala](https://boulderhalle-dresden.de).
 
-<img src="Resources/detail.png" alt="detail" /><img src="Resources/form.png" alt="form" /><img src="Resources/summary.png" alt="summary" />
+![detail](Resources/detail.png) ![form](Resources/form.png) ![summary](Resources/summary.png)
 
 ## Features
 
