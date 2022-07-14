@@ -8,9 +8,9 @@
 import Foundation
 
 struct Logbook: Codable, Equatable {
-    var logbookSections: [LogbookSection]
+    var logbookEntries: [LogbookEntry]
     
-    init(logbookSections: [LogbookSection] = []) {
-        self.logbookSections = logbookSections
+    init(logbookEntries: [LogbookEntry] = []) {
+        self.logbookEntries = logbookEntries
     }
 }

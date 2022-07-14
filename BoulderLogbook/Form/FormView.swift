@@ -15,7 +15,12 @@ struct FormView: View {
         WithViewStore(store) { viewStore in
             Form {
                 Section {
-                    Text("Enter the number of finished boulders!")
+                    HStack {
+                        Spacer()
+                        Text("Log your boulder session")
+                        Image(systemName: "pencil")
+                        Spacer()
+                    }
                 }
                 Section {
                     ForEach(BoulderGrade.allCases, id: \.self) { grade in
@@ -23,7 +28,7 @@ struct FormView: View {
                             HStack {
                                 Image(systemName: grade == .white ? "circle" : "circle.fill")
                                     .foregroundColor(grade == .white ? .none : grade.color)
-                                Text("× \(viewStore.logbookEntry?.numberOfGrades(for: grade) ?? 0)")
+                                Text("× \(viewStore.logbookEntry.numberOfGrades(for: grade))")
                             }
                         } onIncrement: {
                             viewStore.send(.increase(grade))
@@ -33,11 +38,28 @@ struct FormView: View {
                     }
                 }
                 Section {
-                    buttonView(text: "Save") { viewStore.send(.save) }
-                        .foregroundColor(.green)
-                    buttonView(text: "Cancel") { viewStore.send(.cancel) }
-                        .foregroundColor(.red)
+                    DatePicker(
+                        selection: viewStore.binding(
+                            get: \.logbookEntry.date,
+                            send: FormAction.didSelectDate
+                        ),
+                        in: ...Date(),
+                        displayedComponents: .date
+                    ) {
+                        HStack {
+                            Image(systemName: "calendar")
+                            Text("Adjust date")
+                        }
+                    }
                 }
+                Section {
+                    buttonView(text: "Save", action: { viewStore.send(.save) })
+                    .foregroundColor(.green)
+                    
+                    buttonView(text: "Cancel", action: { viewStore.send(.cancel) })
+                    .foregroundColor(.red)
+                }
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -47,11 +69,20 @@ struct FormView: View {
 }
 
 extension FormView {
-    @ViewBuilder func buttonView(text: String, action: @escaping () -> Void) -> some View {
+    @ViewBuilder func buttonView(
+        text: String,
+        action: @escaping () -> Void
+    ) -> some View {
         Button {
             action()
         } label: {
-            Text(text)
+            HStack {
+                Text("")
+                    .hidden()
+                Spacer()
+                Text(text)
+                Spacer()
+            }
         }
     }
 }

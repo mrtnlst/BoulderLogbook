@@ -13,4 +13,5 @@ enum FormAction {
     case save
     case increase(BoulderGrade)
     case decrease(BoulderGrade)
+    case didSelectDate(Date)
 }

@@ -14,12 +14,12 @@ struct SummaryView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
-                ForEach(viewStore.logbook.logbookSections.sorted(by: { $0.date > $1.date })) { section in
+                ForEach(viewStore.logbook.logbookEntries.sorted(by: { $0.date > $1.date })) { entry in
                     SummarySectionView(
-                        logbookSection: section,
-                        onDelete: { viewStore.send(.delete(entry: $0, section: section.date)) }
+                        logbookEntry: entry
                     )
                 }
+                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -30,17 +30,13 @@ struct SummaryView: View {
 }
 
 struct SummarySectionView: View {
-    let logbookSection: LogbookSection
-    let onDelete: (IndexSet) -> Void
+    let logbookEntry: LogbookEntry
     
     var body: some View {
         Section {
-            ForEach(logbookSection.logbookEntries.sorted(by: { $0.date > $1.date })) { entry in
-                SummaryEntryView(entry: entry)
-            }
-            .onDelete(perform: onDelete)
+            SummaryEntryView(entry: logbookEntry)
         } header: {
-            Text(logbookSection.date, style: .date)
+            Text(logbookEntry.date, style: .date)
         }
         .headerProminence(.increased)
     }
@@ -59,7 +55,8 @@ struct SummaryEntryView: View {
                 }
                 Text(entry.date, style: .time)
             }
-            Spacer()
+            .padding(.bottom, 2)
+            
             HStack(spacing: 3) {
                 ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
                     let numberOfTops = entry.numberOfGrades(for: grade)
@@ -87,7 +84,7 @@ struct SummaryView_Previews: PreviewProvider {
                     environment: SummaryEnvironment(
                         mainQueue: .main,
                         fetch: { return .none },
-                        delete: { _, _ in return .none }
+                        delete: { _ in return .none }
                     )
                 )
             )

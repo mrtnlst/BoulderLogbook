@@ -9,8 +9,14 @@ import Foundation
 
 struct LogbookEntry: Codable, Identifiable, Equatable {
     let id: UUID
-    let date: Date
+    var date: Date
     var tops: [BoulderGrade]
+    
+    internal init(id: UUID = UUID(), date: Date, tops: [BoulderGrade]) {
+        self.id = id
+        self.date = date
+        self.tops = tops
+    }
 }
 
 extension LogbookEntry {
@@ -23,41 +29,41 @@ extension LogbookEntry {
 }
 
 let exampleLogbook: Logbook = Logbook(
-    logbookSections: [
-        LogbookSection(
+    logbookEntries: [
+        LogbookEntry(
+//            id: UUID(),
             date: .now,
-            logbookEntries: [
-                LogbookEntry(
-                    id: UUID(),
-                    date: .now,
-                    tops: [.white, .white, .black, .black, .black]
-                ),
-                LogbookEntry(
-                    id: UUID(),
-                    date: .now,
-                    tops: [.white, .black, .red, .red, .red, .blue]
-                )
-            ]
+            tops: [.white, .white, .black, .black, .black]
         ),
-        LogbookSection(
+        LogbookEntry(
+//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400),
-            logbookEntries: [
-                LogbookEntry(
-                    id: UUID(),
-                    date: Date(timeIntervalSinceNow: -86400),
-                    tops: [.white, .black, .black, .black, .black]
-                )
-            ]
+            tops: [.white, .black, .red, .red, .red, .blue]
         ),
-        LogbookSection(
+        LogbookEntry(
+//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 2),
-            logbookEntries: [
-                LogbookEntry(
-                    id: UUID(),
-                    date: Date(timeIntervalSinceNow: -86400 * 2),
-                    tops: [.black, .black, .black, .orange, .orange]
-                )
-            ]
+            tops: [.black, .black, .black, .orange, .orange]
+        ),
+        LogbookEntry(
+//            id: UUID(),
+            date: Date(timeIntervalSinceNow: -86400 * 3),
+            tops: [.white, .black, .orange, .orange, .red]
+        ),
+        LogbookEntry(
+//            id: UUID(),
+            date: Date(timeIntervalSinceNow: -86400 * 4),
+            tops: [.white, .white, .black, .black, .black, .orange]
+        ),
+        LogbookEntry(
+//            id: UUID(),
+            date: Date(timeIntervalSinceNow: -86400 * 5),
+            tops: [.white, .white, .white, .black, .black]
+        ),
+        LogbookEntry(
+//            id: UUID(),
+            date: Date(timeIntervalSinceNow: -86400 * 6),
+            tops: [.white, .black, .black, .black, .black, .black, .black, .orange, .orange, .orange]
         )
     ]
 )

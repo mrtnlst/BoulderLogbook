@@ -12,14 +12,14 @@ import Charts
 extension Logbook {
     var chartSections: [ChartSection] {
         var sections: [ChartSection] = []
-        for section in logbookSections {
+        for entry in logbookEntries {
             for grade in BoulderGrade.allCases {
                 sections.append(
                     ChartSection(
                         id: UUID(),
                         grade: grade,
-                        date: section.date,
-                        count: section.numberOfGrades(for: grade)
+                        date: entry.date,
+                        count: entry.numberOfGrades(for: grade)
                     )
                 )
             }
@@ -33,13 +33,6 @@ struct ChartSection: Identifiable {
     var grade: BoulderGrade
     var date: Date
     var count: Int
-}
-
-extension LogbookSection {
-    func numberOfGrades(for grade: BoulderGrade) -> Int {
-        let numberOfBoulders = logbookEntries.reduce(0) { $0 + $1.numberOfGrades(for: grade) }
-        return numberOfBoulders
-    }
 }
 
 struct ChartView: View {

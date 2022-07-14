@@ -10,7 +10,7 @@ import Foundation
 struct SummaryState: Equatable {
     var logbook: Logbook
     
-    init(logbook: Logbook = Logbook(logbookSections: [])) {
+    init(logbook: Logbook = Logbook(logbookEntries: [])) {
         self.logbook = logbook
     }
 }
