@@ -15,6 +15,7 @@ enum BoulderGrade: Int, Codable, CaseIterable {
     case black
     case white
     case yellow
+    case purple
     
     var gradeDescription: String {
         switch self {
@@ -24,6 +25,7 @@ enum BoulderGrade: Int, Codable, CaseIterable {
         case .black: return "Black"
         case .white: return "White"
         case .yellow: return "Yellow"
+        case .purple: return "Purple"
         }
     }
     
@@ -33,8 +35,10 @@ enum BoulderGrade: Int, Codable, CaseIterable {
         case .red: return .red
         case .orange: return .orange
         case .black: return .black
-        case .white: return .gray
+        case .white:
+            return Color(uiColor: .init(dynamicProvider: { $0.userInterfaceStyle == .light ? .gray : .white }))
         case .yellow: return .yellow
+        case .purple: return .purple
         }
     }
 }

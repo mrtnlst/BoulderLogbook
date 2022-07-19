@@ -52,12 +52,13 @@ struct SummaryDetailChart: View {
             }
         }
         .chartForegroundStyleScale([
+            BoulderGrade.purple.gradeDescription: BoulderGrade.purple.color,
             BoulderGrade.yellow.gradeDescription: BoulderGrade.yellow.color,
             BoulderGrade.white.gradeDescription: BoulderGrade.white.color,
             BoulderGrade.black.gradeDescription: BoulderGrade.black.color,
             BoulderGrade.orange.gradeDescription: BoulderGrade.orange.color,
             BoulderGrade.red.gradeDescription: BoulderGrade.red.color,
-            BoulderGrade.blue.gradeDescription: BoulderGrade.blue.color,
+            BoulderGrade.blue.gradeDescription: BoulderGrade.blue.color
         ])
         .chartLegend(.hidden)
         .frame(maxHeight: 200)
