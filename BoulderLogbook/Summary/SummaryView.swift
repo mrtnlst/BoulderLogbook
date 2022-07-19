@@ -12,51 +12,22 @@ struct SummaryView: View {
     let store: Store<SummaryState, SummaryAction>
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            summaryListOniOS16(with: store)
-        } else {
+#if canImport(Charts)
+        if #available(iOS 16, *) {
             summaryList(with: store)
+                .navigationDestination(
+                    for: Store<SummaryDetailState, SummaryDetailAction>.self
+                ) { detailStore in
+                    SummaryDetailView(store: detailStore)
+                }
         }
+#else
+        summaryList(with: store)
+#endif
     }
 }
 
 extension SummaryView {
-    @available(iOS 16.0, *)
-    @ViewBuilder func summaryListOniOS16(with store: Store<SummaryState, SummaryAction>) -> some View {
-#if canImport(Charts)
-        WithViewStore(store) { viewStore in
-            List {
-                ForEachStore(
-                    store.scope(
-                        state: \.summaryDetails,
-                        action: SummaryAction.summaryDetailAction(id:action:))
-                ) { detailStore in
-                    Section {
-                        NavigationLink(value: detailStore) {
-                            SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
-                        }
-                    } header: {
-                        Text(ViewStore(detailStore).logbookEntry.date, style: .date)
-                    }
-                    .headerProminence(.increased)
-                }
-                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
-            }
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
-            .navigationTitle("Summary")
-            .navigationDestination(
-                for: Store<SummaryDetailState, SummaryDetailAction>.self
-            ) { detailStore in
-                SummaryDetailView(store: detailStore)
-            }
-        }
-#else
-        EmptyView()
-#endif
-    }
-    
     @ViewBuilder func summaryList(with store: Store<SummaryState, SummaryAction>) -> some View {
         WithViewStore(store) { viewStore in
             List {
@@ -66,11 +37,15 @@ extension SummaryView {
                         action: SummaryAction.summaryDetailAction(id:action:))
                 ) { detailStore in
                     Section {
-                        NavigationLink {
-                            SummaryDetailView(store: detailStore)
-                        } label: {
-                            SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+#if canImport(Charts)
+                        if #available(iOS 16, *) {
+                            NavigationLink(value: detailStore) {
+                                SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+                            }
                         }
+#else
+                        SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+#endif
                     } header: {
                         Text(ViewStore(detailStore).logbookEntry.date, style: .date)
                     }
