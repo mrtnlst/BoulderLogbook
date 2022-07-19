@@ -12,5 +12,5 @@ import ComposableArchitecture
 struct SummaryEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var fetch: () -> Effect<Logbook, Never>
-    var delete: (IndexSet) -> Effect<Never, Never>
+    var delete: (LogbookEntry) -> Effect<Never, Never>
 }

@@ -50,8 +50,20 @@ extension SummaryView {
                         Text(ViewStore(detailStore).logbookEntry.date, style: .date)
                     }
                     .headerProminence(.increased)
-                }
-                .onDelete(perform: { viewStore.send(.delete(entry: $0)) })
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewStore.send(.delete(entry: ViewStore(detailStore).logbookEntry))
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        Button {
+                            print("Awesome!")
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.orange)
+                    }
+                }                
             }
             .onAppear {
                 viewStore.send(.onAppear)

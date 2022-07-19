@@ -17,7 +17,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
                 SummaryEnvironment(
                     mainQueue: $0.mainQueue,
                     fetch: $0.storageService.fetch,
-                    delete: $0.storageService.delete(logbookEntries:)
+                    delete: $0.storageService.delete(logbookEntry:)
                 )
             }
         ),

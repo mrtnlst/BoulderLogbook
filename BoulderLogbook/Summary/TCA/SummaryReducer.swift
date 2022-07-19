@@ -23,10 +23,10 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
         state.logbook = logbook
         return .none
         
-    case let .delete(indexSet):
+    case let .delete(logbookEntry):
         return .merge(
             environment
-                .delete(indexSet)
+                .delete(logbookEntry)
                 .fireAndForget(),
             Effect(value: .fetch)
         )
