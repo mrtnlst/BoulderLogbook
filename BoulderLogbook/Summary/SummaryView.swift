@@ -52,12 +52,12 @@ extension SummaryView {
                     .headerProminence(.increased)
                     .swipeActions {
                         Button(role: .destructive) {
-                            viewStore.send(.delete(entry: ViewStore(detailStore).logbookEntry))
+                            viewStore.send(.delete(ViewStore(detailStore).logbookEntry))
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                         Button {
-                            print("Awesome!")
+                            viewStore.send(.edit(ViewStore(detailStore).logbookEntry))
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }

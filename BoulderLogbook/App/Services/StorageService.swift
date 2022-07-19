@@ -40,8 +40,10 @@ final class StorageService: StorageServiceType {
             logbook = Logbook()
         }
         
-        if let existingEntry = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
-            logbook?.logbookEntries[existingEntry].tops.append(contentsOf: logbookEntry.tops)
+        if let editedEntry = logbook?.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
+            logbook?.logbookEntries[editedEntry] = logbookEntry
+        } else if let entryToAppend = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
+            logbook?.logbookEntries[entryToAppend].tops.append(contentsOf: logbookEntry.tops)
         } else {
             logbook?.logbookEntries.append(logbookEntry)
         }
@@ -61,7 +63,7 @@ final class StorageService: StorageServiceType {
               var logbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) else {
             return Empty().eraseToAnyPublisher().eraseToEffect()
         }
-        logbook.logbookEntries.removeAll(where: { $0 == logbookEntry })
+        logbook.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
         
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
             UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
