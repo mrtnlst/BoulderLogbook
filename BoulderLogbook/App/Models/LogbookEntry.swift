@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct LogbookEntry: Codable, Identifiable, Equatable, Hashable {
-    let id: UUID
+public struct LogbookEntry: Codable, Identifiable, Equatable, Hashable {
+    public let id: UUID
     var date: Date
     var tops: [BoulderGrade]
     
@@ -40,43 +40,30 @@ extension LogbookEntry {
 let exampleLogbook: Logbook = Logbook(
     logbookEntries: [
         LogbookEntry(
-//            id: UUID(),
             date: .now,
-            tops: [.yellow,
-                   .white, .white,
-                   .black, .black, .black,
-                   .orange, .orange, .orange, .orange, .orange,
-                   .red, .red, .red, .red, .red, .red,
-                   .blue, .blue, .blue, .blue, .blue
-            ]
+            tops: [.purple, .white, .black, .black, .black, .black, .orange]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400),
             tops: [.white, .black, .red, .red, .red, .blue]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 2),
             tops: [.black, .black, .black, .orange, .orange]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 3),
             tops: [.white, .black, .orange, .orange, .red]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 4),
             tops: [.white, .white, .black, .black, .black, .orange]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 5),
             tops: [.white, .white, .white, .black, .black]
         ),
         LogbookEntry(
-//            id: UUID(),
             date: Date(timeIntervalSinceNow: -86400 * 6),
             tops: [.white, .black, .black, .black, .black, .black, .black, .orange, .orange, .orange]
         )

@@ -8,5 +8,5 @@
 import Foundation
 
 public enum SummaryDetailAction: Equatable {
-    case didSelectBackButton
+    case delete(LogbookEntry)
 }

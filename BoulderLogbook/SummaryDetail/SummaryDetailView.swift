@@ -23,11 +23,14 @@ struct SummaryDetailView: View {
                 SummaryEntryView(entry: viewStore.logbookEntry)
                 Spacer()
 #if canImport(Charts)
-                Button {
-                    viewStore.send(.didSelectBackButton)
+                Button(role: .destructive) {
+                    viewStore.send(.delete(viewStore.logbookEntry))
                 } label: {
-                    Text("Back to Summary")
-                        .foregroundColor(.orange)
+                    Label {
+                        Text("Delete Entry")
+                    } icon: {
+                        Image(systemName: "trash")
+                    }
                 }
 #endif
             }

@@ -58,7 +58,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
         case .form(_):
             return .none
             
-        case .summary(.summaryDetailAction(id: _, action: .didSelectBackButton)):
+        case .summary(.summaryDetailAction(id: _, action: .delete(_))):
             state.path = []
             return .none
             

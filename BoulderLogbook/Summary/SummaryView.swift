@@ -31,6 +31,13 @@ extension SummaryView {
     @ViewBuilder func summaryList(with store: Store<SummaryState, SummaryAction>) -> some View {
         WithViewStore(store) { viewStore in
             List {
+                Section {
+                    if !viewStore.logbook.logbookEntries.isEmpty {
+                        BarChartView(logbook: viewStore.logbook)
+                            .frame(minHeight: 150)
+                            .padding(.vertical, 8)
+                    }
+                }
                 ForEachStore(
                     store.scope(
                         state: \.summaryDetails,

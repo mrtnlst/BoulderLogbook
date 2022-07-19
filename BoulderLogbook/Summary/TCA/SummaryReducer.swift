@@ -23,7 +23,8 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
         state.logbook = logbook
         return .none
         
-    case let .delete(logbookEntry):
+    case let .delete(logbookEntry),
+         let .summaryDetailAction(id: _, action: .delete(logbookEntry)):
         return .merge(
             environment
                 .delete(logbookEntry)

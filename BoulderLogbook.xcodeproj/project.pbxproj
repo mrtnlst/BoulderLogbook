@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5BCD4A6E2868BC610005A1D9 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCD4A6D2868BC610005A1D9 /* ChartView.swift */; };
+		A920E2602887035F00D85C1E /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920E25F2887035F00D85C1E /* BarChartView.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
 		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5BCD4A6D2868BC610005A1D9 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		A920E25F2887035F00D85C1E /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -106,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A920E2612887036500D85C1E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A920E25F2887035F00D85C1E /* BarChartView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		A9B07E392868579500AA6274 = {
 			isa = PBXGroup;
 			children = (
@@ -151,8 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				A9B07E7F2868588700AA6274 /* SummaryView.swift */,
-				5BCD4A6D2868BC610005A1D9 /* ChartView.swift */,
 				A9B07E802868588700AA6274 /* TCA */,
+				A920E2612887036500D85C1E /* Views */,
 			);
 			path = Summary;
 			sourceTree = "<group>";
@@ -372,8 +380,8 @@
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				A9B326612880573F00501A70 /* SummaryDetailAction.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
-				5BCD4A6E2868BC610005A1D9 /* ChartView.swift in Sources */,
 				A9CE675F2880044D00027885 /* SummaryDetailReducer.swift in Sources */,
+				A920E2602887035F00D85C1E /* BarChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */,
