@@ -42,8 +42,8 @@ final class StorageService: StorageServiceType {
         
         if let editedEntry = logbook?.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
             logbook?.logbookEntries[editedEntry] = logbookEntry
-        } else if let entryToAppend = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
-            logbook?.logbookEntries[entryToAppend].tops.append(contentsOf: logbookEntry.tops)
+        } else if let updatedEntry = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
+            logbook?.logbookEntries[updatedEntry].tops.append(contentsOf: logbookEntry.tops)
         } else {
             logbook?.logbookEntries.append(logbookEntry)
         }

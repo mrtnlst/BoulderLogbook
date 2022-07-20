@@ -35,6 +35,13 @@ extension LogbookEntry {
         }
         return dictionary[grade] ?? 0
     }
+    
+    var sectionDateString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "de_DE")
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
+        return dateFormatter.string(from: sectionDate)
+    }
 }
 
 let exampleLogbook: Logbook = Logbook(
