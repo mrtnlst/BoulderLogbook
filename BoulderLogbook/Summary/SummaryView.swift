@@ -33,9 +33,14 @@ extension SummaryView {
             List {
                 Section {
                     if !viewStore.logbook.logbookEntries.isEmpty {
-                        BarChartView(logbook: viewStore.logbook)
-                            .frame(minHeight: 150)
-                            .padding(.vertical, 8)
+                        BarChartView(
+                            store: Store(
+                                initialState: ChartState(logbook: viewStore.logbook),
+                                reducer: chartReducer,
+                                environment: .init()
+                            )
+                        )
+                        .padding(.vertical, 8)
                     }
                 }
                 ForEachStore(

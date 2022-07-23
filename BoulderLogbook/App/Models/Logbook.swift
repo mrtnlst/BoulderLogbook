@@ -14,26 +14,3 @@ struct Logbook: Codable, Equatable {
         self.logbookEntries = logbookEntries
     }
 }
-
-extension Logbook {
-    struct BarChartEntry: Identifiable {
-        let id: UUID = UUID()
-        var grade: BoulderGrade
-        var date: String
-        var count: Int
-    }
-    
-    var chartSections: [BarChartEntry] {
-        return logbookEntries.reduce(into: []) { partialResult, entry in
-            partialResult.append(
-                contentsOf: BoulderGrade.allCases.map { grade in
-                    BarChartEntry(
-                        grade: grade,
-                        date: entry.sectionDateString,
-                        count: entry.numberOfGrades(for: grade)
-                    )
-                }
-            )
-        }
-    }
-}

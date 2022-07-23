@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB1288C250000E376E8 /* ChartState.swift */; };
+		5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB3288C250400E376E8 /* ChartAction.swift */; };
+		5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */; };
+		5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */; };
 		A920E2602887035F00D85C1E /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920E25F2887035F00D85C1E /* BarChartView.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
@@ -52,6 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5BEA9BB1288C250000E376E8 /* ChartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartState.swift; sourceTree = "<group>"; };
+		5BEA9BB3288C250400E376E8 /* ChartAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAction.swift; sourceTree = "<group>"; };
+		5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEnvironment.swift; sourceTree = "<group>"; };
+		5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartReducer.swift; sourceTree = "<group>"; };
 		A920E25F2887035F00D85C1E /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
@@ -106,12 +114,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A920E2612887036500D85C1E /* Views */ = {
+		5BEA9BB9288C251300E376E8 /* TCA */ = {
+			isa = PBXGroup;
+			children = (
+				5BEA9BB1288C250000E376E8 /* ChartState.swift */,
+				5BEA9BB3288C250400E376E8 /* ChartAction.swift */,
+				5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */,
+				5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */,
+			);
+			path = TCA;
+			sourceTree = "<group>";
+		};
+		5BEA9BBA288C251900E376E8 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
 				A920E25F2887035F00D85C1E /* BarChartView.swift */,
+				5BEA9BB9288C251300E376E8 /* TCA */,
 			);
-			path = Views;
+			path = Charts;
 			sourceTree = "<group>";
 		};
 		A9B07E392868579500AA6274 = {
@@ -129,6 +149,7 @@
 			children = (
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A9B07E852868588700AA6274 /* App */,
+				5BEA9BBA288C251900E376E8 /* Charts */,
 				A9B07E922868588700AA6274 /* Form */,
 				A9B07E7E2868588700AA6274 /* Summary */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
@@ -160,7 +181,6 @@
 			children = (
 				A9B07E7F2868588700AA6274 /* SummaryView.swift */,
 				A9B07E802868588700AA6274 /* TCA */,
-				A920E2612887036500D85C1E /* Views */,
 			);
 			path = Summary;
 			sourceTree = "<group>";
@@ -373,6 +393,7 @@
 			files = (
 				A9B07E9F2868588700AA6274 /* SummaryAction.swift in Sources */,
 				A9B07EAD2868588700AA6274 /* Logbook.swift in Sources */,
+				5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				A9B3265F2880573A00501A70 /* SummaryDetailState.swift in Sources */,
 				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
@@ -381,12 +402,14 @@
 				A9B326612880573F00501A70 /* SummaryDetailAction.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				A9CE675F2880044D00027885 /* SummaryDetailReducer.swift in Sources */,
+				5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */,
 				A920E2602887035F00D85C1E /* BarChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */,
 				A9B326632880574600501A70 /* SummaryDetailEnvironment.swift in Sources */,
 				A9CE6764288004E400027885 /* SummaryDetailView.swift in Sources */,
+				5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */,
 				A9D4995B28805069001BC4F2 /* Store+SummaryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* SummaryView.swift in Sources */,
 				A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */,
@@ -394,6 +417,7 @@
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
 				A9B07E9B2868588700AA6274 /* SummaryEnvironment.swift in Sources */,
 				A9B07EB72868588700AA6274 /* FormReducer.swift in Sources */,
+				5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				A9B07EB52868588700AA6274 /* FormAction.swift in Sources */,
 				A9B07E9D2868588700AA6274 /* SummaryReducer.swift in Sources */,

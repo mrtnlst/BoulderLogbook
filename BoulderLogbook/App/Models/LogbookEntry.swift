@@ -73,6 +73,18 @@ let exampleLogbook: Logbook = Logbook(
         LogbookEntry(
             date: Date(timeIntervalSinceNow: -86400 * 6),
             tops: [.white, .black, .black, .black, .black, .black, .black, .orange, .orange, .orange]
+        ),
+        LogbookEntry(
+            date: Date(timeIntervalSinceNow: -86400 * 7),
+            tops: [.white, .black, .black, .black, .orange, .orange, .orange, .red]
+        ),
+        LogbookEntry(
+            date: Date(timeIntervalSinceNow: -86400 * 8),
+            tops: [.black, .black, .black, .black, .black, .orange, .orange, .blue, .blue]
+        ),
+        LogbookEntry(
+            date: Date(timeIntervalSinceNow: -86400 * 9),
+            tops: [.purple, .white, .black, .orange]
         )
     ]
 )
