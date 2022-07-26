@@ -12,6 +12,7 @@ When finished it should allow you to:
 * log all your tops for a session
 * display a list of your past sessions
 * show your number of tops for each grade in a line chart (over a time span of a week)  
+* ability to add information to the top (e.g. whether it was a flash)
 
 
 Other possible features: 
