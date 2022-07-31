@@ -31,7 +31,7 @@ extension ChartState {
                 contentsOf: BoulderGrade.allCases.map { grade in
                     BarChartEntry(
                         grade: grade,
-                        date: entry.sectionDateString,
+                        date: entry.entryDateString,
                         count: entry.numberOfGrades(for: grade)
                     )
                 }

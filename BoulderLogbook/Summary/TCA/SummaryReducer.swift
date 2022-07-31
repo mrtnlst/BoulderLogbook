@@ -21,10 +21,27 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
     
     case let .receiveLogbookEntries(result: .success(logbook)):
         state.logbook = logbook
+        
+        let dictionary = logbook.logbookEntries.reduce(into: [Date: [LogbookEntry]](), { partialResult, entry in
+            let components = Calendar.current.dateComponents([.year, .month], from: entry.date)
+            let date = Calendar.current.date(from: components)!
+            let existing = partialResult[date] ?? []
+            partialResult[date] = existing + [entry]
+        })
+        state.summarySections = .init(
+            uniqueElements: dictionary.keys.map { date in
+                let entries = dictionary[date] ?? []
+                return SummarySectionState(
+                    date: date,
+                    summaryDetails: .init(uniqueElements: entries.map { SummaryDetailState(logbookEntry: $0) })
+                )
+            }
+        )
+        
         return .none
         
-    case let .delete(logbookEntry),
-         let .summaryDetailAction(id: _, action: .delete(logbookEntry)):
+    case let .summarySectionAction(id: _, action: .delete(logbookEntry)) ,
+        let .summarySectionAction(id: _, action:.summaryDetailAction(id: _, action: .delete(logbookEntry))):
         return .merge(
             environment
                 .delete(logbookEntry)
@@ -32,10 +49,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
             Effect(value: .fetch)
         )
         
-    case .edit(_):
-        return .none
-    
-    case .summaryDetailAction(id: _, action: _):
+    case .summarySectionAction(id: _, action: _):
         return .none
     }
 }

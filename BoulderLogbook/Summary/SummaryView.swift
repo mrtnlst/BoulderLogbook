@@ -45,37 +45,12 @@ extension SummaryView {
                 }
                 ForEachStore(
                     store.scope(
-                        state: \.summaryDetails,
-                        action: SummaryAction.summaryDetailAction(id:action:))
-                ) { detailStore in
-                    Section {
-#if canImport(Charts)
-                        if #available(iOS 16, *) {
-                            NavigationLink(value: detailStore) {
-                                SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
-                            }
-                        }
-#else
-                        SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
-#endif
-                    } header: {
-                        Text(ViewStore(detailStore).logbookEntry.date, style: .date)
-                    }
-                    .headerProminence(.increased)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewStore.send(.delete(ViewStore(detailStore).logbookEntry))
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        Button {
-                            viewStore.send(.edit(ViewStore(detailStore).logbookEntry))
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(.orange)
-                    }
-                }                
+                        state: \.summarySections,
+                        action: SummaryAction.summarySectionAction(id:action:)
+                    )
+                ) { sectionStore in
+                    SummarySectionView(store: sectionStore)
+                }
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -85,45 +60,26 @@ extension SummaryView {
     }
 }
 
-struct SummaryEntryView: View {
-    let entry: LogbookEntry
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                if #available(iOS 16, *) {
-                    Image(systemName: "figure.climbing")
-                } else {
-                    Image("figure.climbing")
-                }
-                Text(entry.date, style: .time)
-            }
-            .padding(.bottom, 2)
-            
-            HStack(spacing: 3) {
-                ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
-                    let numberOfTops = entry.numberOfGrades(for: grade)
-                    if numberOfTops > 0 {
-                        Image(systemName: grade == .white ? "circle" : "circle.fill")
-                            .foregroundColor(grade == .white ? .none : grade.color)
-                        Text("×")
-                        Text("\(numberOfTops) ")
-                    }
-                }
-            }
-        }
-    }
-}
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        if #available(iOS 16.0, *) {
 #if canImport(Charts)
+        if #available(iOS 16.0, *) {
             NavigationStack {
                 SummaryView(
                     store: Store(
                         initialState: SummaryState(
-                            logbook: exampleLogbook
+                            summarySections: .init(
+                                uniqueElements: [
+                                    .init(
+                                        date: .now,
+                                        summaryDetails: [
+                                            .init(logbookEntry: exampleLogbook.logbookEntries[0]),
+                                            .init(logbookEntry: exampleLogbook.logbookEntries[2])
+                                        ]
+                                    )
+                                ]
+                            )
                         ),
                         reducer: summaryReducer,
                         environment: SummaryEnvironment(
@@ -134,23 +90,33 @@ struct SummaryView_Previews: PreviewProvider {
                     )
                 )
             }
-#else
-            NavigationView {
-                SummaryView(
-                    store: Store(
-                        initialState: SummaryState(
-                            logbook: exampleLogbook
-                        ),
-                        reducer: summaryReducer,
-                        environment: SummaryEnvironment(
-                            mainQueue: .main,
-                            fetch: { return .none },
-                            delete: { _ in return .none }
-                        )
-                    )
-                )
-            }
-#endif
         }
+#else
+        NavigationView {
+            SummaryView(
+                store: Store(
+                    initialState: SummaryState(
+                        summarySections: .init(
+                            uniqueElements: [
+                                .init(
+                                    date: .now,
+                                    summaryDetails: [
+                                        .init(logbookEntry: exampleLogbook.logbookEntries[0]),
+                                        .init(logbookEntry: exampleLogbook.logbookEntries[2])
+                                    ]
+                                )
+                            ]
+                        )
+                    ),
+                    reducer: summaryReducer,
+                    environment: SummaryEnvironment(
+                        mainQueue: .main,
+                        fetch: { return .none },
+                        delete: { _ in return .none }
+                    )
+                )
+            )
+        }
+#endif
     }
 }

@@ -22,11 +22,20 @@ public struct LogbookEntry: Codable, Identifiable, Equatable, Hashable {
 extension LogbookEntry {
     var sectionDate: Date {
         guard let sectionDate = Calendar.current.date(
-            from: Calendar.current.dateComponents([.year, .month, .day], from: date)
+            from: Calendar.current.dateComponents([.year, .month], from: date)
         ) else {
             return date
         }
         return sectionDate
+    }
+    
+    var entryDate: Date {
+        guard let entryDate = Calendar.current.date(
+            from: Calendar.current.dateComponents([.year, .month, .day], from: date)
+        ) else {
+            return date
+        }
+        return entryDate
     }
     
     func numberOfGrades(for grade: BoulderGrade) -> Int {
@@ -36,11 +45,11 @@ extension LogbookEntry {
         return dictionary[grade] ?? 0
     }
     
-    var sectionDateString: String {
+    var entryDateString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "de_DE")
         dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
-        return dateFormatter.string(from: sectionDate)
+        return dateFormatter.string(from: entryDate)
     }
 }
 

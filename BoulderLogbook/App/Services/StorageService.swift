@@ -42,12 +42,12 @@ final class StorageService: StorageServiceType {
         
         if let editedEntry = logbook?.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
             logbook?.logbookEntries[editedEntry] = logbookEntry
-        } else if let updatedEntry = logbook?.logbookEntries.firstIndex(where: { $0.sectionDate == logbookEntry.sectionDate }) {
+        } else if let updatedEntry = logbook?.logbookEntries.firstIndex(where: { $0.entryDate == logbookEntry.entryDate }) {
             logbook?.logbookEntries[updatedEntry].tops.append(contentsOf: logbookEntry.tops)
         } else {
             logbook?.logbookEntries.append(logbookEntry)
         }
-        logbook?.logbookEntries.sort(by: { $0.sectionDate > $1.sectionDate } )
+        logbook?.logbookEntries.sort(by: { $0.entryDate > $1.entryDate } )
         
         // Encode Logbook and save back to UserDefaults.
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {

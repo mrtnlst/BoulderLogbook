@@ -58,11 +58,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
         case .form(_):
             return .none
             
-        case .summary(.summaryDetailAction(id: _, action: .delete(_))):
+        case .summary(.summarySectionAction(id: _, action: .summaryDetailAction(id: _, action: .delete(_)))):
             state.path = []
             return .none
             
-        case let .summary(.edit(entry)):
+        case let .summary(.summarySectionAction(id: _, action: .edit(entry))):
             state.formState = FormState(logbookEntry: entry)
             state.isPresentingForm = true
             return .none
