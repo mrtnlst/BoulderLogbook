@@ -31,14 +31,13 @@ enum BoulderGrade: Int, Codable, CaseIterable {
     
     var color: Color {
         switch self {
-        case .blue: return .blue
-        case .red: return .red
-        case .orange: return .orange
-        case .black: return .black
-        case .white:
-            return Color(uiColor: .init(dynamicProvider: { $0.userInterfaceStyle == .light ? .gray : .white }))
-        case .yellow: return .yellow
-        case .purple: return .purple
+        case .blue: return .mandalaBlue
+        case .red: return .mandalaRed
+        case .orange: return .mandalaOrange
+        case .black: return .mandalaBlack
+        case .white: return .mandalaWhite
+        case .yellow: return .mandalaYellow
+        case .purple: return .mandalaPurple
         }
     }
     
