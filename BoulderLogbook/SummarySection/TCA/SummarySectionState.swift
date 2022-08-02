@@ -8,8 +8,11 @@
 import Foundation
 import IdentifiedCollections
 
-struct SummarySectionState: Equatable, Identifiable {
-    let id: UUID = UUID()
+struct SummarySectionState: Equatable {
     let date: Date
     var summaryDetails: IdentifiedArrayOf<SummaryDetailState> = []
+}
+
+extension SummarySectionState: Identifiable {
+    var id: Double { date.timeIntervalSince1970 }
 }

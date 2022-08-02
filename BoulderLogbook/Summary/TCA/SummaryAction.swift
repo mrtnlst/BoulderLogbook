@@ -11,5 +11,5 @@ enum SummaryAction: Equatable {
     case onAppear
     case fetch
     case receiveLogbookEntries(result: Result<Logbook, Never>)
-    case summarySectionAction(id: UUID, action: SummarySectionAction)
+    case summarySectionAction(id: Double, action: SummarySectionAction)
 }
