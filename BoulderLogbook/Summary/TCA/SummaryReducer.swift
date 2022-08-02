@@ -35,7 +35,9 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
                     date: date,
                     summaryDetails: .init(uniqueElements: entries.map { SummaryDetailState(logbookEntry: $0) })
                 )
-            }
+            }.sorted(
+                by: { $0.date > $1.date }
+            )
         )
         
         return .none
