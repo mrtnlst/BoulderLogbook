@@ -70,18 +70,22 @@ struct SummaryEntryView: View {
             }
             
             VStack(alignment: .leading) {
-                HStack(spacing: 2) {
-                    ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
-                        let numberOfTops = entry.numberOfGrades(for: grade)
-                        if numberOfTops > 0 {
-                            Image(systemName: "circle.fill")
-                                .foregroundColor(grade.color)
-                            Text("×")
-                            Text("\(numberOfTops) ")
-                        }
+                HStack {
+                    HStack(spacing: 0) {
+                        ForEach(entry.tops, id: \.self) { $0.color }
+                    }
+                    .cornerRadius(8)
+                    
+                    HStack(spacing: 2) {
+                        Image(systemName: "arrowtriangle.up.circle")
+                            .font(.footnote.weight(.bold))
+                        Text("×")
+                            .font(.footnote.weight(.medium))
+                        Text("\(entry.tops.count)")
+                            .font(.footnote.weight(.medium))
                     }
                 }
-                .padding(.bottom, 1)
+                
                 HStack {
                     Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                         .font(.footnote)
