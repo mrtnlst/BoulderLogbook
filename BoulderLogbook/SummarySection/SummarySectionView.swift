@@ -72,7 +72,7 @@ struct SummaryEntryView: View {
             VStack(alignment: .leading) {
                 HStack {
                     HStack(spacing: 0) {
-                        ForEach(entry.tops, id: \.self) { $0.color }
+                        ForEach(entry.tops.sorted(by: { $0.rawValue > $1.rawValue }), id: \.self) { $0.color }
                     }
                     .cornerRadius(8)
                     
