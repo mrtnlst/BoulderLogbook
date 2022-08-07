@@ -57,7 +57,7 @@ let exampleLogbook: Logbook = Logbook(
     logbookEntries: [
         LogbookEntry(
             date: .now,
-            tops: [.purple, .white, .black, .black, .black, .black, .orange]
+            tops: [.purple, .purple, .white, .black, .black, .black, .black, .orange, .red, .red, .blue]
         ),
         LogbookEntry(
             date: Date(timeIntervalSinceNow: -86400),
