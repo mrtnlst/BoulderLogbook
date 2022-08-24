@@ -8,7 +8,7 @@
 import Foundation
 
 enum SummarySectionAction: Equatable {
-    case delete(LogbookEntry)
-    case edit(LogbookEntry)
-    case summaryDetailAction(id: UUID, action: SummaryDetailAction)
+    case delete(LogbookData.Entry)
+    case edit(LogbookData.Entry)
+    case entryAction(id: Int, action: EntryAction)
 }

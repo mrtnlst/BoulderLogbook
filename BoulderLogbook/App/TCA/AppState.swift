@@ -12,5 +12,5 @@ struct AppState: Equatable {
     var summaryState: SummaryState = SummaryState()
     var formState: FormState?
     var isPresentingForm: Bool = false
-    var path: [Store<SummaryDetailState, SummaryDetailAction>] = []
+    var path: [Store<EntryState, EntryAction>] = []
 }

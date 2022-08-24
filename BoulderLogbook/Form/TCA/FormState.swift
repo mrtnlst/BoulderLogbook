@@ -8,5 +8,5 @@
 import Foundation
 
 struct FormState: Equatable {
-    var logbookEntry: LogbookEntry = LogbookEntry(date: .now, tops: [])
+    var logbookEntry: LogbookData.Entry = LogbookData.Entry(date: .now, tops: [])
 }

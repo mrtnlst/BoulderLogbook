@@ -20,20 +20,17 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
             .catchToEffect(SummaryAction.receiveLogbookEntries)
     
     case let .receiveLogbookEntries(result: .success(logbook)):
-        state.logbook = logbook
-        
-        let dictionary = logbook.logbookEntries.reduce(into: [Date: [LogbookEntry]](), { partialResult, entry in
-            let components = Calendar.current.dateComponents([.year, .month], from: entry.date)
-            let date = Calendar.current.date(from: components)!
-            let existing = partialResult[date] ?? []
-            partialResult[date] = existing + [entry]
-        })
-        state.summarySections = .init(
-            uniqueElements: dictionary.keys.map { date in
-                let entries = dictionary[date] ?? []
-                return SummarySectionState(
-                    date: date,
-                    summaryDetails: .init(uniqueElements: entries.map { SummaryDetailState(logbookEntry: $0) })
+        state.sections = .init(
+            uniqueElements: logbook.sections.map { section in
+                SummarySectionState(
+                    date: section.date,
+                    entryStates: .init(
+                        uniqueElements: section.entries.map {
+                            EntryState(entry: $0)
+                        }.sorted(
+                            by: { $0.entry.date > $1.entry.date }
+                        )
+                    )
                 )
             }.sorted(
                 by: { $0.date > $1.date }
@@ -43,7 +40,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment> { 
         return .none
         
     case let .summarySectionAction(id: _, action: .delete(logbookEntry)) ,
-        let .summarySectionAction(id: _, action:.summaryDetailAction(id: _, action: .delete(logbookEntry))):
+        let .summarySectionAction(id: _, action:.entryAction(id: _, action: .delete(logbookEntry))):
         return .merge(
             environment
                 .delete(logbookEntry)

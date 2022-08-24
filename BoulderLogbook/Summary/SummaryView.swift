@@ -16,9 +16,9 @@ struct SummaryView: View {
         if #available(iOS 16, *) {
             summaryList(with: store)
                 .navigationDestination(
-                    for: Store<SummaryDetailState, SummaryDetailAction>.self
+                    for: Store<EntryState, EntryAction>.self
                 ) { detailStore in
-                    SummaryDetailView(store: detailStore)
+                    EntryView(store: detailStore)
                 }
         }
 #else
@@ -32,10 +32,11 @@ extension SummaryView {
         WithViewStore(store) { viewStore in
             List {
                 Section {
-                    if !viewStore.logbook.logbookEntries.isEmpty {
+                    if let recentSection = viewStore.sections.first,
+                       !recentSection.entryStates.isEmpty {
                         BarChartView(
                             store: Store(
-                                initialState: ChartState(logbook: viewStore.logbook),
+                                initialState: ChartState(recentSection),
                                 reducer: chartReducer,
                                 environment: .init()
                             )
@@ -45,7 +46,7 @@ extension SummaryView {
                 }
                 ForEachStore(
                     store.scope(
-                        state: \.summarySections,
+                        state: \.sections,
                         action: SummaryAction.summarySectionAction(id:action:)
                     )
                 ) { sectionStore in
@@ -69,13 +70,13 @@ struct SummaryView_Previews: PreviewProvider {
                 SummaryView(
                     store: Store(
                         initialState: SummaryState(
-                            summarySections: .init(
+                            sections: .init(
                                 uniqueElements: [
                                     .init(
                                         date: .now,
-                                        summaryDetails: [
-                                            .init(logbookEntry: exampleLogbook.logbookEntries[0]),
-                                            .init(logbookEntry: exampleLogbook.logbookEntries[2])
+                                        entryStates: [
+                                            .init(entry: exampleLogbook.logbookEntries[0]),
+                                            .init(entry: exampleLogbook.logbookEntries[2])
                                         ]
                                     )
                                 ]
@@ -95,19 +96,7 @@ struct SummaryView_Previews: PreviewProvider {
         NavigationView {
             SummaryView(
                 store: Store(
-                    initialState: SummaryState(
-                        summarySections: .init(
-                            uniqueElements: [
-                                .init(
-                                    date: .now,
-                                    summaryDetails: [
-                                        .init(logbookEntry: exampleLogbook.logbookEntries[0]),
-                                        .init(logbookEntry: exampleLogbook.logbookEntries[2])
-                                    ]
-                                )
-                            ]
-                        )
-                    ),
+                    initialState: SummaryState(LogbookData.sampleLogbook),
                     reducer: summaryReducer,
                     environment: SummaryEnvironment(
                         mainQueue: .main,

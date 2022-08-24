@@ -12,5 +12,5 @@ enum AppAction {
     case summary(SummaryAction)
     case form(FormAction)
     case setIsPresentingForm(Bool)
-    case setPath([Store<SummaryDetailState, SummaryDetailAction>])
+    case setPath([Store<EntryState, EntryAction>])
 }

@@ -14,6 +14,10 @@
 		5B1A80722896EB4400530B01 /* SummarySectionEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A80712896EB4400530B01 /* SummarySectionEnvironment.swift */; };
 		5B1A80742896EB4A00530B01 /* SummarySectionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A80732896EB4A00530B01 /* SummarySectionReducer.swift */; };
 		5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */; };
+		5B1A808028A7D6BF00530B01 /* LogbookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* LogbookData.swift */; };
+		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
+		5BE79CC428B620820083EE33 /* LogbookData.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* LogbookData.Section.swift */; };
+		5BE79CC628B6208A0083EE33 /* LogbookData.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */; };
 		5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB1288C250000E376E8 /* ChartState.swift */; };
 		5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB3288C250400E376E8 /* ChartAction.swift */; };
 		5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */; };
@@ -44,12 +48,12 @@
 		A9B07EB92868588700AA6274 /* FormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E962868588700AA6274 /* FormState.swift */; };
 		A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E972868588700AA6274 /* FormEnvironment.swift */; };
 		A9B07EBD2868588700AA6274 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E982868588700AA6274 /* FormView.swift */; };
-		A9B3265F2880573A00501A70 /* SummaryDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B3265E2880573A00501A70 /* SummaryDetailState.swift */; };
-		A9B326612880573F00501A70 /* SummaryDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326602880573F00501A70 /* SummaryDetailAction.swift */; };
-		A9B326632880574600501A70 /* SummaryDetailEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326622880574600501A70 /* SummaryDetailEnvironment.swift */; };
-		A9CE675F2880044D00027885 /* SummaryDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE675E2880044D00027885 /* SummaryDetailReducer.swift */; };
-		A9CE6764288004E400027885 /* SummaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* SummaryDetailView.swift */; };
-		A9D4995B28805069001BC4F2 /* Store+SummaryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* Store+SummaryDetail.swift */; };
+		A9B3265F2880573A00501A70 /* EntryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B3265E2880573A00501A70 /* EntryState.swift */; };
+		A9B326612880573F00501A70 /* EntryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326602880573F00501A70 /* EntryAction.swift */; };
+		A9B326632880574600501A70 /* EntryEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326622880574600501A70 /* EntryEnvironment.swift */; };
+		A9CE675F2880044D00027885 /* EntryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE675E2880044D00027885 /* EntryReducer.swift */; };
+		A9CE6764288004E400027885 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryView.swift */; };
+		A9D4995B28805069001BC4F2 /* Store+Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* Store+Entry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,10 @@
 		5B1A80712896EB4400530B01 /* SummarySectionEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionEnvironment.swift; sourceTree = "<group>"; };
 		5B1A80732896EB4A00530B01 /* SummarySectionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionReducer.swift; sourceTree = "<group>"; };
 		5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryEntryView.swift; sourceTree = "<group>"; };
+		5B1A807F28A7D6BF00530B01 /* LogbookData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.swift; sourceTree = "<group>"; };
+		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
+		5BE79CC328B620820083EE33 /* LogbookData.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Section.swift; sourceTree = "<group>"; };
+		5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Entry.swift; sourceTree = "<group>"; };
 		5BEA9BB1288C250000E376E8 /* ChartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartState.swift; sourceTree = "<group>"; };
 		5BEA9BB3288C250400E376E8 /* ChartAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAction.swift; sourceTree = "<group>"; };
 		5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEnvironment.swift; sourceTree = "<group>"; };
@@ -101,12 +109,12 @@
 		A9B07E962868588700AA6274 /* FormState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormState.swift; sourceTree = "<group>"; };
 		A9B07E972868588700AA6274 /* FormEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormEnvironment.swift; sourceTree = "<group>"; };
 		A9B07E982868588700AA6274 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
-		A9B3265E2880573A00501A70 /* SummaryDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailState.swift; sourceTree = "<group>"; };
-		A9B326602880573F00501A70 /* SummaryDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailAction.swift; sourceTree = "<group>"; };
-		A9B326622880574600501A70 /* SummaryDetailEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailEnvironment.swift; sourceTree = "<group>"; };
-		A9CE675E2880044D00027885 /* SummaryDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailReducer.swift; sourceTree = "<group>"; };
-		A9CE6763288004E400027885 /* SummaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailView.swift; sourceTree = "<group>"; };
-		A9D4995A28805069001BC4F2 /* Store+SummaryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+SummaryDetail.swift"; sourceTree = "<group>"; };
+		A9B3265E2880573A00501A70 /* EntryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryState.swift; sourceTree = "<group>"; };
+		A9B326602880573F00501A70 /* EntryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAction.swift; sourceTree = "<group>"; };
+		A9B326622880574600501A70 /* EntryEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryEnvironment.swift; sourceTree = "<group>"; };
+		A9CE675E2880044D00027885 /* EntryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryReducer.swift; sourceTree = "<group>"; };
+		A9CE6763288004E400027885 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
+		A9D4995A28805069001BC4F2 /* Store+Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+Entry.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				5B1A806D2896E3F700530B01 /* Color+Mandala.swift */,
+				5B1A808128A7DA0D00530B01 /* Date+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -204,7 +213,7 @@
 				A9B07E922868588700AA6274 /* Form */,
 				A9B07E7E2868588700AA6274 /* Summary */,
 				5B1A80762896EB7A00530B01 /* SummarySection */,
-				A9CE6761288004D300027885 /* SummaryDetail */,
+				A9CE6761288004D300027885 /* Entry */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
 			path = BoulderLogbook;
@@ -277,6 +286,9 @@
 				A9B07E8E2868588700AA6274 /* BoulderGrade.swift */,
 				A9B07E8D2868588700AA6274 /* Logbook.swift */,
 				A9B07E8F2868588700AA6274 /* LogbookEntry.swift */,
+				5B1A807F28A7D6BF00530B01 /* LogbookData.swift */,
+				5BE79CC328B620820083EE33 /* LogbookData.Section.swift */,
+				5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -309,23 +321,23 @@
 			path = TCA;
 			sourceTree = "<group>";
 		};
-		A9CE6761288004D300027885 /* SummaryDetail */ = {
+		A9CE6761288004D300027885 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
-				A9CE6763288004E400027885 /* SummaryDetailView.swift */,
+				A9CE6763288004E400027885 /* EntryView.swift */,
 				A9CE6762288004DA00027885 /* TCA */,
 				A9D4995C2880506C001BC4F2 /* Extensions */,
 			);
-			path = SummaryDetail;
+			path = Entry;
 			sourceTree = "<group>";
 		};
 		A9CE6762288004DA00027885 /* TCA */ = {
 			isa = PBXGroup;
 			children = (
-				A9CE675E2880044D00027885 /* SummaryDetailReducer.swift */,
-				A9B3265E2880573A00501A70 /* SummaryDetailState.swift */,
-				A9B326602880573F00501A70 /* SummaryDetailAction.swift */,
-				A9B326622880574600501A70 /* SummaryDetailEnvironment.swift */,
+				A9CE675E2880044D00027885 /* EntryReducer.swift */,
+				A9B3265E2880573A00501A70 /* EntryState.swift */,
+				A9B326602880573F00501A70 /* EntryAction.swift */,
+				A9B326622880574600501A70 /* EntryEnvironment.swift */,
 			);
 			path = TCA;
 			sourceTree = "<group>";
@@ -333,7 +345,7 @@
 		A9D4995C2880506C001BC4F2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A9D4995A28805069001BC4F2 /* Store+SummaryDetail.swift */,
+				A9D4995A28805069001BC4F2 /* Store+Entry.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -449,27 +461,29 @@
 				A9B07EAD2868588700AA6274 /* Logbook.swift in Sources */,
 				5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
-				A9B3265F2880573A00501A70 /* SummaryDetailState.swift in Sources */,
+				A9B3265F2880573A00501A70 /* EntryState.swift in Sources */,
 				5B1A806A2896CF8A00530B01 /* SummarySectionState.swift in Sources */,
 				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
+				5B1A808028A7D6BF00530B01 /* LogbookData.swift in Sources */,
 				5B1A806E2896E3F700530B01 /* Color+Mandala.swift in Sources */,
 				A9B07EA12868588700AA6274 /* SummaryState.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				5B1A80702896EB3C00530B01 /* SummarySectionAction.swift in Sources */,
-				A9B326612880573F00501A70 /* SummaryDetailAction.swift in Sources */,
+				5BE79CC628B6208A0083EE33 /* LogbookData.Entry.swift in Sources */,
+				A9B326612880573F00501A70 /* EntryAction.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				5B1A80722896EB4400530B01 /* SummarySectionEnvironment.swift in Sources */,
-				A9CE675F2880044D00027885 /* SummaryDetailReducer.swift in Sources */,
+				A9CE675F2880044D00027885 /* EntryReducer.swift in Sources */,
 				5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */,
 				A920E2602887035F00D85C1E /* BarChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */,
 				A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */,
-				A9B326632880574600501A70 /* SummaryDetailEnvironment.swift in Sources */,
-				A9CE6764288004E400027885 /* SummaryDetailView.swift in Sources */,
+				A9B326632880574600501A70 /* EntryEnvironment.swift in Sources */,
+				A9CE6764288004E400027885 /* EntryView.swift in Sources */,
 				5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */,
-				A9D4995B28805069001BC4F2 /* Store+SummaryDetail.swift in Sources */,
+				A9D4995B28805069001BC4F2 /* Store+Entry.swift in Sources */,
 				A9B07E992868588700AA6274 /* SummaryView.swift in Sources */,
 				A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* FormView.swift in Sources */,
@@ -480,8 +494,10 @@
 				5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				A9B07EB52868588700AA6274 /* FormAction.swift in Sources */,
+				5BE79CC428B620820083EE33 /* LogbookData.Section.swift in Sources */,
 				A9B07E9D2868588700AA6274 /* SummaryReducer.swift in Sources */,
 				A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */,
+				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  SummaryDetailView.swift
+//  EntryView.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 14.07.22.
@@ -11,20 +11,20 @@ import ComposableArchitecture
 import Charts
 #endif
 
-struct SummaryDetailView: View {
-    let store: Store<SummaryDetailState, SummaryDetailAction>
+struct EntryView: View {
+    let store: Store<EntryState, EntryAction>
     
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
                 if #available(iOS 16.0, *) {
-                    SummaryDetailChart(logbookEntry: viewStore.logbookEntry)
+                    EntryViewChart(logbookEntry: viewStore.entry)
                 }
-                SummaryEntryView(entry: viewStore.logbookEntry)
+                SummaryEntryView(entry: viewStore.entry)
                 Spacer()
 #if canImport(Charts)
                 Button(role: .destructive) {
-                    viewStore.send(.delete(viewStore.logbookEntry))
+                    viewStore.send(.delete(viewStore.entry))
                 } label: {
                     Label {
                         Text("Delete Entry")
@@ -34,14 +34,14 @@ struct SummaryDetailView: View {
                 }
 #endif
             }
-            .navigationTitle(Text(viewStore.logbookEntry.date, style: .date))
+            .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
     }
 }
 
 @available(iOS 16.0, *)
-struct SummaryDetailChart: View {
-    let logbookEntry: LogbookEntry
+struct EntryViewChart: View {
+    let logbookEntry: LogbookData.Entry
     
     var body: some View {
 #if canImport(Charts)
@@ -49,7 +49,7 @@ struct SummaryDetailChart: View {
             ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
                 BarMark(
                     x: .value("Grade", grade.gradeDescription),
-                    y: .value("Tops", logbookEntry.numberOfGrades(for: grade))
+                    y: .value("Tops", entry.numberOfGrades(for: grade))
                 )
                 .foregroundStyle(by: .value("Grade", grade.gradeDescription))
             }
@@ -72,14 +72,14 @@ struct SummaryDetailChart: View {
     }
 }
 
-struct SummaryDetailView_Previews: PreviewProvider {
+struct EntryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SummaryDetailView(
+            EntryView(
                 store: Store(
-                    initialState: .init(logbookEntry: exampleLogbook.logbookEntries[0]),
-                    reducer: summaryDetailReducer,
-                    environment: SummaryDetailEnvironment()
+                    initialState: .init(entry:             LogbookData.Entry.sampleEntries[0]),
+                    reducer: entryReducer,
+                    environment: EntryEnvironment()
                 )
             )
         }

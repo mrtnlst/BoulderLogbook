@@ -16,7 +16,7 @@ let summarySectionReducer = Reducer<SummarySectionState, SummarySectionAction, S
     case .edit(_):
         return .none
     
-    case .summaryDetailAction(id: _, action: _):
+    case .entryAction(id: _, action: _):
         return .none
     }
 }

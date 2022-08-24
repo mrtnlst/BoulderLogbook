@@ -13,8 +13,18 @@ struct ChartState: Equatable {
         case month = 30
         case all = 100
     }
-    let logbook: Logbook
+    let entries: [LogbookData.Entry]
     var selectedSegment: Segment = .week
+    
+    init(_ section: SummarySectionState) {
+        self.entries = section.entryStates.map {
+            LogbookData.Entry(date: $0.entry.date, tops: $0.entry.tops)
+        }
+    }
+    
+    init(entries: [LogbookData.Entry]) {
+        self.entries = entries
+    }
 }
 
 extension ChartState {
@@ -26,12 +36,12 @@ extension ChartState {
     }
     
     var chartSections: [BarChartEntry] {
-        return logbook.logbookEntries.prefix(selectedSegment.rawValue).reduce(into: []) { partialResult, entry in
+        return entries.prefix(selectedSegment.rawValue).reduce(into: []) { partialResult, entry in
             partialResult.append(
                 contentsOf: BoulderGrade.allCases.map { grade in
                     BarChartEntry(
                         grade: grade,
-                        date: entry.entryDateString,
+                        date: entry.date.yearMonthDayDateString ?? "",
                         count: entry.numberOfGrades(for: grade)
                     )
                 }

@@ -9,5 +9,5 @@ import Foundation
 import ComposableArchitecture
 
 struct FormEnvironment {
-    var save: (LogbookEntry) -> Effect<Never, Never>
+    var save: (LogbookData.Entry) -> Effect<Never, Never>
 }

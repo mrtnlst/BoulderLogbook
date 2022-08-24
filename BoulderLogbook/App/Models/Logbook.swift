@@ -9,8 +9,29 @@ import Foundation
 
 struct Logbook: Codable, Equatable {
     var logbookEntries: [LogbookEntry]
-    
-    init(logbookEntries: [LogbookEntry] = []) {
-        self.logbookEntries = logbookEntries
+}
+
+extension Logbook {
+    func toLogbookData() -> LogbookData {
+        let dictionary = logbookEntries.reduce(into: [Date: [LogbookEntry]]()) { partialResult, entry in
+            if let sectionDate = entry.date.yearMonthDate {
+                let existing = partialResult[sectionDate] ?? []
+                partialResult[sectionDate] = existing + [entry]
+            }
+        }
+        return LogbookData(
+            sections: dictionary.keys.map { sectionDate in 
+                let entries = dictionary[sectionDate] ?? []
+                return LogbookData.Section(
+                    date: sectionDate,
+                    entries: entries.map {
+                        LogbookData.Entry(
+                            date: $0.date,
+                            tops: $0.tops
+                        )
+                    }
+                )
+            }
+        )
     }
 }

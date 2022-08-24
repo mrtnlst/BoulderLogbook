@@ -16,26 +16,25 @@ struct SummarySectionView: View {
             Section {
                 ForEachStore(
                     store.scope(
-                        state: \.summaryDetails,
-                        action: SummarySectionAction.summaryDetailAction(id:action:))
+                        state: \.entryStates,
+                        action: SummarySectionAction.entryAction(id:action:))
                 ) { detailStore in
-                    
 #if canImport(Charts)
                     if #available(iOS 16, *) {
                         NavigationLink(value: detailStore) {
-                            SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+                            SummaryEntryView(entry: ViewStore(detailStore).entry)
                         }
                     }
 #else
-                    SummaryEntryView(entry: ViewStore(detailStore).logbookEntry)
+                    SummaryEntryView(entry: ViewStore(detailStore).entry)
                         .swipeActions {
                             Button(role: .destructive) {
-                                viewStore.send(.delete(ViewStore(detailStore).logbookEntry))
+                                viewStore.send(.delete(ViewStore(detailStore).entry))
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
                             Button {
-                                viewStore.send(.edit(ViewStore(detailStore).logbookEntry))
+                                viewStore.send(.edit(ViewStore(detailStore).entry))
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
@@ -56,12 +55,8 @@ struct SummarySectionView_Previews: PreviewProvider {
         List {
             SummarySectionView(
                 store: Store(
-                    initialState: .init(
-                        date: .now,
-                        summaryDetails: [
-                            .init(logbookEntry: exampleLogbook.logbookEntries[0]),
-                            .init(logbookEntry: exampleLogbook.logbookEntries[2])
-                        ]
+                    initialState: SummarySectionState(
+                        LogbookData.Section.sampleSections[0]
                     ),
                     reducer: summarySectionReducer,
                     environment: SummarySectionEnvironment()

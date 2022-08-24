@@ -56,7 +56,7 @@ struct BarChartView_Previews: PreviewProvider {
     static var previews: some View {
         BarChartView(
             store: Store(
-                initialState: ChartState(logbook: exampleLogbook),
+                initialState: ChartState(entries: LogbookData.Entry.sampleEntries),
                 reducer: chartReducer,
                 environment: ChartEnvironment()
             )
