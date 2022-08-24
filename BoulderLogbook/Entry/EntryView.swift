@@ -16,32 +16,36 @@ struct EntryView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                if #available(iOS 16.0, *) {
-                    EntryViewChart(logbookEntry: viewStore.entry)
-                }
-                SummaryEntryView(entry: viewStore.entry)
-                Spacer()
-#if canImport(Charts)
-                Button(role: .destructive) {
-                    viewStore.send(.delete(viewStore.entry))
-                } label: {
-                    Label {
-                        Text("Delete Entry")
-                    } icon: {
-                        Image(systemName: "trash")
+            ScrollView {
+                VStack {
+                    if #available(iOS 16.0, *) {
+                        EntryViewChart(entry: viewStore.entry)
                     }
+                    SummaryEntryView(entry: viewStore.entry)
+                        .frame(height: 80)
+                        .padding()
+                    Spacer()
+    #if canImport(Charts)
+                    Button(role: .destructive) {
+                        viewStore.send(.delete(viewStore.entry))
+                    } label: {
+                        Label {
+                            Text("Delete Entry")
+                        } icon: {
+                            Image(systemName: "trash")
+                        }
+                    }
+    #endif
                 }
-#endif
+                .navigationTitle(Text(viewStore.entry.date, style: .date))
             }
-            .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
     }
 }
 
 @available(iOS 16.0, *)
 struct EntryViewChart: View {
-    let logbookEntry: LogbookData.Entry
+    let entry: LogbookData.Entry
     
     var body: some View {
 #if canImport(Charts)
@@ -64,7 +68,7 @@ struct EntryViewChart: View {
             BoulderGrade.blue.gradeDescription: BoulderGrade.blue.color
         ])
         .chartLegend(.hidden)
-        .frame(maxHeight: 200)
+        .frame(height: 200)
         .padding()
 #else
         EmptyView()
