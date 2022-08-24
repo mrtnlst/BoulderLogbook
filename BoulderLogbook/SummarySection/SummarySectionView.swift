@@ -51,9 +51,11 @@ extension SummarySectionView {
             }
 #endif
         } else {
-            NavigationLink {
-                EntryView(store: entryStore)
-            } label: {
+            ZStack {
+                NavigationLink(destination: EntryView(store: entryStore)) {
+                   EmptyView()
+                }
+                .opacity(0)
                 SummaryEntryView(entry: ViewStore(entryStore).entry)
             }
         }
