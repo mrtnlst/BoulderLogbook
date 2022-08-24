@@ -16,29 +16,53 @@ struct EntryView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            ScrollView {
-                VStack {
+            List {
+                Section {
                     if #available(iOS 16.0, *) {
                         EntryViewChart(entry: viewStore.entry)
+                    } else {
+                        VStack(alignment: .leading, spacing: 8) {
+                            EntryColorView(entry: viewStore.entry)
+                                .frame(minHeight: 32)
+                            HStack(spacing: 4) {
+                                Image(systemName: "arrowtriangle.up.circle")
+                                    .font(.callout.weight(.bold))
+                                Text("\(viewStore.entry.tops.count) tops")
+                                    .font(.callout)
+                            }
+                            HStack(spacing: 4) {
+                                Image(systemName: "clock")
+                                    .font(.callout.weight(.bold))
+                                Text(viewStore.entry.date, format: .dateTime.year().month().day().hour().minute())
+                                    .font(.callout)
+                            }
+                        }
+                        .padding(.vertical, 8)
                     }
-                    SummaryEntryView(entry: viewStore.entry)
-                        .frame(height: 80)
-                        .padding()
-                    Spacer()
-    #if canImport(Charts)
+                }
+                Section {
+                    Button {
+                        viewStore.send(.edit(viewStore.entry))
+                    } label: {
+                        Label {
+                            Text("Edit")
+                        } icon: {
+                            Image(systemName: "pencil")
+                        }
+                    }
                     Button(role: .destructive) {
                         viewStore.send(.delete(viewStore.entry))
                     } label: {
                         Label {
-                            Text("Delete Entry")
+                            Text("Delete")
                         } icon: {
                             Image(systemName: "trash")
+                                .foregroundColor(.red)
                         }
                     }
-    #endif
                 }
-                .navigationTitle(Text(viewStore.entry.date, style: .date))
             }
+            .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
     }
 }
@@ -81,7 +105,7 @@ struct EntryView_Previews: PreviewProvider {
         NavigationView {
             EntryView(
                 store: Store(
-                    initialState: .init(entry:             LogbookData.Entry.sampleEntries[0]),
+                    initialState: .init(entry: LogbookData.Entry.sampleEntries[0]),
                     reducer: entryReducer,
                     environment: EntryEnvironment()
                 )

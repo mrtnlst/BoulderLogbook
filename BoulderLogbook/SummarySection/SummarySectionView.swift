@@ -18,34 +18,44 @@ struct SummarySectionView: View {
                     store.scope(
                         state: \.entryStates,
                         action: SummarySectionAction.entryAction(id:action:))
-                ) { detailStore in
-#if canImport(Charts)
-                    if #available(iOS 16, *) {
-                        NavigationLink(value: detailStore) {
-                            SummaryEntryView(entry: ViewStore(detailStore).entry)
-                        }
-                    }
-#else
-                    SummaryEntryView(entry: ViewStore(detailStore).entry)
+                ) { entryStore in
+                    summaryEntryView(for: entryStore)
                         .swipeActions {
                             Button(role: .destructive) {
-                                viewStore.send(.delete(ViewStore(detailStore).entry))
+                                viewStore.send(.delete(ViewStore(entryStore).entry))
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
                             Button {
-                                viewStore.send(.edit(ViewStore(detailStore).entry))
+                                viewStore.send(.edit(ViewStore(entryStore).entry))
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
                             .tint(.orange)
                         }
-#endif
                 }
             } header: {
                 Text(viewStore.date, format: .dateTime.year().month(.wide))
             }
             .headerProminence(.increased)
+        }
+    }
+}
+
+extension SummarySectionView {
+    @ViewBuilder func summaryEntryView(for entryStore: Store<EntryState, EntryAction>) -> some View {
+        if #available(iOS 16, *) {
+#if canImport(Charts)
+            NavigationLink(value: entryStore) {
+                SummaryEntryView(entry: ViewStore(entryStore).entry)
+            }
+#endif
+        } else {
+            NavigationLink {
+                EntryView(store: entryStore)
+            } label: {
+                SummaryEntryView(entry: ViewStore(entryStore).entry)
+            }
         }
     }
 }

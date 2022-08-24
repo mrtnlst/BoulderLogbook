@@ -15,15 +15,7 @@ struct SummaryEntryView: View {
             iconView()
             VStack(alignment: .leading) {
                 HStack {
-                    GeometryReader { reader in
-                        HStack(spacing: 0) {
-                            ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
-                                colorSegment(for: grade, and: reader.size.width)
-                            }
-                        }
-                    }
-                    .cornerRadius(8)
-                    
+                    EntryColorView(entry: entry)
                     HStack(spacing: 2) {
                         Image(systemName: "arrowtriangle.up.circle")
                             .font(.footnote.weight(.bold))
@@ -58,20 +50,6 @@ extension SummaryEntryView {
                         .fill(Color.accentColor.opacity(0.15))
 
                 }
-        }
-    }
-    
-    @ViewBuilder func colorSegment(for grade: BoulderGrade, and width: CGFloat) -> some View {
-        let numberOfTops = entry.numberOfGrades(for: grade)
-        if numberOfTops > 0 {
-            ZStack {
-                grade.color.frame(
-                    width: width / CGFloat(entry.tops.count) * CGFloat(numberOfTops)
-                )
-                Text("\(numberOfTops)")
-                    .font(.caption2.weight(.light))
-                    .foregroundColor(grade == BoulderGrade.white ? Color.black : Color.white)
-            }
         }
     }
 }

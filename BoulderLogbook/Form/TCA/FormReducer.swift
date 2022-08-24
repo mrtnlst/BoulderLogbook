@@ -15,21 +15,21 @@ let formReducer = Reducer<FormState, FormAction, FormEnvironment> { state, actio
         
     case .save:
         return environment
-            .save(state.logbookEntry)
+            .save(state.entry)
             .fireAndForget()
         
     case let .increase(grade):
-        state.logbookEntry.tops.append(grade)
+        state.entry.tops.append(grade)
         return .none
         
     case let .decrease(grade):
-        if let index = state.logbookEntry.tops.firstIndex(of: grade) {
-            state.logbookEntry.tops.remove(at: index)
+        if let index = state.entry.tops.firstIndex(of: grade) {
+            state.entry.tops.remove(at: index)
         }
         return .none
     
     case let .didSelectDate(date):
-        state.logbookEntry.date = date
+        state.entry.date = date
         return .none
     }
 }

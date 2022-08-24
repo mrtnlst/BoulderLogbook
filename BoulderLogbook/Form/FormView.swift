@@ -28,7 +28,7 @@ struct FormView: View {
                             HStack {
                                 Image(systemName: grade == .white ? "circle" : "circle.fill")
                                     .foregroundColor(grade == .white ? .none : grade.color)
-                                Text("× \(viewStore.logbookEntry.numberOfGrades(for: grade))")
+                                Text("× \(viewStore.entry.numberOfGrades(for: grade))")
                             }
                         } onIncrement: {
                             viewStore.send(.increase(grade))
@@ -37,18 +37,20 @@ struct FormView: View {
                         }
                     }
                 }
-                Section {
-                    DatePicker(
-                        selection: viewStore.binding(
-                            get: \.logbookEntry.date,
-                            send: FormAction.didSelectDate
-                        ),
-                        in: ...Date(),
-                        displayedComponents: [.hourAndMinute, .date]
-                    ) {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text("Adjust date")
+                if viewStore.isNewEntry {
+                    Section {
+                        DatePicker(
+                            selection: viewStore.binding(
+                                get: \.entry.date,
+                                send: FormAction.didSelectDate
+                            ),
+                            in: ...Date(),
+                            displayedComponents: [.hourAndMinute, .date]
+                        ) {
+                            HStack {
+                                Image(systemName: "calendar")
+                                Text("Adjust date")
+                            }
                         }
                     }
                 }
