@@ -39,14 +39,13 @@ struct SummaryEntryView: View {
 
 extension SummaryEntryView {
     @ViewBuilder func iconView() -> some View {
-        Image(systemName: "figure.climbing")
-            .foregroundColor(.accentColor)
-            .padding(10)
-            .background {
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color.accentColor.opacity(0.15))
-                
-            }
+        ZStack {
+            Image(systemName: "figure.climbing")
+                .foregroundColor(.accentColor)
+            Color.accentColor.opacity(0.15)
+                .cornerRadius(8)
+        }
+        .frame(maxWidth: 48)
     }
 }
 
