@@ -22,5 +22,4 @@ Other possible features:
 
 ## Compatibility
 
-* Runs and builds on iOS 15 and iOS 16 (without Charts though)
-* Uses `#if canImport(Charts)` to build on Xcode 13
+* Requires iOS 16 and Xcode 14

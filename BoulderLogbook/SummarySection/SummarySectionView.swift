@@ -44,36 +44,26 @@ struct SummarySectionView: View {
 
 extension SummarySectionView {
     @ViewBuilder func summaryEntryView(for entryStore: Store<EntryState, EntryAction>) -> some View {
-        if #available(iOS 16, *) {
-#if canImport(Charts)
-            NavigationLink(value: entryStore) {
-                SummaryEntryView(entry: ViewStore(entryStore).entry)
-            }
-#endif
-        } else {
-            ZStack {
-                NavigationLink(destination: EntryView(store: entryStore)) {
-                   EmptyView()
-                }
-                .opacity(0)
-                SummaryEntryView(entry: ViewStore(entryStore).entry)
-            }
+        NavigationLink(value: entryStore) {
+            SummaryEntryView(entry: ViewStore(entryStore).entry)
         }
     }
 }
 
 struct SummarySectionView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            SummarySectionView(
-                store: Store(
-                    initialState: SummarySectionState(
-                        LogbookData.Section.sampleSections[0]
-                    ),
-                    reducer: summarySectionReducer,
-                    environment: SummarySectionEnvironment()
+        NavigationView {
+            List {
+                SummarySectionView(
+                    store: Store(
+                        initialState: SummarySectionState(
+                            LogbookData.Section.sampleSections[0]
+                        ),
+                        reducer: summarySectionReducer,
+                        environment: SummarySectionEnvironment()
+                    )
                 )
-            )
+            }
         }
     }
 }

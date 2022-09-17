@@ -39,18 +39,14 @@ struct SummaryEntryView: View {
 
 extension SummaryEntryView {
     @ViewBuilder func iconView() -> some View {
-        if #available(iOS 16, *) {
-            Image(systemName: "figure.climbing")
-        } else {
-            Image("figure.climbing")
-                .foregroundColor(.accentColor)
-                .padding(10)
-                .background {
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(Color.accentColor.opacity(0.15))
-
-                }
-        }
+        Image(systemName: "figure.climbing")
+            .foregroundColor(.accentColor)
+            .padding(10)
+            .background {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color.accentColor.opacity(0.15))
+                
+            }
     }
 }
 

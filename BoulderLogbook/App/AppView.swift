@@ -13,19 +13,10 @@ struct AppView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            if #available(iOS 16.0, *) {
-#if canImport(Charts)
-                NavigationStack(
-                    path: viewStore.binding(get: \.path, send: AppAction.setPath)
-                ) {
-                    summaryView(with: viewStore)
-                }
-#endif
-            } else {
-                NavigationView {
-                    summaryView(with: viewStore)
-                }
-                .navigationViewStyle(.stack)
+            NavigationStack(
+                path: viewStore.binding(get: \.path, send: AppAction.setPath)
+            ) {
+                summaryView(with: viewStore)
             }
         }
     }

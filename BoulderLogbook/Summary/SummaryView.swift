@@ -12,18 +12,12 @@ struct SummaryView: View {
     let store: Store<SummaryState, SummaryAction>
     
     var body: some View {
-#if canImport(Charts)
-        if #available(iOS 16, *) {
-            summaryList(with: store)
-                .navigationDestination(
-                    for: Store<EntryState, EntryAction>.self
-                ) { detailStore in
-                    EntryView(store: detailStore)
-                }
-        }
-#else
         summaryList(with: store)
-#endif
+            .navigationDestination(
+                for: Store<EntryState, EntryAction>.self
+            ) { detailStore in
+                EntryView(store: detailStore)
+            }
     }
 }
 
@@ -32,17 +26,17 @@ extension SummaryView {
         WithViewStore(store) { viewStore in
             List {
                 Section {
-                    if let recentSection = viewStore.sections.first,
-                       !recentSection.entryStates.isEmpty {
-                        BarChartView(
-                            store: Store(
-                                initialState: ChartState(recentSection),
-                                reducer: chartReducer,
-                                environment: .init()
-                            )
-                        )
-                        .padding(.vertical, 8)
-                    }
+//                    if let recentSection = viewStore.sections.first,
+//                       !recentSection.entryStates.isEmpty {
+//                        BarChartView(
+//                            store: Store(
+//                                initialState: ChartState(recentSection),
+//                                reducer: chartReducer,
+//                                environment: .init()
+//                            )
+//                        )
+//                        .padding(.vertical, 8)
+//                    }
                 }
                 ForEachStore(
                     store.scope(
@@ -64,24 +58,7 @@ extension SummaryView {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-#if canImport(Charts)
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                SummaryView(
-                    store: Store(
-                        initialState: SummaryState(LogbookData.sampleLogbook),
-                        reducer: summaryReducer,
-                        environment: SummaryEnvironment(
-                            mainQueue: .main,
-                            fetch: { return .none },
-                            delete: { _ in return .none }
-                        )
-                    )
-                )
-            }
-        }
-#else
-        NavigationView {
+        NavigationStack {
             SummaryView(
                 store: Store(
                     initialState: SummaryState(LogbookData.sampleLogbook),
@@ -94,6 +71,5 @@ struct SummaryView_Previews: PreviewProvider {
                 )
             )
         }
-#endif
     }
 }

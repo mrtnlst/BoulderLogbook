@@ -7,15 +7,12 @@
 
 import SwiftUI
 import ComposableArchitecture
-#if canImport(Charts)
 import Charts
-#endif
 
 struct BarChartView: View {
     let store: Store<ChartState, ChartAction>
     
     var body: some View {
-#if canImport(Charts)
         WithViewStore(store) { viewStore in
             VStack {
                 Picker(
@@ -29,26 +26,21 @@ struct BarChartView: View {
                     Text("All time").tag(ChartState.Segment.all)
                 }
                 .pickerStyle(.segmented)
-                if #available(iOS 16.0, *) {
-                    Chart(viewStore.chartSections) { section in
-                        BarMark(
-                            x: .value("Date", section.date),
-                            y: .value("Total Tops", section.count)
-                        )
-                        .foregroundStyle(by: .value("Grade", section.grade.gradeDescription))
-                    }
-                    .chartXScale(domain: .automatic(reversed: true))
-                    .chartForegroundStyleScale(BoulderGrade.chartForegroundStyleScale)
-                    .chartLegend(.hidden)
-                    .frame(height: 200)
-                    .animation(.default, value: viewStore.selectedSegment)
-                    // TODO: Hide x-axis labels when selected segment != .week
+                Chart(viewStore.chartSections) { section in
+                    BarMark(
+                        x: .value("Date", section.date),
+                        y: .value("Total Tops", section.count)
+                    )
+                    .foregroundStyle(by: .value("Grade", section.grade.gradeDescription))
                 }
+                .chartXScale(domain: .automatic(reversed: true))
+                .chartForegroundStyleScale(BoulderGrade.chartForegroundStyleScale)
+                .chartLegend(.hidden)
+                .frame(height: 200)
+                .animation(.default, value: viewStore.selectedSegment)
+                // TODO: Hide x-axis labels when selected segment != .week
             }
         }
-#else
-        EmptyView()
-#endif
     }
 }
 
