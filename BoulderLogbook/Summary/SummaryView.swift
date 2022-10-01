@@ -26,17 +26,14 @@ extension SummaryView {
         WithViewStore(store) { viewStore in
             List {
                 Section {
-//                    if let recentSection = viewStore.sections.first,
-//                       !recentSection.entryStates.isEmpty {
-//                        BarChartView(
-//                            store: Store(
-//                                initialState: ChartState(recentSection),
-//                                reducer: chartReducer,
-//                                environment: .init()
-//                            )
-//                        )
-//                        .padding(.vertical, 8)
-//                    }
+                    LineChartView(
+                        store: Store(
+                            initialState: ChartState(viewStore.entryStates),
+                            reducer: chartReducer,
+                            environment: .init()
+                        )
+                    )
+                    .frame(height: 150)
                 }
                 ForEachStore(
                     store.scope(

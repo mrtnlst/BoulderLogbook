@@ -20,4 +20,10 @@ extension SummaryState {
             }
         )
     }
+    
+    var entryStates: [EntryState] {
+        sections.reduce(into: []) { partialResult, sectionState in
+            partialResult.append(contentsOf: sectionState.entryStates.elements)
+        }
+    }
 }

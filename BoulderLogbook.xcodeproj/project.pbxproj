@@ -16,6 +16,9 @@
 		5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */; };
 		5B1A808028A7D6BF00530B01 /* LogbookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* LogbookData.swift */; };
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
+		5B289AD328DA1B8C00EC6F0B /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */; };
+		5B289AD528E89AFD00EC6F0B /* ChartState+Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */; };
+		5B289AD828E89CE200EC6F0B /* ChartState+ChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */; };
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
 		5BE79CC428B620820083EE33 /* LogbookData.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* LogbookData.Section.swift */; };
 		5BE79CC628B6208A0083EE33 /* LogbookData.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */; };
@@ -77,6 +80,9 @@
 		5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryEntryView.swift; sourceTree = "<group>"; };
 		5B1A807F28A7D6BF00530B01 /* LogbookData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.swift; sourceTree = "<group>"; };
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
+		5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
+		5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartState+Segment.swift"; sourceTree = "<group>"; };
+		5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartState+ChartEntry.swift"; sourceTree = "<group>"; };
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
 		5BE79CC328B620820083EE33 /* LogbookData.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Section.swift; sourceTree = "<group>"; };
 		5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Entry.swift; sourceTree = "<group>"; };
@@ -176,6 +182,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5B289AD628E89B0100EC6F0B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */,
+				5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		5BD8298B28B647D00053BE8E /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +214,9 @@
 			isa = PBXGroup;
 			children = (
 				A920E25F2887035F00D85C1E /* BarChartView.swift */,
+				5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */,
 				5BEA9BB9288C251300E376E8 /* TCA */,
+				5B289AD628E89B0100EC6F0B /* Extensions */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -501,7 +518,10 @@
 				A9B07EBD2868588700AA6274 /* FormView.swift in Sources */,
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
 				5B1A80742896EB4A00530B01 /* SummarySectionReducer.swift in Sources */,
+				5B289AD828E89CE200EC6F0B /* ChartState+ChartEntry.swift in Sources */,
+				5B289AD528E89AFD00EC6F0B /* ChartState+Segment.swift in Sources */,
 				A9B07E9B2868588700AA6274 /* SummaryEnvironment.swift in Sources */,
+				5B289AD328DA1B8C00EC6F0B /* LineChartView.swift in Sources */,
 				A9B07EB72868588700AA6274 /* FormReducer.swift in Sources */,
 				5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,

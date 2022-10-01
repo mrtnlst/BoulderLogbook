@@ -21,9 +21,9 @@ struct BarChartView: View {
                         get: \.selectedSegment,
                         send: ChartAction.didSelectSegment)
                 ) {
-                    Text("Past 7").tag(ChartState.Segment.week)
-                    Text("Past 30").tag(ChartState.Segment.month)
-                    Text("All time").tag(ChartState.Segment.all)
+                    ForEach(viewStore.availableSegments, id: \.self) { segment in
+                        Text(segment.rawValue).tag(segment.tag)
+                    }
                 }
                 .pickerStyle(.segmented)
                 Chart(viewStore.chartSections) { section in
@@ -38,7 +38,6 @@ struct BarChartView: View {
                 .chartLegend(.hidden)
                 .frame(height: 200)
                 .animation(.default, value: viewStore.selectedSegment)
-                // TODO: Hide x-axis labels when selected segment != .week
             }
         }
     }

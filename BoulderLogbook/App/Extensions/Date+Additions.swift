@@ -20,13 +20,13 @@ extension Date {
         )
     }
     
-    var yearMonthDayDateString: String? {
+    var dayMonthDateString: String? {
         guard let yearMonthDayDate = yearMonthDayDate else {
             return nil
         }
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "de_DE")
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
+        dateFormatter.setLocalizedDateFormatFromTemplate("ddMM")
         return dateFormatter.string(from: yearMonthDayDate)
     }
 }
