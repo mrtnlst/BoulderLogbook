@@ -64,6 +64,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
             
         case let .summary(.summarySectionAction(id: _, action: .edit(entry))),
              let .summary(.summarySectionAction(id: _, action: .entryAction(id: _, action: .edit(entry)))):
+            state.path = []
             state.formState = FormState(entry: entry, isNewEntry: false)
             state.isPresentingForm = true
             return .none
