@@ -25,15 +25,8 @@ extension SummaryView {
     @ViewBuilder func summaryList(with store: Store<SummaryState, SummaryAction>) -> some View {
         WithViewStore(store) { viewStore in
             List {
-                Section {
-                    LineChartView(
-                        store: Store(
-                            initialState: ChartState(viewStore.entryStates),
-                            reducer: chartReducer,
-                            environment: .init()
-                        )
-                    )
-                    .frame(height: 150)
+                if viewStore.entryStates.count > 2 {
+                    summaryChart(with: viewStore.entryStates)
                 }
                 ForEachStore(
                     store.scope(
@@ -48,6 +41,19 @@ extension SummaryView {
                 viewStore.send(.onAppear)
             }
             .navigationTitle("Summary")
+        }
+    }
+    
+    @ViewBuilder func summaryChart(with entryStates: [EntryState]) -> some View {
+        Section {
+            LineChartView(
+                store: Store(
+                    initialState: ChartState(entryStates),
+                    reducer: chartReducer,
+                    environment: .init()
+                )
+            )
+            .frame(height: 150)
         }
     }
 }
