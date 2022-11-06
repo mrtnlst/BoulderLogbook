@@ -7,6 +7,7 @@
 
 import Foundation
 
-enum ChartAction {
+enum ChartAction: Equatable {
     case didSelectSegment(ChartState.Segment)
+    case presentSummaryChartFilter
 }

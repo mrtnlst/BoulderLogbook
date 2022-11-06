@@ -13,4 +13,5 @@ struct SummaryEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var fetch: () -> Effect<LogbookData, Never>
     var delete: (LogbookData.Entry) -> Effect<Never, Never>
+    var fetchFilters: () -> Effect<[BoulderGrade], Never>
 }

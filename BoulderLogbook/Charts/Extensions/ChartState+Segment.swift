@@ -8,7 +8,7 @@
 import Foundation
 
 extension ChartState {
-    enum Segment: String {
+    enum Segment: String, Equatable {
         case week = "7 Days"
         case month = "30 Days"
         case all = "All-time"

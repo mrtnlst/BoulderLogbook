@@ -26,7 +26,7 @@ extension SummaryView {
         WithViewStore(store) { viewStore in
             List {
                 if viewStore.entryStates.count > 2 {
-                    summaryChart(with: viewStore.entryStates)
+                    summaryChart()
                 }
                 ForEachStore(
                     store.scope(
@@ -44,13 +44,12 @@ extension SummaryView {
         }
     }
     
-    @ViewBuilder func summaryChart(with entryStates: [EntryState]) -> some View {
+    @ViewBuilder func summaryChart() -> some View {
         Section {
             LineChartView(
-                store: Store(
-                    initialState: ChartState(entryStates),
-                    reducer: chartReducer,
-                    environment: .init()
+                store: store.scope(
+                    state: \.chartState,
+                    action: SummaryAction.chart
                 )
             )
             .frame(height: 150)
@@ -69,7 +68,8 @@ struct SummaryView_Previews: PreviewProvider {
                     environment: SummaryEnvironment(
                         mainQueue: .main,
                         fetch: { return .none },
-                        delete: { _ in return .none }
+                        delete: { _ in return .none },
+                        fetchFilters: { return .none }
                     )
                 )
             )

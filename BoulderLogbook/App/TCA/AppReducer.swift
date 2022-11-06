@@ -17,7 +17,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
                 SummaryEnvironment(
                     mainQueue: $0.mainQueue,
                     fetch: $0.storageService.fetch,
-                    delete: $0.storageService.delete(logbookEntry:)
+                    delete: $0.storageService.delete(logbookEntry:),
+                    fetchFilters: $0.storageService.fetchFilters
                 )
             }
         ),
@@ -30,18 +31,29 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
                 )
             }
         ),
-    Reducer { state, action, _ in
+        filterSheetReducer.optional().pullback(
+            state: \AppState.filterSheetState,
+            action: /AppAction.filterSheet,
+            environment: {
+                FilterSheetEnvironment(
+                    mainQueue: $0.mainQueue,
+                    fetch: $0.storageService.fetch(filterKey:),
+                    save: $0.storageService.save(value:for:)
+                )
+            }
+        ),
+    Reducer { state, action, environment in
         switch action {
-        case .setIsPresentingForm(true):
-            state.formState = FormState()
-            state.isPresentingForm = true
+        case let .setIsPresentingForm(isPresenting):
+            state.formState = isPresenting ? FormState() : nil
+            state.isPresentingForm = isPresenting
             return .none
-        
-        case .setIsPresentingForm(false):
-            state.isPresentingForm = false
-            state.formState = nil
+            
+        case let .setIsPresentingFilter(isPresenting):
+            state.filterSheetState = isPresenting ? FilterSheetState() : nil
+            state.isPresentingFilter = isPresenting
             return .none
-        
+            
         case let .setPath(path):
             state.path = path
             return .none
@@ -69,7 +81,16 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
             state.isPresentingForm = true
             return .none
             
+        case .summary(.chart(.presentSummaryChartFilter)):
+            return Effect(value: .setIsPresentingFilter(true))
+            
         case .summary(_):
+            return .none
+        
+        case .filterSheet(.filter(_, .setIsOn(_))):
+            return Effect(value: .summary(.fetchFilters))
+            
+        case .filterSheet(_):
             return .none
         }
    }

@@ -49,6 +49,22 @@ extension AppView {
                 FormView(store: formStore)
             }
         }
+        .sheet(
+            isPresented: viewStore.binding(
+                get: \.isPresentingFilter,
+                send: AppAction.setIsPresentingFilter
+            )
+        ) {
+            IfLetStore(
+                store.scope(
+                    state: \.filterSheetState,
+                    action: AppAction.filterSheet
+                )
+            ) { filterSheetStore in
+                FilterSheetView(store: filterSheetStore)
+            }
+            .presentationDetents([.medium])
+        }
     }
 }
 

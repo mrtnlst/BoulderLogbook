@@ -53,6 +53,14 @@ struct LineChartView: View {
                 .chartYScale(domain: 0...viewStore.maximumValue)
                 .chartForegroundStyleScale(BoulderGrade.chartForegroundStyleScale)
                 .chartLegend(.hidden)
+                .onLongPressGesture(
+                    minimumDuration: 0.2,
+                    perform: {
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        viewStore.send(.presentSummaryChartFilter)
+                    }
+                )
 //               FIXME: .animation(.default, value: viewStore.selectedSegment) 
             }
         }

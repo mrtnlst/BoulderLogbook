@@ -11,6 +11,8 @@ import ComposableArchitecture
 enum AppAction {
     case summary(SummaryAction)
     case form(FormAction)
+    case filterSheet(FilterSheetAction)
     case setIsPresentingForm(Bool)
+    case setIsPresentingFilter(Bool)
     case setPath([Store<EntryState, EntryAction>])
 }

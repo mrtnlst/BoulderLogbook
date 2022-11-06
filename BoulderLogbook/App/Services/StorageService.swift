@@ -13,9 +13,15 @@ protocol StorageServiceType {
     func fetch() -> Effect<LogbookData, Never>
     func save(logbookEntry: LogbookData.Entry) -> Effect<Never, Never>
     func delete(logbookEntry: LogbookData.Entry) -> Effect<Never, Never>
+    func fetch(filterKey: String) -> Effect<Bool, Never>
+    func fetchFilters() -> Effect<[BoulderGrade], Never>
+    func save(value: Bool, for filterKey: String) -> Effect<Never, Never>
 }
 
-final class StorageService: StorageServiceType {
+final class StorageService: StorageServiceType {}
+
+// MARK: - Logbook Entries
+extension StorageService {
     func fetch() -> Effect<LogbookData, Never> {
         let defaults = UserDefaults.standard
         let decoder = JSONDecoder()
@@ -65,10 +71,52 @@ final class StorageService: StorageServiceType {
             return Empty().eraseToAnyPublisher().eraseToEffect()
         }
         logbook.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
-
+        
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
             UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
         }
+        return Empty()
+            .eraseToAnyPublisher()
+            .eraseToEffect()
+    }
+}
+
+// MARK: - Filters
+extension StorageService {
+    func fetch(filterKey: String) -> Effect<Bool, Never> {
+        let defaults = UserDefaults.standard
+        return Future { promise in
+            if let object = defaults.object(forKey: filterKey) as? Bool {
+                return promise(.success(object))
+            }
+            promise(.success(true))
+        }
+        .eraseToAnyPublisher()
+        .eraseToEffect()
+    }
+    
+    func fetchFilters() -> Effect<[BoulderGrade], Never> {
+        let defaults = UserDefaults.standard
+        return Future { promise in
+            let filters: [BoulderGrade] = BoulderGrade.allCases.filter {
+                defaults.bool(forKey: $0.gradeDescription)
+            }
+            // If no filters have been adjusted, show all and save entries for that.
+            if filters.isEmpty {
+                BoulderGrade.allCases.forEach {
+                    _ = self.save(value: true, for: $0.gradeDescription)
+                }
+                return promise(.success(BoulderGrade.allCases))
+            }
+            return promise(.success(filters))
+        }
+        .eraseToAnyPublisher()
+        .eraseToEffect()
+    }
+    
+    func save(value: Bool, for filterKey: String) -> Effect<Never, Never> {
+        let defaults = UserDefaults.standard
+        defaults.set(value, forKey: filterKey)
         return Empty()
             .eraseToAnyPublisher()
             .eraseToEffect()

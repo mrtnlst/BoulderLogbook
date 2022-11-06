@@ -10,6 +10,9 @@ import Foundation
 enum SummaryAction: Equatable {
     case onAppear
     case fetch
+    case fetchFilters
     case receiveLogbookEntries(result: Result<LogbookData, Never>)
     case summarySectionAction(id: Double, action: SummarySectionAction)
+    case receiveFilters(Result<[BoulderGrade], Never>)
+    case chart(ChartAction)
 }
