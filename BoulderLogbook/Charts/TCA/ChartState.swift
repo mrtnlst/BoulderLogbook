@@ -21,7 +21,7 @@ struct ChartState: Equatable {
 extension ChartState {
     var availableSegments: [Segment] {
         if entries.count <= Segment.week.tag {
-            return []
+            return [.week]
         } else if entries.count <= Segment.month.tag {
             return [.week, .month]
         } else {
@@ -36,10 +36,6 @@ extension ChartState {
     
     var hasXAxisValueLabel: Bool {
         selectedSegment == .week
-    }
-    
-    var hasPicker: Bool {
-        availableSegments.count > 0
     }
 }
 

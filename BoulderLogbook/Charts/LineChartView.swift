@@ -15,7 +15,7 @@ struct LineChartView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                if viewStore.hasPicker {
+                HStack {
                     Picker(
                         "Pick the number of sessions displayed in the chart!",
                         selection: viewStore.binding(
@@ -71,7 +71,9 @@ struct LineChartView_Previews: PreviewProvider {
     static var previews: some View {
         LineChartView(
             store: Store(
-                initialState: ChartState(entries: LogbookData.Entry.sampleEntries),
+                initialState: ChartState(
+                    entries: LogbookData.Entry.sampleEntries
+                ),
                 reducer: chartReducer,
                 environment: ChartEnvironment()
             )
