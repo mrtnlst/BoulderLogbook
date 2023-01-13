@@ -11,7 +11,7 @@ struct FormState: Equatable {
     var entry: LogbookData.Entry
     let isNewEntry: Bool
     
-    init(entry: LogbookData.Entry = LogbookData.Entry(date: .now, tops: []), isNewEntry: Bool = true) {
+    init(entry: LogbookData.Entry = LogbookData.Entry(id: UUID().uuidString, date: .now, tops: []), isNewEntry: Bool = true) {
         self.entry = entry
         self.isNewEntry = isNewEntry
     }

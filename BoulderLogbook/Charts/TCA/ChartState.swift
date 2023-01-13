@@ -13,7 +13,7 @@ struct ChartState: Equatable {
     
     init(_ entries: [EntryState]) {
         self.entries = entries.map {
-            LogbookData.Entry(date: $0.entry.date, tops: $0.entry.tops)
+            LogbookData.Entry(id: $0.entry.id, date: $0.entry.date, tops: $0.entry.tops)
         }
     }
     

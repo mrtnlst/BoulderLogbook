@@ -37,20 +37,18 @@ struct FormView: View {
                         }
                     }
                 }
-                if viewStore.isNewEntry {
-                    Section {
-                        DatePicker(
-                            selection: viewStore.binding(
-                                get: \.entry.date,
-                                send: FormAction.didSelectDate
-                            ),
-                            in: ...Date(),
-                            displayedComponents: [.hourAndMinute, .date]
-                        ) {
-                            HStack {
-                                Image(systemName: "calendar")
-                                Text("Adjust date")
-                            }
+                Section {
+                    DatePicker(
+                        selection: viewStore.binding(
+                            get: \.entry.date,
+                            send: FormAction.didSelectDate
+                        ),
+                        in: ...Date(),
+                        displayedComponents: [.hourAndMinute, .date]
+                    ) {
+                        HStack {
+                            Image(systemName: "calendar")
+                            Text("Adjust date")
                         }
                     }
                 }

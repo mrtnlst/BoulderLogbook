@@ -41,6 +41,7 @@ final class StorageService: StorageServiceType {
         }
         
         let newLogbookEntry = LogbookEntry(
+            id: logbookEntry.id,
             date: logbookEntry.date,
             tops: logbookEntry.tops
         )

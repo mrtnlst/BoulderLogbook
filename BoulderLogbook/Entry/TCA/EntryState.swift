@@ -12,7 +12,7 @@ public struct EntryState: Equatable {
 }
 
 extension EntryState: Identifiable {
-    public var id: Int {
+    public var id: String {
         entry.id
     }
 }

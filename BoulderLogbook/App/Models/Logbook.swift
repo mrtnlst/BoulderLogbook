@@ -26,6 +26,7 @@ extension Logbook {
                     date: sectionDate,
                     entries: entries.map {
                         LogbookData.Entry(
+                            id: $0.id,
                             date: $0.date,
                             tops: $0.tops
                         )
