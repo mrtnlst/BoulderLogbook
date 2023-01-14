@@ -7,20 +7,17 @@
 
 import Foundation
 
-struct LogbookEntry: Codable, Equatable {
+struct LogbookEntry: Identifiable, Codable, Equatable {
+    var id: String
     var date: Date
     var tops: [BoulderGrade]
 }
 
-extension LogbookEntry: Identifiable {
-    var id: Int {
-        date.hashValue
-    }
-}
 
 extension LogbookEntry {
     static func logbookEntry(from data: LogbookData.Entry) -> Self {
         LogbookEntry(
+            id: UUID().uuidString,
             date: data.date,
             tops: data.tops
         )
