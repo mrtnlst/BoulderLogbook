@@ -8,15 +8,16 @@
 import Foundation
 
 extension LogbookData {
-    public struct Entry: Equatable, Hashable {
+    public struct Entry: Identifiable, Equatable, Hashable {
+        public var id: String
         var date: Date
         var tops: [BoulderGrade]
-    }
-}
-
-extension LogbookData.Entry: Identifiable {
-    public var id: Int {
-        date.hashValue
+        
+        init(id: String = UUID().uuidString, date: Date, tops: [BoulderGrade]) {
+            self.id = id
+            self.date = date
+            self.tops = tops
+        }
     }
 }
 

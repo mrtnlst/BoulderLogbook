@@ -8,21 +8,24 @@
 import Foundation
 
 struct LogbookEntry: Codable, Equatable {
+    var id: String
     var date: Date
     var tops: [BoulderGrade]
-}
-
-extension LogbookEntry: Identifiable {
-    var id: Int {
-        date.hashValue
+   
+    init(id: String, date: Date, tops: [BoulderGrade]) {
+        self.id = id
+        self.date = date
+        self.tops = tops
     }
-}
-
-extension LogbookEntry {
-    static func logbookEntry(from data: LogbookData.Entry) -> Self {
-        LogbookEntry(
-            date: data.date,
-            tops: data.tops
-        )
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        do {
+            self.id = try container.decode(String.self, forKey: .id)
+        } catch {
+            self.id = UUID().uuidString
+        }
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.tops = try container.decode([BoulderGrade].self, forKey: .tops)
     }
 }
