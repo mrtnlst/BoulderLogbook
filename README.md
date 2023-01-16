@@ -7,19 +7,17 @@ An unofficial boulder logbook for Dresden's boulder gym [Mandala](https://boulde
 
 ## Features
 
-When finished it should allow you to: 
-
-* log all your tops for a session
-* display a list of your past sessions
-* show your number of tops for each grade in a line chart (over a time span of a week)  
-* ability to add information to the top (e.g. whether it was a flash)
+* ✍️ Log all your tops for a session
+* 📈 Display your past sessions in a list and review your progress using charts
+* 📊 Filter visible grades in the summary chart
+* 🎛️ Made a mistake? Just edit your session's tops or the date afterwards (thanks to [@ChrissisCorner](https://github.com/ChrissisCorner))
 
 
-Other possible features: 
+## Roadmap
 
-* specify whether a top was a flash (or on sight)
-* allow you to set the grading scale for your gym 
+* 📸 Specify whether a top was a flash (or on sight)
+* 📏 Allow you to set the grading scale for your gym 
 
 ## Compatibility
 
-* Requires iOS 16 and Xcode 14
+* 🚀 Requires iOS 16 and Xcode 14
