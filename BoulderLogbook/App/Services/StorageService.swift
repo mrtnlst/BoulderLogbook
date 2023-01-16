@@ -9,6 +9,11 @@ import Foundation
 import Combine
 import ComposableArchitecture
 
+fileprivate extension String {
+    static let logbookKey = "Logbook"
+    static let logbookVersionKey = "Logbook_v2"
+}
+
 protocol StorageServiceType {
     func fetch() -> Effect<LogbookData, Never>
     func save(logbookEntry: LogbookData.Entry) -> Effect<Never, Never>
@@ -20,10 +25,15 @@ final class StorageService: StorageServiceType {
         let defaults = UserDefaults.standard
         let decoder = JSONDecoder()
         return Future { promise in
-            if let logbookData = defaults.object(forKey: "Logbook") as? Data {
-                if let decodedLogbook = try? decoder.decode(Logbook.self, from: logbookData) {
-                    promise(.success(decodedLogbook.toLogbookData()))
+            if let logbookData = defaults.object(forKey: .logbookKey) as? Data,
+               let decodedLogbook = try? decoder.decode(Logbook.self, from: logbookData) {
+                if !defaults.bool(forKey: .logbookVersionKey),
+                   let encodedLogbook = try? JSONEncoder().encode(decodedLogbook) {
+                    // One time migration to add `id` to `LoogbookEntry`.
+                    defaults.set(encodedLogbook, forKey: .logbookKey)
+                    defaults.set(true, forKey: .logbookVersionKey)
                 }
+                promise(.success(decodedLogbook.toLogbookData()))
             }
         }
         .eraseToAnyPublisher()
@@ -33,7 +43,7 @@ final class StorageService: StorageServiceType {
     func save(logbookEntry: LogbookData.Entry) -> Effect<Never, Never> {
         // Obtain Logbook from UserDefaults or create new if unavailable.
         var logbook: Logbook?
-        if let logbookData = UserDefaults.standard.object(forKey: "Logbook") as? Data,
+        if let logbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
            let decodedLogbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) {
             logbook = decodedLogbook
         } else {
@@ -53,7 +63,7 @@ final class StorageService: StorageServiceType {
         
         // Encode Logbook and save back to UserDefaults.
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
-            UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
+            UserDefaults.standard.set(encodedLogbook, forKey: .logbookKey)
         }
         return Empty()
             .eraseToAnyPublisher()
@@ -61,14 +71,14 @@ final class StorageService: StorageServiceType {
     }
     
     func delete(logbookEntry: LogbookData.Entry) -> Effect<Never, Never> {
-        guard let logbookData = UserDefaults.standard.object(forKey: "Logbook") as? Data,
+        guard let logbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
               var logbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) else {
             return Empty().eraseToAnyPublisher().eraseToEffect()
         }
         logbook.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
 
         if let encodedLogbook = try? JSONEncoder().encode(logbook) {
-            UserDefaults.standard.set(encodedLogbook, forKey: "Logbook")
+            UserDefaults.standard.set(encodedLogbook, forKey: .logbookKey)
         }
         return Empty()
             .eraseToAnyPublisher()

@@ -7,19 +7,25 @@
 
 import Foundation
 
-struct LogbookEntry: Identifiable, Codable, Equatable {
+struct LogbookEntry: Codable, Equatable {
     var id: String
     var date: Date
     var tops: [BoulderGrade]
-}
-
-
-extension LogbookEntry {
-    static func logbookEntry(from data: LogbookData.Entry) -> Self {
-        LogbookEntry(
-            id: UUID().uuidString,
-            date: data.date,
-            tops: data.tops
-        )
+   
+    init(id: String, date: Date, tops: [BoulderGrade]) {
+        self.id = id
+        self.date = date
+        self.tops = tops
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        do {
+            self.id = try container.decode(String.self, forKey: .id)
+        } catch {
+            self.id = UUID().uuidString
+        }
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.tops = try container.decode([BoulderGrade].self, forKey: .tops)
     }
 }
