@@ -1,5 +1,5 @@
 //
-//  LogbookEntry.swift
+//  EntryData.swift
 //  Mandala
 //
 //  Created by Martin List on 25.06.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogbookEntry: Codable, Equatable {
+struct EntryData: Codable, Equatable {
     var id: String
     var date: Date
     var tops: [BoulderGrade]

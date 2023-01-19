@@ -14,7 +14,7 @@ struct SummaryState: Equatable {
 }
 
 extension SummaryState {
-    init(_ logbook: LogbookData) {
+    init(_ logbook: Logbook) {
         self.sections = .init(
             uniqueElements: logbook.sections.map {
                 SummarySectionState($0)

@@ -72,7 +72,7 @@ struct LineChartView_Previews: PreviewProvider {
         LineChartView(
             store: Store(
                 initialState: ChartState(
-                    entries: LogbookData.Entry.sampleEntries
+                    entries: Logbook.Entry.sampleEntries
                 ),
                 reducer: chartReducer,
                 environment: ChartEnvironment()

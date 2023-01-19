@@ -63,7 +63,7 @@ struct SummaryView_Previews: PreviewProvider {
         NavigationStack {
             SummaryView(
                 store: Store(
-                    initialState: SummaryState(LogbookData.sampleLogbook),
+                    initialState: SummaryState(Logbook.sampleLogbook),
                     reducer: summaryReducer,
                     environment: SummaryEnvironment(
                         mainQueue: .main,

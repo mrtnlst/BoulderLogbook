@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SummaryEntryView: View {
-    let entry: LogbookData.Entry
+    let entry: Logbook.Entry
     
     var body: some View {
         HStack {
@@ -54,7 +54,7 @@ struct SummaryEntryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             SummaryEntryView(
-                entry: LogbookData.Entry.sampleEntries[0]
+                entry: Logbook.Entry.sampleEntries[0]
             )
         }
     }

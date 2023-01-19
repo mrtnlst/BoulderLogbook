@@ -73,7 +73,7 @@ struct AppView_Previews: PreviewProvider {
         AppView(
             store: Store(
                 initialState: AppState(
-                    summaryState: .init(LogbookData.sampleLogbook)
+                    summaryState: .init(Logbook.sampleLogbook)
                 ),
                 reducer: appReducer,
                 environment: AppEnvironment(

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct EntryState: Equatable {
-    var entry: LogbookData.Entry
+    var entry: Logbook.Entry
 }
 
 extension EntryState: Identifiable {

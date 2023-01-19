@@ -8,10 +8,10 @@
 import Foundation
 
 struct FormState: Equatable {
-    var entry: LogbookData.Entry
+    var entry: Logbook.Entry
     let isNewEntry: Bool
     
-    init(entry: LogbookData.Entry = LogbookData.Entry(date: .now, tops: []), isNewEntry: Bool = true) {
+    init(entry: Logbook.Entry = Logbook.Entry(date: .now, tops: []), isNewEntry: Bool = true) {
         self.entry = entry
         self.isNewEntry = isNewEntry
     }

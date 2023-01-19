@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EntryColorView: View {
-    let entry: LogbookData.Entry
+    let entry: Logbook.Entry
     
     var body: some View {
         GeometryReader { reader in
@@ -40,7 +40,7 @@ struct EntryColorView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             EntryColorView(
-                entry: LogbookData.Entry.sampleEntries[0]
+                entry: Logbook.Entry.sampleEntries[0]
             )
         }
     }

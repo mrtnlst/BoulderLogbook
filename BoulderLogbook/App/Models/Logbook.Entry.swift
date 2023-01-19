@@ -1,5 +1,5 @@
 //
-//  LogbookData.Entry.swift
+//  Logbook.Entry.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 24.08.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension LogbookData {
+extension Logbook {
     public struct Entry: Identifiable, Equatable, Hashable {
         public var id: String
         var date: Date
@@ -21,7 +21,7 @@ extension LogbookData {
     }
 }
 
-extension LogbookData.Entry {
+extension Logbook.Entry {
     var sectionDate: Date {
         date.yearMonthDate ?? date
     }
@@ -38,21 +38,21 @@ extension LogbookData.Entry {
     }
 }
 
-extension LogbookData.Entry {
-    static var sampleEntries: [LogbookData.Entry] = [
-        LogbookData.Entry(
+extension Logbook.Entry {
+    static var sampleEntries: [Logbook.Entry] = [
+        Logbook.Entry(
             date: Date(timeIntervalSince1970: 1659650401),
             tops: [.black, .black, .black, .black, .black, .orange, .orange, .blue, .blue]
         ),
-        LogbookData.Entry(
+        Logbook.Entry(
             date: Date(timeIntervalSince1970: 1659823201),
             tops: [.yellow, .white, .black, .red, .red, .orange, .red, .blue]
         ),
-        LogbookData.Entry(
+        Logbook.Entry(
             date: Date(timeIntervalSince1970: 1656799201),
             tops: [.purple, .purple, .white, .black, .black, .black, .black, .orange, .red, .red, .blue]
         ),
-        LogbookData.Entry(
+        Logbook.Entry(
             date: Date(timeIntervalSince1970: 1656972001),
             tops: [.white, .black, .black, .black, .black, .black, .black, .orange, .orange, .orange]
         )

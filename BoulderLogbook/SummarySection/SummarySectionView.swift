@@ -54,7 +54,7 @@ struct SummarySectionView_Previews: PreviewProvider {
                 SummarySectionView(
                     store: Store(
                         initialState: SummarySectionState(
-                            LogbookData.Section.sampleSections[0]
+                            Logbook.Section.sampleSections[0]
                         ),
                         reducer: summarySectionReducer,
                         environment: SummarySectionEnvironment()

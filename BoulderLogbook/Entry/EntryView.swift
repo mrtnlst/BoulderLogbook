@@ -46,7 +46,7 @@ struct EntryView: View {
 }
 
 struct EntryViewChart: View {
-    let entry: LogbookData.Entry
+    let entry: Logbook.Entry
     
     var body: some View {
         Chart {
@@ -78,7 +78,7 @@ struct EntryView_Previews: PreviewProvider {
         NavigationView {
             EntryView(
                 store: Store(
-                    initialState: .init(entry: LogbookData.Entry.sampleEntries[0]),
+                    initialState: .init(entry: Logbook.Entry.sampleEntries[0]),
                     reducer: entryReducer,
                     environment: EntryEnvironment()
                 )

@@ -18,7 +18,7 @@ extension SummarySectionState: Identifiable {
 }
 
 extension SummarySectionState {
-    init(_ section: LogbookData.Section) {
+    init(_ section: Logbook.Section) {
         self.date = section.date
         self.entryStates = .init(
             uniqueElements: section.entries.map {

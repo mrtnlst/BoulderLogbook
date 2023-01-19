@@ -52,7 +52,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
                 )
             )
             let entries = state.entryStates.map {
-                LogbookData.Entry(date: $0.entry.date, tops: $0.entry.tops)
+                Logbook.Entry(date: $0.entry.date, tops: $0.entry.tops)
             }
             state.chartState.entries = entries
             return .none

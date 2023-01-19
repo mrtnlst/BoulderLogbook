@@ -8,6 +8,6 @@
 import Foundation
 
 public enum EntryAction: Equatable {
-    case delete(LogbookData.Entry)
-    case edit(LogbookData.Entry)
+    case delete(Logbook.Entry)
+    case edit(Logbook.Entry)
 }

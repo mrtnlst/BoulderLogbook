@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct ChartState: Equatable {
-    var entries: [LogbookData.Entry] = []
+    var entries: [Logbook.Entry] = []
     var filters: [BoulderGrade] = BoulderGrade.allCases
     var selectedSegment: Segment = .week
     
-    init(entries: [LogbookData.Entry] = []) {
+    init(entries: [Logbook.Entry] = []) {
         self.entries = entries
     }
 }

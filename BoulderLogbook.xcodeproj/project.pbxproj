@@ -14,7 +14,7 @@
 		5B1A80722896EB4400530B01 /* SummarySectionEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A80712896EB4400530B01 /* SummarySectionEnvironment.swift */; };
 		5B1A80742896EB4A00530B01 /* SummarySectionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A80732896EB4A00530B01 /* SummarySectionReducer.swift */; };
 		5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */; };
-		5B1A808028A7D6BF00530B01 /* LogbookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* LogbookData.swift */; };
+		5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* Logbook.swift */; };
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
 		5B289AD328DA1B8C00EC6F0B /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */; };
 		5B289AD528E89AFD00EC6F0B /* ChartState+Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */; };
@@ -30,8 +30,8 @@
 		5BC73A9129059A0300B579D7 /* FilterEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC73A9029059A0300B579D7 /* FilterEnvironment.swift */; };
 		5BC73A9329059A0800B579D7 /* FilterReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC73A9229059A0800B579D7 /* FilterReducer.swift */; };
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
-		5BE79CC428B620820083EE33 /* LogbookData.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* LogbookData.Section.swift */; };
-		5BE79CC628B6208A0083EE33 /* LogbookData.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */; };
+		5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* Logbook.Section.swift */; };
+		5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */; };
 		5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB1288C250000E376E8 /* ChartState.swift */; };
 		5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB3288C250400E376E8 /* ChartAction.swift */; };
 		5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */; };
@@ -53,9 +53,9 @@
 		A9B07EA72868588700AA6274 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E892868588700AA6274 /* AppAction.swift */; };
 		A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8A2868588700AA6274 /* AppEnvironment.swift */; };
 		A9B07EAB2868588700AA6274 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8B2868588700AA6274 /* AppView.swift */; };
-		A9B07EAD2868588700AA6274 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8D2868588700AA6274 /* Logbook.swift */; };
+		A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8D2868588700AA6274 /* LogbookData.swift */; };
 		A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8E2868588700AA6274 /* BoulderGrade.swift */; };
-		A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8F2868588700AA6274 /* LogbookEntry.swift */; };
+		A9B07EB12868588700AA6274 /* EntryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8F2868588700AA6274 /* EntryData.swift */; };
 		A9B07EB32868588700AA6274 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E912868588700AA6274 /* StorageService.swift */; };
 		A9B07EB52868588700AA6274 /* FormAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E942868588700AA6274 /* FormAction.swift */; };
 		A9B07EB72868588700AA6274 /* FormReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E952868588700AA6274 /* FormReducer.swift */; };
@@ -88,7 +88,7 @@
 		5B1A80712896EB4400530B01 /* SummarySectionEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionEnvironment.swift; sourceTree = "<group>"; };
 		5B1A80732896EB4A00530B01 /* SummarySectionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionReducer.swift; sourceTree = "<group>"; };
 		5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryEntryView.swift; sourceTree = "<group>"; };
-		5B1A807F28A7D6BF00530B01 /* LogbookData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.swift; sourceTree = "<group>"; };
+		5B1A807F28A7D6BF00530B01 /* Logbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
 		5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartState+Segment.swift"; sourceTree = "<group>"; };
@@ -104,8 +104,8 @@
 		5BC73A9029059A0300B579D7 /* FilterEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterEnvironment.swift; sourceTree = "<group>"; };
 		5BC73A9229059A0800B579D7 /* FilterReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterReducer.swift; sourceTree = "<group>"; };
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
-		5BE79CC328B620820083EE33 /* LogbookData.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Section.swift; sourceTree = "<group>"; };
-		5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookData.Entry.swift; sourceTree = "<group>"; };
+		5BE79CC328B620820083EE33 /* Logbook.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Section.swift; sourceTree = "<group>"; };
+		5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Entry.swift; sourceTree = "<group>"; };
 		5BEA9BB1288C250000E376E8 /* ChartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartState.swift; sourceTree = "<group>"; };
 		5BEA9BB3288C250400E376E8 /* ChartAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAction.swift; sourceTree = "<group>"; };
 		5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEnvironment.swift; sourceTree = "<group>"; };
@@ -128,9 +128,9 @@
 		A9B07E892868588700AA6274 /* AppAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
 		A9B07E8A2868588700AA6274 /* AppEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A9B07E8B2868588700AA6274 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
-		A9B07E8D2868588700AA6274 /* Logbook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
+		A9B07E8D2868588700AA6274 /* LogbookData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogbookData.swift; sourceTree = "<group>"; };
 		A9B07E8E2868588700AA6274 /* BoulderGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoulderGrade.swift; sourceTree = "<group>"; };
-		A9B07E8F2868588700AA6274 /* LogbookEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogbookEntry.swift; sourceTree = "<group>"; };
+		A9B07E8F2868588700AA6274 /* EntryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryData.swift; sourceTree = "<group>"; };
 		A9B07E912868588700AA6274 /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		A9B07E942868588700AA6274 /* FormAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormAction.swift; sourceTree = "<group>"; };
 		A9B07E952868588700AA6274 /* FormReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormReducer.swift; sourceTree = "<group>"; };
@@ -373,11 +373,11 @@
 			isa = PBXGroup;
 			children = (
 				A9B07E8E2868588700AA6274 /* BoulderGrade.swift */,
-				A9B07E8D2868588700AA6274 /* Logbook.swift */,
-				A9B07E8F2868588700AA6274 /* LogbookEntry.swift */,
-				5B1A807F28A7D6BF00530B01 /* LogbookData.swift */,
-				5BE79CC328B620820083EE33 /* LogbookData.Section.swift */,
-				5BE79CC528B6208A0083EE33 /* LogbookData.Entry.swift */,
+				A9B07E8D2868588700AA6274 /* LogbookData.swift */,
+				A9B07E8F2868588700AA6274 /* EntryData.swift */,
+				5B1A807F28A7D6BF00530B01 /* Logbook.swift */,
+				5BE79CC328B620820083EE33 /* Logbook.Section.swift */,
+				5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -550,7 +550,7 @@
 				5B289AE029058BA700EC6F0B /* FilterSheetReducer.swift in Sources */,
 				A9B07E9F2868588700AA6274 /* SummaryAction.swift in Sources */,
 				5B1A806C2896DA4900530B01 /* SummarySectionView.swift in Sources */,
-				A9B07EAD2868588700AA6274 /* Logbook.swift in Sources */,
+				A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */,
 				5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				A9B3265F2880573A00501A70 /* EntryState.swift in Sources */,
@@ -558,12 +558,12 @@
 				5B1A806A2896CF8A00530B01 /* SummarySectionState.swift in Sources */,
 				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
-				5B1A808028A7D6BF00530B01 /* LogbookData.swift in Sources */,
+				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				5B1A806E2896E3F700530B01 /* Color+Mandala.swift in Sources */,
 				A9B07EA12868588700AA6274 /* SummaryState.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				5B1A80702896EB3C00530B01 /* SummarySectionAction.swift in Sources */,
-				5BE79CC628B6208A0083EE33 /* LogbookData.Entry.swift in Sources */,
+				5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */,
 				A9B326612880573F00501A70 /* EntryAction.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				5B289ADE29058BA200EC6F0B /* FilterSheetEnvironment.swift in Sources */,
@@ -575,7 +575,7 @@
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */,
-				A9B07EB12868588700AA6274 /* LogbookEntry.swift in Sources */,
+				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
 				A9B326632880574600501A70 /* EntryEnvironment.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
@@ -597,7 +597,7 @@
 				5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				A9B07EB52868588700AA6274 /* FormAction.swift in Sources */,
-				5BE79CC428B620820083EE33 /* LogbookData.Section.swift in Sources */,
+				5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */,
 				A9B07E9D2868588700AA6274 /* SummaryReducer.swift in Sources */,
 				5BC73A8F290599FC00B579D7 /* FilterAction.swift in Sources */,
 				A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */,

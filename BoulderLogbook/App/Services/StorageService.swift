@@ -15,9 +15,9 @@ fileprivate extension String {
 }
 
 protocol StorageServiceType {
-    func fetch() -> Effect<LogbookData, Never>
-    func save(logbookEntry: LogbookData.Entry) -> Effect<Never, Never>
-    func delete(logbookEntry: LogbookData.Entry) -> Effect<Never, Never>
+    func fetch() -> Effect<Logbook, Never>
+    func save(logbookEntry: Logbook.Entry) -> Effect<Never, Never>
+    func delete(logbookEntry: Logbook.Entry) -> Effect<Never, Never>
     func fetch(filterKey: String) -> Effect<Bool, Never>
     func fetchFilters() -> Effect<[BoulderGrade], Never>
     func save(value: Bool, for filterKey: String) -> Effect<Never, Never>
@@ -25,65 +25,65 @@ protocol StorageServiceType {
 
 final class StorageService: StorageServiceType {}
 
-// MARK: - Logbook Entries
+// MARK: - LogbookData Entries
 extension StorageService {
-    func fetch() -> Effect<LogbookData, Never> {
+    func fetch() -> Effect<Logbook, Never> {
         let defaults = UserDefaults.standard
         let decoder = JSONDecoder()
         return Future { promise in
             if let logbookData = defaults.object(forKey: .logbookKey) as? Data,
-               let decodedLogbook = try? decoder.decode(Logbook.self, from: logbookData) {
+               let decodedLogbookData = try? decoder.decode(LogbookData.self, from: logbookData) {
                 if !defaults.bool(forKey: .logbookVersionKey),
-                   let encodedLogbook = try? JSONEncoder().encode(decodedLogbook) {
+                   let encodedLogbook = try? JSONEncoder().encode(decodedLogbookData) {
                     // One time migration to add `id` to `LoogbookEntry`.
                     defaults.set(encodedLogbook, forKey: .logbookKey)
                     defaults.set(true, forKey: .logbookVersionKey)
                 }
-                promise(.success(decodedLogbook.toLogbookData()))
+                promise(.success(decodedLogbookData.toLogbook()))
             }
         }
         .eraseToAnyPublisher()
         .eraseToEffect()
     }
     
-    func save(logbookEntry: LogbookData.Entry) -> Effect<Never, Never> {
-        // Obtain Logbook from UserDefaults or create new if unavailable.
-        var logbook: Logbook?
-        if let logbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
-           let decodedLogbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) {
-            logbook = decodedLogbook
+    func save(logbookEntry: Logbook.Entry) -> Effect<Never, Never> {
+        // Obtain LogbookData from UserDefaults or create new if unavailable.
+        var logbookData: LogbookData?
+        if let encodedLogbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
+           let decodedLogbookData = try? JSONDecoder().decode(LogbookData.self, from: encodedLogbookData) {
+            logbookData = decodedLogbookData
         } else {
-            logbook = Logbook(logbookEntries: [])
+            logbookData = LogbookData(logbookEntries: [])
         }
-        
-        let newLogbookEntry = LogbookEntry(
+        let newEntryData = EntryData(
             id: logbookEntry.id,
             date: logbookEntry.date,
             tops: logbookEntry.tops
         )
-        if let editedEntry = logbook?.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
-            logbook?.logbookEntries[editedEntry] = newLogbookEntry
+        // Update existing entry or add new entry.
+        if let editedEntryData = logbookData?.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
+            logbookData?.logbookEntries[editedEntryData] = newEntryData
         } else {
-            logbook?.logbookEntries.append(newLogbookEntry)
+            logbookData?.logbookEntries.append(newEntryData)
         }
         
-        // Encode Logbook and save back to UserDefaults.
-        if let encodedLogbook = try? JSONEncoder().encode(logbook) {
-            UserDefaults.standard.set(encodedLogbook, forKey: .logbookKey)
+        // Encode LogbookData and save back to UserDefaults.
+        if let encodedLogbookData = try? JSONEncoder().encode(logbookData) {
+            UserDefaults.standard.set(encodedLogbookData, forKey: .logbookKey)
         }
         return Empty()
             .eraseToAnyPublisher()
             .eraseToEffect()
     }
     
-    func delete(logbookEntry: LogbookData.Entry) -> Effect<Never, Never> {
-        guard let logbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
-              var logbook = try? JSONDecoder().decode(Logbook.self, from: logbookData) else {
+    func delete(logbookEntry: Logbook.Entry) -> Effect<Never, Never> {
+        guard let encodedLogbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
+              var logbookData = try? JSONDecoder().decode(LogbookData.self, from: encodedLogbookData) else {
             return Empty().eraseToAnyPublisher().eraseToEffect()
         }
-        logbook.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
+        logbookData.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
         
-        if let encodedLogbook = try? JSONEncoder().encode(logbook) {
+        if let encodedLogbook = try? JSONEncoder().encode(logbookData) {
             UserDefaults.standard.set(encodedLogbook, forKey: .logbookKey)
         }
         return Empty()
