@@ -109,17 +109,21 @@ extension StorageService {
     func fetchFilters() -> Effect<[BoulderGrade], Never> {
         let defaults = UserDefaults.standard
         return Future { promise in
-            let filters: [BoulderGrade] = BoulderGrade.allCases.filter {
-                defaults.bool(forKey: $0.gradeDescription)
+            // We distinguish between active, inactive and not saved filters.
+            let filters = BoulderGrade.allCases.reduce(into: [BoulderGrade: Bool]()) { partialResult, value in
+                let state = defaults.bool(forKey: value.gradeDescription)
+                partialResult[value] = state
             }
-            // If no filters have been adjusted, show all and save entries for that.
+            // If no filters have been saved we assume a fresh install and show all.
             if filters.isEmpty {
                 BoulderGrade.allCases.forEach {
                     _ = self.save(value: true, for: $0.gradeDescription)
                 }
                 return promise(.success(BoulderGrade.allCases))
             }
-            return promise(.success(filters))
+            // We only return the active filters.
+            let activeFilters = filters.compactMap { $0.value ? $0.key : nil }
+            return promise(.success(activeFilters))
         }
         .eraseToAnyPublisher()
         .eraseToEffect()
