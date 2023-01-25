@@ -70,12 +70,13 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
             return .none
             
         case let .receiveFilters(.success(filters)):
-            if !filters.isEmpty {
-                state.chartState.filters = filters
-            }
+            state.chartState.filters = filters
             return .none
             
         case .chart(_):
+            return .none
+            
+        case .presentSummaryChartFilter:
             return .none
         }
     }

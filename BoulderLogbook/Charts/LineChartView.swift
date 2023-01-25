@@ -14,6 +14,24 @@ struct LineChartView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
+            if viewStore.filters.isEmpty {
+                HStack {
+                    Spacer()
+                    Text("Long press to enable filters!")
+                    Image(systemName: "hand.tap.fill")
+                    Spacer()
+                }
+            } else {
+                lineChartView()
+                    .frame(height: 150)
+            }
+        }
+    }
+}
+
+extension LineChartView {
+    @ViewBuilder func lineChartView() -> some View {
+        WithViewStore(store) { viewStore in
             VStack {
                 HStack {
                     Picker(
@@ -53,15 +71,7 @@ struct LineChartView: View {
                 .chartYScale(domain: 0...viewStore.maximumValue)
                 .chartForegroundStyleScale(BoulderGrade.chartForegroundStyleScale)
                 .chartLegend(.hidden)
-                .onLongPressGesture(
-                    minimumDuration: 0.2,
-                    perform: {
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        viewStore.send(.presentSummaryChartFilter)
-                    }
-                )
-//               FIXME: .animation(.default, value: viewStore.selectedSegment) 
+//               FIXME: .animation(.default, value: viewStore.selectedSegment)
             }
         }
     }

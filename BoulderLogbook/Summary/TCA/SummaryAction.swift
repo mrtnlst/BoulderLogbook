@@ -15,4 +15,5 @@ enum SummaryAction: Equatable {
     case summarySectionAction(id: Double, action: SummarySectionAction)
     case receiveFilters(Result<[BoulderGrade], Never>)
     case chart(ChartAction)
+    case presentSummaryChartFilter
 }

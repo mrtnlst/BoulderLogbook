@@ -13,8 +13,5 @@ let chartReducer = Reducer<ChartState, ChartAction, ChartEnvironment> { state, a
     case let .didSelectSegment(segment):
         state.selectedSegment = segment
         return .none
-        
-    case .presentSummaryChartFilter:
-        return .none
     }
 }

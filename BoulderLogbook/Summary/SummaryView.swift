@@ -46,13 +46,22 @@ extension SummaryView {
     
     @ViewBuilder func summaryChart() -> some View {
         Section {
-            LineChartView(
-                store: store.scope(
-                    state: \.chartState,
-                    action: SummaryAction.chart
+            WithViewStore(store) { viewStore in
+                LineChartView(
+                    store: store.scope(
+                        state: \.chartState,
+                        action: SummaryAction.chart
+                    )
                 )
-            )
-            .frame(height: 150)
+                .onLongPressGesture(
+                    minimumDuration: 0.2,
+                    perform: {
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        viewStore.send(.presentSummaryChartFilter)
+                    }
+                )
+            }
         }
     }
 }

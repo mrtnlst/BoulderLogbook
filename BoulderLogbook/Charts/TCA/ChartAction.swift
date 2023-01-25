@@ -9,5 +9,4 @@ import Foundation
 
 enum ChartAction: Equatable {
     case didSelectSegment(ChartState.Segment)
-    case presentSummaryChartFilter
 }
