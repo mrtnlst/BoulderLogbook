@@ -37,7 +37,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
         case let .receiveLogbookEntries(result: .success(logbook)):
             state.sections = .init(
                 uniqueElements: logbook.sections.map { section in
-                    SummarySectionState(
+                    SummarySection.State(
                         date: section.date,
                         entryStates: .init(
                             uniqueElements: section.entries.map {

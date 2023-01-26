@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SummarySectionView: View {
-    let store: Store<SummarySectionState, SummarySectionAction>
+    let store: StoreOf<SummarySection>
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -17,7 +17,7 @@ struct SummarySectionView: View {
                 ForEachStore(
                     store.scope(
                         state: \.entryStates,
-                        action: SummarySectionAction.entryAction(id:action:))
+                        action: SummarySection.Action.entryAction(id:action:))
                 ) { entryStore in
                     NavigationLink(value: entryStore) {
                         SummaryEntryView(entry: ViewStore(entryStore).entry)
@@ -53,11 +53,10 @@ struct SummarySectionView_Previews: PreviewProvider {
             List {
                 SummarySectionView(
                     store: Store(
-                        initialState: SummarySectionState(
+                        initialState: SummarySection.State(
                             Logbook.Section.sampleSections[0]
                         ),
-                        reducer: summarySectionReducer,
-                        environment: SummarySectionEnvironment()
+                        reducer: SummarySection()
                     )
                 )
             }

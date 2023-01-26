@@ -9,15 +9,16 @@ import Foundation
 import IdentifiedCollections
 
 struct SummaryState: Equatable {
-    var sections: IdentifiedArrayOf<SummarySectionState> = []
+    var sections: IdentifiedArrayOf<SummarySection.State> = []
     var chartState: ChartState = ChartState()
 }
 
 extension SummaryState {
+    /// Warning: Only used for previews!
     init(_ logbook: Logbook) {
         self.sections = .init(
             uniqueElements: logbook.sections.map {
-                SummarySectionState($0)
+                SummarySection.State($0)
             }
         )
     }

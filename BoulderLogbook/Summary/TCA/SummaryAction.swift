@@ -12,7 +12,7 @@ enum SummaryAction: Equatable {
     case fetch
     case fetchFilters
     case receiveLogbookEntries(result: Result<Logbook, Never>)
-    case summarySectionAction(id: Double, action: SummarySectionAction)
+    case summarySectionAction(id: Double, action: SummarySection.Action)
     case receiveFilters(Result<[BoulderGrade], Never>)
     case chart(ChartAction)
     case presentSummaryChartFilter
