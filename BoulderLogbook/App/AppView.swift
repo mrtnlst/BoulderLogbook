@@ -9,61 +9,63 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AppView: View {
-    let store: Store<AppState, AppAction>
+    let store: StoreOf<AppReducer>
     
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationStack(
-                path: viewStore.binding(get: \.path, send: AppAction.setPath)
+                path: viewStore.binding(get: \.path, send: AppReducer.Action.setPath)
             ) {
-                dashboardView(with: viewStore)
+                dashboardView()
             }
         }
     }
 }
 
 extension AppView {
-    @ViewBuilder func dashboardView(with viewStore: ViewStore<AppState, AppAction>) -> some View {
-        DashboardView(
-            store: store.scope(state: \.dashboardState, action: AppAction.dashboard)
-        )
-        .toolbar {
-            Button {
-                viewStore.send(.setIsPresentingForm(true))
-            } label: {
-                Image(systemName: "plus.circle.fill")
-            }
-        }
-        .sheet(
-            isPresented: viewStore.binding(
-                get: \.isPresentingForm,
-                send: AppAction.setIsPresentingForm
+    @ViewBuilder func dashboardView() -> some View {
+        WithViewStore(store) { viewStore in
+            DashboardView(
+                store: store.scope(state: \.dashboardState, action: AppReducer.Action.dashboard)
             )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.entryFormState,
-                    action: AppAction.entryForm
-                )
-            ) { formStore in
-                EntryFormView(store: formStore)
+            .toolbar {
+                Button {
+                    viewStore.send(.setIsPresentingForm(true))
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                }
             }
-        }
-        .sheet(
-            isPresented: viewStore.binding(
-                get: \.isPresentingFilter,
-                send: AppAction.setIsPresentingFilter
-            )
-        ) {
-            IfLetStore(
-                store.scope(
-                    state: \.filterSheetState,
-                    action: AppAction.filterSheet
+            .sheet(
+                isPresented: viewStore.binding(
+                    get: \.isPresentingForm,
+                    send: AppReducer.Action.setIsPresentingForm
                 )
-            ) { filterSheetStore in
-                FilterSheetView(store: filterSheetStore)
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.entryFormState,
+                        action: AppReducer.Action.entryForm
+                    )
+                ) { formStore in
+                    EntryFormView(store: formStore)
+                }
             }
-            .presentationDetents([.medium])
+            .sheet(
+                isPresented: viewStore.binding(
+                    get: \.isPresentingFilter,
+                    send: AppReducer.Action.setIsPresentingFilter
+                )
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.filterSheetState,
+                        action: AppReducer.Action.filterSheet
+                    )
+                ) { filterSheetStore in
+                    FilterSheetView(store: filterSheetStore)
+                }
+                .presentationDetents([.medium])
+            }
         }
     }
 }
@@ -72,11 +74,10 @@ struct AppView_Previews: PreviewProvider {
     static var previews: some View {
         AppView(
             store: Store(
-                initialState: AppState(
+                initialState: AppReducer.State(
                     dashboardState: Dashboard.State(Logbook.sampleLogbook)
                 ),
-                reducer: appReducer,
-                environment: AppEnvironment(
+                reducer: AppReducer(
                     storageService: StorageService()
                 )
             )

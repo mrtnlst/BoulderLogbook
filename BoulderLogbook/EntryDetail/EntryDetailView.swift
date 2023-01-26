@@ -13,7 +13,7 @@ struct EntryDetailView: View {
     let store: StoreOf<EntryDetail>
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store) { viewStore in
             List {
                 Section {
                     EntryViewChart(entry: viewStore.entry)

@@ -11,9 +11,8 @@ import ComposableArchitecture
 @main
 struct BoulderLogbookApp: App {
     static var store = Store(
-        initialState: AppState(),
-        reducer: appReducer,
-        environment: AppEnvironment(
+        initialState: AppReducer.State(),
+        reducer: AppReducer(
             storageService: StorageService()
         )
     )

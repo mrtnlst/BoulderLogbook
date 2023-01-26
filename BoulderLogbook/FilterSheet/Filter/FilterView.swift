@@ -12,7 +12,7 @@ struct FilterView: View {
     let store: StoreOf<Filter>
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store) { viewStore in
             Toggle(
                 isOn: viewStore.binding(
                     get: \.isOn,

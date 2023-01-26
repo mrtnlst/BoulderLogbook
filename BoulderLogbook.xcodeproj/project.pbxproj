@@ -30,10 +30,6 @@
 		A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B07E412868579900AA6274 /* Assets.xcassets */; };
 		A9B07E7D2868582700AA6274 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A9B07E7C2868582700AA6274 /* ComposableArchitecture */; };
 		A9B07E992868588700AA6274 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E7F2868588700AA6274 /* DashboardView.swift */; };
-		A9B07EA32868588700AA6274 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E872868588700AA6274 /* AppState.swift */; };
-		A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E882868588700AA6274 /* AppReducer.swift */; };
-		A9B07EA72868588700AA6274 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E892868588700AA6274 /* AppAction.swift */; };
-		A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8A2868588700AA6274 /* AppEnvironment.swift */; };
 		A9B07EAB2868588700AA6274 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8B2868588700AA6274 /* AppView.swift */; };
 		A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8D2868588700AA6274 /* LogbookData.swift */; };
 		A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8E2868588700AA6274 /* BoulderGrade.swift */; };
@@ -42,6 +38,7 @@
 		A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E982868588700AA6274 /* EntryFormView.swift */; };
 		A9C3005229828948001B51C4 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005129828948001B51C4 /* Dashboard.swift */; };
 		A9C300582982913F001B51C4 /* EntryForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C300572982913F001B51C4 /* EntryForm.swift */; };
+		A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005A298292F8001B51C4 /* AppReducer.swift */; };
 		A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryDetailView.swift */; };
 		A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */; };
 /* End PBXBuildFile section */
@@ -82,10 +79,6 @@
 		A9B07E572868579900AA6274 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
 		A9B07E7F2868588700AA6274 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		A9B07E872868588700AA6274 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		A9B07E882868588700AA6274 /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		A9B07E892868588700AA6274 /* AppAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
-		A9B07E8A2868588700AA6274 /* AppEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A9B07E8B2868588700AA6274 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		A9B07E8D2868588700AA6274 /* LogbookData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogbookData.swift; sourceTree = "<group>"; };
 		A9B07E8E2868588700AA6274 /* BoulderGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoulderGrade.swift; sourceTree = "<group>"; };
@@ -94,6 +87,7 @@
 		A9B07E982868588700AA6274 /* EntryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFormView.swift; sourceTree = "<group>"; };
 		A9C3005129828948001B51C4 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A9C300572982913F001B51C4 /* EntryForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForm.swift; sourceTree = "<group>"; };
+		A9C3005A298292F8001B51C4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
 		A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreOf+EntryDetail.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,24 +205,13 @@
 		A9B07E852868588700AA6274 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				A9C3005A298292F8001B51C4 /* AppReducer.swift */,
 				A9B07E8B2868588700AA6274 /* AppView.swift */,
-				A9B07E862868588700AA6274 /* TCA */,
 				A9B07E8C2868588700AA6274 /* Models */,
 				A9B07E902868588700AA6274 /* Services */,
 				5B1A80772896EBD100530B01 /* Extensions */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		A9B07E862868588700AA6274 /* TCA */ = {
-			isa = PBXGroup;
-			children = (
-				A9B07E872868588700AA6274 /* AppState.swift */,
-				A9B07E882868588700AA6274 /* AppReducer.swift */,
-				A9B07E892868588700AA6274 /* AppAction.swift */,
-				A9B07E8A2868588700AA6274 /* AppEnvironment.swift */,
-			);
-			path = TCA;
 			sourceTree = "<group>";
 		};
 		A9B07E8C2868588700AA6274 /* Models */ = {
@@ -402,7 +385,6 @@
 				A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				A961AB60298286C600AD89DD /* Diagram.swift in Sources */,
-				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				5BC0C9BA297F204900E8C567 /* Filter.swift in Sources */,
@@ -411,19 +393,17 @@
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */,
-				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,
-				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
 				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
+				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
 				5B289AD328DA1B8C00EC6F0B /* DiagramView.swift in Sources */,
-				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */,
 				A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */,
 				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,
