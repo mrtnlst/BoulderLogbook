@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct AppState: Equatable {
     var summaryState: SummaryState = SummaryState()
     var formState: FormState?
-    var filterSheetState: FilterSheetState?
+    var filterSheetState: FilterSheet.State?
     var isPresentingForm: Bool = false
     var isPresentingFilter: Bool = false
     var path: [Store<EntryState, EntryAction>] = []

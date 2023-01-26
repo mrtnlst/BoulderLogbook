@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct FilterView: View {
-    let store: Store<FilterState, FilterAction>
+    let store: StoreOf<Filter>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Toggle(
                 isOn: viewStore.binding(
                     get: \.isOn,
-                    send: FilterAction.setIsOn
+                    send: Filter.Action.setIsOn
                 )
             ) {
                 HStack {
@@ -35,21 +35,18 @@ struct FilterView_Previews: PreviewProvider {
         Form {
             FilterView(
                 store: Store(
-                    initialState: FilterState(grade: .blue, isOn: true),
-                    reducer: filterReducer,
-                    environment: FilterEnvironment(
-                        mainQueue: .main,
+                    initialState: Filter.State(grade: .blue, isOn: true),
+                    reducer: Filter(
                         fetch: { _ in return .none },
                         save: { _, _ in return .none }
                     )
                 )
             )
+            
             FilterView(
                 store: Store(
-                    initialState: FilterState(grade: .red, isOn: false),
-                    reducer: filterReducer,
-                    environment: FilterEnvironment(
-                        mainQueue: .main,
+                    initialState: Filter.State(grade: .red, isOn: false),
+                    reducer: Filter(
                         fetch: { _ in return .none },
                         save: { _, _ in return .none }
                     )

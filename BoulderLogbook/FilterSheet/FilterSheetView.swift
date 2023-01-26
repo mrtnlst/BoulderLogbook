@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct FilterSheetView: View {
-    let store: Store<FilterSheetState, FilterSheetAction>
+    let store: StoreOf<FilterSheet>
     
     @State var toggle: Bool = true
     
@@ -27,8 +27,8 @@ struct FilterSheetView: View {
                 Section {
                     ForEachStore(
                         store.scope(
-                            state: \.filters,
-                            action: FilterSheetAction.filter
+                            state: { $0.filters },
+                            action: FilterSheet.Action.filter
                         )
                     ) { filterStore in
                         FilterView(store: filterStore)
@@ -45,10 +45,8 @@ struct FilterSheetView_Previews: PreviewProvider {
             .sheet(isPresented: .constant(true)) {
                 FilterSheetView(
                     store: Store(
-                        initialState: FilterSheetState(),
-                        reducer: filterSheetReducer,
-                        environment: FilterSheetEnvironment(
-                            mainQueue: .main,
+                        initialState: FilterSheet.State(),
+                        reducer: FilterSheet(
                             fetch: { _ in return .none },
                             save: { _, _ in return .none }
                         )

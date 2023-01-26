@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment>
+let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>
     .combine(
         summaryReducer.pullback(
             state: \AppState.summaryState,
@@ -31,16 +31,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
                 )
             }
         ),
-        filterSheetReducer.optional().pullback(
-            state: \AppState.filterSheetState,
+        AnyReducer {
+            FilterSheet(mainQueue: $0.mainQueue, fetch: $0.storageService.fetch, save: $0.storageService.save)
+        }
+        .optional()
+        .pullback(
+            state: \.filterSheetState,
             action: /AppAction.filterSheet,
-            environment: {
-                FilterSheetEnvironment(
-                    mainQueue: $0.mainQueue,
-                    fetch: $0.storageService.fetch(filterKey:),
-                    save: $0.storageService.save(value:for:)
-                )
-            }
+            environment: { $0 }
         ),
     Reducer { state, action, environment in
         switch action {
@@ -50,7 +48,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>
             return .none
             
         case let .setIsPresentingFilter(isPresenting):
-            state.filterSheetState = isPresenting ? FilterSheetState() : nil
+            state.filterSheetState = isPresenting ? FilterSheet.State() : nil
             state.isPresentingFilter = isPresenting
             return .none
             
