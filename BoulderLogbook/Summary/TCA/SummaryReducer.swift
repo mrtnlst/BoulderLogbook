@@ -41,7 +41,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
                         date: section.date,
                         entryStates: .init(
                             uniqueElements: section.entries.map {
-                                EntryState(entry: $0)
+                                EntryDetail.State(entry: $0)
                             }.sorted(
                                 by: { $0.entry.date > $1.entry.date }
                             )

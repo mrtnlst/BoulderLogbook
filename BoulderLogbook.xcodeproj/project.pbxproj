@@ -32,6 +32,7 @@
 		5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */; };
 		A920E2602887035F00D85C1E /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920E25F2887035F00D85C1E /* BarChartView.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
+		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
 		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
@@ -56,12 +57,8 @@
 		A9B07EB92868588700AA6274 /* FormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E962868588700AA6274 /* FormState.swift */; };
 		A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E972868588700AA6274 /* FormEnvironment.swift */; };
 		A9B07EBD2868588700AA6274 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E982868588700AA6274 /* FormView.swift */; };
-		A9B3265F2880573A00501A70 /* EntryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B3265E2880573A00501A70 /* EntryState.swift */; };
-		A9B326612880573F00501A70 /* EntryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326602880573F00501A70 /* EntryAction.swift */; };
-		A9B326632880574600501A70 /* EntryEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B326622880574600501A70 /* EntryEnvironment.swift */; };
-		A9CE675F2880044D00027885 /* EntryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE675E2880044D00027885 /* EntryReducer.swift */; };
-		A9CE6764288004E400027885 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryView.swift */; };
-		A9D4995B28805069001BC4F2 /* Store+Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* Store+Entry.swift */; };
+		A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryDetailView.swift */; };
+		A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +97,8 @@
 		5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartReducer.swift; sourceTree = "<group>"; };
 		A920E25F2887035F00D85C1E /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
+		A9435D8529826D6B001DC22B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9B07E462868579900AA6274 /* Logbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Logbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,12 +124,8 @@
 		A9B07E962868588700AA6274 /* FormState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormState.swift; sourceTree = "<group>"; };
 		A9B07E972868588700AA6274 /* FormEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormEnvironment.swift; sourceTree = "<group>"; };
 		A9B07E982868588700AA6274 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
-		A9B3265E2880573A00501A70 /* EntryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryState.swift; sourceTree = "<group>"; };
-		A9B326602880573F00501A70 /* EntryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAction.swift; sourceTree = "<group>"; };
-		A9B326622880574600501A70 /* EntryEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryEnvironment.swift; sourceTree = "<group>"; };
-		A9CE675E2880044D00027885 /* EntryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryReducer.swift; sourceTree = "<group>"; };
-		A9CE6763288004E400027885 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
-		A9D4995A28805069001BC4F2 /* Store+Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+Entry.swift"; sourceTree = "<group>"; };
+		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
+		A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreOf+EntryDetail.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */,
+				5BD8298928B647CC0053BE8E /* EntryColorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -216,14 +212,6 @@
 				5BC0C9B9297F204900E8C567 /* Filter.swift */,
 			);
 			path = Filter;
-			sourceTree = "<group>";
-		};
-		5BD8298B28B647D00053BE8E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5BD8298928B647CC0053BE8E /* EntryColorView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		5BEA9BB9288C251300E376E8 /* TCA */ = {
@@ -261,10 +249,11 @@
 		A9B07E3E2868579600AA6274 /* BoulderLogbook */ = {
 			isa = PBXGroup;
 			children = (
+				A9435D8529826D6B001DC22B /* Info.plist */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A9B07E852868588700AA6274 /* App */,
 				5BEA9BBA288C251900E376E8 /* Charts */,
-				A9CE6761288004D300027885 /* Entry */,
+				A9CE6761288004D300027885 /* EntryDetail */,
 				5B289AE429058BBF00EC6F0B /* FilterSheet */,
 				A9B07E922868588700AA6274 /* Form */,
 				A9B07E7E2868588700AA6274 /* Summary */,
@@ -376,34 +365,14 @@
 			path = TCA;
 			sourceTree = "<group>";
 		};
-		A9CE6761288004D300027885 /* Entry */ = {
+		A9CE6761288004D300027885 /* EntryDetail */ = {
 			isa = PBXGroup;
 			children = (
-				A9CE6763288004E400027885 /* EntryView.swift */,
-				5BD8298B28B647D00053BE8E /* Views */,
-				A9CE6762288004DA00027885 /* TCA */,
-				A9D4995C2880506C001BC4F2 /* Extensions */,
+				A9435D8329826290001DC22B /* EntryDetail.swift */,
+				A9CE6763288004E400027885 /* EntryDetailView.swift */,
+				A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */,
 			);
-			path = Entry;
-			sourceTree = "<group>";
-		};
-		A9CE6762288004DA00027885 /* TCA */ = {
-			isa = PBXGroup;
-			children = (
-				A9CE675E2880044D00027885 /* EntryReducer.swift */,
-				A9B3265E2880573A00501A70 /* EntryState.swift */,
-				A9B326602880573F00501A70 /* EntryAction.swift */,
-				A9B326622880574600501A70 /* EntryEnvironment.swift */,
-			);
-			path = TCA;
-			sourceTree = "<group>";
-		};
-		A9D4995C2880506C001BC4F2 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A9D4995A28805069001BC4F2 /* Store+Entry.swift */,
-			);
-			path = Extensions;
+			path = EntryDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,32 +487,29 @@
 				A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */,
 				5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
-				A9B3265F2880573A00501A70 /* EntryState.swift in Sources */,
 				5B1A806A2896CF8A00530B01 /* SummarySectionState.swift in Sources */,
 				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				5BC0C9BA297F204900E8C567 /* Filter.swift in Sources */,
+				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
 				5B1A806E2896E3F700530B01 /* Color+Mandala.swift in Sources */,
 				A9B07EA12868588700AA6274 /* SummaryState.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				5B1A80702896EB3C00530B01 /* SummarySectionAction.swift in Sources */,
 				5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */,
-				A9B326612880573F00501A70 /* EntryAction.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				5B1A80722896EB4400530B01 /* SummarySectionEnvironment.swift in Sources */,
-				A9CE675F2880044D00027885 /* EntryReducer.swift in Sources */,
 				5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */,
 				A920E2602887035F00D85C1E /* BarChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */,
 				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
-				A9B326632880574600501A70 /* EntryEnvironment.swift in Sources */,
-				A9CE6764288004E400027885 /* EntryView.swift in Sources */,
+				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
 				5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */,
-				A9D4995B28805069001BC4F2 /* Store+Entry.swift in Sources */,
+				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* SummaryView.swift in Sources */,
 				A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* FormView.swift in Sources */,
@@ -706,7 +672,7 @@
 				DEVELOPMENT_TEAM = 4853CED358;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = BoulderLogbook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -736,7 +702,7 @@
 				DEVELOPMENT_TEAM = 4853CED358;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = BoulderLogbook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

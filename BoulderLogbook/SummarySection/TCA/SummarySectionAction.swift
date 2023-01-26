@@ -10,5 +10,5 @@ import Foundation
 enum SummarySectionAction: Equatable {
     case delete(Logbook.Entry)
     case edit(Logbook.Entry)
-    case entryAction(id: String, action: EntryAction)
+    case entryAction(id: String, action: EntryDetail.Action)
 }

@@ -10,7 +10,7 @@ import IdentifiedCollections
 
 struct SummarySectionState: Equatable {
     let date: Date
-    var entryStates: IdentifiedArrayOf<EntryState> = []
+    var entryStates: IdentifiedArrayOf<EntryDetail.State> = []
 }
 
 extension SummarySectionState: Identifiable {
@@ -22,7 +22,7 @@ extension SummarySectionState {
         self.date = section.date
         self.entryStates = .init(
             uniqueElements: section.entries.map {
-                EntryState(entry: $0)
+                EntryDetail.State(entry: $0)
             }
         )
     }

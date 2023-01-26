@@ -14,5 +14,5 @@ enum AppAction {
     case filterSheet(FilterSheet.Action)
     case setIsPresentingForm(Bool)
     case setIsPresentingFilter(Bool)
-    case setPath([Store<EntryState, EntryAction>])
+    case setPath([StoreOf<EntryDetail>])
 }

@@ -22,7 +22,7 @@ extension SummaryState {
         )
     }
     
-    var entryStates: [EntryState] {
+    var entryStates: [EntryDetail.State] {
         sections.reduce(into: []) { partialResult, sectionState in
             partialResult.append(contentsOf: sectionState.entryStates.elements)
         }

@@ -14,9 +14,9 @@ struct SummaryView: View {
     var body: some View {
         summaryList(with: store)
             .navigationDestination(
-                for: Store<EntryState, EntryAction>.self
+                for: StoreOf<EntryDetail>.self
             ) { detailStore in
-                EntryView(store: detailStore)
+                EntryDetailView(store: detailStore)
             }
     }
 }

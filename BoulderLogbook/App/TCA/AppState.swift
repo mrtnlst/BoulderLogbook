@@ -14,5 +14,5 @@ struct AppState: Equatable {
     var filterSheetState: FilterSheet.State?
     var isPresentingForm: Bool = false
     var isPresentingFilter: Bool = false
-    var path: [Store<EntryState, EntryAction>] = []
+    var path: [StoreOf<EntryDetail>] = []
 }

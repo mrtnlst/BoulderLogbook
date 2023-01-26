@@ -9,11 +9,11 @@ import SwiftUI
 import ComposableArchitecture
 import Charts
 
-struct EntryView: View {
-    let store: Store<EntryState, EntryAction>
+struct EntryDetailView: View {
+    let store: StoreOf<EntryDetail>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 Section {
                     EntryViewChart(entry: viewStore.entry)
@@ -76,11 +76,12 @@ struct EntryViewChart: View {
 struct EntryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EntryView(
+            EntryDetailView(
                 store: Store(
-                    initialState: .init(entry: Logbook.Entry.sampleEntries[0]),
-                    reducer: entryReducer,
-                    environment: EntryEnvironment()
+                    initialState: EntryDetail.State(
+                        entry: Logbook.Entry.sampleEntries[0]
+                    ),
+                    reducer: EntryDetail()
                 )
             )
         }
