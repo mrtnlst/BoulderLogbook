@@ -9,7 +9,7 @@ An unofficial boulder logbook for Dresden's boulder gym [Mandala](https://boulde
 
 * ✍️ Log all your tops for a session
 * 📈 Display your past sessions in a list and review your progress using charts
-* 📊 Filter visible grades in the summary chart
+* 📊 Filter visible grades on the dashboard's chart
 * 🎛️ Made a mistake? Just edit your session's tops or the date afterwards (thanks to [@ChrissisCorner](https://github.com/ChrissisCorner))
 
 

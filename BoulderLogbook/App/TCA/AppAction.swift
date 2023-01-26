@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 enum AppAction {
-    case summary(SummaryAction)
+    case dashboard(Dashboard.Action)
     case form(FormAction)
     case filterSheet(FilterSheet.Action)
     case setIsPresentingForm(Bool)

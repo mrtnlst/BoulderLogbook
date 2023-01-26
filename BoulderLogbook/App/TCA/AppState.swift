@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct AppState: Equatable {
-    var summaryState: SummaryState = SummaryState()
+    var dashboardState: Dashboard.State = Dashboard.State()
     var formState: FormState?
     var filterSheetState: FilterSheet.State?
     var isPresentingForm: Bool = false

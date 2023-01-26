@@ -1,5 +1,5 @@
 //
-//  SummaryEntryView.swift
+//  DashboardEntryView.swift
 //  BoulderLogbook
 //
 //  Created by martin on 07.08.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SummaryEntryView: View {
+struct DashboardEntryView: View {
     let entry: Logbook.Entry
     
     var body: some View {
@@ -37,7 +37,7 @@ struct SummaryEntryView: View {
     }
 }
 
-extension SummaryEntryView {
+extension DashboardEntryView {
     @ViewBuilder func iconView() -> some View {
         ZStack {
             Image(systemName: "figure.climbing")
@@ -53,7 +53,7 @@ extension SummaryEntryView {
 struct SummaryEntryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            SummaryEntryView(
+            DashboardEntryView(
                 entry: Logbook.Entry.sampleEntries[0]
             )
         }

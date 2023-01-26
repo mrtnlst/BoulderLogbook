@@ -8,38 +8,39 @@
 import Foundation
 import ComposableArchitecture
 
-let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>
-    .combine(
-        summaryReducer.pullback(
-            state: \AppState.summaryState,
-            action: /AppAction.summary,
-            environment: {
-                SummaryEnvironment(
-                    mainQueue: $0.mainQueue,
-                    fetch: $0.storageService.fetch,
-                    delete: $0.storageService.delete(logbookEntry:),
-                    fetchFilters: $0.storageService.fetchFilters
-                )
-            }
-        ),
-        formReducer.optional().pullback(
-            state: \AppState.formState,
-            action: /AppAction.form,
-            environment: {
-                FormEnvironment(
-                    save: $0.storageService.save(logbookEntry:)
-                )
-            }
-        ),
-        AnyReducer {
-            FilterSheet(mainQueue: $0.mainQueue, fetch: $0.storageService.fetch, save: $0.storageService.save)
+let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>.combine(
+    formReducer.optional().pullback(
+        state: \AppState.formState,
+        action: /AppAction.form,
+        environment: {
+            FormEnvironment(
+                save: $0.storageService.save(logbookEntry:)
+            )
         }
-        .optional()
-        .pullback(
-            state: \.filterSheetState,
-            action: /AppAction.filterSheet,
-            environment: { $0 }
-        ),
+    ),
+    AnyReducer {
+        Dashboard(
+            mainQueue: $0.mainQueue,
+            fetch: $0.storageService.fetch,
+            delete: $0.storageService.delete(logbookEntry:),
+            fetchFilters: $0.storageService.fetchFilters
+        )
+    }.pullback(
+        state: \.dashboardState,
+        action: /AppAction.dashboard,
+        environment: { $0 }
+    ),
+    AnyReducer {
+        FilterSheet(
+            mainQueue: $0.mainQueue,
+            fetch: $0.storageService.fetch,
+            save: $0.storageService.save
+        )
+    }.optional().pullback(
+        state: \.filterSheetState,
+        action: /AppAction.filterSheet,
+        environment: { $0 }
+    ),
     Reducer { state, action, environment in
         switch action {
         case let .setIsPresentingForm(isPresenting):
@@ -62,34 +63,34 @@ let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>
         case .form(.save):
             return .merge(
                 Effect(value: .setIsPresentingForm(false)),
-                Effect(value: .summary(.fetch))
+                Effect(value: .dashboard(.fetch))
             )
             
         case .form(_):
             return .none
             
-        case .summary(.summarySectionAction(id: _, action: .entryAction(id: _, action: .delete(_)))):
+        case .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(_)))):
             state.path = []
             return .none
             
-        case let .summary(.summarySectionAction(id: _, action: .edit(entry))),
-             let .summary(.summarySectionAction(id: _, action: .entryAction(id: _, action: .edit(entry)))):
+        case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
+            let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
             state.path = []
             state.formState = FormState(entry: entry, isNewEntry: false)
             state.isPresentingForm = true
             return .none
             
-        case .summary(.presentFilters):
+        case .dashboard(.presentFilters):
             return Effect(value: .setIsPresentingFilter(true))
             
-        case .summary(_):
+        case .dashboard(_):
             return .none
-        
+            
         case .filterSheet(.filter(_, .setIsOn(_))):
-            return Effect(value: .summary(.fetchFilters))
+            return Effect(value: .dashboard(.fetchFilters))
             
         case .filterSheet(_):
             return .none
         }
-   }
+    }
 )

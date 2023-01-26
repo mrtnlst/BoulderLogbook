@@ -1,5 +1,5 @@
 //
-//  SummarySectionView.swift
+//  DashboardSectionView.swift
 //  BoulderLogbook
 //
 //  Created by martin on 31.07.22.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct SummarySectionView: View {
-    let store: StoreOf<SummarySection>
+struct DashboardSectionView: View {
+    let store: StoreOf<DashboardSection>
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -17,10 +17,10 @@ struct SummarySectionView: View {
                 ForEachStore(
                     store.scope(
                         state: \.entryStates,
-                        action: SummarySection.Action.entryAction(id:action:))
+                        action: DashboardSection.Action.entryDetail(id:action:))
                 ) { entryStore in
                     NavigationLink(value: entryStore) {
-                        SummaryEntryView(entry: ViewStore(entryStore).entry)
+                        DashboardEntryView(entry: ViewStore(entryStore).entry)
                     }
                     .swipeActions {
                         Button(role: .destructive) {
@@ -51,12 +51,12 @@ struct SummarySectionView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             List {
-                SummarySectionView(
+                DashboardSectionView(
                     store: Store(
-                        initialState: SummarySection.State(
+                        initialState: DashboardSection.State(
                             Logbook.Section.sampleSections[0]
                         ),
-                        reducer: SummarySection()
+                        reducer: DashboardSection()
                     )
                 )
             }

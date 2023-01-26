@@ -1,5 +1,5 @@
 //
-//  SummaryView.swift
+//  DashboardView.swift
 //  Mandala
 //
 //  Created by Martin List on 24.06.22.
@@ -8,11 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct SummaryView: View {
-    let store: Store<SummaryState, SummaryAction>
+struct DashboardView: View {
+    let store: StoreOf<Dashboard>
     
     var body: some View {
-        summaryList(with: store)
+        listView()
             .navigationDestination(
                 for: StoreOf<EntryDetail>.self
             ) { detailStore in
@@ -21,8 +21,8 @@ struct SummaryView: View {
     }
 }
 
-extension SummaryView {
-    @ViewBuilder func summaryList(with store: Store<SummaryState, SummaryAction>) -> some View {
+extension DashboardView {
+    @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
                 if viewStore.entryStates.count > 2 {
@@ -31,10 +31,10 @@ extension SummaryView {
                 ForEachStore(
                     store.scope(
                         state: \.sections,
-                        action: SummaryAction.summarySectionAction(id:action:)
+                        action: Dashboard.Action.dashboardSection(id:action:)
                     )
                 ) { sectionStore in
-                    SummarySectionView(store: sectionStore)
+                    DashboardSectionView(store: sectionStore)
                 }
             }
             .onAppear {
@@ -50,7 +50,7 @@ extension SummaryView {
                 DiagramView(
                     store: store.scope(
                         state: \.diagramState,
-                        action: SummaryAction.diagram
+                        action: Dashboard.Action.diagram
                     )
                 )
                 .onLongPressGesture(
@@ -70,12 +70,10 @@ extension SummaryView {
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            SummaryView(
+            DashboardView(
                 store: Store(
-                    initialState: SummaryState(Logbook.sampleLogbook),
-                    reducer: summaryReducer,
-                    environment: SummaryEnvironment(
-                        mainQueue: .main,
+                    initialState: Dashboard.State(Logbook.sampleLogbook),
+                    reducer: Dashboard(
                         fetch: { return .none },
                         delete: { _ in return .none },
                         fetchFilters: { return .none }

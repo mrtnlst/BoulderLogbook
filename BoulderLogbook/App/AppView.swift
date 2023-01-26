@@ -16,16 +16,16 @@ struct AppView: View {
             NavigationStack(
                 path: viewStore.binding(get: \.path, send: AppAction.setPath)
             ) {
-                summaryView(with: viewStore)
+                dashboardView(with: viewStore)
             }
         }
     }
 }
 
 extension AppView {
-    @ViewBuilder func summaryView(with viewStore: ViewStore<AppState, AppAction>) -> some View {
-        SummaryView(
-            store: store.scope(state: \.summaryState, action: AppAction.summary)
+    @ViewBuilder func dashboardView(with viewStore: ViewStore<AppState, AppAction>) -> some View {
+        DashboardView(
+            store: store.scope(state: \.dashboardState, action: AppAction.dashboard)
         )
         .toolbar {
             Button {
@@ -73,7 +73,7 @@ struct AppView_Previews: PreviewProvider {
         AppView(
             store: Store(
                 initialState: AppState(
-                    summaryState: .init(Logbook.sampleLogbook)
+                    dashboardState: Dashboard.State(Logbook.sampleLogbook)
                 ),
                 reducer: appReducer,
                 environment: AppEnvironment(

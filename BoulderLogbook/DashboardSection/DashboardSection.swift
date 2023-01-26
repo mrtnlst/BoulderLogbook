@@ -1,5 +1,5 @@
 //
-//  SummarySection.swift
+//  DashboardSection.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 26.01.23.
@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct SummarySection: ReducerProtocol {
+struct DashboardSection: ReducerProtocol {
     struct State: Equatable, Identifiable {
         var id: Double { date.timeIntervalSince1970 }
         let date: Date
@@ -18,7 +18,7 @@ struct SummarySection: ReducerProtocol {
     enum Action: Equatable {
         case delete(Logbook.Entry)
         case edit(Logbook.Entry)
-        case entryAction(id: String, action: EntryDetail.Action)
+        case entryDetail(id: String, action: EntryDetail.Action)
     }
     
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
@@ -26,7 +26,7 @@ struct SummarySection: ReducerProtocol {
     }
 }
 
-extension SummarySection.State {
+extension DashboardSection.State {
     /// Warning: Only used for previews!
     init(_ section: Logbook.Section) {
         self.date = section.date
