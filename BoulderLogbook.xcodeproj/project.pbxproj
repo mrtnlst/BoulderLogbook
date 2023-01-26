@@ -12,9 +12,7 @@
 		5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */; };
 		5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* Logbook.swift */; };
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
-		5B289AD328DA1B8C00EC6F0B /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */; };
-		5B289AD528E89AFD00EC6F0B /* ChartState+Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */; };
-		5B289AD828E89CE200EC6F0B /* ChartState+ChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */; };
+		5B289AD328DA1B8C00EC6F0B /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AD228DA1B8C00EC6F0B /* DiagramView.swift */; };
 		5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */; };
 		5BC0C9BA297F204900E8C567 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9B9297F204900E8C567 /* Filter.swift */; };
 		5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */; };
@@ -22,14 +20,10 @@
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
 		5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* Logbook.Section.swift */; };
 		5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */; };
-		5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB1288C250000E376E8 /* ChartState.swift */; };
-		5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB3288C250400E376E8 /* ChartAction.swift */; };
-		5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */; };
-		5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */; };
-		A920E2602887035F00D85C1E /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A920E25F2887035F00D85C1E /* BarChartView.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A961AB5D29827D8700AD89DD /* SummarySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961AB5C29827D8700AD89DD /* SummarySection.swift */; };
+		A961AB60298286C600AD89DD /* Diagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961AB5E2982827A00AD89DD /* Diagram.swift */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
 		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
@@ -74,9 +68,7 @@
 		5B1A807C28A04E7F00530B01 /* SummaryEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryEntryView.swift; sourceTree = "<group>"; };
 		5B1A807F28A7D6BF00530B01 /* Logbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
-		5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
-		5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartState+Segment.swift"; sourceTree = "<group>"; };
-		5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartState+ChartEntry.swift"; sourceTree = "<group>"; };
+		5B289AD228DA1B8C00EC6F0B /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
 		5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetView.swift; sourceTree = "<group>"; };
 		5BC0C9B9297F204900E8C567 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
@@ -84,15 +76,11 @@
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
 		5BE79CC328B620820083EE33 /* Logbook.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Section.swift; sourceTree = "<group>"; };
 		5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Entry.swift; sourceTree = "<group>"; };
-		5BEA9BB1288C250000E376E8 /* ChartState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartState.swift; sourceTree = "<group>"; };
-		5BEA9BB3288C250400E376E8 /* ChartAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAction.swift; sourceTree = "<group>"; };
-		5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEnvironment.swift; sourceTree = "<group>"; };
-		5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartReducer.swift; sourceTree = "<group>"; };
-		A920E25F2887035F00D85C1E /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
 		A9435D8529826D6B001DC22B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A961AB5C29827D8700AD89DD /* SummarySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySection.swift; sourceTree = "<group>"; };
+		A961AB5E2982827A00AD89DD /* Diagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagram.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9B07E462868579900AA6274 /* Logbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Logbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,15 +157,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5B289AD628E89B0100EC6F0B /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				5B289AD428E89AFD00EC6F0B /* ChartState+Segment.swift */,
-				5B289AD728E89CE200EC6F0B /* ChartState+ChartEntry.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		5B289AE429058BBF00EC6F0B /* FilterSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,26 +176,13 @@
 			path = Filter;
 			sourceTree = "<group>";
 		};
-		5BEA9BB9288C251300E376E8 /* TCA */ = {
+		5BEA9BBA288C251900E376E8 /* Diagram */ = {
 			isa = PBXGroup;
 			children = (
-				5BEA9BB1288C250000E376E8 /* ChartState.swift */,
-				5BEA9BB3288C250400E376E8 /* ChartAction.swift */,
-				5BEA9BB5288C250A00E376E8 /* ChartEnvironment.swift */,
-				5BEA9BB7288C250F00E376E8 /* ChartReducer.swift */,
+				A961AB5E2982827A00AD89DD /* Diagram.swift */,
+				5B289AD228DA1B8C00EC6F0B /* DiagramView.swift */,
 			);
-			path = TCA;
-			sourceTree = "<group>";
-		};
-		5BEA9BBA288C251900E376E8 /* Charts */ = {
-			isa = PBXGroup;
-			children = (
-				A920E25F2887035F00D85C1E /* BarChartView.swift */,
-				5B289AD228DA1B8C00EC6F0B /* LineChartView.swift */,
-				5BEA9BB9288C251300E376E8 /* TCA */,
-				5B289AD628E89B0100EC6F0B /* Extensions */,
-			);
-			path = Charts;
+			path = Diagram;
 			sourceTree = "<group>";
 		};
 		A9B07E392868579500AA6274 = {
@@ -235,7 +201,7 @@
 				A9435D8529826D6B001DC22B /* Info.plist */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A9B07E852868588700AA6274 /* App */,
-				5BEA9BBA288C251900E376E8 /* Charts */,
+				5BEA9BBA288C251900E376E8 /* Diagram */,
 				A9CE6761288004D300027885 /* EntryDetail */,
 				5B289AE429058BBF00EC6F0B /* FilterSheet */,
 				A9B07E922868588700AA6274 /* Form */,
@@ -468,8 +434,8 @@
 				A9B07E9F2868588700AA6274 /* SummaryAction.swift in Sources */,
 				5B1A806C2896DA4900530B01 /* SummarySectionView.swift in Sources */,
 				A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */,
-				5BEA9BB2288C250000E376E8 /* ChartState.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
+				A961AB60298286C600AD89DD /* Diagram.swift in Sources */,
 				A9B07EA32868588700AA6274 /* AppState.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
@@ -481,26 +447,20 @@
 				5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */,
 				A9B07EA72868588700AA6274 /* AppAction.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* SummarySection.swift in Sources */,
-				5BEA9BB4288C250400E376E8 /* ChartAction.swift in Sources */,
-				A920E2602887035F00D85C1E /* BarChartView.swift in Sources */,
 				A9B07EB92868588700AA6274 /* FormState.swift in Sources */,
 				A9B07EA92868588700AA6274 /* AppEnvironment.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* SummaryEntryView.swift in Sources */,
 				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
-				5BEA9BB6288C250A00E376E8 /* ChartEnvironment.swift in Sources */,
 				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* SummaryView.swift in Sources */,
 				A9B07EBB2868588700AA6274 /* FormEnvironment.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* FormView.swift in Sources */,
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
-				5B289AD828E89CE200EC6F0B /* ChartState+ChartEntry.swift in Sources */,
-				5B289AD528E89AFD00EC6F0B /* ChartState+Segment.swift in Sources */,
 				A9B07E9B2868588700AA6274 /* SummaryEnvironment.swift in Sources */,
-				5B289AD328DA1B8C00EC6F0B /* LineChartView.swift in Sources */,
+				5B289AD328DA1B8C00EC6F0B /* DiagramView.swift in Sources */,
 				A9B07EB72868588700AA6274 /* FormReducer.swift in Sources */,
-				5BEA9BB8288C250F00E376E8 /* ChartReducer.swift in Sources */,
 				A9B07EA52868588700AA6274 /* AppReducer.swift in Sources */,
 				A9B07EB52868588700AA6274 /* FormAction.swift in Sources */,
 				5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */,

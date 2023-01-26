@@ -26,7 +26,7 @@ extension SummaryView {
         WithViewStore(store) { viewStore in
             List {
                 if viewStore.entryStates.count > 2 {
-                    summaryChart()
+                    diagramView()
                 }
                 ForEachStore(
                     store.scope(
@@ -44,13 +44,13 @@ extension SummaryView {
         }
     }
     
-    @ViewBuilder func summaryChart() -> some View {
+    @ViewBuilder func diagramView() -> some View {
         Section {
             WithViewStore(store) { viewStore in
-                LineChartView(
+                DiagramView(
                     store: store.scope(
-                        state: \.chartState,
-                        action: SummaryAction.chart
+                        state: \.diagramState,
+                        action: SummaryAction.diagram
                     )
                 )
                 .onLongPressGesture(
@@ -58,7 +58,7 @@ extension SummaryView {
                     perform: {
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                         impactHeavy.impactOccurred()
-                        viewStore.send(.presentSummaryChartFilter)
+                        viewStore.send(.presentFilters)
                     }
                 )
             }

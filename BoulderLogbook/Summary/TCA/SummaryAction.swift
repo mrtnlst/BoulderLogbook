@@ -14,6 +14,6 @@ enum SummaryAction: Equatable {
     case receiveLogbookEntries(result: Result<Logbook, Never>)
     case summarySectionAction(id: Double, action: SummarySection.Action)
     case receiveFilters(Result<[BoulderGrade], Never>)
-    case chart(ChartAction)
-    case presentSummaryChartFilter
+    case diagram(Diagram.Action)
+    case presentFilters
 }

@@ -9,10 +9,10 @@ import Foundation
 import ComposableArchitecture
 
 let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.combine(
-    chartReducer.pullback(
-        state: \.chartState,
-        action: /SummaryAction.chart,
-        environment: { _ in .init() }
+    AnyReducer { Diagram() }.pullback(
+        state: \.diagramState,
+        action: /SummaryAction.diagram,
+        environment: { _ in }
     ),
     Reducer { state, action, environment in
         switch action {
@@ -54,7 +54,7 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
             let entries = state.entryStates.map {
                 Logbook.Entry(date: $0.entry.date, tops: $0.entry.tops)
             }
-            state.chartState.entries = entries
+            state.diagramState.entries = entries
             return .none
             
         case let .summarySectionAction(id: _, action: .delete(logbookEntry)) ,
@@ -70,13 +70,13 @@ let summaryReducer = Reducer<SummaryState, SummaryAction, SummaryEnvironment>.co
             return .none
             
         case let .receiveFilters(.success(filters)):
-            state.chartState.filters = filters
+            state.diagramState.filters = filters
             return .none
             
-        case .chart(_):
+        case .diagram(_):
             return .none
             
-        case .presentSummaryChartFilter:
+        case .presentFilters:
             return .none
         }
     }

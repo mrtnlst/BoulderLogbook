@@ -79,7 +79,7 @@ let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>
             state.isPresentingForm = true
             return .none
             
-        case .summary(.presentSummaryChartFilter):
+        case .summary(.presentFilters):
             return Effect(value: .setIsPresentingFilter(true))
             
         case .summary(_):

@@ -10,7 +10,7 @@ import IdentifiedCollections
 
 struct SummaryState: Equatable {
     var sections: IdentifiedArrayOf<SummarySection.State> = []
-    var chartState: ChartState = ChartState()
+    var diagramState: Diagram.State = Diagram.State()
 }
 
 extension SummaryState {

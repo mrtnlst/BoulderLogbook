@@ -1,5 +1,5 @@
 //
-//  LineChartView.swift
+//  DiagramView.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 20.09.22.
@@ -9,8 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 import Charts
 
-struct LineChartView: View {
-    let store: Store<ChartState, ChartAction>
+struct DiagramView: View {
+    let store: StoreOf<Diagram>
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -29,7 +29,7 @@ struct LineChartView: View {
     }
 }
 
-extension LineChartView {
+extension DiagramView {
     @ViewBuilder func lineChartView() -> some View {
         WithViewStore(store) { viewStore in
             VStack {
@@ -38,7 +38,7 @@ extension LineChartView {
                         "Pick the number of sessions displayed in the chart!",
                         selection: viewStore.binding(
                             get: \.selectedSegment,
-                            send: ChartAction.didSelectSegment)
+                            send: Diagram.Action.didSelectSegment)
                     ) {
                         ForEach(viewStore.availableSegments, id: \.self) { segment in
                             Text(segment.rawValue).tag(segment.tag)
@@ -79,13 +79,10 @@ extension LineChartView {
 
 struct LineChartView_Previews: PreviewProvider {
     static var previews: some View {
-        LineChartView(
+        DiagramView(
             store: Store(
-                initialState: ChartState(
-                    entries: Logbook.Entry.sampleEntries
-                ),
-                reducer: chartReducer,
-                environment: ChartEnvironment()
+                initialState: Diagram.State(entries: Logbook.Entry.sampleEntries),
+                reducer: Diagram()
             )
         )
         .frame(height: 200)
