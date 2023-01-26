@@ -27,19 +27,19 @@ fileprivate extension String {
 }
 
 protocol StorageServiceType {
-    func fetch() -> Effect<Logbook, Never>
-    func save(logbookEntry: Logbook.Entry) -> Effect<Never, Never>
-    func delete(logbookEntry: Logbook.Entry) -> Effect<Never, Never>
-    func fetch(filterKey: String) -> Effect<Bool, Never>
-    func fetchFilters() -> Effect<[BoulderGrade], Never>
-    func save(value: Bool, for filterKey: String) -> Effect<Never, Never>
+    func fetch() -> EffectPublisher<Logbook, Never>
+    func save(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never>
+    func delete(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never>
+    func fetch(filterKey: String) -> EffectPublisher<Bool, Never>
+    func fetchFilters() -> EffectPublisher<[BoulderGrade], Never>
+    func save(value: Bool, for filterKey: String) -> EffectPublisher<Never, Never>
 }
 
 final class StorageService: StorageServiceType {}
 
 // MARK: - LogbookData Entries
 extension StorageService {
-    func fetch() -> Effect<Logbook, Never> {
+    func fetch() -> EffectPublisher<Logbook, Never> {
         let defaults = UserDefaults.standard
         let decoder = JSONDecoder()
         return Future { promise in
@@ -58,7 +58,7 @@ extension StorageService {
         .eraseToEffect()
     }
     
-    func save(logbookEntry: Logbook.Entry) -> Effect<Never, Never> {
+    func save(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never> {
         // Obtain LogbookData from UserDefaults or create new if unavailable.
         var logbookData: LogbookData?
         if let encodedLogbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
@@ -88,7 +88,7 @@ extension StorageService {
             .eraseToEffect()
     }
     
-    func delete(logbookEntry: Logbook.Entry) -> Effect<Never, Never> {
+    func delete(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never> {
         guard let encodedLogbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
               var logbookData = try? JSONDecoder().decode(LogbookData.self, from: encodedLogbookData) else {
             return Empty().eraseToAnyPublisher().eraseToEffect()
@@ -106,7 +106,7 @@ extension StorageService {
 
 // MARK: - Filters
 extension StorageService {
-    func fetch(filterKey: String) -> Effect<Bool, Never> {
+    func fetch(filterKey: String) -> EffectPublisher<Bool, Never> {
         let defaults = UserDefaults.standard
         return Future { promise in
             if let object = defaults.object(forKey: filterKey) as? Bool {
@@ -118,7 +118,7 @@ extension StorageService {
         .eraseToEffect()
     }
     
-    func fetchFilters() -> Effect<[BoulderGrade], Never> {
+    func fetchFilters() -> EffectPublisher<[BoulderGrade], Never> {
         let defaults = UserDefaults.standard
         return Future { promise in
             // We distinguish between active, inactive and not saved filters.
@@ -141,7 +141,7 @@ extension StorageService {
         .eraseToEffect()
     }
     
-    func save(value: Bool, for filterKey: String) -> Effect<Never, Never> {
+    func save(value: Bool, for filterKey: String) -> EffectPublisher<Never, Never> {
         let defaults = UserDefaults.standard
         defaults.set(value, forKey: filterKey)
         return Empty()

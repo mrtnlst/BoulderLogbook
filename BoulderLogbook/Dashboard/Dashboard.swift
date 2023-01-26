@@ -37,8 +37,8 @@ struct Dashboard: ReducerProtocol {
             switch action {
             case .onAppear:
                 return .merge(
-                    Effect(value: .fetch),
-                    Effect(value: .fetchFilters)
+                    EffectPublisher(value: .fetch),
+                    EffectPublisher(value: .fetchFilters)
                 )
                 
             case .fetch:
@@ -82,7 +82,7 @@ struct Dashboard: ReducerProtocol {
                     storageService
                         .delete(logbookEntry: logbookEntry)
                         .fireAndForget(),
-                    Effect(value: .fetch)
+                    EffectPublisher(value: .fetch)
                 )
                 
             case .dashboardSection(id: _, action: _):

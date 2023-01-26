@@ -51,12 +51,12 @@ struct AppReducer: ReducerProtocol {
                 return .none
                 
             case .entryForm(.cancel):
-                return Effect(value: .setIsPresentingForm(false))
+                return EffectPublisher(value: .setIsPresentingForm(false))
                 
             case .entryForm(.save):
                 return .merge(
-                    Effect(value: .setIsPresentingForm(false)),
-                    Effect(value: .dashboard(.fetch))
+                    EffectPublisher(value: .setIsPresentingForm(false)),
+                    EffectPublisher(value: .dashboard(.fetch))
                 )
                 
             case .entryForm(_):
@@ -74,13 +74,13 @@ struct AppReducer: ReducerProtocol {
                 return .none
                 
             case .dashboard(.presentFilters):
-                return Effect(value: .setIsPresentingFilter(true))
+                return EffectPublisher(value: .setIsPresentingFilter(true))
                 
             case .dashboard(_):
                 return .none
                 
             case .filterSheet(.filter(_, .setIsOn(_))):
-                return Effect(value: .dashboard(.fetchFilters))
+                return EffectPublisher(value: .dashboard(.fetchFilters))
                 
             case .filterSheet(_):
                 return .none
