@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import Combine
-import ComposableArchitecture
 import Dependencies
 
 private enum StorageServiceKey: DependencyKey {
@@ -29,10 +27,11 @@ fileprivate extension String {
 protocol StorageServiceType {
     func fetch() -> Logbook
     func save(_ logbookEntry: Logbook.Entry)
-    func delete(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never>
-    func fetch(filterKey: String) -> EffectPublisher<Bool, Never>
-    func fetchFilters() -> EffectPublisher<[BoulderGrade], Never>
-    func save(value: Bool, for filterKey: String) -> EffectPublisher<Never, Never>
+    func delete(_ logbookEntry: Logbook.Entry)
+    
+    func fetchFilters() -> [BoulderGrade]
+    func fetchFilter(_ filterKey: String) -> Bool
+    func saveFilter(_ filterKey: String, with value: Bool)
 }
 
 final class StorageService {
@@ -55,7 +54,7 @@ extension StorageService: StorageServiceType {
         }
         return data.toLogbook()
     }
-        
+    
     func save(_ logbookEntry: Logbook.Entry) {
         var data = fetchLogbookData()
         let newEntryData = EntryData(
@@ -76,19 +75,13 @@ extension StorageService: StorageServiceType {
         }
     }
     
-    func delete(logbookEntry: Logbook.Entry) -> EffectPublisher<Never, Never> {
-        guard let encodedLogbookData = UserDefaults.standard.object(forKey: .logbookKey) as? Data,
-              var logbookData = try? JSONDecoder().decode(LogbookData.self, from: encodedLogbookData) else {
-            return Empty().eraseToAnyPublisher().eraseToEffect()
-        }
-        logbookData.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
+    func delete(_ logbookEntry: Logbook.Entry) {
+        var data = fetchLogbookData()
+        data.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
         
-        if let encodedLogbook = try? JSONEncoder().encode(logbookData) {
-            UserDefaults.standard.set(encodedLogbook, forKey: .logbookKey)
+        if let encodedData = try? JSONEncoder().encode(data) {
+            userDefaults.set(encodedData, forKey: .logbookKey)
         }
-        return Empty()
-            .eraseToAnyPublisher()
-            .eraseToEffect()
     }
 }
 
@@ -108,46 +101,29 @@ private extension StorageService {
 
 // MARK: - Filters
 extension StorageService {
-    func fetch(filterKey: String) -> EffectPublisher<Bool, Never> {
-        let defaults = UserDefaults.standard
-        return Future { promise in
-            if let object = defaults.object(forKey: filterKey) as? Bool {
-                return promise(.success(object))
-            }
-            promise(.success(true))
-        }
-        .eraseToAnyPublisher()
-        .eraseToEffect()
+    func fetchFilter(_ filterKey: String) -> Bool {
+        return userDefaults.object(forKey: filterKey) as? Bool ?? false
     }
     
-    func fetchFilters() -> EffectPublisher<[BoulderGrade], Never> {
-        let defaults = UserDefaults.standard
-        return Future { promise in
-            // We distinguish between active, inactive and not saved filters.
-            let filters = BoulderGrade.allCases.reduce(into: [BoulderGrade: Bool]()) { partialResult, value in
-                let state = defaults.bool(forKey: value.gradeDescription)
-                partialResult[value] = state
-            }
-            // If no filters have been saved we assume a fresh install and show all.
-            if filters.isEmpty {
-                BoulderGrade.allCases.forEach {
-                    _ = self.save(value: true, for: $0.gradeDescription)
-                }
-                return promise(.success(BoulderGrade.allCases))
-            }
-            // We only return the active filters.
-            let activeFilters = filters.compactMap { $0.value ? $0.key : nil }
-            return promise(.success(activeFilters))
+    func fetchFilters() -> [BoulderGrade] {
+        // We distinguish between active, inactive and not saved filters.
+        let filters = BoulderGrade.allCases.reduce(into: [BoulderGrade: Bool]()) { partialResult, value in
+            let state = userDefaults.bool(forKey: value.gradeDescription)
+            partialResult[value] = state
         }
-        .eraseToAnyPublisher()
-        .eraseToEffect()
+        // If no filters have been saved we assume a fresh install and show all.
+        if filters.isEmpty {
+            BoulderGrade.allCases.forEach {
+                saveFilter($0.gradeDescription, with: true)
+            }
+            return BoulderGrade.allCases
+        }
+        // We only return the active filters.
+        let activeFilters = filters.compactMap { $0.value ? $0.key : nil }
+        return activeFilters
     }
-    
-    func save(value: Bool, for filterKey: String) -> EffectPublisher<Never, Never> {
-        let defaults = UserDefaults.standard
-        defaults.set(value, forKey: filterKey)
-        return Empty()
-            .eraseToAnyPublisher()
-            .eraseToEffect()
+
+    func saveFilter(_ filterKey: String, with value: Bool) {
+        userDefaults.set(value, forKey: filterKey)
     }
 }

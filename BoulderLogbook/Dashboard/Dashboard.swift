@@ -20,7 +20,7 @@ struct Dashboard: ReducerProtocol {
         case fetchFilters
         case receiveLogbook(TaskResult<Logbook>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
-        case receiveFilters(Result<[BoulderGrade], Never>)
+        case receiveFilters(TaskResult<[BoulderGrade]>)
         case diagram(Diagram.Action)
         case presentFilters
     }
@@ -43,14 +43,13 @@ struct Dashboard: ReducerProtocol {
                 
             case .fetch:
                 return .task {
-                    await .receiveLogbook(TaskResult { storageService.fetch() } )
+                    await .receiveLogbook(TaskResult { storageService.fetch() })
                 }
                 
             case .fetchFilters:
-                return storageService
-                    .fetchFilters()
-                    .receive(on: mainQueue)
-                    .catchToEffect(Action.receiveFilters)
+                return .task {
+                    await .receiveFilters(TaskResult { storageService.fetchFilters() })
+                }
                 
             case let .receiveLogbook(.success(logbook)):
                 state.sections = .init(
@@ -78,20 +77,21 @@ struct Dashboard: ReducerProtocol {
             case .receiveLogbook(.failure):
                 return .none
                 
+            case let .receiveFilters(.success(filters)):
+                state.diagramState.filters = filters
+                return .none
+                
+            case .receiveFilters(.failure):
+                return .none
+                
             case let .dashboardSection(id: _, action: .delete(logbookEntry)) ,
                 let .dashboardSection(id: _, action:.entryDetail(id: _, action: .delete(logbookEntry))):
                 return .merge(
-                    storageService
-                        .delete(logbookEntry: logbookEntry)
-                        .fireAndForget(),
-                    EffectPublisher(value: .fetch)
+                    .fireAndForget { storageService.delete(logbookEntry) },
+                    .task { .fetch }
                 )
                 
             case .dashboardSection(id: _, action: _):
-                return .none
-                
-            case let .receiveFilters(.success(filters)):
-                state.diagramState.filters = filters
                 return .none
                 
             case .diagram(_):

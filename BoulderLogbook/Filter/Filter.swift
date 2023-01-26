@@ -17,7 +17,7 @@ struct Filter: ReducerProtocol {
     
     enum Action {
         case fetch
-        case receiveValue(Result<Bool, Never>)
+        case receiveValue(TaskResult<Bool>)
         case setIsOn(Bool)
     }
     
@@ -27,20 +27,22 @@ struct Filter: ReducerProtocol {
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .fetch:
-            return storageService
-                .fetch(filterKey: state.grade.gradeDescription)
-                .receive(on: mainQueue)
-                .catchToEffect(Action.receiveValue)
+            return .task { [state] in
+                await .receiveValue(TaskResult { storageService.fetchFilter(state.grade.gradeDescription) })
+            }
             
         case let .receiveValue(.success(value)):
             state.isOn = value
             return .none
+        
+        case .receiveValue(.failure):
+            return .none
             
         case let .setIsOn(isOn):
             state.isOn = isOn
-            return storageService
-                .save(value: isOn, for: state.grade.gradeDescription)
-                .fireAndForget()
+            return .fireAndForget { [state] in
+                storageService.saveFilter(state.grade.gradeDescription, with: isOn)
+            }
         }
     }
 }
