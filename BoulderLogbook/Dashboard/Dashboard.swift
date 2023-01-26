@@ -18,7 +18,7 @@ struct Dashboard: ReducerProtocol {
         case onAppear
         case fetch
         case fetchFilters
-        case receiveLogbookEntries(result: Result<Logbook, Never>)
+        case receiveLogbook(TaskResult<Logbook>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
         case receiveFilters(Result<[BoulderGrade], Never>)
         case diagram(Diagram.Action)
@@ -42,10 +42,9 @@ struct Dashboard: ReducerProtocol {
                 )
                 
             case .fetch:
-                return storageService
-                    .fetch()
-                    .receive(on: mainQueue)
-                    .catchToEffect(Action.receiveLogbookEntries)
+                return .task {
+                    await .receiveLogbook(TaskResult { storageService.fetch() } )
+                }
                 
             case .fetchFilters:
                 return storageService
@@ -53,7 +52,7 @@ struct Dashboard: ReducerProtocol {
                     .receive(on: mainQueue)
                     .catchToEffect(Action.receiveFilters)
                 
-            case let .receiveLogbookEntries(result: .success(logbook)):
+            case let .receiveLogbook(.success(logbook)):
                 state.sections = .init(
                     uniqueElements: logbook.sections.map { section in
                         DashboardSection.State(
@@ -74,6 +73,9 @@ struct Dashboard: ReducerProtocol {
                     Logbook.Entry(date: $0.entry.date, tops: $0.entry.tops)
                 }
                 state.diagramState.entries = entries
+                return .none
+                
+            case .receiveLogbook(.failure):
                 return .none
                 
             case let .dashboardSection(id: _, action: .delete(logbookEntry)) ,

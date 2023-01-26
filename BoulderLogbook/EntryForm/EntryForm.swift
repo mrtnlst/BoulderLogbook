@@ -35,10 +35,10 @@ struct EntryForm: ReducerProtocol {
             return .none
             
         case .save:
-            return storageService
-                .save(logbookEntry: state.entry)
-                .fireAndForget()
-            
+            return .fireAndForget { [state] in
+                storageService.save(state.entry)
+            }
+
         case let .increase(grade):
             state.entry.tops.append(grade)
             return .none
