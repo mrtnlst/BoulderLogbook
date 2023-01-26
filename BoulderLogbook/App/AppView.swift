@@ -42,11 +42,11 @@ extension AppView {
         ) {
             IfLetStore(
                 store.scope(
-                    state: \.formState,
-                    action: AppAction.form
+                    state: \.entryFormState,
+                    action: AppAction.entryForm
                 )
             ) { formStore in
-                FormView(store: formStore)
+                EntryFormView(store: formStore)
             }
         }
         .sheet(

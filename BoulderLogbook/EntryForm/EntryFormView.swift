@@ -1,5 +1,5 @@
 //
-//  FormView.swift
+//  EntryFormView.swift
 //  Mandala
 //
 //  Created by Martin List on 25.06.22.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct FormView: View {
-    let store: Store<FormState, FormAction>
+struct EntryFormView: View {
+    let store: StoreOf<EntryForm>
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -41,7 +41,7 @@ struct FormView: View {
                     DatePicker(
                         selection: viewStore.binding(
                             get: \.entry.date,
-                            send: FormAction.didSelectDate
+                            send: EntryForm.Action.didSelectDate
                         ),
                         in: ...Date(),
                         displayedComponents: [.hourAndMinute, .date]
@@ -65,7 +65,7 @@ struct FormView: View {
     }
 }
 
-extension FormView {
+extension EntryFormView {
     @ViewBuilder func buttonView(
         text: String,
         action: @escaping () -> Void
@@ -86,11 +86,10 @@ extension FormView {
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
-        FormView(
+        EntryFormView(
             store: Store(
-                initialState: FormState(),
-                reducer: formReducer,
-                environment: FormEnvironment(
+                initialState: EntryForm.State(),
+                reducer: EntryForm(
                     save: { _ in return .none }
                 )
             )

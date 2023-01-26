@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 enum AppAction {
     case dashboard(Dashboard.Action)
-    case form(FormAction)
+    case entryForm(EntryForm.Action)
     case filterSheet(FilterSheet.Action)
     case setIsPresentingForm(Bool)
     case setIsPresentingFilter(Bool)

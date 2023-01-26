@@ -9,14 +9,12 @@ import Foundation
 import ComposableArchitecture
 
 let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>.combine(
-    formReducer.optional().pullback(
-        state: \AppState.formState,
-        action: /AppAction.form,
-        environment: {
-            FormEnvironment(
-                save: $0.storageService.save(logbookEntry:)
-            )
-        }
+    AnyReducer {
+        EntryForm(save: $0.storageService.save(logbookEntry:))
+    }.optional().pullback(
+        state: \.entryFormState,
+        action: /AppAction.entryForm,
+        environment: { $0 }
     ),
     AnyReducer {
         Dashboard(
@@ -44,7 +42,7 @@ let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>.combine(
     Reducer { state, action, environment in
         switch action {
         case let .setIsPresentingForm(isPresenting):
-            state.formState = isPresenting ? FormState() : nil
+            state.entryFormState = isPresenting ? EntryForm.State() : nil
             state.isPresentingForm = isPresenting
             return .none
             
@@ -57,16 +55,16 @@ let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>.combine(
             state.path = path
             return .none
             
-        case .form(.cancel):
+        case .entryForm(.cancel):
             return Effect(value: .setIsPresentingForm(false))
             
-        case .form(.save):
+        case .entryForm(.save):
             return .merge(
                 Effect(value: .setIsPresentingForm(false)),
                 Effect(value: .dashboard(.fetch))
             )
             
-        case .form(_):
+        case .entryForm(_):
             return .none
             
         case .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(_)))):
@@ -76,7 +74,7 @@ let appReducer = AnyReducer<AppState, AppAction, AppEnvironment>.combine(
         case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
             let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
             state.path = []
-            state.formState = FormState(entry: entry, isNewEntry: false)
+            state.entryFormState = EntryForm.State(entry: entry, isNewEntry: false)
             state.isPresentingForm = true
             return .none
             
