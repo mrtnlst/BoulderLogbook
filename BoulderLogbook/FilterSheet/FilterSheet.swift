@@ -24,16 +24,14 @@ struct FilterSheet: ReducerProtocol {
         case filter(Filter.State.ID, Filter.Action)
     }
     
-    var mainQueue: AnySchedulerOf<DispatchQueue> = .main
-    var fetch: (String) -> Effect<Bool, Never>
-    var save: (Bool, String) -> Effect<Never, Never>
+    @Dependency(\.mainQueue) var mainQueue
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { _, _ in
             return .none
         }
         .forEach(\.filters, action: /Action.filter) {
-            Filter(mainQueue: self.mainQueue, fetch: self.fetch, save: self.save)
+            Filter()
         }
     }
 }

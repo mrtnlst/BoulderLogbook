@@ -27,7 +27,7 @@ struct EntryForm: ReducerProtocol {
         case didSelectDate(Date)
     }
     
-    var save: (Logbook.Entry) -> Effect<Never, Never>
+    @Dependency(\.storageService) var storageService
     
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
@@ -35,7 +35,8 @@ struct EntryForm: ReducerProtocol {
             return .none
             
         case .save:
-            return save(state.entry)
+            return storageService
+                .save(logbookEntry: state.entry)
                 .fireAndForget()
             
         case let .increase(grade):

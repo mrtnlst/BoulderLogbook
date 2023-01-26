@@ -27,18 +27,13 @@ struct AppReducer: ReducerProtocol {
         case setPath([StoreOf<EntryDetail>])
     }
     
-    var mainQueue: AnySchedulerOf<DispatchQueue> = .main
-    var storageService: StorageServiceType
+    @Dependency(\.mainQueue) var mainQueue
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboardState, action: /Action.dashboard) {
-            Dashboard(
-                mainQueue: mainQueue,
-                fetch: storageService.fetch,
-                delete: storageService.delete(logbookEntry:),
-                fetchFilters: storageService.fetchFilters
-            )
+            Dashboard()
         }
+        
         Reduce { state, action in
             switch action {
             case let .setIsPresentingForm(isPresenting):
@@ -92,14 +87,10 @@ struct AppReducer: ReducerProtocol {
             }
         }
         .ifLet(\.entryFormState, action: /Action.entryForm) {
-            EntryForm(save: storageService.save(logbookEntry:))
+            EntryForm()
         }
         .ifLet(\.filterSheetState, action: /Action.filterSheet) {
-            FilterSheet(
-                mainQueue: mainQueue,
-                fetch: storageService.fetch,
-                save: storageService.save
-            )
+            FilterSheet()
         }
     }
 }

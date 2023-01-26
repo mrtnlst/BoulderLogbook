@@ -132,7 +132,6 @@
 		5B289AE429058BBF00EC6F0B /* FilterSheet */ = {
 			isa = PBXGroup;
 			children = (
-				5BC73A9429059A1200B579D7 /* Filter */,
 				5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */,
 				5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */,
 			);
@@ -142,8 +141,8 @@
 		5BC73A9429059A1200B579D7 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
-				5BC73A8A290599EC00B579D7 /* FilterView.swift */,
 				5BC0C9B9297F204900E8C567 /* Filter.swift */,
+				5BC73A8A290599EC00B579D7 /* FilterView.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -173,12 +172,13 @@
 				A9435D8529826D6B001DC22B /* Info.plist */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A9B07E852868588700AA6274 /* App */,
-				5BEA9BBA288C251900E376E8 /* Diagram */,
-				A9CE6761288004D300027885 /* EntryDetail */,
-				5B289AE429058BBF00EC6F0B /* FilterSheet */,
-				A9C300592982929C001B51C4 /* EntryForm */,
 				A9C3005329829070001B51C4 /* Dashboard */,
 				A9C300542982907D001B51C4 /* DashboardSection */,
+				5BEA9BBA288C251900E376E8 /* Diagram */,
+				A9CE6761288004D300027885 /* EntryDetail */,
+				A9C300592982929C001B51C4 /* EntryForm */,
+				5BC73A9429059A1200B579D7 /* Filter */,
+				5B289AE429058BBF00EC6F0B /* FilterSheet */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
 			path = BoulderLogbook;

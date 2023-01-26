@@ -46,10 +46,7 @@ struct FilterSheetView_Previews: PreviewProvider {
                 FilterSheetView(
                     store: Store(
                         initialState: FilterSheet.State(),
-                        reducer: FilterSheet(
-                            fetch: { _ in return .none },
-                            save: { _, _ in return .none }
-                        )
+                        reducer: FilterSheet()
                     )
                 )
                 .presentationDetents([.medium])

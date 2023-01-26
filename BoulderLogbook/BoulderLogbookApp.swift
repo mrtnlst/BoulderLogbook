@@ -12,9 +12,7 @@ import ComposableArchitecture
 struct BoulderLogbookApp: App {
     static var store = Store(
         initialState: AppReducer.State(),
-        reducer: AppReducer(
-            storageService: StorageService()
-        )
+        reducer: AppReducer()
     )
     
     var body: some Scene {

@@ -21,14 +21,14 @@ struct Filter: ReducerProtocol {
         case setIsOn(Bool)
     }
     
-    var mainQueue: AnySchedulerOf<DispatchQueue> = .main
-    var fetch: (String) -> Effect<Bool, Never>
-    var save: (Bool, String) -> Effect<Never, Never>
+    @Dependency(\.mainQueue) var mainQueue
+    @Dependency(\.storageService) var storageService
     
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .fetch:
-            return fetch(state.grade.gradeDescription)
+            return storageService
+                .fetch(filterKey: state.grade.gradeDescription)
                 .receive(on: mainQueue)
                 .catchToEffect(Action.receiveValue)
             
@@ -38,10 +38,9 @@ struct Filter: ReducerProtocol {
             
         case let .setIsOn(isOn):
             state.isOn = isOn
-            return save(isOn, state.grade.gradeDescription)
+            return storageService
+                .save(value: isOn, for: state.grade.gradeDescription)
                 .fireAndForget()
         }
     }
-    
-    
 }

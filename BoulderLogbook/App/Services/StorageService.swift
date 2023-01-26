@@ -8,6 +8,18 @@
 import Foundation
 import Combine
 import ComposableArchitecture
+import Dependencies
+
+private enum StorageServiceKey: DependencyKey {
+    static var liveValue: StorageServiceType = StorageService()
+}
+
+extension DependencyValues {
+    var storageService: StorageServiceType {
+        get { self[StorageServiceKey.self] }
+        set { self[StorageServiceKey.self] = newValue }
+    }
+}
 
 fileprivate extension String {
     static let logbookKey = "Logbook"

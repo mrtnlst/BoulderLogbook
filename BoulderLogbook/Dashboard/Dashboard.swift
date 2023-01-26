@@ -25,11 +25,9 @@ struct Dashboard: ReducerProtocol {
         case presentFilters
     }
     
-    var mainQueue: AnySchedulerOf<DispatchQueue> = .main
-    var fetch: () -> Effect<Logbook, Never>
-    var delete: (Logbook.Entry) -> Effect<Never, Never>
-    var fetchFilters: () -> Effect<[BoulderGrade], Never>
-    
+    @Dependency(\.mainQueue) var mainQueue
+    @Dependency(\.storageService) var storageService
+
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.diagramState, action: /Action.diagram) {
             Diagram()
@@ -44,12 +42,14 @@ struct Dashboard: ReducerProtocol {
                 )
                 
             case .fetch:
-                return fetch()
+                return storageService
+                    .fetch()
                     .receive(on: mainQueue)
                     .catchToEffect(Action.receiveLogbookEntries)
                 
             case .fetchFilters:
-                return fetchFilters()
+                return storageService
+                    .fetchFilters()
                     .receive(on: mainQueue)
                     .catchToEffect(Action.receiveFilters)
                 
@@ -79,7 +79,8 @@ struct Dashboard: ReducerProtocol {
             case let .dashboardSection(id: _, action: .delete(logbookEntry)) ,
                 let .dashboardSection(id: _, action:.entryDetail(id: _, action: .delete(logbookEntry))):
                 return .merge(
-                    delete(logbookEntry)
+                    storageService
+                        .delete(logbookEntry: logbookEntry)
                         .fireAndForget(),
                     Effect(value: .fetch)
                 )

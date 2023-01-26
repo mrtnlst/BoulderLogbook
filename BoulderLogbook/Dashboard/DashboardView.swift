@@ -73,11 +73,7 @@ struct SummaryView_Previews: PreviewProvider {
             DashboardView(
                 store: Store(
                     initialState: Dashboard.State(Logbook.sampleLogbook),
-                    reducer: Dashboard(
-                        fetch: { return .none },
-                        delete: { _ in return .none },
-                        fetchFilters: { return .none }
-                    )
+                    reducer: Dashboard()
                 )
             )
         }

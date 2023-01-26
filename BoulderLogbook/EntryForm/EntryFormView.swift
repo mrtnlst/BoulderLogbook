@@ -89,9 +89,7 @@ struct FormView_Previews: PreviewProvider {
         EntryFormView(
             store: Store(
                 initialState: EntryForm.State(),
-                reducer: EntryForm(
-                    save: { _ in return .none }
-                )
+                reducer: EntryForm()
             )
         )
     }

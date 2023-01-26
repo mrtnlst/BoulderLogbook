@@ -36,20 +36,14 @@ struct FilterView_Previews: PreviewProvider {
             FilterView(
                 store: Store(
                     initialState: Filter.State(grade: .blue, isOn: true),
-                    reducer: Filter(
-                        fetch: { _ in return .none },
-                        save: { _, _ in return .none }
-                    )
+                    reducer: Filter()
                 )
             )
             
             FilterView(
                 store: Store(
                     initialState: Filter.State(grade: .red, isOn: false),
-                    reducer: Filter(
-                        fetch: { _ in return .none },
-                        save: { _, _ in return .none }
-                    )
+                    reducer: Filter()
                 )
             )
         }
