@@ -28,6 +28,7 @@ struct AppReducer: ReducerProtocol {
     }
     
     @Dependency(\.mainQueue) var mainQueue
+    @Dependency(\.continuousClock) var clock
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboardState, action: /Action.dashboard) {
@@ -80,7 +81,10 @@ struct AppReducer: ReducerProtocol {
                 return .none
                 
             case .filterSheet(.filter(_, .setIsOn(_))):
-                return EffectPublisher(value: .dashboard(.fetchFilters))
+                return .task {
+                    try await self.clock.sleep(for: .milliseconds(500))
+                    return .dashboard(.fetchFilters)
+                }
                 
             case .filterSheet(_):
                 return .none
