@@ -108,8 +108,9 @@ extension StorageService {
     func fetchFilters() -> [BoulderGrade] {
         // We distinguish between active, inactive and not saved filters.
         let filters = BoulderGrade.allCases.reduce(into: [BoulderGrade: Bool]()) { partialResult, value in
-            let state = userDefaults.bool(forKey: value.gradeDescription)
-            partialResult[value] = state
+            if let state = userDefaults.object(forKey: value.gradeDescription) as? Bool {
+                partialResult[value] = state
+            }
         }
         // If no filters have been saved we assume a fresh install and show all.
         if filters.isEmpty {
