@@ -40,7 +40,7 @@ extension DashboardView {
             .onAppear {
                 viewStore.send(.onAppear)
             }
-            .navigationTitle("Summary")
+            .navigationTitle("Dashboard")
         }
     }
     
@@ -67,7 +67,7 @@ extension DashboardView {
 }
 
 
-struct SummaryView_Previews: PreviewProvider {
+struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             DashboardView(

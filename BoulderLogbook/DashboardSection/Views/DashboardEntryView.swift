@@ -50,7 +50,7 @@ extension DashboardEntryView {
 }
 
 
-struct SummaryEntryView_Previews: PreviewProvider {
+struct DashboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             DashboardEntryView(

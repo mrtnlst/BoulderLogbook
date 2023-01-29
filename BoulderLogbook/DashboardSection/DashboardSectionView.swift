@@ -47,7 +47,7 @@ struct DashboardSectionView: View {
     }
 }
 
-struct SummarySectionView_Previews: PreviewProvider {
+struct DashboardSectionView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             List {
