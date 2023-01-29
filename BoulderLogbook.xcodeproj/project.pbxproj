@@ -22,6 +22,10 @@
 		5BDD41F02986850700B84BA0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41EF2986850700B84BA0 /* Settings.swift */; };
 		5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41F229868AA400B84BA0 /* SettingsView.swift */; };
 		5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */; };
+		5BDD41F82986905800B84BA0 /* GradeSystemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41F72986905800B84BA0 /* GradeSystemList.swift */; };
+		5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41F92986909300B84BA0 /* GradeSystemListView.swift */; };
+		5BDD42002987086800B84BA0 /* GradeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41FF2987086800B84BA0 /* GradeEntry.swift */; };
+		5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */; };
 		5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* Logbook.Section.swift */; };
 		5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
@@ -73,6 +77,10 @@
 		5BDD41EF2986850700B84BA0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		5BDD41F229868AA400B84BA0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystem.swift; sourceTree = "<group>"; };
+		5BDD41F72986905800B84BA0 /* GradeSystemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemList.swift; sourceTree = "<group>"; };
+		5BDD41F92986909300B84BA0 /* GradeSystemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemListView.swift; sourceTree = "<group>"; };
+		5BDD41FF2987086800B84BA0 /* GradeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeEntry.swift; sourceTree = "<group>"; };
+		5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemClient.swift; sourceTree = "<group>"; };
 		5BE79CC328B620820083EE33 /* Logbook.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Section.swift; sourceTree = "<group>"; };
 		5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Entry.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -172,8 +180,19 @@
 				A9B07E8D2868588700AA6274 /* LogbookData.swift */,
 				A9B07E8F2868588700AA6274 /* EntryData.swift */,
 				5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */,
+				5BDD41FF2987086800B84BA0 /* GradeEntry.swift */,
 			);
 			path = Codables;
+			sourceTree = "<group>";
+		};
+		5BDD41FB2986909C00B84BA0 /* GradeSystemList */ = {
+			isa = PBXGroup;
+			children = (
+				5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */,
+				5BDD41F72986905800B84BA0 /* GradeSystemList.swift */,
+				5BDD41F92986909300B84BA0 /* GradeSystemListView.swift */,
+			);
+			path = GradeSystemList;
 			sourceTree = "<group>";
 		};
 		5BEA9BBA288C251900E376E8 /* Diagram */ = {
@@ -208,6 +227,7 @@
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BC73A9429059A1200B579D7 /* Filter */,
 				5B289AE429058BBF00EC6F0B /* FilterSheet */,
+				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
@@ -237,6 +257,7 @@
 			children = (
 				A9C3005A298292F8001B51C4 /* AppReducer.swift */,
 				A9B07E8B2868588700AA6274 /* AppView.swift */,
+				5B1A80772896EBD100530B01 /* Extensions */,
 				A9B07E8C2868588700AA6274 /* Models */,
 				A9B07E902868588700AA6274 /* Services */,
 				5B1A80772896EBD100530B01 /* Extensions */,
@@ -411,6 +432,7 @@
 				A9C3005229828948001B51C4 /* Dashboard.swift in Sources */,
 				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
 				A9B07EAD2868588700AA6274 /* LogbookData.swift in Sources */,
+				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				A961AB60298286C600AD89DD /* Diagram.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
@@ -421,12 +443,14 @@
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
+				5BDD41F82986905800B84BA0 /* GradeSystemList.swift in Sources */,
 				5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
+				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
 				5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */,
 				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
@@ -435,6 +459,7 @@
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5B289AD328DA1B8C00EC6F0B /* DiagramView.swift in Sources */,
+				5BDD42002987086800B84BA0 /* GradeEntry.swift in Sources */,
 				5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */,
 				5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */,
 				A9B07EAF2868588700AA6274 /* LegacyBoulderGrade.swift in Sources */,

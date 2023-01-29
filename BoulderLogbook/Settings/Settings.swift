@@ -9,10 +9,21 @@ import Foundation
 import ComposableArchitecture
 
 struct Settings: ReducerProtocol {
-    struct State: Equatable {}
-    enum Action {}
+    struct State: Equatable {
+        var gradeSystemList: GradeSystemList.State = GradeSystemList.State()
+    }
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    enum Action {
+        case gradeSystemList(GradeSystemList.Action)
+    }
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: \.gradeSystemList, action: /Action.gradeSystemList) {
+            GradeSystemList()
+        }
         
+        Reduce { _, _ in
+            return .none
+        }
     }
 }

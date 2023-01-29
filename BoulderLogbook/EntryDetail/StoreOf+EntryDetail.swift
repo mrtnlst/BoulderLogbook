@@ -12,7 +12,7 @@ extension StoreOf: Equatable where State == EntryDetail.State {
     public static func == (
         lhs: ComposableArchitecture.Store<State, Action>,
         rhs: ComposableArchitecture.Store<State, Action>) -> Bool {
-            ViewStore(lhs).id == ViewStore(rhs).id
+            ViewStore(lhs).id == ViewStore(rhs).id && ViewStore(lhs).entry == ViewStore(rhs).entry
     }
 }
 

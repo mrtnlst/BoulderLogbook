@@ -13,10 +13,41 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                
+            WithViewStore(store) { viewStore in
+                List {
+                    NavigationLink {
+                        GradeSystemListView(
+                            store: store.scope(
+                                state: \.gradeSystemList,
+                                action: Settings.Action.gradeSystemList
+                            )
+                        )
+                    } label: {
+                        gradeSystemList()
+                    }
+                }
+                .navigationTitle("Settings")
             }
-            .navigationTitle("Settings")
+        }
+    }
+}
+
+extension SettingsView {
+    @ViewBuilder func gradeSystemList() -> some View {
+        WithViewStore(store) { viewStore in
+            HStack {
+                Image(systemName: "square.fill.text.grid.1x2")
+                    .font(.title)
+                    .foregroundColor(.accentColor)
+                VStack(alignment: .leading) {
+                    Text("Grade Systems")
+                    if let system = viewStore.gradeSystemList.selectedSystem {
+                        Text("Selected: \(system.name)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
         }
     }
 }

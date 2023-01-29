@@ -8,26 +8,19 @@
 import Foundation
 import SwiftUI
 
-struct GradeEntry: Codable {
-    let gradeSystem: GradeSystem
-    let grade: GradeSystem.Grade
-    let isAttempt: Bool
-    let wasFlash: Bool
-    let wasOnsight: Bool
-}
-
-struct GradeSystem: Codable {
-    struct Grade: Codable {
+struct GradeSystem: Equatable, Codable, Identifiable {
+    struct Grade: Equatable, Codable {
         let name: String
         let color: Color
         let difficulty: Int
     }
-    
+    let id: UUID
     let name: String
     let grades: [Grade]
 }
 
 let mandalaGrades: GradeSystem = GradeSystem(
+    id: UUID(),
     name: "Mandala",
     grades: [
         .init(
@@ -61,4 +54,10 @@ let mandalaGrades: GradeSystem = GradeSystem(
             difficulty: 5
         )
     ]
+)
+
+let kletterarenaGrades: GradeSystem = GradeSystem(
+    id: UUID(),
+    name: "Kletterarena",
+    grades: []
 )
