@@ -29,7 +29,7 @@ protocol StorageServiceType {
     func save(_ logbookEntry: Logbook.Entry)
     func delete(_ logbookEntry: Logbook.Entry)
     
-    func fetchFilters() -> [BoulderGrade]
+    func fetchFilters() -> [LegacyBoulderGrade]
     func fetchFilter(_ filterKey: String) -> Bool
     func saveFilter(_ filterKey: String, with value: Bool)
 }
@@ -105,19 +105,19 @@ extension StorageService {
         return userDefaults.object(forKey: filterKey) as? Bool ?? false
     }
     
-    func fetchFilters() -> [BoulderGrade] {
+    func fetchFilters() -> [LegacyBoulderGrade] {
         // We distinguish between active, inactive and not saved filters.
-        let filters = BoulderGrade.allCases.reduce(into: [BoulderGrade: Bool]()) { partialResult, value in
+        let filters = LegacyBoulderGrade.allCases.reduce(into: [LegacyBoulderGrade: Bool]()) { partialResult, value in
             if let state = userDefaults.object(forKey: value.gradeDescription) as? Bool {
                 partialResult[value] = state
             }
         }
         // If no filters have been saved we assume a fresh install and show all.
         if filters.isEmpty {
-            BoulderGrade.allCases.forEach {
+            LegacyBoulderGrade.allCases.forEach {
                 saveFilter($0.gradeDescription, with: true)
             }
-            return BoulderGrade.allCases
+            return LegacyBoulderGrade.allCases
         }
         // We only return the active filters.
         let activeFilters = filters.compactMap { $0.value ? $0.key : nil }

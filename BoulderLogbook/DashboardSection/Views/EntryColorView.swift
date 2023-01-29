@@ -13,7 +13,7 @@ struct EntryColorView: View {
     var body: some View {
         GeometryReader { reader in
             HStack(spacing: 0) {
-                ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
+                ForEach(LegacyBoulderGrade.allCases.reversed(), id: \.self) { grade in
                     colorSegment(for: grade, and: reader.size.width)
                 }
             }
@@ -21,7 +21,7 @@ struct EntryColorView: View {
         .cornerRadius(8)
     }
     
-    @ViewBuilder func colorSegment(for grade: BoulderGrade, and width: CGFloat) -> some View {
+    @ViewBuilder func colorSegment(for grade: LegacyBoulderGrade, and width: CGFloat) -> some View {
         let numberOfTops = entry.numberOfGrades(for: grade)
         if numberOfTops > 0 {
             ZStack {
@@ -30,7 +30,7 @@ struct EntryColorView: View {
                 )
                 Text("\(numberOfTops)")
                     .font(.caption2.weight(.light))
-                    .foregroundColor(grade == BoulderGrade.white ? Color.black : Color.white)
+                    .foregroundColor(grade == LegacyBoulderGrade.white ? Color.black : Color.white)
             }
         }
     }

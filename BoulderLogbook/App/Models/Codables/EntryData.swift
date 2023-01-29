@@ -10,9 +10,9 @@ import Foundation
 struct EntryData: Codable, Equatable {
     var id: String
     var date: Date
-    var tops: [BoulderGrade]
+    var tops: [LegacyBoulderGrade]
    
-    init(id: String, date: Date, tops: [BoulderGrade]) {
+    init(id: String, date: Date, tops: [LegacyBoulderGrade]) {
         self.id = id
         self.date = date
         self.tops = tops
@@ -26,6 +26,6 @@ struct EntryData: Codable, Equatable {
             self.id = UUID().uuidString
         }
         self.date = try container.decode(Date.self, forKey: .date)
-        self.tops = try container.decode([BoulderGrade].self, forKey: .tops)
+        self.tops = try container.decode([LegacyBoulderGrade].self, forKey: .tops)
     }
 }

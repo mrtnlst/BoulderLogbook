@@ -20,7 +20,7 @@ struct Dashboard: ReducerProtocol {
         case fetchFilters
         case receiveLogbook(TaskResult<Logbook>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
-        case receiveFilters(TaskResult<[BoulderGrade]>)
+        case receiveFilters(TaskResult<[LegacyBoulderGrade]>)
         case diagram(Diagram.Action)
         case presentFilters
     }

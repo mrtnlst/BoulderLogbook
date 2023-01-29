@@ -11,9 +11,9 @@ extension Logbook {
     public struct Entry: Identifiable, Equatable, Hashable {
         public var id: String
         var date: Date
-        var tops: [BoulderGrade]
+        var tops: [LegacyBoulderGrade]
         
-        init(id: String = UUID().uuidString, date: Date, tops: [BoulderGrade]) {
+        init(id: String = UUID().uuidString, date: Date, tops: [LegacyBoulderGrade]) {
             self.id = id
             self.date = date
             self.tops = tops
@@ -30,7 +30,7 @@ extension Logbook.Entry {
         date.yearMonthDayDate ?? date
     }
     
-    func numberOfGrades(for grade: BoulderGrade) -> Int {
+    func numberOfGrades(for grade: LegacyBoulderGrade) -> Int {
         let dictionary = tops.reduce(into: [:]) { counts, number in
             counts[number, default: 0] += 1
         }

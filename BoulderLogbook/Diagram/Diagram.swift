@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct Diagram: ReducerProtocol {
     struct State: Equatable {
         var entries: [Logbook.Entry] = []
-        var filters: [BoulderGrade] = BoulderGrade.allCases
+        var filters: [LegacyBoulderGrade] = LegacyBoulderGrade.allCases
         var selectedSegment: Segment = .week
         
         init(entries: [Logbook.Entry] = []) {
@@ -76,7 +76,7 @@ extension Diagram.State {
     var chartSections: [Entry] {
         return entries.prefix(selectedSegment.tag).reduce(into: []) { partialResult, entry in
             partialResult.append(
-                contentsOf: BoulderGrade.allCases.compactMap { grade in
+                contentsOf: LegacyBoulderGrade.allCases.compactMap { grade in
                     guard filters.contains(grade) else {
                         return nil
                     }
@@ -98,7 +98,7 @@ extension Diagram.State {
 extension Diagram.State {
     struct Entry: Identifiable {
         let id: UUID = UUID()
-        var grade: BoulderGrade
+        var grade: LegacyBoulderGrade
         var date: String
         var count: Int
     }

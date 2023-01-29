@@ -69,7 +69,7 @@ extension DiagramView {
                     }
                 }
                 .chartYScale(domain: 0...viewStore.maximumValue)
-                .chartForegroundStyleScale(BoulderGrade.chartForegroundStyleScale)
+                .chartForegroundStyleScale(LegacyBoulderGrade.chartForegroundStyleScale)
                 .chartLegend(.hidden)
 //               FIXME: .animation(.default, value: viewStore.selectedSegment)
             }

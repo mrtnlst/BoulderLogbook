@@ -50,7 +50,7 @@ struct EntryViewChart: View {
     
     var body: some View {
         Chart {
-            ForEach(BoulderGrade.allCases.reversed(), id: \.self) { grade in
+            ForEach(LegacyBoulderGrade.allCases.reversed(), id: \.self) { grade in
                 BarMark(
                     x: .value("Grade", grade.gradeDescription),
                     y: .value("Tops", entry.numberOfGrades(for: grade))
@@ -59,13 +59,13 @@ struct EntryViewChart: View {
             }
         }
         .chartForegroundStyleScale([
-            BoulderGrade.purple.gradeDescription: BoulderGrade.purple.color,
-            BoulderGrade.yellow.gradeDescription: BoulderGrade.yellow.color,
-            BoulderGrade.white.gradeDescription: BoulderGrade.white.color,
-            BoulderGrade.black.gradeDescription: BoulderGrade.black.color,
-            BoulderGrade.orange.gradeDescription: BoulderGrade.orange.color,
-            BoulderGrade.red.gradeDescription: BoulderGrade.red.color,
-            BoulderGrade.blue.gradeDescription: BoulderGrade.blue.color
+            LegacyBoulderGrade.purple.gradeDescription: LegacyBoulderGrade.purple.color,
+            LegacyBoulderGrade.yellow.gradeDescription: LegacyBoulderGrade.yellow.color,
+            LegacyBoulderGrade.white.gradeDescription: LegacyBoulderGrade.white.color,
+            LegacyBoulderGrade.black.gradeDescription: LegacyBoulderGrade.black.color,
+            LegacyBoulderGrade.orange.gradeDescription: LegacyBoulderGrade.orange.color,
+            LegacyBoulderGrade.red.gradeDescription: LegacyBoulderGrade.red.color,
+            LegacyBoulderGrade.blue.gradeDescription: LegacyBoulderGrade.blue.color
         ])
         .chartLegend(.hidden)
         .frame(height: 200)

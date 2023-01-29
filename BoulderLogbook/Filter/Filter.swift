@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct Filter: ReducerProtocol {
     struct State: Equatable, Identifiable {
         var id: UUID = UUID()
-        var grade: BoulderGrade
+        var grade: LegacyBoulderGrade
         var isOn: Bool
     }
     

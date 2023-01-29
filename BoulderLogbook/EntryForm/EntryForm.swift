@@ -22,8 +22,8 @@ struct EntryForm: ReducerProtocol {
     enum Action {
         case cancel
         case save
-        case increase(BoulderGrade)
-        case decrease(BoulderGrade)
+        case increase(LegacyBoulderGrade)
+        case decrease(LegacyBoulderGrade)
         case didSelectDate(Date)
     }
     

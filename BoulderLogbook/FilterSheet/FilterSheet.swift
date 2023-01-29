@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct FilterSheet: ReducerProtocol {
     struct State: Equatable {
         var filters: IdentifiedArrayOf<Filter.State> = IdentifiedArray(
-            uniqueElements: BoulderGrade.allCases.map {
+            uniqueElements: LegacyBoulderGrade.allCases.map {
                 Filter.State(
                     grade: $0,
                     isOn: false
