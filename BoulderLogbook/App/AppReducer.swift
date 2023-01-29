@@ -11,20 +11,23 @@ import ComposableArchitecture
 struct AppReducer: ReducerProtocol {
     struct State: Equatable {
         var dashboard: Dashboard.State = Dashboard.State()
-        var entryFormState: EntryForm.State?
+        var settings: Settings.State?
         var entryForm: EntryForm.State?
         var filterSheet: FilterSheet.State?
         var isPresentingForm: Bool = false
         var isPresentingFilter: Bool = false
+        var isPresentingSettings: Bool = false
         var path: [StoreOf<EntryDetail>] = []
     }
     
     enum Action {
         case dashboard(Dashboard.Action)
+        case settings(Settings.Action)
         case entryForm(EntryForm.Action)
         case filterSheet(FilterSheet.Action)
         case setIsPresentingForm(Bool)
         case setIsPresentingFilter(Bool)
+        case setIsPresentingSettings(Bool)
         case setPath([StoreOf<EntryDetail>])
     }
     
@@ -46,6 +49,11 @@ struct AppReducer: ReducerProtocol {
             case let .setIsPresentingFilter(isPresenting):
                 state.filterSheet = isPresenting ? FilterSheet.State() : nil
                 state.isPresentingFilter = isPresenting
+                return .none
+                
+            case let .setIsPresentingSettings(isPresenting):
+                state.settings = isPresenting ? Settings.State() : nil
+                state.isPresentingSettings = isPresenting
                 return .none
                 
             case let .setPath(path):
@@ -81,6 +89,9 @@ struct AppReducer: ReducerProtocol {
             case .dashboard(_):
                 return .none
                 
+            case .settings(_):
+                return .none
+                
             case .filterSheet(.filter(_, .setIsOn(_))):
                 return .task {
                     try await self.clock.sleep(for: .milliseconds(500))
@@ -96,6 +107,9 @@ struct AppReducer: ReducerProtocol {
         }
         .ifLet(\.filterSheet, action: /Action.filterSheet) {
             FilterSheet()
+        }
+        .ifLet(\.settings, action: /Action.settings) {
+            Settings()
         }
     }
 }

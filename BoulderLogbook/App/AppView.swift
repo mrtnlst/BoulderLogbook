@@ -26,13 +26,24 @@ extension AppView {
     @ViewBuilder func dashboardView() -> some View {
         WithViewStore(store) { viewStore in
             DashboardView(
-                store: store.scope(state: \.dashboardState, action: AppReducer.Action.dashboard)
+                store: store.scope(state: \.dashboard, action: AppReducer.Action.dashboard)
             )
             .toolbar {
-                Button {
-                    viewStore.send(.setIsPresentingForm(true))
-                } label: {
-                    Image(systemName: "plus.circle.fill")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        viewStore.send(.setIsPresentingSettings(true))
+                    } label: {
+                        Image(systemName: "gear")
+                            .fontWeight(.bold)
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewStore.send(.setIsPresentingForm(true))
+                    } label: {
+                        Image(systemName: "plus")
+                            .fontWeight(.bold)
+                    }
                 }
             }
             .sheet(
@@ -65,6 +76,21 @@ extension AppView {
                     FilterSheetView(store: filterSheetStore)
                 }
                 .presentationDetents([.medium])
+            }
+            .sheet(
+                isPresented: viewStore.binding(
+                    get: \.isPresentingSettings,
+                    send: AppReducer.Action.setIsPresentingSettings
+                )
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.settings,
+                        action: AppReducer.Action.settings
+                    )
+                ) { settingsStore in
+                    SettingsView(store: settingsStore)
+                }
             }
         }
     }

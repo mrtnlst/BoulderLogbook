@@ -18,6 +18,8 @@
 		5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */; };
 		5BC73A8B290599EC00B579D7 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC73A8A290599EC00B579D7 /* FilterView.swift */; };
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
+		5BDD41F02986850700B84BA0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41EF2986850700B84BA0 /* Settings.swift */; };
+		5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41F229868AA400B84BA0 /* SettingsView.swift */; };
 		5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC328B620820083EE33 /* Logbook.Section.swift */; };
 		5BE79CC628B6208A0083EE33 /* Logbook.Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
@@ -65,6 +67,8 @@
 		5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
 		5BC73A8A290599EC00B579D7 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
+		5BDD41EF2986850700B84BA0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		5BDD41F229868AA400B84BA0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5BE79CC328B620820083EE33 /* Logbook.Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Section.swift; sourceTree = "<group>"; };
 		5BE79CC528B6208A0083EE33 /* Logbook.Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.Entry.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -147,6 +151,15 @@
 			path = Filter;
 			sourceTree = "<group>";
 		};
+		5BDD41F129868A9A00B84BA0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5BDD41EF2986850700B84BA0 /* Settings.swift */,
+				5BDD41F229868AA400B84BA0 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		5BEA9BBA288C251900E376E8 /* Diagram */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +192,7 @@
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BC73A9429059A1200B579D7 /* Filter */,
 				5B289AE429058BBF00EC6F0B /* FilterSheet */,
+				5BDD41F129868A9A00B84BA0 /* Settings */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
 			path = BoulderLogbook;
@@ -398,11 +412,13 @@
 				A9B07EB12868588700AA6274 /* EntryData.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
+				5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */,
 				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
 				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
 				A9B07EB32868588700AA6274 /* StorageService.swift in Sources */,
+				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5B289AD328DA1B8C00EC6F0B /* DiagramView.swift in Sources */,
 				5BE79CC428B620820083EE33 /* Logbook.Section.swift in Sources */,
 				A9B07EAF2868588700AA6274 /* BoulderGrade.swift in Sources */,
