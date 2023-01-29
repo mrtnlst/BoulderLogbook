@@ -43,7 +43,7 @@ extension AppView {
             ) {
                 IfLetStore(
                     store.scope(
-                        state: \.entryFormState,
+                        state: \.entryForm,
                         action: AppReducer.Action.entryForm
                     )
                 ) { formStore in
@@ -58,7 +58,7 @@ extension AppView {
             ) {
                 IfLetStore(
                     store.scope(
-                        state: \.filterSheetState,
+                        state: \.filterSheet,
                         action: AppReducer.Action.filterSheet
                     )
                 ) { filterSheetStore in
@@ -75,7 +75,7 @@ struct AppView_Previews: PreviewProvider {
         AppView(
             store: Store(
                 initialState: AppReducer.State(
-                    dashboardState: Dashboard.State(Logbook.sampleLogbook)
+                    dashboard: Dashboard.State(Logbook.sampleLogbook)
                 ),
                 reducer: AppReducer()
             )

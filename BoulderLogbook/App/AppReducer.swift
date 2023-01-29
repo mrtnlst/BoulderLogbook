@@ -10,9 +10,10 @@ import ComposableArchitecture
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable {
-        var dashboardState: Dashboard.State = Dashboard.State()
+        var dashboard: Dashboard.State = Dashboard.State()
         var entryFormState: EntryForm.State?
-        var filterSheetState: FilterSheet.State?
+        var entryForm: EntryForm.State?
+        var filterSheet: FilterSheet.State?
         var isPresentingForm: Bool = false
         var isPresentingFilter: Bool = false
         var path: [StoreOf<EntryDetail>] = []
@@ -31,19 +32,19 @@ struct AppReducer: ReducerProtocol {
     @Dependency(\.continuousClock) var clock
 
     var body: some ReducerProtocol<State, Action> {
-        Scope(state: \.dashboardState, action: /Action.dashboard) {
+        Scope(state: \.dashboard, action: /Action.dashboard) {
             Dashboard()
         }
         
         Reduce { state, action in
             switch action {
             case let .setIsPresentingForm(isPresenting):
-                state.entryFormState = isPresenting ? EntryForm.State() : nil
+                state.entryForm = isPresenting ? EntryForm.State() : nil
                 state.isPresentingForm = isPresenting
                 return .none
                 
             case let .setIsPresentingFilter(isPresenting):
-                state.filterSheetState = isPresenting ? FilterSheet.State() : nil
+                state.filterSheet = isPresenting ? FilterSheet.State() : nil
                 state.isPresentingFilter = isPresenting
                 return .none
                 
@@ -70,7 +71,7 @@ struct AppReducer: ReducerProtocol {
             case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
                 let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
                 state.path = []
-                state.entryFormState = EntryForm.State(entry: entry, isNewEntry: false)
+                state.entryForm = EntryForm.State(entry: entry, isNewEntry: false)
                 state.isPresentingForm = true
                 return .none
                 
@@ -90,10 +91,10 @@ struct AppReducer: ReducerProtocol {
                 return .none
             }
         }
-        .ifLet(\.entryFormState, action: /Action.entryForm) {
+        .ifLet(\.entryForm, action: /Action.entryForm) {
             EntryForm()
         }
-        .ifLet(\.filterSheetState, action: /Action.filterSheet) {
+        .ifLet(\.filterSheet, action: /Action.filterSheet) {
             FilterSheet()
         }
     }
