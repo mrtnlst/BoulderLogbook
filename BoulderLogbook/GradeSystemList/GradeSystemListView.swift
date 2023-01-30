@@ -20,6 +20,7 @@ struct GradeSystemListView: View {
                         isSelected: gradeSystem == viewStore.selectedSystem
                     )
                 }
+                .onDelete { viewStore.send(.deleteSystem($0)) }
             }
             .navigationTitle("Grade Systems")
             .toolbar {

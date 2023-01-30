@@ -12,6 +12,7 @@ struct GradeSystemClient {
     var fetchAvailableSystems: () -> [GradeSystem]
     var fetchSelectedSystem: () -> GradeSystem?
     var saveSystem: (GradeSystem) -> ()
+    var deleteSystems: ([GradeSystem]) -> ()
 }
 
 extension DependencyValues {
@@ -52,6 +53,18 @@ extension GradeSystemClient: DependencyKey {
                 }
                 gradeSystems.append(newValue)
                 let data = try? JSONEncoder().encode(gradeSystems)
+                defaults.set(data, forKey: gradeSystemsKey)
+            },
+            deleteSystems: { oldValues in
+                guard let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
+                      var decodedData = try? JSONDecoder().decode([GradeSystem].self, from: encodedData)
+                else {
+                    return
+                }
+                oldValues.forEach { oldValue in
+                    decodedData.removeAll(where: { $0.id == oldValue.id })
+                }
+                let data = try? JSONEncoder().encode(decodedData)
                 defaults.set(data, forKey: gradeSystemsKey)
             }
         )

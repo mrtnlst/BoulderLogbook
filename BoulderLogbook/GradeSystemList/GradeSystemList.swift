@@ -24,6 +24,7 @@ struct GradeSystemList: ReducerProtocol {
         case receiveSelectedSystem(TaskResult<GradeSystem>)
         case gradeSystemForm(GradeSystemForm.Action)
         case setIsPresentingForm(Bool)
+        case deleteSystem(IndexSet)
     }
     
     @Dependency(\.gradeSystemClient) var gradeSystemClient
@@ -73,6 +74,13 @@ struct GradeSystemList: ReducerProtocol {
                 state.isPresentingForm = isPresenting
                 state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
                 return .none
+                
+            case let .deleteSystem(from):
+                let oldValues = from.map { state.gradeSystems[$0] }
+                return .merge(
+                    .fireAndForget { gradeSystemClient.deleteSystems(oldValues) },
+                    .task { .fetchAvailableSystems }
+                )
             }
         }
         .ifLet(\.gradeSystemForm, action: /Action.gradeSystemForm) {
