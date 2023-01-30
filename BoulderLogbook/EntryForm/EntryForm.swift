@@ -11,11 +11,9 @@ import ComposableArchitecture
 struct EntryForm: ReducerProtocol {
     struct State: Equatable {
         var entry: Logbook.Entry
-        let isNewEntry: Bool
         
-        init(entry: Logbook.Entry = Logbook.Entry(date: .now, tops: []), isNewEntry: Bool = true) {
+        init(entry: Logbook.Entry = Logbook.Entry(date: .now, tops: [])) {
             self.entry = entry
-            self.isNewEntry = isNewEntry
         }
     }
     

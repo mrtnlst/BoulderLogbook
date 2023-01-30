@@ -25,10 +25,26 @@ struct GradeSystemListView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
+                        viewStore.send(.setIsPresentingForm(true))
                     } label: {
                         Image(systemName: "plus")
                             .fontWeight(.bold)
                     }
+                }
+            }
+            .sheet(
+                isPresented: viewStore.binding(
+                    get: \.isPresentingForm,
+                    send: GradeSystemList.Action.setIsPresentingForm
+                )
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.gradeSystemForm,
+                        action: GradeSystemList.Action.gradeSystemForm
+                    )
+                ) { formStore in
+                    GradeSystemFormView(store: formStore)
                 }
             }
             .onAppear {

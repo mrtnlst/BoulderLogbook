@@ -12,6 +12,8 @@ struct GradeSystemList: ReducerProtocol {
     public struct State: Equatable {
         var gradeSystems: [GradeSystem] = [mandalaGrades, kletterarenaGrades]
         var selectedSystem: GradeSystem?
+        var gradeSystemForm: GradeSystemForm.State?
+        var isPresentingForm: Bool = false
     }
     
     enum Action: Equatable {
@@ -20,37 +22,61 @@ struct GradeSystemList: ReducerProtocol {
         case fetchSelectedSystem
         case receiveAvailableSystems(TaskResult<[GradeSystem]>)
         case receiveSelectedSystem(TaskResult<GradeSystem>)
+        case gradeSystemForm(GradeSystemForm.Action)
+        case setIsPresentingForm(Bool)
     }
     
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-        case .onAppear:
-            return .merge(
-                .task { .fetchAvailableSystems },
-                .task { .fetchSelectedSystem }
-            )
-            
-        case .fetchAvailableSystems:
-            return .task {
-                await .receiveAvailableSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return .merge(
+                    .task { .fetchAvailableSystems },
+                    .task { .fetchSelectedSystem }
+                )
+                
+            case .fetchAvailableSystems:
+                return .task {
+                    await .receiveAvailableSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+                }
+                
+            case .fetchSelectedSystem:
+                return .none
+                
+            case let .receiveAvailableSystems(.success(gradeSystems)):
+                state.gradeSystems = gradeSystems
+                return .none
+                
+            case let .receiveSelectedSystem(.success(selectedSystem)):
+                state.selectedSystem = selectedSystem
+                return .none
+                
+            case .receiveAvailableSystems(.failure),
+                    .receiveSelectedSystem(.failure):
+                return .none
+                
+            case .gradeSystemForm(.cancel):
+                return .task { .setIsPresentingForm(false) }
+                
+            case .gradeSystemForm(.save):
+                return .merge(
+                    .task { .setIsPresentingForm(false) },
+                    .task { .fetchAvailableSystems }
+                )
+                
+            case .gradeSystemForm(_):
+                return .none
+                
+            case let .setIsPresentingForm(isPresenting):
+                state.isPresentingForm = isPresenting
+                state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
+                return .none
             }
-     
-        case .fetchSelectedSystem:
-            return .none
-            
-        case let .receiveAvailableSystems(.success(gradeSystems)):
-            state.gradeSystems = gradeSystems
-            return .none
-            
-        case let .receiveSelectedSystem(.success(selectedSystem)):
-            state.selectedSystem = selectedSystem
-            return .none
-            
-        case .receiveAvailableSystems(.failure),
-             .receiveSelectedSystem(.failure):
-            return .none
+        }
+        .ifLet(\.gradeSystemForm, action: /Action.gradeSystemForm) {
+            GradeSystemForm()
         }
     }
 }

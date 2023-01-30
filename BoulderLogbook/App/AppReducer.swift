@@ -79,7 +79,7 @@ struct AppReducer: ReducerProtocol {
             case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
                 let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
                 state.path = []
-                state.entryForm = EntryForm.State(entry: entry, isNewEntry: false)
+                state.entryForm = EntryForm.State(entry: entry)
                 state.isPresentingForm = true
                 return .none
                 

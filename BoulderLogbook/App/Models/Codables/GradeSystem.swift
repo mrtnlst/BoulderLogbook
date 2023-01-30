@@ -9,10 +9,18 @@ import Foundation
 import SwiftUI
 
 struct GradeSystem: Equatable, Codable, Identifiable {
-    struct Grade: Equatable, Codable {
-        let name: String
-        let color: Color
-        let difficulty: Int
+    struct Grade: Equatable, Codable, Identifiable {
+        let id: UUID
+        var name: String
+        var color: Color
+        var difficulty: Int
+        
+        init(id: UUID = UUID(), name: String = "", color: Color = .blue, difficulty: Int = 0) {
+            self.id = id
+            self.name = name
+            self.color = color
+            self.difficulty = difficulty
+        }
     }
     let id: UUID
     let name: String

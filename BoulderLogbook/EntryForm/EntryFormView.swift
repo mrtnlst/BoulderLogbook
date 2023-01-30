@@ -46,34 +46,15 @@ struct EntryFormView: View {
                         }
                     }
                     Section {
-                        buttonView(text: "Save", action: { viewStore.send(.save) })
-                        .foregroundColor(.green)
+                        RectangularButton(title: "Save", action: { viewStore.send(.save) })
+                            .foregroundColor(.green)
                         
-                        buttonView(text: "Cancel", action: { viewStore.send(.cancel) })
-                        .foregroundColor(.red)
+                        RectangularButton(title: "Cancel", action: { viewStore.send(.cancel) })
+                            .foregroundColor(.red)
                     }
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listRowInsets(.zero)
                 }
                 .navigationTitle("New Entry")
-            }
-        }
-    }
-}
-
-extension EntryFormView {
-    @ViewBuilder func buttonView(
-        text: String,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button {
-            action()
-        } label: {
-            HStack {
-                Text("")
-                    .hidden()
-                Spacer()
-                Text(text)
-                Spacer()
             }
         }
     }
