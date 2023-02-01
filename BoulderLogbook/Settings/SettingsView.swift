@@ -41,11 +41,6 @@ extension SettingsView {
                     .foregroundColor(.accentColor)
                 VStack(alignment: .leading) {
                     Text("Grade Systems")
-                    if let system = viewStore.gradeSystemList.selectedSystem {
-                        Text("Selected: \(system.name)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
                 }
             }
         }
