@@ -11,8 +11,8 @@ import ComposableArchitecture
 struct GradeSystemForm: ReducerProtocol {
     struct State: Equatable {
         var id: UUID
-        @BindableState var name: String
-        @BindableState var grades: [GradeSystem.Grade]
+        @BindingState var name: String
+        @BindingState var grades: [GradeSystem.Grade]
         
         init(
             id: UUID = UUID(),
