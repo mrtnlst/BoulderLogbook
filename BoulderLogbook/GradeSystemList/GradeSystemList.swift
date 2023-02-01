@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct GradeSystemList: ReducerProtocol {
     public struct State: Equatable {
-        var gradeSystems: [GradeSystem] = [mandalaGrades, kletterarenaGrades]
+        var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
         var gradeSystemForm: GradeSystemForm.State?
         var isPresentingForm: Bool = false
@@ -21,13 +21,15 @@ struct GradeSystemList: ReducerProtocol {
         case fetchAvailableSystems
         case fetchSelectedSystem
         case receiveAvailableSystems(TaskResult<[GradeSystem]>)
-        case receiveSelectedSystem(TaskResult<GradeSystem>)
+        case receiveSelectedSystem(TaskResult<UUID?>)
         case gradeSystemForm(GradeSystemForm.Action)
         case setIsPresentingForm(Bool)
         case deleteSystem(IndexSet)
+        case saveSelectedSystem(UUID)
     }
     
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(\.gradeSystemClient) var client
+    @Dependency(\.continuousClock) var clock
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
@@ -40,18 +42,24 @@ struct GradeSystemList: ReducerProtocol {
                 
             case .fetchAvailableSystems:
                 return .task {
-                    await .receiveAvailableSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+                    await .receiveAvailableSystems(
+                        TaskResult { client.fetchAvailableSystems() }
+                    )
                 }
                 
             case .fetchSelectedSystem:
-                return .none
+                return .task {
+                    await .receiveSelectedSystem(
+                        TaskResult { client.fetchSelectedSystem() }
+                    )
+                }
                 
             case let .receiveAvailableSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
                 return .none
                 
-            case let .receiveSelectedSystem(.success(selectedSystem)):
-                state.selectedSystem = selectedSystem
+            case let .receiveSelectedSystem(.success(id)):
+                state.selectedSystem = state.gradeSystems.first { $0.id == id }
                 return .none
                 
             case .receiveAvailableSystems(.failure),
@@ -78,8 +86,17 @@ struct GradeSystemList: ReducerProtocol {
             case let .deleteSystem(from):
                 let oldValues = from.map { state.gradeSystems[$0] }
                 return .merge(
-                    .fireAndForget { gradeSystemClient.deleteSystems(oldValues) },
+                    .fireAndForget { client.deleteSystems(oldValues) },
                     .task { .fetchAvailableSystems }
+                )
+            
+            case let .saveSelectedSystem(id):
+                return .merge(
+                    .fireAndForget { client.saveSelectedSystem(id) },
+                    .task {
+                        try await clock.sleep(for: .milliseconds(50))
+                        return .fetchSelectedSystem
+                    }
                 )
             }
         }

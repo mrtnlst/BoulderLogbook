@@ -10,9 +10,10 @@ import Dependencies
 
 struct GradeSystemClient {
     var fetchAvailableSystems: () -> [GradeSystem]
-    var fetchSelectedSystem: () -> GradeSystem?
+    var fetchSelectedSystem: () -> UUID?
     var saveSystem: (GradeSystem) -> ()
     var deleteSystems: ([GradeSystem]) -> ()
+    var saveSelectedSystem: (UUID) -> ()
 }
 
 extension DependencyValues {
@@ -27,7 +28,7 @@ extension GradeSystemClient: DependencyKey {
         let defaults = UserDefaults.standard
         let gradeSystemsKey = "grade-systems"
         let selectedGradeSystemKey = "selected-grade-system"
-        return Self (
+        return Self(
             fetchAvailableSystems: {
                 guard let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
                       let decodedData = try? JSONDecoder().decode([GradeSystem].self, from: encodedData)
@@ -37,8 +38,8 @@ extension GradeSystemClient: DependencyKey {
                 return decodedData
             },
             fetchSelectedSystem: {
-                guard let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
-                      let decodedData = try? JSONDecoder().decode(GradeSystem.self, from: encodedData)
+                guard let encodedData = defaults.object(forKey: selectedGradeSystemKey) as? Data,
+                      let decodedData = try? JSONDecoder().decode(UUID.self, from: encodedData)
                 else {
                     return nil
                 }
@@ -66,7 +67,20 @@ extension GradeSystemClient: DependencyKey {
                 }
                 let data = try? JSONEncoder().encode(decodedData)
                 defaults.set(data, forKey: gradeSystemsKey)
+            }, saveSelectedSystem: { newValue in
+                let data = try? JSONEncoder().encode(newValue)
+                defaults.set(data, forKey: selectedGradeSystemKey)
             }
+        )
+    }()
+    
+    static let previewValue: Self = {
+        return Self(
+            fetchAvailableSystems: { [mandalaGrades, kletterarenaGrades] },
+            fetchSelectedSystem: { mandalaGrades.id },
+            saveSystem: { _ in },
+            deleteSystems: { _ in },
+            saveSelectedSystem: { _ in }
         )
     }()
 }

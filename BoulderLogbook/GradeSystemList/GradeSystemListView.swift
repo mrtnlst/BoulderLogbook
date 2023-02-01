@@ -15,10 +15,14 @@ struct GradeSystemListView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
-                    selectionRow(
-                        name: gradeSystem.name,
-                        isSelected: gradeSystem == viewStore.selectedSystem
-                    )
+                    Button {
+                        viewStore.send(.saveSelectedSystem(gradeSystem.id))
+                    } label: {
+                        selectionRow(
+                            name: gradeSystem.name,
+                            isSelected: gradeSystem == viewStore.selectedSystem
+                        )
+                    }
                 }
                 .onDelete { viewStore.send(.deleteSystem($0)) }
             }
@@ -76,6 +80,7 @@ struct GradeSystemListView_Previews: PreviewProvider {
                 store: Store(
                     initialState: GradeSystemList.State(),
                     reducer: GradeSystemList()
+                        .dependency(\.gradeSystemClient, .previewValue)
                 )
             )
         }
