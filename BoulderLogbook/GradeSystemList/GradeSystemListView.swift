@@ -78,7 +78,12 @@ extension GradeSystemListView {
     ) -> some View {
         HStack {
             Text(name)
+                .foregroundColor(.primary)
+                .font(.body)
             Spacer()
+            Text(isSelected ? "Default" : "")
+                .foregroundColor(.secondary)
+                .font(.subheadline)
             Image(systemName: isSelected  ? "checkmark.circle" : "circle")
                 .foregroundColor(isSelected ? .green : .secondary)
         }
