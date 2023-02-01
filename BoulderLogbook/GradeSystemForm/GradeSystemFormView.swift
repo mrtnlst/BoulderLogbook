@@ -90,13 +90,19 @@ extension GradeSystemFormView {
         WithViewStore(store) { viewStore in
             RectangularButton(
                 title: "Save",
-                action: { viewStore.send(.save) }
+                action: {
+                    focusedField = nil
+                    viewStore.send(.save)
+                }
             )
             .foregroundColor(.green)
             
             RectangularButton(
                 title: "Cancel",
-                action: { viewStore.send(.cancel) }
+                action: {
+                    focusedField = nil
+                    viewStore.send(.cancel)
+                }
             )
             .foregroundColor(.red)
         }

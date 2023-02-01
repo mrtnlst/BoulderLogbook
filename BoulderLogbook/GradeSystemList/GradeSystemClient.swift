@@ -11,9 +11,9 @@ import Dependencies
 struct GradeSystemClient {
     var fetchAvailableSystems: () -> [GradeSystem]
     var fetchSelectedSystem: () -> UUID?
-    var saveSystem: (GradeSystem) -> ()
-    var deleteSystems: ([GradeSystem]) -> ()
-    var saveSelectedSystem: (UUID) -> ()
+    var saveSystem: (GradeSystem) -> Void
+    var deleteSystem: (GradeSystem) -> ()
+    var saveSelectedSystem: (UUID) -> Void
 }
 
 extension DependencyValues {
@@ -52,19 +52,23 @@ extension GradeSystemClient: DependencyKey {
                 } else {
                     gradeSystems = []
                 }
-                gradeSystems.append(newValue)
+                
+                if let existingValue = gradeSystems.firstIndex(where: { $0.id == newValue.id }) {
+                    gradeSystems[existingValue] = newValue
+                } else {
+                    gradeSystems.append(newValue)
+                }
                 let data = try? JSONEncoder().encode(gradeSystems)
                 defaults.set(data, forKey: gradeSystemsKey)
             },
-            deleteSystems: { oldValues in
+            deleteSystem: { oldValue in
                 guard let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
                       var decodedData = try? JSONDecoder().decode([GradeSystem].self, from: encodedData)
                 else {
                     return
                 }
-                oldValues.forEach { oldValue in
-                    decodedData.removeAll(where: { $0.id == oldValue.id })
-                }
+                decodedData.removeAll(where: { $0.id == oldValue.id })
+                
                 let data = try? JSONEncoder().encode(decodedData)
                 defaults.set(data, forKey: gradeSystemsKey)
             }, saveSelectedSystem: { newValue in
@@ -79,7 +83,7 @@ extension GradeSystemClient: DependencyKey {
             fetchAvailableSystems: { [mandalaGrades, kletterarenaGrades] },
             fetchSelectedSystem: { mandalaGrades.id },
             saveSystem: { _ in },
-            deleteSystems: { _ in },
+            deleteSystem: { _ in },
             saveSelectedSystem: { _ in }
         )
     }()

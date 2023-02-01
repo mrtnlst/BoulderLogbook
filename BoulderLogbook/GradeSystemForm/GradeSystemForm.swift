@@ -29,9 +29,12 @@ struct GradeSystemForm: ReducerProtocol {
         case binding(BindingAction<State>)
         case cancel
         case save
+        case saveDidFinish(TaskResult<ClientResponse>)
         case addGrade
         case moveGrade(IndexSet, Int)
         case deleteGrade(IndexSet)
+        
+        enum ClientResponse { case finished }
     }
     
     @Dependency(\.gradeSystemClient) var gradeSystemClient
@@ -40,27 +43,27 @@ struct GradeSystemForm: ReducerProtocol {
         BindingReducer()
         
         Reduce { state, action in
-            switch action {
-            case .binding(_):
-                return .none
-                
-            case .cancel:
-                return .none
-                
+            switch action {                
             case .save:
                 guard !state.name.isEmpty else {
                     return .none
                 }
-                state.grades.removeAll(where: { $0.name.isEmpty })
+                var grades = state.grades
+                grades.removeAll(where: { $0.name.isEmpty })
                 let gradeSystem = GradeSystem(
                     id: state.id,
                     name: state.name,
-                    grades: state.grades
+                    grades: grades
                 )
-                return .fireAndForget {
-                    gradeSystemClient.saveSystem(gradeSystem)
+                return .task {
+                    await .saveDidFinish(
+                        TaskResult {
+                            gradeSystemClient.saveSystem(gradeSystem)
+                            return .finished
+                        }
+                    )
                 }
-            
+                
             case .addGrade:
                 var nextDifficulty: Int = 0
                 if let lastDifficulty = state.grades.last?.difficulty {
@@ -90,6 +93,9 @@ struct GradeSystemForm: ReducerProtocol {
                     grades.append(GradeSystem.Grade())
                 }
                 state.grades = grades
+                return .none
+                
+            default:
                 return .none
             }
         }

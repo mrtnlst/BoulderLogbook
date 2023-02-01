@@ -24,8 +24,12 @@ struct GradeSystemList: ReducerProtocol {
         case receiveSelectedSystem(TaskResult<UUID?>)
         case gradeSystemForm(GradeSystemForm.Action)
         case setIsPresentingForm(Bool)
-        case deleteSystem(IndexSet)
-        case saveSelectedSystem(UUID)
+        case saveSelected(UUID)
+        case saveSelectedDidFinish(TaskResult<ClientResponse>)
+        case delete(UUID)
+        case edit(UUID)
+        
+        enum ClientResponse { case finished }
     }
     
     @Dependency(\.gradeSystemClient) var client
@@ -62,42 +66,57 @@ struct GradeSystemList: ReducerProtocol {
                 state.selectedSystem = state.gradeSystems.first { $0.id == id }
                 return .none
                 
-            case .receiveAvailableSystems(.failure),
-                    .receiveSelectedSystem(.failure):
-                return .none
-                
             case .gradeSystemForm(.cancel):
                 return .task { .setIsPresentingForm(false) }
                 
-            case .gradeSystemForm(.save):
-                return .merge(
+            case .gradeSystemForm(.saveDidFinish(_)):
+                return .concatenate(
                     .task { .setIsPresentingForm(false) },
                     .task { .fetchAvailableSystems }
                 )
-                
-            case .gradeSystemForm(_):
-                return .none
-                
+
             case let .setIsPresentingForm(isPresenting):
                 state.isPresentingForm = isPresenting
                 state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
                 return .none
                 
-            case let .deleteSystem(from):
-                let oldValues = from.map { state.gradeSystems[$0] }
+            case let .delete(id):
+                guard let oldValue = state.gradeSystems.first (where: { $0.id == id }) else {
+                    return .none
+                }
                 return .merge(
-                    .fireAndForget { client.deleteSystems(oldValues) },
+                    .fireAndForget { client.deleteSystem(oldValue) },
                     .task { .fetchAvailableSystems }
                 )
             
-            case let .saveSelectedSystem(id):
-                return .merge(
-                    .fireAndForget { client.saveSelectedSystem(id) },
-                    .task {
-                        try await clock.sleep(for: .milliseconds(50))
-                        return .fetchSelectedSystem
-                    }
+            case let .saveSelected(id):
+                return .task {
+                    await .saveSelectedDidFinish(
+                        TaskResult {
+                            client.saveSelectedSystem(id)
+                            return .finished
+                        }
+                    )
+                }
+
+            case .saveSelectedDidFinish(_):
+                return .task { .fetchSelectedSystem }
+                
+            case let .edit(id):
+                guard let gradeSystem = state.gradeSystems.first (where: { $0.id == id }) else {
+                    return .none
+                }
+                let formState = GradeSystemForm.State(
+                    id: gradeSystem.id,
+                    name: gradeSystem.name,
+                    grades: gradeSystem.grades
                 )
+                state.gradeSystemForm = formState
+                state.isPresentingForm = true
+                return .none
+    
+            default:
+                return .none
             }
         }
         .ifLet(\.gradeSystemForm, action: /Action.gradeSystemForm) {

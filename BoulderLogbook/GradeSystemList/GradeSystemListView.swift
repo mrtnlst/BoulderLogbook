@@ -16,15 +16,27 @@ struct GradeSystemListView: View {
             List {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
                     Button {
-                        viewStore.send(.saveSelectedSystem(gradeSystem.id))
+                        viewStore.send(.saveSelected(gradeSystem.id))
                     } label: {
                         selectionRow(
                             name: gradeSystem.name,
-                            isSelected: gradeSystem == viewStore.selectedSystem
+                            isSelected: viewStore.selectedSystem?.id == gradeSystem.id 
                         )
                     }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewStore.send(.delete(gradeSystem.id))
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        Button {
+                            viewStore.send(.edit(gradeSystem.id))
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.orange)
+                    }
                 }
-                .onDelete { viewStore.send(.deleteSystem($0)) }
             }
             .navigationTitle("Grade Systems")
             .toolbar {
