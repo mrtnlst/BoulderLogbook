@@ -90,6 +90,9 @@ struct GradeSystemList: ReducerProtocol {
                 )
             
             case let .saveSelected(id):
+                guard state.selectedSystem?.id != id else {
+                    return .none
+                }
                 return .task {
                     await .saveSelectedDidFinish(
                         TaskResult {
