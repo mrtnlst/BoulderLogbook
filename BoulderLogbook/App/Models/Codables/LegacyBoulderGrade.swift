@@ -51,3 +51,9 @@ enum LegacyBoulderGrade: Int, Codable, CaseIterable {
         LegacyBoulderGrade.blue.gradeDescription: LegacyBoulderGrade.blue.color
     ]
 }
+
+extension [LegacyBoulderGrade] {
+    func numberOfGrades(for grade: LegacyBoulderGrade) -> Int {
+        return self.filter { $0 == grade }.count
+    }
+}

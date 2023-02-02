@@ -53,7 +53,7 @@ struct EntryViewChart: View {
             ForEach(LegacyBoulderGrade.allCases.reversed(), id: \.self) { grade in
                 BarMark(
                     x: .value("Grade", grade.gradeDescription),
-                    y: .value("Tops", entry.numberOfGrades(for: grade))
+                    y: .value("Tops", entry.tops.numberOfGrades(for: grade))
                 )
                 .foregroundStyle(by: .value("Grade", grade.gradeDescription))
             }

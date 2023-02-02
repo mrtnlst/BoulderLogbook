@@ -22,7 +22,7 @@ struct EntryColorView: View {
     }
     
     @ViewBuilder func colorSegment(for grade: LegacyBoulderGrade, and width: CGFloat) -> some View {
-        let numberOfTops = entry.numberOfGrades(for: grade)
+        let numberOfTops = entry.tops.numberOfGrades(for: grade)
         if numberOfTops > 0 {
             ZStack {
                 grade.color.frame(

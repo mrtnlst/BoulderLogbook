@@ -80,7 +80,7 @@ extension Diagram.State {
                     guard filters.contains(grade) else {
                         return nil
                     }
-                    let count = entry.numberOfGrades(for: grade)
+                    let count = entry.tops.numberOfGrades(for: grade)
                     if count > 0 {
                         return Entry(
                             grade: grade,

@@ -36,11 +36,4 @@ extension Logbook.Section.Entry {
     var entryDate: Date {
         date.yearMonthDayDate ?? date
     }
-    
-    func numberOfGrades(for grade: LegacyBoulderGrade) -> Int {
-        let dictionary = tops.reduce(into: [:]) { counts, number in
-            counts[number, default: 0] += 1
-        }
-        return dictionary[grade] ?? 0
-    }
 }

@@ -10,46 +10,57 @@ import ComposableArchitecture
 
 struct EntryForm: ReducerProtocol {
     struct State: Equatable {
-        var entry: Logbook.Section.Entry
+        var id: String
+        @BindingState var date: Date
+        var tops: [LegacyBoulderGrade]
         
-        init(entry: Logbook.Section.Entry = .init(date: .now, tops: [])) {
-            self.entry = entry
+        init(
+            id: String = UUID().uuidString,
+            date: Date = .now,
+            tops: [LegacyBoulderGrade] = []
+        ) {
+            self.id = id
+            self.date = date
+            self.tops = tops
         }
     }
     
-    enum Action {
-        case cancel
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case save
+        case cancel
         case increase(LegacyBoulderGrade)
         case decrease(LegacyBoulderGrade)
-        case didSelectDate(Date)
     }
     
     @Dependency(\.storageService) var storageService
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-        case .cancel:
-            return .none
-            
-        case .save:
-            return .fireAndForget { [state] in
-                storageService.save(state.entry)
-            }
-
-        case let .increase(grade):
-            state.entry.tops.append(grade)
-            return .none
-            
-        case let .decrease(grade):
-            if let index = state.entry.tops.firstIndex(of: grade) {
-                state.entry.tops.remove(at: index)
-            }
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
         
-        case let .didSelectDate(date):
-            state.entry.date = date
-            return .none
+        Reduce { state, action in
+            switch action {
+            case .save:
+                let entry = Logbook.Section.Entry(
+                    id: state.id,
+                    date: state.date,
+                    tops: state.tops
+                )
+                return .fireAndForget { storageService.save(entry) }
+                
+            case let .increase(grade):
+                state.tops.append(grade)
+                return .none
+                
+            case let .decrease(grade):
+                if let index = state.tops.firstIndex(of: grade) {
+                    state.tops.remove(at: index)
+                }
+                return .none
+                
+            default:
+                return .none
+            }
         }
     }
 }
