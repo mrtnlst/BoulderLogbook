@@ -72,7 +72,7 @@ struct DashboardView_Previews: PreviewProvider {
         NavigationStack {
             DashboardView(
                 store: Store(
-                    initialState: Dashboard.State(Logbook.sampleLogbook),
+                    initialState: Dashboard.State(.sample),
                     reducer: Dashboard()
                 )
             )

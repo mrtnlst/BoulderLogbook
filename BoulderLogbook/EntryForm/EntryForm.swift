@@ -10,9 +10,9 @@ import ComposableArchitecture
 
 struct EntryForm: ReducerProtocol {
     struct State: Equatable {
-        var entry: Logbook.Entry
+        var entry: Logbook.Section.Entry
         
-        init(entry: Logbook.Entry = Logbook.Entry(date: .now, tops: [])) {
+        init(entry: Logbook.Section.Entry = .init(date: .now, tops: [])) {
             self.entry = entry
         }
     }

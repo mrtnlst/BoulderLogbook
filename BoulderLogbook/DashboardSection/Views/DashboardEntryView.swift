@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DashboardEntryView: View {
-    let entry: Logbook.Entry
+    let entry: Logbook.Section.Entry
     
     var body: some View {
         HStack {
@@ -54,7 +54,7 @@ struct DashboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             DashboardEntryView(
-                entry: Logbook.Entry.sampleEntries[0]
+                entry: .samples[0]
             )
         }
     }

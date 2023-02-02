@@ -10,11 +10,11 @@ import ComposableArchitecture
 
 struct Diagram: ReducerProtocol {
     struct State: Equatable {
-        var entries: [Logbook.Entry] = []
+        var entries: [Logbook.Section.Entry] = []
         var filters: [LegacyBoulderGrade] = LegacyBoulderGrade.allCases
         var selectedSegment: Segment = .week
         
-        init(entries: [Logbook.Entry] = []) {
+        init(entries: [Logbook.Section.Entry] = []) {
             self.entries = entries
         }
     }

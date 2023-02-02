@@ -26,8 +26,8 @@ fileprivate extension String {
 
 protocol StorageServiceType {
     func fetch() -> Logbook
-    func save(_ logbookEntry: Logbook.Entry)
-    func delete(_ logbookEntry: Logbook.Entry)
+    func save(_ logbookEntry: Logbook.Section.Entry)
+    func delete(_ logbookEntry: Logbook.Section.Entry)
     
     func fetchFilters() -> [LegacyBoulderGrade]
     func fetchFilter(_ filterKey: String) -> Bool
@@ -55,7 +55,7 @@ extension StorageService: StorageServiceType {
         return data.toLogbook()
     }
     
-    func save(_ logbookEntry: Logbook.Entry) {
+    func save(_ logbookEntry: Logbook.Section.Entry) {
         var data = fetchLogbookData()
         let newEntryData = EntryData(
             id: logbookEntry.id,
@@ -75,7 +75,7 @@ extension StorageService: StorageServiceType {
         }
     }
     
-    func delete(_ logbookEntry: Logbook.Entry) {
+    func delete(_ logbookEntry: Logbook.Section.Entry) {
         var data = fetchLogbookData()
         data.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
         

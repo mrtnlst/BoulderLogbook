@@ -81,7 +81,9 @@ struct LineChartView_Previews: PreviewProvider {
     static var previews: some View {
         DiagramView(
             store: Store(
-                initialState: Diagram.State(entries: Logbook.Entry.sampleEntries),
+                initialState: Diagram.State(
+                    entries: Logbook.Section.Entry.samples
+                ),
                 reducer: Diagram()
             )
         )

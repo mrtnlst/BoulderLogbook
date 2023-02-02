@@ -10,13 +10,13 @@ import ComposableArchitecture
 
 public struct EntryDetail: Equatable, ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        var entry: Logbook.Entry
+        var entry: Logbook.Section.Entry
         public var id: String { entry.id }
     }
     
     public enum Action: Equatable {
-        case delete(Logbook.Entry)
-        case edit(Logbook.Entry)
+        case delete(Logbook.Section.Entry)
+        case edit(Logbook.Section.Entry)
     }
     
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {

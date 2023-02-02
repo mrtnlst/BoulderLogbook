@@ -8,9 +8,39 @@
 import Foundation
 
 public struct Logbook: Equatable {
-    var sections: [Section]
+    var sections: [Logbook.Section]
+    
+    public struct Section: Equatable {
+        var date: Date
+        var entries: [Entry]
+        
+        public struct Entry: Identifiable, Equatable, Hashable {
+            public var id: String
+            var date: Date
+            var tops: [LegacyBoulderGrade]
+            
+            init(id: String = UUID().uuidString, date: Date, tops: [LegacyBoulderGrade]) {
+                self.id = id
+                self.date = date
+                self.tops = tops
+            }
+        }
+    }
 }
 
-extension Logbook {
-    static let sampleLogbook = Logbook(sections: Logbook.Section.sampleSections)
+extension Logbook.Section.Entry {
+    var sectionDate: Date {
+        date.yearMonthDate ?? date
+    }
+    
+    var entryDate: Date {
+        date.yearMonthDayDate ?? date
+    }
+    
+    func numberOfGrades(for grade: LegacyBoulderGrade) -> Int {
+        let dictionary = tops.reduce(into: [:]) { counts, number in
+            counts[number, default: 0] += 1
+        }
+        return dictionary[grade] ?? 0
+    }
 }

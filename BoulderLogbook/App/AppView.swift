@@ -101,7 +101,7 @@ struct AppView_Previews: PreviewProvider {
         AppView(
             store: Store(
                 initialState: AppReducer.State(
-                    dashboard: Dashboard.State(Logbook.sampleLogbook)
+                    dashboard: Dashboard.State(.sample)
                 ),
                 reducer: AppReducer()
             )

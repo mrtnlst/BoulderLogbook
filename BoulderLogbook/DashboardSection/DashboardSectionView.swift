@@ -54,7 +54,7 @@ struct DashboardSectionView_Previews: PreviewProvider {
                 DashboardSectionView(
                     store: Store(
                         initialState: DashboardSection.State(
-                            Logbook.Section.sampleSections[0]
+                            Logbook.Section.samples[0]
                         ),
                         reducer: DashboardSection()
                     )

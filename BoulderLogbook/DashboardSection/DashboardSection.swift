@@ -16,8 +16,8 @@ struct DashboardSection: ReducerProtocol {
     }
     
     enum Action: Equatable {
-        case delete(Logbook.Entry)
-        case edit(Logbook.Entry)
+        case delete(Logbook.Section.Entry)
+        case edit(Logbook.Section.Entry)
         case entryDetail(id: String, action: EntryDetail.Action)
     }
     

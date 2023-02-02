@@ -69,7 +69,7 @@ struct Dashboard: ReducerProtocol {
                     )
                 )
                 let entries = state.entryStates.map {
-                    Logbook.Entry(date: $0.entry.date, tops: $0.entry.tops)
+                    Logbook.Section.Entry(date: $0.entry.date, tops: $0.entry.tops)
                 }
                 state.diagramState.entries = entries
                 return .none
