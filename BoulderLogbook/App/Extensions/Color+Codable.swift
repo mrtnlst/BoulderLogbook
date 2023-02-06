@@ -11,15 +11,13 @@ import UIKit
 import SwiftUI
 
 fileprivate extension Color {
-    typealias SystemColor = UIColor
-    
     var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
         
-        guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
+        guard UIColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
             // Pay attention that the color should be convertible into RGB format
             // Colors using hue, saturation and brightness won't work
             return nil
@@ -35,9 +33,9 @@ extension Color: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let r = try container.decode(Double.self, forKey: .red)
-        let g = try container.decode(Double.self, forKey: .green)
-        let b = try container.decode(Double.self, forKey: .blue)
+        let r = try container.decode(CGFloat.self, forKey: .red)
+        let g = try container.decode(CGFloat.self, forKey: .green)
+        let b = try container.decode(CGFloat.self, forKey: .blue)
         
         self.init(red: r, green: g, blue: b)
     }

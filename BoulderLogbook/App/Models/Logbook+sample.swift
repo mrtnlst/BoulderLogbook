@@ -34,19 +34,23 @@ extension Logbook.Section.Entry {
     static var samples: [Logbook.Section.Entry] = [
         .init(
             date: Date(timeIntervalSince1970: 1659650401),
-            tops: [.black, .black, .black, .black, .black, .orange, .orange, .blue, .blue]
+            tops: [.sample4, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             date: Date(timeIntervalSince1970: 1659823201),
-            tops: [.yellow, .white, .black, .red, .red, .orange, .red, .blue]
+            tops: [.sample6, .sample5, .sample4, .sample2, .sample2, .sample3, .sample2, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             date: Date(timeIntervalSince1970: 1656799201),
-            tops: [.purple, .purple, .white, .black, .black, .black, .black, .orange, .red, .red, .blue]
+            tops: [.sample7, .sample7, .sample6, .sample4, .sample4, .sample4, .sample4, .sample3, .sample2, .sample2, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             date: Date(timeIntervalSince1970: 1656972001),
-            tops: [.white, .black, .black, .black, .black, .black, .black, .orange, .orange, .orange]
+            tops: [.sample6, .sample4, .sample4, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3],
+            gradeSystem: GradeSystem.mandala.id
         )
     ]
 }

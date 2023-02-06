@@ -12,8 +12,9 @@ struct GradeSystemClient {
     var fetchAvailableSystems: () -> [GradeSystem]
     var fetchSelectedSystem: () -> UUID?
     var saveSystem: (GradeSystem) -> Void
-    var deleteSystem: (GradeSystem) -> ()
+    var deleteSystem: (UUID) -> ()
     var saveSelectedSystem: (UUID) -> Void
+    var saveDefaultSystems: () -> Void
 }
 
 extension DependencyValues {
@@ -44,7 +45,8 @@ extension GradeSystemClient: DependencyKey {
                     return nil
                 }
                 return decodedData
-            }, saveSystem: { newValue in
+            },
+            saveSystem: { newValue in
                 var gradeSystems: [GradeSystem]
                 if let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
                    let decodedData = try? JSONDecoder().decode([GradeSystem].self, from: encodedData) {
@@ -67,24 +69,47 @@ extension GradeSystemClient: DependencyKey {
                 else {
                     return
                 }
-                decodedData.removeAll(where: { $0.id == oldValue.id })
+                decodedData.removeAll(where: { $0.id == oldValue })
                 
                 let data = try? JSONEncoder().encode(decodedData)
                 defaults.set(data, forKey: gradeSystemsKey)
-            }, saveSelectedSystem: { newValue in
+            },
+            saveSelectedSystem: { newValue in
                 let data = try? JSONEncoder().encode(newValue)
                 defaults.set(data, forKey: selectedGradeSystemKey)
+            },
+            saveDefaultSystems: {
+                let defaultGradeSystemsKey = "default-grade-systems"
+                guard !defaults.bool(forKey: defaultGradeSystemsKey) else {
+                    return
+                }
+                
+                var gradeSystems: [GradeSystem]
+                if let encodedData = defaults.object(forKey: gradeSystemsKey) as? Data,
+                   let decodedData = try? JSONDecoder().decode([GradeSystem].self, from: encodedData) {
+                    gradeSystems = decodedData
+                } else {
+                    gradeSystems = []
+                }
+                guard !gradeSystems.contains(where: { $0.id == GradeSystem.mandala.id }) else {
+                    return
+                }
+                gradeSystems.append(.mandala)
+                let data = try? JSONEncoder().encode(gradeSystems)
+                defaults.set(data, forKey: gradeSystemsKey)
+                defaults.set(true, forKey: defaultGradeSystemsKey)
             }
         )
     }()
     
     static let previewValue: Self = {
         return Self(
-            fetchAvailableSystems: { [mandalaGrades, kletterarenaGrades] },
-            fetchSelectedSystem: { mandalaGrades.id },
+            fetchAvailableSystems: { [.mandala, .kletterarena] },
+            fetchSelectedSystem: { GradeSystem.mandala.id },
             saveSystem: { _ in },
             deleteSystem: { _ in },
-            saveSelectedSystem: { _ in }
+            saveSelectedSystem: { _ in },
+            saveDefaultSystems: {}
         )
     }()
 }

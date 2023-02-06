@@ -25,9 +25,7 @@ extension DashboardView {
     @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
-                if viewStore.entryStates.count > 2 {
-                    diagramView()
-                }
+                diagramView()
                 ForEachStore(
                     store.scope(
                         state: \.sections,
@@ -49,17 +47,9 @@ extension DashboardView {
             WithViewStore(store) { viewStore in
                 DiagramView(
                     store: store.scope(
-                        state: \.diagramState,
+                        state: \.diagram,
                         action: Dashboard.Action.diagram
                     )
-                )
-                .onLongPressGesture(
-                    minimumDuration: 0.2,
-                    perform: {
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        viewStore.send(.presentFilters)
-                    }
                 )
             }
         }
@@ -72,8 +62,10 @@ struct DashboardView_Previews: PreviewProvider {
         NavigationStack {
             DashboardView(
                 store: Store(
-                    initialState: Dashboard.State(.sample),
+                    initialState: Dashboard.State(),
                     reducer: Dashboard()
+                        .dependency(\.logbookClient, .previewValue)
+                        .dependency(\.gradeSystemClient, .previewValue)
                 )
             )
         }

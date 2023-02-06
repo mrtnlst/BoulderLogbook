@@ -13,27 +13,57 @@ struct DashboardSection: ReducerProtocol {
         var id: Double { date.timeIntervalSince1970 }
         let date: Date
         var entryStates: IdentifiedArrayOf<EntryDetail.State> = []
+        var gradeSystems: [GradeSystem] = []
+        
+        init(
+            date: Date,
+            entries: [Logbook.Section.Entry],
+            gradeSystems: [GradeSystem]
+        ) {
+            self.date = date
+            self.gradeSystems = gradeSystems
+            
+            let entryStates: [EntryDetail.State] = entries.compactMap { entry in
+                guard let system = gradeSystems.first(where: { $0.id == entry.gradeSystem }) else {
+                    return nil
+                }
+                return EntryDetail.State(entry: entry, gradeSystem: system)
+            }
+            self.entryStates = .init(uniqueElements: entryStates.sorted { $0.entry.date > $1.entry.date })
+        }
     }
     
     enum Action: Equatable {
-        case delete(Logbook.Section.Entry)
+        case delete(UUID)
+        case deleteDidFinish(TaskResult<LogbookClientResponse>)
         case edit(Logbook.Section.Entry)
-        case entryDetail(id: String, action: EntryDetail.Action)
+        case entryDetail(id: UUID, action: EntryDetail.Action)
+        
+        enum LogbookClientResponse { case finished }
     }
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        return .none
-    }
-}
-
-extension DashboardSection.State {
-    /// Warning: Only used for previews!
-    init(_ section: Logbook.Section) {
-        self.date = section.date
-        self.entryStates = .init(
-            uniqueElements: section.entries.map {
-                EntryDetail.State(entry: $0)
+    @Dependency(\.logbookClient) var logbookClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case let .delete(id):
+                return .task {
+                    await .deleteDidFinish(
+                        TaskResult {
+                            logbookClient.deleteEntry(id)
+                            return .finished
+                        }
+                    )
+                }
+                
+            default:
+                return .none
             }
-        )
+        }
+        .forEach(\.entryStates, action: /Action.entryDetail) {
+            EntryDetail()
+        }
     }
 }

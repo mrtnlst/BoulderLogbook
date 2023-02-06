@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct GradeSystem: Equatable, Codable, Identifiable {
-    struct Grade: Equatable, Codable, Identifiable {
+struct GradeSystem: Equatable, Codable, Identifiable, Hashable {
+    struct Grade: Equatable, Codable, Identifiable, Hashable {
         let id: UUID
         var name: String
         var color: Color
@@ -27,45 +27,63 @@ struct GradeSystem: Equatable, Codable, Identifiable {
     let grades: [Grade]
 }
 
-let mandalaGrades: GradeSystem = GradeSystem(
-    id: UUID(),
-    name: "Mandala",
-    grades: [
-        .init(
-            name: "Blue",
-            color: .mandalaBlue,
-            difficulty: 0
-        ),
-        .init(
-            name: "Red",
-            color: .mandalaRed,
-            difficulty: 1
-        ),
-        .init(
-            name: "Orange",
-            color: .mandalaOrange,
-            difficulty: 2
-        ),
-        .init(
-            name: "Black",
-            color: .mandalaBlack,
-            difficulty: 3
-        ),
-        .init(
-            name: "White",
-            color: .mandalaWhite,
-            difficulty: 4
-        ),
-        .init(
-            name: "Yellow",
-            color: .mandalaYellow,
-            difficulty: 5
-        )
-    ]
-)
+extension GradeSystem {
+    static let mandala: GradeSystem = GradeSystem(
+        id: UUID(),
+        name: "Mandala",
+        grades: [
+            .mandalaBlue,
+            .mandalaRed,
+            .mandalaOrange,
+            .mandalaBlack,
+            .mandalaWhite,
+            .mandalaYellow,
+            .mandalaPurple
+        ]
+    )
 
-let kletterarenaGrades: GradeSystem = GradeSystem(
-    id: UUID(),
-    name: "Kletterarena",
-    grades: []
-)
+    static let kletterarena: GradeSystem = GradeSystem(
+        id: UUID(),
+        name: "Kletterarena",
+        grades: []
+    )
+
+}
+
+extension GradeSystem.Grade {
+    static let mandalaBlue = GradeSystem.Grade(
+        name: "Blue",
+        color: .mandalaBlue,
+        difficulty: 0
+    )
+    static let mandalaRed = GradeSystem.Grade(
+        name: "Red",
+        color: .mandalaRed,
+        difficulty: 1
+    )
+    static let mandalaOrange = GradeSystem.Grade(
+        name: "Orange",
+        color: .mandalaOrange,
+        difficulty: 2
+    )
+    static let mandalaBlack = GradeSystem.Grade(
+        name: "Black",
+        color: .mandalaBlack,
+        difficulty: 3
+    )
+    static let mandalaWhite = GradeSystem.Grade(
+        name: "White",
+        color: .mandalaWhite,
+        difficulty: 4
+    )
+    static let mandalaYellow = GradeSystem.Grade(
+        name: "Yellow",
+        color: .mandalaYellow,
+        difficulty: 5
+    )
+    static let mandalaPurple = GradeSystem.Grade(
+        name: "Purple",
+        color: .mandalaPurple,
+        difficulty: 6
+    )
+}

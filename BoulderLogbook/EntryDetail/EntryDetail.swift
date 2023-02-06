@@ -10,8 +10,18 @@ import ComposableArchitecture
 
 public struct EntryDetail: Equatable, ReducerProtocol {
     public struct State: Equatable, Identifiable {
-        var entry: Logbook.Section.Entry
-        public var id: String { entry.id }
+        public let id: UUID
+        let entry: Logbook.Section.Entry
+        var gradeSystem: GradeSystem
+        
+        init(
+            entry: Logbook.Section.Entry,
+            gradeSystem: GradeSystem
+        ) {
+            self.id = entry.id
+            self.entry = entry
+            self.gradeSystem = gradeSystem
+        }
     }
     
     public enum Action: Equatable {
@@ -22,5 +32,4 @@ public struct EntryDetail: Equatable, ReducerProtocol {
     public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         return .none
     }
-    
 }

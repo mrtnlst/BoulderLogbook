@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct EntryColorView: View {
-    let entry: Logbook.Section.Entry
+    let grades: [GradeSystem.Grade]
+    let gradeSystem: GradeSystem
+
+    init(tops: [Top], gradeSystem: GradeSystem) {
+        self.gradeSystem = gradeSystem
+        self.grades = tops.successful().grades(for: gradeSystem)
+    }
     
     var body: some View {
         GeometryReader { reader in
             HStack(spacing: 0) {
-                ForEach(LegacyBoulderGrade.allCases.reversed(), id: \.self) { grade in
+                ForEach(gradeSystem.grades) { grade in
                     colorSegment(for: grade, and: reader.size.width)
                 }
             }
@@ -21,16 +27,16 @@ struct EntryColorView: View {
         .cornerRadius(8)
     }
     
-    @ViewBuilder func colorSegment(for grade: LegacyBoulderGrade, and width: CGFloat) -> some View {
-        let numberOfTops = entry.tops.numberOfGrades(for: grade)
+    @ViewBuilder func colorSegment(for grade: GradeSystem.Grade, and width: CGFloat) -> some View {
+        let numberOfTops = grades.filter { $0 == grade }.count
         if numberOfTops > 0 {
             ZStack {
                 grade.color.frame(
-                    width: width / CGFloat(entry.tops.count) * CGFloat(numberOfTops)
+                    width: width / CGFloat(grades.count) * CGFloat(numberOfTops)
                 )
                 Text("\(numberOfTops)")
                     .font(.caption2.weight(.light))
-                    .foregroundColor(grade == LegacyBoulderGrade.white ? Color.black : Color.white)
+                    .foregroundColor(grade.color.isBright ? Color.black : Color.white)
             }
         }
     }
@@ -40,7 +46,19 @@ struct EntryColorView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             EntryColorView(
-                entry: .samples[0]
+                tops: [
+                    .sample1,
+                    .sample2,
+                    .sample2,
+                    .sample3,
+                    .sample4,
+                    .sample5,
+                    .sample6,
+                    .sample7,
+                    .sample7,
+                    .sample7
+                ],
+                gradeSystem: .mandala
             )
         }
     }

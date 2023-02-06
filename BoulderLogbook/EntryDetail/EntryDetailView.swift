@@ -16,60 +16,62 @@ struct EntryDetailView: View {
         WithViewStore(store) { viewStore in
             List {
                 Section {
-                    EntryViewChart(entry: viewStore.entry)
+                    chart(tops: viewStore.entry.tops, gradeSystem: viewStore.gradeSystem)
                 }
                 Section {
-                    Button {
-                        viewStore.send(.edit(viewStore.entry))
-                    } label: {
-                        Label {
-                            Text("Edit")
-                        } icon: {
-                            Image(systemName: "pencil")
-                        }
-                    }
-                    Button(role: .destructive) {
-                        viewStore.send(.delete(viewStore.entry))
-                    } label: {
-                        Label {
-                            Text("Delete")
-                        } icon: {
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
-                        }
-                    }
+                    gradesSystem()
                 }
+                Section {
+                    buttons()
+                }
+                .listRowInsets(.zero)
             }
             .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
     }
 }
 
-struct EntryViewChart: View {
-    let entry: Logbook.Section.Entry
-    
-    var body: some View {
+extension EntryDetailView {
+    @ViewBuilder func chart(tops: [Top], gradeSystem: GradeSystem) -> some View {
+        let grades = tops.successful().grades(for: gradeSystem)
         Chart {
-            ForEach(LegacyBoulderGrade.allCases.reversed(), id: \.self) { grade in
+            ForEach(gradeSystem.grades, id: \.self) { grade in
                 BarMark(
-                    x: .value("Grade", grade.gradeDescription),
-                    y: .value("Tops", entry.tops.numberOfGrades(for: grade))
+                    x: .value("Grade", grade.name),
+                    y: .value("Tops", grades.filter { $0 == grade }.count)
                 )
-                .foregroundStyle(by: .value("Grade", grade.gradeDescription))
+                .foregroundStyle(by: .value("Grade", grade.name))
             }
         }
-        .chartForegroundStyleScale([
-            LegacyBoulderGrade.purple.gradeDescription: LegacyBoulderGrade.purple.color,
-            LegacyBoulderGrade.yellow.gradeDescription: LegacyBoulderGrade.yellow.color,
-            LegacyBoulderGrade.white.gradeDescription: LegacyBoulderGrade.white.color,
-            LegacyBoulderGrade.black.gradeDescription: LegacyBoulderGrade.black.color,
-            LegacyBoulderGrade.orange.gradeDescription: LegacyBoulderGrade.orange.color,
-            LegacyBoulderGrade.red.gradeDescription: LegacyBoulderGrade.red.color,
-            LegacyBoulderGrade.blue.gradeDescription: LegacyBoulderGrade.blue.color
-        ])
+        .chartForegroundStyleScale(range: gradeSystem.grades.map { $0.color })
         .chartLegend(.hidden)
         .frame(height: 200)
-        .padding()
+    }
+    
+    @ViewBuilder func gradesSystem() -> some View {
+        WithViewStore(store) { viewStore in
+            HStack {
+                Label(
+                    title: { Text("Grade System") },
+                    icon: {
+                        Image(systemName: "square.fill.text.grid.1x2")
+                            .foregroundColor(.primary)
+                    }
+                )
+                Spacer()
+                Text(viewStore.gradeSystem.name)
+                    .foregroundColor(.secondary)
+            }
+        }
+    }
+    
+    @ViewBuilder func buttons() -> some View {
+        WithViewStore(store) { viewStore in
+            RectangularButton(title: "Edit", action: { viewStore.send(.edit(viewStore.entry)) })
+                .foregroundColor(.orange)
+            RectangularButton(title: "Delete", action: { viewStore.send(.delete(viewStore.entry)) })
+                .foregroundColor(.red)
+        }
     }
 }
 
@@ -79,7 +81,8 @@ struct EntryView_Previews: PreviewProvider {
             EntryDetailView(
                 store: Store(
                     initialState: EntryDetail.State(
-                        entry: .samples[0]
+                        entry: .samples[0],
+                        gradeSystem: .mandala
                     ),
                     reducer: EntryDetail()
                 )

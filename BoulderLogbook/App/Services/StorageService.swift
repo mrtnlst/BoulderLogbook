@@ -58,12 +58,13 @@ extension StorageService: StorageServiceType {
     func save(_ logbookEntry: Logbook.Section.Entry) {
         var data = fetchLogbookData()
         let newEntryData = EntryData(
-            id: logbookEntry.id,
+            id: logbookEntry.id.uuidString,
             date: logbookEntry.date,
-            tops: logbookEntry.tops
+            tops: []
+//            tops: logbookEntry.tops
         )
         // Update existing entry or add new entry.
-        if let editedEntryData = data.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id }) {
+        if let editedEntryData = data.logbookEntries.firstIndex(where: { $0.id == logbookEntry.id.uuidString }) {
             data.logbookEntries[editedEntryData] = newEntryData
         } else {
             data.logbookEntries.append(newEntryData)
@@ -77,7 +78,7 @@ extension StorageService: StorageServiceType {
     
     func delete(_ logbookEntry: Logbook.Section.Entry) {
         var data = fetchLogbookData()
-        data.logbookEntries.removeAll(where: { $0.id == logbookEntry.id })
+        data.logbookEntries.removeAll(where: { $0.id == logbookEntry.id.uuidString })
         
         if let encodedData = try? JSONEncoder().encode(data) {
             userDefaults.set(encodedData, forKey: .logbookKey)

@@ -29,10 +29,14 @@ struct AppReducer: ReducerProtocol {
         case setIsPresentingFilter(Bool)
         case setIsPresentingSettings(Bool)
         case setPath([StoreOf<EntryDetail>])
+        case deleteEntriesDidFinish(TaskResult<LogbookClientResponse>)
+        
+        enum LogbookClientResponse { case finished }
     }
     
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.continuousClock) var clock
+    @Dependency(\.logbookClient) var logbookClient
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -63,10 +67,10 @@ struct AppReducer: ReducerProtocol {
             case .entryForm(.cancel):
                 return EffectPublisher(value: .setIsPresentingForm(false))
                 
-            case .entryForm(.save):
+            case .entryForm(.saveDidFinish(_)):
                 return .merge(
                     EffectPublisher(value: .setIsPresentingForm(false)),
-                    EffectPublisher(value: .dashboard(.fetch))
+                    EffectPublisher(value: .dashboard(.fetchEntries))
                 )
                 
             case .entryForm(_):
@@ -82,16 +86,36 @@ struct AppReducer: ReducerProtocol {
                 state.entryForm = .init(
                     id: entry.id,
                     date: entry.date,
-                    tops: entry.tops
+                    tops: entry.tops.normal(),
+                    attempts: entry.tops.filter { $0.isAttempt },
+                    flashs: entry.tops.filter { $0.wasFlash },
+                    onsights: entry.tops.filter { $0.wasOnsight },
+                    selectedSystem: entry.gradeSystem
                 )
                 state.isPresentingForm = true
                 return .none
                 
-            case .dashboard(.presentFilters):
+            case .dashboard(.diagram(.presentFilters)):
                 return EffectPublisher(value: .setIsPresentingFilter(true))
                 
             case .dashboard(_):
                 return .none
+                
+            case .settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish(_)))):
+                return .task { .dashboard(.fetchGradeSystems) }
+                
+            case let .settings(.gradeSystemList(.delete(id))):
+                return .task {
+                    await .deleteEntriesDidFinish(
+                        TaskResult {
+                            logbookClient.deleteEntries(id)
+                            return .finished
+                        }
+                    )
+                }
+                
+            case .deleteEntriesDidFinish(_):
+                return .task { .dashboard(.fetchGradeSystems) }
                 
             case .settings(_):
                 return .none

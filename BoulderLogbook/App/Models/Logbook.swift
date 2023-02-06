@@ -8,24 +8,31 @@
 import Foundation
 
 public struct Logbook: Equatable {
-    var sections: [Logbook.Section]
     
     public struct Section: Equatable {
-        var date: Date
-        var entries: [Entry]
         
-        public struct Entry: Identifiable, Equatable, Hashable {
-            public var id: String
+        public struct Entry: Identifiable, Equatable, Hashable, Codable {
+            public let id: UUID
             var date: Date
-            var tops: [LegacyBoulderGrade]
+            var tops: [Top]
+            var gradeSystem: UUID
             
-            init(id: String = UUID().uuidString, date: Date, tops: [LegacyBoulderGrade]) {
+            init(
+                id: UUID = UUID(),
+                date: Date,
+                tops: [Top] = [],
+                gradeSystem: UUID
+            ) {
                 self.id = id
                 self.date = date
                 self.tops = tops
+                self.gradeSystem = gradeSystem
             }
         }
+        var date: Date
+        var entries: [Entry]
     }
+    var sections: [Section]
 }
 
 extension Logbook.Section.Entry {

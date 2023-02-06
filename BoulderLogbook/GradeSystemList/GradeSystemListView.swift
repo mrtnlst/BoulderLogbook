@@ -10,32 +10,28 @@ import ComposableArchitecture
 
 struct GradeSystemListView: View {
     let store: StoreOf<GradeSystemList>
+    @State var showConfirmation = false
     
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
-                    Button {
-                        viewStore.send(.saveSelected(gradeSystem.id))
-                    } label: {
-                        selectionRow(
-                            name: gradeSystem.name,
-                            isSelected: viewStore.selectedSystem?.id == gradeSystem.id 
-                        )
-                    }
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewStore.send(.delete(gradeSystem.id))
-                        } label: {
-                            Label("Delete", systemImage: "trash")
+                    selectionRow(gradeSystem: gradeSystem)
+                    .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
+                    .alert(
+                        "Warning",
+                        isPresented: $showConfirmation,
+                        actions: {
+                            Button(
+                                "Delete",
+                                role: .destructive,
+                                action: { viewStore.send(.delete(gradeSystem.id)) }
+                            )
+                        },
+                        message: {
+                            Text("Deleting a grade system deletes all associated logbook entries!")
                         }
-                        Button {
-                            viewStore.send(.edit(gradeSystem.id))
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(.orange)
-                    }
+                    )
                 }
             }
             .navigationTitle("Grade Systems")
@@ -72,20 +68,40 @@ struct GradeSystemListView: View {
 }
 
 extension GradeSystemListView {
-    @ViewBuilder func selectionRow(
-        name: String,
-        isSelected: Bool
-    ) -> some View {
-        HStack {
-            Text(name)
-                .foregroundColor(.primary)
-                .font(.body)
-            Spacer()
-            Text(isSelected ? "Default" : "")
-                .foregroundColor(.secondary)
-                .font(.subheadline)
-            Image(systemName: isSelected  ? "checkmark.circle" : "circle")
-                .foregroundColor(isSelected ? .green : .secondary)
+    @ViewBuilder func selectionRow(gradeSystem: GradeSystem) -> some View {
+        WithViewStore(store) { viewStore in
+            Button(
+                action: { viewStore.send(.saveSelected(gradeSystem.id)) },
+                label: {
+                    let isSelected = viewStore.selectedSystem?.id == gradeSystem.id
+                    HStack {
+                        Text(gradeSystem.name)
+                            .foregroundColor(.primary)
+                            .font(.body)
+                        Spacer()
+                        Text(isSelected ? "Default" : "")
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                        Image(systemName: isSelected  ? "checkmark.circle" : "circle")
+                            .foregroundColor(isSelected ? .green : .secondary)
+                    }
+                }
+            )
+        }
+    }
+    
+    @ViewBuilder func swipeButtons(gradeSystem: GradeSystem) -> some View {
+        WithViewStore(store) { viewStore in
+            Button(
+                action: { showConfirmation = true },
+                label: { Label("Delete", systemImage: "trash") }
+            )
+            .tint(.red)
+            Button(
+                action: { viewStore.send(.edit(gradeSystem.id)) },
+                label: { Label("Edit", systemImage: "pencil") }
+            )
+            .tint(.orange)
         }
     }
 }

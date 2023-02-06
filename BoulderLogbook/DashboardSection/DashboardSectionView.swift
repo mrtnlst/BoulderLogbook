@@ -20,11 +20,17 @@ struct DashboardSectionView: View {
                         action: DashboardSection.Action.entryDetail(id:action:))
                 ) { entryStore in
                     NavigationLink(value: entryStore) {
-                        DashboardEntryView(entry: ViewStore(entryStore).entry)
+                        let entry = ViewStore(entryStore).entry
+                        if let gradeSystem = viewStore.gradeSystems.first { $0.id == entry.gradeSystem } {
+                            DashboardEntryView(
+                                entry: entry,
+                                gradeSystem: gradeSystem
+                            )
+                        }
                     }
                     .swipeActions {
                         Button(role: .destructive) {
-                            viewStore.send(.delete(ViewStore(entryStore).entry))
+                            viewStore.send(.delete(ViewStore(entryStore).entry.id))
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
@@ -54,7 +60,9 @@ struct DashboardSectionView_Previews: PreviewProvider {
                 DashboardSectionView(
                     store: Store(
                         initialState: DashboardSection.State(
-                            Logbook.Section.samples[0]
+                            date: .now,
+                            entries: Logbook.Section.Entry.samples,
+                            gradeSystems: [.mandala]
                         ),
                         reducer: DashboardSection()
                     )

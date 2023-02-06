@@ -34,16 +34,15 @@ struct SettingsView: View {
 
 extension SettingsView {
     @ViewBuilder func gradeSystemList() -> some View {
-        WithViewStore(store) { viewStore in
-            HStack {
+        Label(
+            title: {
+                Text("Grade Systems")
+            },
+            icon: {
                 Image(systemName: "square.fill.text.grid.1x2")
-                    .font(.title)
-                    .foregroundColor(.accentColor)
-                VStack(alignment: .leading) {
-                    Text("Grade Systems")
-                }
+                    .foregroundColor(.primary)
             }
-        }
+        )
     }
 }
 

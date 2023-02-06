@@ -26,9 +26,17 @@ extension LogbookData {
                     date: sectionDate,
                     entries: entries.map {
                         Logbook.Section.Entry(
-                            id: $0.id,
+                            id: UUID(uuidString: $0.id)!,
                             date: $0.date,
-                            tops: $0.tops
+                            tops: $0.tops.map { top in
+                                Top(
+                                    grade: UUID(), // FIXME!
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: false
+                                )
+                            },
+                            gradeSystem: GradeSystem.mandala.id
                         )
                     }
                 )

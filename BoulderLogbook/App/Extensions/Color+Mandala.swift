@@ -17,3 +17,12 @@ extension Color {
     static let mandalaYellow = Color(#colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1))
     static let mandalaPurple = Color(#colorLiteral(red: 0.7921568627, green: 0.3764705882, blue: 0.9490196078, alpha: 1))
 }
+
+extension Color {
+    var isBright: Bool {
+        var white: CGFloat = 0.0
+        let uiColor = UIColor(self)
+        uiColor.getWhite(&white, alpha: nil)
+        return white >= 0.85 // Don't use white background
+    }
+}

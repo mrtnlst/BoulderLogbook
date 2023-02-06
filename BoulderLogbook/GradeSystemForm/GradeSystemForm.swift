@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct GradeSystemForm: ReducerProtocol {
     struct State: Equatable {
-        var id: UUID
+        let id: UUID
         @BindingState var name: String
         @BindingState var grades: [GradeSystem.Grade]
         
@@ -26,14 +26,14 @@ struct GradeSystemForm: ReducerProtocol {
     }
     
     enum Action: BindableAction, Equatable {
-        case binding(BindingAction<State>)
-        case cancel
         case save
-        case saveDidFinish(TaskResult<ClientResponse>)
         case addGrade
         case moveGrade(IndexSet, Int)
         case deleteGrade(IndexSet)
-        
+        case saveDidFinish(TaskResult<ClientResponse>)
+        case cancel
+        case binding(BindingAction<State>)
+
         enum ClientResponse { case finished }
     }
     

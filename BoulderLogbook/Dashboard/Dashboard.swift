@@ -11,112 +11,115 @@ import ComposableArchitecture
 struct Dashboard: ReducerProtocol {
     struct State: Equatable {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
-        var diagramState: Diagram.State = Diagram.State()
+        var diagram: Diagram.State = Diagram.State()
+        var gradeSystems: [GradeSystem] = []
     }
     
     enum Action: Equatable {
         case onAppear
-        case fetch
+        case fetchGradeSystems
+        case receiveGradeSystems(TaskResult<[GradeSystem]>)
+        case fetchEntries
+        case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
         case fetchFilters
-        case receiveLogbook(TaskResult<Logbook>)
-        case dashboardSection(id: Double, action: DashboardSection.Action)
         case receiveFilters(TaskResult<[LegacyBoulderGrade]>)
+        case dashboardSection(id: Double, action: DashboardSection.Action)
         case diagram(Diagram.Action)
-        case presentFilters
     }
     
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.storageService) var storageService
+    @Dependency(\.logbookClient) var logbookClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
 
     var body: some ReducerProtocol<State, Action> {
-        Scope(state: \.diagramState, action: /Action.diagram) {
+        Scope(state: \.diagram, action: /Action.diagram) {
             Diagram()
         }
 
         Reduce { state, action in
             switch action {
             case .onAppear:
+                return .concatenate(
+                    .fireAndForget { gradeSystemClient.saveDefaultSystems() },
+                    .task { .fetchGradeSystems }
+                )
+               
+            case .fetchGradeSystems:
+                return .task {
+                    await .receiveGradeSystems(
+                        TaskResult { gradeSystemClient.fetchAvailableSystems() }
+                    )
+                }
+                
+            case let .receiveGradeSystems(.success(gradeSystems)):
+                state.gradeSystems = gradeSystems
+                state.diagram.gradeSystems = gradeSystems
                 return .merge(
-                    EffectPublisher(value: .fetch),
-                    EffectPublisher(value: .fetchFilters)
+                    .task { .fetchEntries },
+                    .task { .fetchFilters }
                 )
                 
-            case .fetch:
+            case .fetchEntries:
                 return .task {
-                    await .receiveLogbook(TaskResult { storageService.fetch() })
+                    await .receiveEntries(TaskResult { logbookClient.fetchEntries() })
                 }
                 
-            case .fetchFilters:
-                return .task {
-                    await .receiveFilters(TaskResult { storageService.fetchFilters() })
+            case let .receiveEntries(.success(entries)):
+                let sections = entries.reduce(into: [Logbook.Section]()) { partialResult, entry in
+                    guard let sectionDate = entry.date.yearMonthDate else {
+                        return
+                    }
+                    if let indexOfSection = partialResult.firstIndex(where: { $0.date == sectionDate }) {
+                        partialResult[indexOfSection].entries.append(entry)
+                    } else {
+                        partialResult.append(
+                            .init(
+                                date: sectionDate,
+                                entries: [entry]
+                            )
+                        )
+                    }
                 }
-                
-            case let .receiveLogbook(.success(logbook)):
                 state.sections = .init(
-                    uniqueElements: logbook.sections.map { section in
+                    uniqueElements: sections.map { section in
                         DashboardSection.State(
                             date: section.date,
-                            entryStates: .init(
-                                uniqueElements: section.entries.map {
-                                    EntryDetail.State(entry: $0)
-                                }.sorted(
-                                    by: { $0.entry.date > $1.entry.date }
-                                )
-                            )
+                            entries: section.entries,
+                            gradeSystems: state.gradeSystems
                         )
                     }.sorted(
                         by: { $0.date > $1.date }
                     )
                 )
-                let entries = state.entryStates.map {
-                    Logbook.Section.Entry(date: $0.entry.date, tops: $0.entry.tops)
+                state.diagram.entries = entries
+                return .none
+                
+            case .fetchFilters:
+                return .task {
+                    await .receiveFilters(TaskResult { storageService.fetchFilters() })
                 }
-                state.diagramState.entries = entries
+     
+            case .receiveFilters(.success(_)):
+//                state.diagramState.filters = filters
                 return .none
+           
+            
+            case .dashboardSection(id: _, action: .deleteDidFinish(_)):
+                return .task { .fetchEntries }
                 
-            case .receiveLogbook(.failure):
-                return .none
-                
-            case let .receiveFilters(.success(filters)):
-                state.diagramState.filters = filters
-                return .none
-                
-            case .receiveFilters(.failure):
-                return .none
-                
-            case let .dashboardSection(id: _, action: .delete(logbookEntry)) ,
-                let .dashboardSection(id: _, action:.entryDetail(id: _, action: .delete(logbookEntry))):
+            case let .dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(logbookEntry))):
                 return .merge(
                     .fireAndForget { storageService.delete(logbookEntry) },
-                    .task { .fetch }
+                    .task { .fetchEntries }
                 )
                 
-            case .dashboardSection(id: _, action: _):
-                return .none
-                
-            case .diagram(_):
-                return .none
-                
-            case .presentFilters:
+            default:
                 return .none
             }
         }
-    }
-}
-
-extension Dashboard.State {
-    /// Warning: Only used for previews!
-    init(_ logbook: Logbook) {
-        self.sections = .init(
-            uniqueElements: logbook.sections.map {
-                DashboardSection.State($0)
-            }
-        )
-    }
-    
-    var entryStates: [EntryDetail.State] {
-        sections.reduce(into: []) { partialResult, sectionState in
-            partialResult.append(contentsOf: sectionState.entryStates.elements)
+        .forEach(\.sections, action: /Action.dashboardSection) {
+            DashboardSection()
         }
     }
 }
