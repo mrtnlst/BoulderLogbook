@@ -29,14 +29,14 @@ struct AppReducer: ReducerProtocol {
         case setIsPresentingFilter(Bool)
         case setIsPresentingSettings(Bool)
         case setPath([StoreOf<EntryDetail>])
-        case deleteEntriesDidFinish(TaskResult<LogbookClientResponse>)
+        case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
         
-        enum LogbookClientResponse { case finished }
+        enum EntryClientResponse { case finished }
     }
     
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.continuousClock) var clock
-    @Dependency(\.logbookClient) var logbookClient
+    @Dependency(\.entryClient) var entryClient
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -51,7 +51,9 @@ struct AppReducer: ReducerProtocol {
                 return .none
                 
             case let .setIsPresentingFilter(isPresenting):
-                state.filterSheet = isPresenting ? FilterSheet.State() : nil
+                // TODO: Maybe move to Dashboard?
+                let systems = state.dashboard.gradeSystems
+                state.filterSheet = isPresenting ? FilterSheet.State(gradeSystems: systems) : nil
                 state.isPresentingFilter = isPresenting
                 return .none
                 
@@ -108,7 +110,7 @@ struct AppReducer: ReducerProtocol {
                 return .task {
                     await .deleteEntriesDidFinish(
                         TaskResult {
-                            logbookClient.deleteEntries(id)
+                            entryClient.deleteEntries(id)
                             return .finished
                         }
                     )
@@ -119,12 +121,6 @@ struct AppReducer: ReducerProtocol {
                 
             case .settings(_):
                 return .none
-                
-            case .filterSheet(.filter(_, .setIsOn(_))):
-                return .task {
-                    try await self.clock.sleep(for: .milliseconds(500))
-                    return .dashboard(.fetchFilters)
-                }
                 
             case .filterSheet(_):
                 return .none

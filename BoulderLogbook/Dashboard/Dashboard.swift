@@ -21,15 +21,13 @@ struct Dashboard: ReducerProtocol {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
-        case fetchFilters
-        case receiveFilters(TaskResult<[LegacyBoulderGrade]>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
         case diagram(Diagram.Action)
     }
     
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.storageService) var storageService
-    @Dependency(\.logbookClient) var logbookClient
+    @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
 
     var body: some ReducerProtocol<State, Action> {
@@ -56,13 +54,12 @@ struct Dashboard: ReducerProtocol {
                 state.gradeSystems = gradeSystems
                 state.diagram.gradeSystems = gradeSystems
                 return .merge(
-                    .task { .fetchEntries },
-                    .task { .fetchFilters }
+                    .task { .fetchEntries }
                 )
                 
             case .fetchEntries:
                 return .task {
-                    await .receiveEntries(TaskResult { logbookClient.fetchEntries() })
+                    await .receiveEntries(TaskResult { entryClient.fetchEntries() })
                 }
                 
             case let .receiveEntries(.success(entries)):
@@ -94,16 +91,6 @@ struct Dashboard: ReducerProtocol {
                 )
                 state.diagram.entries = entries
                 return .none
-                
-            case .fetchFilters:
-                return .task {
-                    await .receiveFilters(TaskResult { storageService.fetchFilters() })
-                }
-     
-            case .receiveFilters(.success(_)):
-//                state.diagramState.filters = filters
-                return .none
-           
             
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
                 return .task { .fetchEntries }

@@ -10,28 +10,93 @@ import ComposableArchitecture
 
 struct FilterSheet: ReducerProtocol {
     struct State: Equatable {
-        var filters: IdentifiedArrayOf<Filter.State> = IdentifiedArray(
-            uniqueElements: LegacyBoulderGrade.allCases.map {
-                Filter.State(
-                    grade: $0,
-                    isOn: false
-                )
-            }
-        )
+        var gradeSystems: [GradeSystem] = []
+        @BindingState var selectedSystemId: UUID?
+        @BindingState var filters: [FilterViewModel] = []
+        
+        var selectedSystem: GradeSystem? {
+            gradeSystems.first(where: { $0.id == selectedSystemId })
+        }
     }
     
-    enum Action {
-        case filter(Filter.State.ID, Filter.Action)
+    enum Action: BindableAction {
+        case onAppear
+        case fetchSelectedSystem
+        case receiveSelectedSystem(TaskResult<UUID?>)
+        case fetchFilters
+        case receiveFilters(TaskResult<[Filter]?>)
+        case binding(BindingAction<State>)
     }
     
-    @Dependency(\.mainQueue) var mainQueue
+    @Dependency(\.filterClient) var filterClient
     
     var body: some ReducerProtocol<State, Action> {
-        Reduce { _, _ in
-            return .none
-        }
-        .forEach(\.filters, action: /Action.filter) {
-            Filter()
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return .task { .fetchSelectedSystem }
+                
+            case .fetchSelectedSystem:
+                return .task {
+                    await .receiveSelectedSystem(
+                        TaskResult { filterClient.fetchFilterSystem() }
+                    )
+                }
+                
+            case let .receiveSelectedSystem(.success(selected)):
+                state.selectedSystemId = selected
+                return .task { .fetchFilters }
+                
+            case .fetchFilters:
+                return .task {
+                    await .receiveFilters(
+                        TaskResult { filterClient.fetchFilters() }
+                    )
+                }
+                
+            case let .receiveFilters(.success(filters)):
+                guard let filters = filters, let filterSystem = state.selectedSystem else {
+                    return .none
+                }
+                var availableFilters = filters.compactMap { filter in
+                    if let grade = filterSystem.grades.first(where: { $0.id == filter.id }) {
+                        return FilterViewModel(grade: grade, isOn: filter.isOn)
+                    }
+                    return nil
+                }
+                if availableFilters.isEmpty {
+                    availableFilters = filterSystem.grades.map { FilterViewModel(grade: $0, isOn: true) }
+                    state.filters = availableFilters
+                    return .fireAndForget {
+                        filterClient.saveFilters(availableFilters.map { Filter(id: $0.id, isOn: $0.isOn) })
+                    }
+                }
+                state.filters = availableFilters
+                return .none
+                 
+            case .binding(\.$selectedSystemId):
+                var effects: [EffectPublisher<Action, Never>] = []
+                if state.selectedSystemId == nil {
+                    state.filters.removeAll()
+                    effects.append(.fireAndForget { filterClient.saveFilters(nil) })
+                }
+                effects.append(
+                    contentsOf: [
+                        .fireAndForget { [state] in filterClient.saveFilterSystem(state.selectedSystemId) },
+                        .task { .receiveFilters(.success([])) }
+                    ]
+                )
+                return .merge(effects)
+                
+            case .binding(\.$filters):
+                let currentFilters = state.filters.map { Filter(id: $0.id, isOn: $0.isOn) }
+                return .fireAndForget { filterClient.saveFilters(currentFilters) }
+            
+            default:
+                return .none
+            }
         }
     }
 }

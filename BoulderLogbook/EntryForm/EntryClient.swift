@@ -1,5 +1,5 @@
 //
-//  LogbookClient.swift
+//  EntryClient.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 04.02.23.
@@ -8,7 +8,7 @@
 import Foundation
 import Dependencies
 
-struct LogbookClient {
+struct EntryClient {
     var fetchEntries: () -> [Logbook.Section.Entry]
     var saveEntry: (Logbook.Section.Entry) -> Void
     var deleteEntry: (UUID) -> Void
@@ -16,13 +16,13 @@ struct LogbookClient {
 }
 
 extension DependencyValues {
-    var logbookClient: LogbookClient {
-        get { self[LogbookClient.self] }
-        set { self[LogbookClient.self] = newValue }
+    var entryClient: EntryClient {
+        get { self[EntryClient.self] }
+        set { self[EntryClient.self] = newValue }
     }
 }
 
-extension LogbookClient: DependencyKey {
+extension EntryClient: DependencyKey {
     static let liveValue: Self = {
         let defaults = UserDefaults.standard
         let entriesKey = "logbook-entries"

@@ -64,7 +64,7 @@ struct DashboardView_Previews: PreviewProvider {
                 store: Store(
                     initialState: Dashboard.State(),
                     reducer: Dashboard()
-                        .dependency(\.logbookClient, .previewValue)
+                        .dependency(\.entryClient, .previewValue)
                         .dependency(\.gradeSystemClient, .previewValue)
                 )
             )

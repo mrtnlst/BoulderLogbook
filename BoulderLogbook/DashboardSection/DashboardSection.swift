@@ -42,7 +42,7 @@ struct DashboardSection: ReducerProtocol {
         enum LogbookClientResponse { case finished }
     }
     
-    @Dependency(\.logbookClient) var logbookClient
+    @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some ReducerProtocol<State, Action> {
@@ -52,7 +52,7 @@ struct DashboardSection: ReducerProtocol {
                 return .task {
                     await .deleteDidFinish(
                         TaskResult {
-                            logbookClient.deleteEntry(id)
+                            entryClient.deleteEntry(id)
                             return .finished
                         }
                     )

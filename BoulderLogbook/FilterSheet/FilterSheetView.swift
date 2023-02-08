@@ -11,27 +11,59 @@ import ComposableArchitecture
 struct FilterSheetView: View {
     let store: StoreOf<FilterSheet>
     
-    @State var toggle: Bool = true
-    
     var body: some View {
         WithViewStore(store) { viewStore in
             Form {
                 Section {
                     HStack {
                         Spacer()
-                        Text("Select visible grades")
+                        Text("Configure Diagram")
                         Image(systemName: "switch.2")
                         Spacer()
                     }
                 }
-                Section {
-                    ForEachStore(
-                        store.scope(
-                            state: { $0.filters },
-                            action: FilterSheet.Action.filter
-                        )
-                    ) { filterStore in
-                        FilterView(store: filterStore)
+                Section { gradeSystems() }
+                Section { filters() }
+            }
+            .onAppear { viewStore.send(.onAppear) }
+        }
+    }
+}
+
+extension FilterSheetView {
+    @ViewBuilder func gradeSystems() -> some View {
+        WithViewStore(store) { viewStore in
+            Picker(
+                selection: viewStore.binding(\.$selectedSystemId),
+                content: {
+                    Text("None")
+                        .tag(UUID?.none)
+                    ForEach(viewStore.gradeSystems) {
+                        Text($0.name)
+                            .tag($0.id as UUID?)
+                    }
+                },
+                label: {
+                    Label(
+                        title: { Text("Grade System") },
+                        icon: { Image(systemName: "square.fill.text.grid.1x2") }
+                    )
+                    .foregroundColor(.primary)
+                }
+            )
+            .pickerStyle(.menu)
+        }
+    }
+    
+    @ViewBuilder func filters() -> some View {
+        WithViewStore(store) { viewStore in
+            ForEach(viewStore.binding(\.$filters)) { $filter in
+                Toggle(isOn: $filter.isOn) {
+                    HStack {
+                        let color = filter.grade.color
+                        Image(systemName: color.isBright ? "circle" : "circle.fill")
+                            .foregroundColor(color.isBright ? .none : color)
+                        Text(filter.grade.name)
                     }
                 }
             }
@@ -45,7 +77,10 @@ struct FilterSheetView_Previews: PreviewProvider {
             .sheet(isPresented: .constant(true)) {
                 FilterSheetView(
                     store: Store(
-                        initialState: FilterSheet.State(),
+                        initialState: FilterSheet.State(
+                            gradeSystems: [.mandala, .kletterarena],
+                            filters: FilterViewModel.samples
+                        ),
                         reducer: FilterSheet()
                     )
                 )

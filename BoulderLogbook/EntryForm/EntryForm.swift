@@ -58,14 +58,14 @@ struct EntryForm: ReducerProtocol {
         case increaseOnsight(GradeSystem.Grade)
         case decreaseOnsight(GradeSystem.Grade)
         case save
-        case saveDidFinish(TaskResult<LogbookEntryClientResponse>)
+        case saveDidFinish(TaskResult<EntryClientResponse>)
         case cancel
         case binding(BindingAction<State>)
         
-        enum LogbookEntryClientResponse { case finished }
+        enum EntryClientResponse { case finished }
     }
     
-    @Dependency(\.logbookClient) var logbookEntryClient
+    @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some ReducerProtocol<State, Action> {
@@ -170,7 +170,7 @@ struct EntryForm: ReducerProtocol {
                 return .task {
                     await .saveDidFinish(
                         TaskResult {
-                            logbookEntryClient.saveEntry(entry)
+                            entryClient.saveEntry(entry)
                             return .finished
                         }
                     )
