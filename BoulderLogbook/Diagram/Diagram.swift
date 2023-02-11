@@ -44,9 +44,9 @@ struct Diagram: ReducerProtocol {
                     }
                     partialResult.append(
                         contentsOf: selectedSystem.grades.compactMap { grade in
-                            guard !filters.isEmpty,
-                                  filters.first(where: { $0.id == grade.id })?.isOn ?? false
-                            else {
+                            if !filters.isEmpty,
+                               let filter = filters.first(where: { $0.id == grade.id }),
+                               !filter.isOn {
                                 return nil
                             }
                             let count = entry.tops.count(for: grade)
@@ -67,13 +67,18 @@ struct Diagram: ReducerProtocol {
     
     enum Action: Equatable, BindableAction {
         case onAppear
+        case fetchGradeSystems
+        case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
+        case fetchFilters
+        case receiveFilters(TaskResult<[Filter]?>)
         case presentFilters
         case binding(BindingAction<State>)
     }
     
-    @Dependency(\.gradeSystemClient) var client
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(\.filterClient) var filterClient
     
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
@@ -81,13 +86,24 @@ struct Diagram: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                return .task { .fetchGradeSystems }
+                
+            case .fetchGradeSystems:
+                return .task {
+                    await .receiveGradeSystems(
+                        TaskResult { gradeSystemClient.fetchAvailableSystems() }
+                    )
+                }
+                
+            case let .receiveGradeSystems(.success(gradeSystems)):
+                state.gradeSystems = gradeSystems
                 return .task { .fetchSelectedSystem }
                 
             case .fetchSelectedSystem:
                 return .task {
                     await .receiveSelectedSystem(
                         TaskResult {
-                            client.fetchSelectedSystem()
+                            filterClient.fetchFilterSystem()
                         }
                     )
                 }
@@ -96,6 +112,25 @@ struct Diagram: ReducerProtocol {
                 if let system = state.gradeSystems.first(where: { $0.id == selected }) {
                     state.selectedSystem = system
                 }
+                return .task { .fetchFilters }
+                
+            case .fetchFilters:
+                return .task {
+                    await .receiveFilters(
+                        TaskResult { filterClient.fetchFilters() }
+                    )
+                }
+            case let .receiveFilters(.success(filters)):
+                var availableFilters: [Filter] = []
+                if let system = state.selectedSystem,
+                   let filters = filters {
+                    filters.forEach { filter in
+                        if system.grades.contains(where: { $0.id == filter.id }) {
+                            availableFilters.append(filter)
+                        }
+                    }
+                }
+                state.filters = availableFilters
                 return .none
                 
             default:

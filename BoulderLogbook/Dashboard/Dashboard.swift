@@ -21,8 +21,6 @@ struct Dashboard: ReducerProtocol {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
-        case fetchFilters
-        case receiveFilters(TaskResult<[Filter]?>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
         case diagram(Diagram.Action)
     }
@@ -30,7 +28,6 @@ struct Dashboard: ReducerProtocol {
     @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
-    @Dependency(\.filterClient) var filterClient
     
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.diagram, action: /Action.diagram) {
@@ -54,11 +51,7 @@ struct Dashboard: ReducerProtocol {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                state.diagram.gradeSystems = gradeSystems
-                return .merge(
-                    .task { .fetchEntries },
-                    .task { .fetchFilters }
-                )
+                return .task { .fetchEntries }
                 
             case .fetchEntries:
                 return .task {
@@ -93,16 +86,6 @@ struct Dashboard: ReducerProtocol {
                     )
                 )
                 state.diagram.entries = entries
-                return .none
-                
-            case .fetchFilters:
-                return .task {
-                    await .receiveFilters(
-                        TaskResult { filterClient.fetchFilters() }
-                    )
-                }
-            case let .receiveFilters(.success(filters)):
-                state.diagram.filters = filters ?? []
                 return .none
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):

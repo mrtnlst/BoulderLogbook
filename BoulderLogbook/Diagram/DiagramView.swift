@@ -14,21 +14,31 @@ struct DiagramView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-//            if viewStore.filters.isEmpty {
-//                HStack {
-//                    Spacer()
-//                    Text("Long press to enable filters!")
-//                    Image(systemName: "hand.tap.fill")
-//                    Spacer()
-//                }
-//            } else {
-            if viewStore.entries.count < 3 {
-                emptyDataView(count: viewStore.entries.count)
-            } else {
-                lineChartView()
-                .onAppear { viewStore.send(.onAppear) }
-                .frame(height: 150)
+            VStack {
+                if viewStore.selectedSystem == nil {
+                    emptyDataView(
+                        image: "hand.tap.fill",
+                        text: "Long press to configure diagram!"
+                    )
+                } else if viewStore.entries.count < 3 {
+                    emptyDataView(
+                        image: "chart.xyaxis.line",
+                        text: "Add \(3 - viewStore.entries.count) more entries for a fancy diagram!"
+                    )
+                } else {
+                    lineChartView()
+                        .frame(height: 150)
+                }
             }
+            .onAppear { viewStore.send(.onAppear) }
+            .onLongPressGesture(
+                minimumDuration: 0.2,
+                perform: {
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
+                    viewStore.send(.presentFilters)
+                }
+            )
         }
     }
 }
@@ -80,24 +90,19 @@ extension DiagramView {
                     )
                 )
                 .chartLegend(.hidden)
-                .onLongPressGesture(
-                    minimumDuration: 0.2,
-                    perform: {
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        viewStore.send(.presentFilters)
-                    }
-                )
 //               FIXME: .animation(.default, value: viewStore.selectedSegment)
             }
         }
     }
     
-    @ViewBuilder func emptyDataView(count: Int) -> some View {
+    @ViewBuilder func emptyDataView(
+        image: String,
+        text: String
+    ) -> some View {
         HStack {
             Spacer()
-            Image(systemName: "chart.xyaxis.line")
-            Text("Add \(3 - count) more entries for a fancy diagram!")
+            Image(systemName: image)
+            Text(text)
             Spacer()
         }
         .font(.footnote)
