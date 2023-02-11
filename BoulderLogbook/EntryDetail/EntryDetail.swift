@@ -25,7 +25,7 @@ public struct EntryDetail: Equatable, ReducerProtocol {
     }
     
     public enum Action: Equatable {
-        case delete(Logbook.Section.Entry)
+        case delete(UUID)
         case edit(Logbook.Section.Entry)
     }
     

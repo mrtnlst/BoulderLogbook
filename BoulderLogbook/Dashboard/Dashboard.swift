@@ -21,15 +21,17 @@ struct Dashboard: ReducerProtocol {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
+        case fetchFilters
+        case receiveFilters(TaskResult<[Filter]?>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
         case diagram(Diagram.Action)
     }
     
     @Dependency(\.mainQueue) var mainQueue
-    @Dependency(\.storageService) var storageService
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
-
+    @Dependency(\.filterClient) var filterClient
+    
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.diagram, action: /Action.diagram) {
             Diagram()
@@ -54,7 +56,8 @@ struct Dashboard: ReducerProtocol {
                 state.gradeSystems = gradeSystems
                 state.diagram.gradeSystems = gradeSystems
                 return .merge(
-                    .task { .fetchEntries }
+                    .task { .fetchEntries },
+                    .task { .fetchFilters }
                 )
                 
             case .fetchEntries:
@@ -91,16 +94,20 @@ struct Dashboard: ReducerProtocol {
                 )
                 state.diagram.entries = entries
                 return .none
-            
+                
+            case .fetchFilters:
+                return .task {
+                    await .receiveFilters(
+                        TaskResult { filterClient.fetchFilters() }
+                    )
+                }
+            case let .receiveFilters(.success(filters)):
+                state.diagram.filters = filters ?? []
+                return .none
+                
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
                 return .task { .fetchEntries }
-                
-            case let .dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(logbookEntry))):
-                return .merge(
-                    .fireAndForget { storageService.delete(logbookEntry) },
-                    .task { .fetchEntries }
-                )
-                
+
             default:
                 return .none
             }

@@ -137,7 +137,8 @@ struct LineChartView_Previews: PreviewProvider {
                 store: Store(
                     initialState: Diagram.State(
                         entries: Logbook.Section.Entry.samples + Logbook.Section.Entry.samples,
-                        gradeSystems: [.mandala]
+                        gradeSystems: [.mandala],
+                        filters: Filter.samples.dropLast(4)
                     ),
                     reducer: Diagram()
                         .dependency(\.gradeSystemClient, .previewValue)

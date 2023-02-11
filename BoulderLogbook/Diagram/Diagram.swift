@@ -16,20 +16,20 @@ struct Diagram: ReducerProtocol {
             var date: String
             var count: Int
         }
-        
-//        var filters: [LegacyBoulderGrade] = LegacyBoulderGrade.allCases
-        
         var entries: [Logbook.Section.Entry]
         var gradeSystems: [GradeSystem] = []
+        var filters: [Filter] = []
         var selectedSystem: GradeSystem?
         @BindingState var selectedSegment: Segment = .week
         
         init(
             entries: [Logbook.Section.Entry] = [],
-            gradeSystems: [GradeSystem] = []
+            gradeSystems: [GradeSystem] = [],
+            filters: [Filter] = []
         ) {
             self.entries = entries
             self.gradeSystems = gradeSystems
+            self.filters = filters
         }
         
         var chartEntries: [Entry] {
@@ -44,9 +44,11 @@ struct Diagram: ReducerProtocol {
                     }
                     partialResult.append(
                         contentsOf: selectedSystem.grades.compactMap { grade in
-//                        guard filters.contains(grade) else {
-//                            return nil
-//                        }
+                            guard !filters.isEmpty,
+                                  filters.first(where: { $0.id == grade.id })?.isOn ?? false
+                            else {
+                                return nil
+                            }
                             let count = entry.tops.count(for: grade)
                             if count > 0 {
                                 return Entry(

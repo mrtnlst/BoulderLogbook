@@ -25,6 +25,7 @@ struct FilterSheet: ReducerProtocol {
         case receiveSelectedSystem(TaskResult<UUID?>)
         case fetchFilters
         case receiveFilters(TaskResult<[Filter]?>)
+        case saveFilters
         case binding(BindingAction<State>)
     }
     
@@ -69,13 +70,15 @@ struct FilterSheet: ReducerProtocol {
                 if availableFilters.isEmpty {
                     availableFilters = filterSystem.grades.map { FilterViewModel(grade: $0, isOn: true) }
                     state.filters = availableFilters
-                    return .fireAndForget {
-                        filterClient.saveFilters(availableFilters.map { Filter(id: $0.id, isOn: $0.isOn) })
-                    }
+                    return .task { .saveFilters }
                 }
                 state.filters = availableFilters
                 return .none
-                 
+                
+            case .saveFilters:
+                let currentFilters = state.filters.map { Filter(id: $0.id, isOn: $0.isOn) }
+                return .fireAndForget { filterClient.saveFilters(currentFilters) }
+                
             case .binding(\.$selectedSystemId):
                 var effects: [EffectPublisher<Action, Never>] = []
                 if state.selectedSystemId == nil {
@@ -91,8 +94,7 @@ struct FilterSheet: ReducerProtocol {
                 return .merge(effects)
                 
             case .binding(\.$filters):
-                let currentFilters = state.filters.map { Filter(id: $0.id, isOn: $0.isOn) }
-                return .fireAndForget { filterClient.saveFilters(currentFilters) }
+                return .task { .saveFilters }
             
             default:
                 return .none

@@ -119,6 +119,9 @@ struct AppReducer: ReducerProtocol {
             case .deleteEntriesDidFinish(_):
                 return .task { .dashboard(.fetchGradeSystems) }
                 
+            case .filterSheet(.saveFilters):
+                return .task { .dashboard(.fetchFilters) }
+                
             case .settings(_):
                 return .none
                 

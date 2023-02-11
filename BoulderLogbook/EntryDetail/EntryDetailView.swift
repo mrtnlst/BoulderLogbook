@@ -69,7 +69,7 @@ extension EntryDetailView {
         WithViewStore(store) { viewStore in
             RectangularButton(title: "Edit", action: { viewStore.send(.edit(viewStore.entry)) })
                 .foregroundColor(.orange)
-            RectangularButton(title: "Delete", action: { viewStore.send(.delete(viewStore.entry)) })
+            RectangularButton(title: "Delete", action: { viewStore.send(.delete(viewStore.entry.id)) })
                 .foregroundColor(.red)
         }
     }

@@ -48,7 +48,8 @@ struct DashboardSection: ReducerProtocol {
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .delete(id):
+            case let .delete(id),
+                 let .entryDetail(id: _, action: .delete(id)):
                 return .task {
                     await .deleteDidFinish(
                         TaskResult {
