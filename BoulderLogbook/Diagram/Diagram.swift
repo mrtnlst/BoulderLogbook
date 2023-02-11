@@ -34,8 +34,8 @@ struct Diagram: ReducerProtocol {
         
         var chartEntries: [Entry] {
             let chartEntries = entries
-                .prefix(selectedSegment.tag)
                 .sorted(by: { $0.date > $1.date })
+                .prefix(selectedSegment.tag)
                 .reduce(into: [Entry]()) { partialResult, entry in
                     guard entry.gradeSystem == selectedSystem?.id,
                           let selectedSystem = selectedSystem
