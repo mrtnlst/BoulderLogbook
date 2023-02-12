@@ -38,10 +38,7 @@ struct GradeSystemList: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .concatenate(
-                    .task { .fetchGradeSystems },
-                    .task { .fetchSelectedSystem }
-                )
+                return .task { .fetchGradeSystems }
                 
             case .fetchGradeSystems:
                 return .task {
@@ -51,7 +48,7 @@ struct GradeSystemList: ReducerProtocol {
                 }
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .none
+                return .task { .fetchSelectedSystem }
                 
             case .fetchSelectedSystem:
                 return .task {
