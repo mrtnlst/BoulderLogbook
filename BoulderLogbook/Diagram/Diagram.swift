@@ -21,6 +21,7 @@ struct Diagram: ReducerProtocol {
         var filters: [Filter] = []
         var selectedSystem: GradeSystem?
         var chartEntries: [Entry] = []
+        var isFetching: Bool = true // TODO: Add dedicated View State
         @BindingState var selectedSegment: Segment = .week
         
         init(
@@ -51,6 +52,7 @@ struct Diagram: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .fetchSelectedSystem:
+                state.isFetching = true
                 return .task {
                     await .receiveSelectedSystem(
                         TaskResult {
@@ -69,9 +71,11 @@ struct Diagram: ReducerProtocol {
                 state.selectedSystem = nil
                 state.filters = []
                 state.chartEntries = []
+                state.isFetching = false
                 return .none
                 
             case .fetchFilters:
+                state.isFetching = true
                 return .task {
                     await .receiveFilters(
                         TaskResult { filterClient.fetchFilters() }
@@ -91,6 +95,7 @@ struct Diagram: ReducerProtocol {
                 return .task { .setChartEntries }
                 
             case .setChartEntries:
+                state.isFetching = false
                 state.chartEntries = state.entries
                     .sorted(by: { $0.date > $1.date })
                     .prefix(state.selectedSegment.tag)
@@ -152,6 +157,9 @@ extension Diagram.State {
 
 extension Diagram.State {
     var availableSegments: [Segment] {
+        guard selectedSystem != nil, !isFetching else {
+            return []
+        }
         if entries.count <= Segment.week.tag {
             return []
         } else if entries.count <= Segment.month.tag {

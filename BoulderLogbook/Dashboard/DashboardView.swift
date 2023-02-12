@@ -25,7 +25,9 @@ extension DashboardView {
     @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
-                diagramView()
+                if !viewStore.diagram.isFetching {
+                    diagramView()
+                }
                 ForEachStore(
                     store.scope(
                         state: \.sections,
