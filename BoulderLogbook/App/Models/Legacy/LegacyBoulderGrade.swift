@@ -17,6 +17,17 @@ enum LegacyBoulderGrade: Int, Codable, CaseIterable {
     case yellow
     case purple
     
+    var grade: GradeSystem.Grade {
+        switch self {
+        case .blue: return .mandalaBlue
+        case .red: return .mandalaRed
+        case .orange: return .mandalaOrange
+        case .black: return .mandalaBlack
+        case .white: return .mandalaWhite
+        case .yellow: return .mandalaYellow
+        case .purple: return .mandalaPurple
+        }
+    }
     var gradeDescription: String {
         switch self {
         case .blue: return "Blue"

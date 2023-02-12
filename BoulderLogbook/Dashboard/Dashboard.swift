@@ -24,8 +24,6 @@ struct Dashboard: ReducerProtocol {
         case dashboardSection(id: Double, action: DashboardSection.Action)
         case diagram(Diagram.Action)
     }
-    
-    @Dependency(\.mainQueue) var mainQueue
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     

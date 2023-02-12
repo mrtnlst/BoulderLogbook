@@ -33,9 +33,6 @@ struct AppReducer: ReducerProtocol {
         
         enum EntryClientResponse { case finished }
     }
-    
-    @Dependency(\.mainQueue) var mainQueue
-    @Dependency(\.continuousClock) var clock
     @Dependency(\.entryClient) var entryClient
 
     var body: some ReducerProtocol<State, Action> {

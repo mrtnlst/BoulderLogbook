@@ -35,11 +35,11 @@ struct DashboardSection: ReducerProtocol {
     
     enum Action: Equatable {
         case delete(UUID)
-        case deleteDidFinish(TaskResult<LogbookClientResponse>)
+        case deleteDidFinish(TaskResult<EntryClientResponse>)
         case edit(Logbook.Section.Entry)
         case entryDetail(id: UUID, action: EntryDetail.Action)
         
-        enum LogbookClientResponse { case finished }
+        enum EntryClientResponse { case finished }
     }
     
     @Dependency(\.entryClient) var entryClient
