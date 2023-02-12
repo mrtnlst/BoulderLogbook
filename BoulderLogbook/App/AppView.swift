@@ -75,7 +75,7 @@ extension AppView {
                 ) { filterSheetStore in
                     FilterSheetView(store: filterSheetStore)
                 }
-                .presentationDetents([.medium])
+                .presentationDetents([.medium, .large])
             }
             .sheet(
                 isPresented: viewStore.binding(
