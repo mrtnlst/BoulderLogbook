@@ -81,6 +81,7 @@ struct Diagram: ReducerProtocol {
                         TaskResult { filterClient.fetchFilters() }
                     )
                 }
+                
             case let .receiveFilters(.success(filters)):
                 var availableFilters: [Filter] = []
                 if let system = state.selectedSystem,

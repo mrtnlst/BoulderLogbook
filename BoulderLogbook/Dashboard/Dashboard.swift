@@ -39,7 +39,7 @@ struct Dashboard: ReducerProtocol {
                     .fireAndForget { gradeSystemClient.saveDefaultSystems() },
                     .task { .fetchGradeSystems }
                 )
-               
+                
             case .fetchGradeSystems:
                 return .task {
                     await .receiveGradeSystems(

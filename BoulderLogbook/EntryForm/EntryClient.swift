@@ -28,12 +28,6 @@ extension EntryClient: DependencyKey {
         let entriesKey = "logbook-entries"
         return Self(
             fetchEntries: {
-                if let oldEntryData = defaults.object(forKey: "Logbook") as? Data,
-                   let decodedOldData = try? JSONDecoder().decode(LogbookData.self, from: oldEntryData) {
-                    let newEntries = decodedOldData.toLogbookEntries()
-                    let data = try? JSONEncoder().encode(newEntries)
-                    defaults.set(data, forKey: entriesKey)
-                }
                 guard let encodedData = defaults.object(forKey: entriesKey) as? Data,
                       let decodedData = try? JSONDecoder().decode([Logbook.Section.Entry].self, from: encodedData)
                 else {
