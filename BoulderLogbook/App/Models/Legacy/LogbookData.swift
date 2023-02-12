@@ -43,4 +43,25 @@ extension LogbookData {
             }
         )
     }
+    
+    func toLogbookEntries() -> [Logbook.Section.Entry] {
+        return logbookEntries.map { logbookDataEntry in
+            let tops = logbookDataEntry.tops.map { grade in
+                Top(
+                    id: UUID(),
+                    grade: grade.grade.id,
+                    isAttempt: false,
+                    wasFlash: false,
+                    wasOnsight: false
+                )
+            }
+            
+            return Logbook.Section.Entry(
+                id: UUID(uuidString: logbookDataEntry.id)!,
+                date: logbookDataEntry.date,
+                tops: tops,
+                gradeSystem: GradeSystem.mandala.id
+            )
+        }
+    }
 }
