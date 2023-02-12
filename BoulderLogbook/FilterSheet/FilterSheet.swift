@@ -80,16 +80,18 @@ struct FilterSheet: ReducerProtocol {
                 return .fireAndForget { filterClient.saveFilters(currentFilters) }
                 
             case .binding(\.$selectedSystemId):
-                var effects: [EffectPublisher<Action, Never>] = []
+                var effects: [EffectPublisher<Action, Never>] = [
+                    .fireAndForget { [state] in
+                        filterClient.saveFilterSystem(state.selectedSystemId)
+                        
+                    }
+                ]
                 if state.selectedSystemId == nil {
                     state.filters.removeAll()
-                    effects.append(.fireAndForget { filterClient.saveFilters(nil) })
+                    effects.append(.task { .saveFilters })
                 }
                 effects.append(
-                    contentsOf: [
-                        .fireAndForget { [state] in filterClient.saveFilterSystem(state.selectedSystemId) },
-                        .task { .receiveFilters(.success([])) }
-                    ]
+                    .task { .receiveFilters(.success([])) }
                 )
                 return .merge(effects)
                 

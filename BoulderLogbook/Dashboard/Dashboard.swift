@@ -51,6 +51,7 @@ struct Dashboard: ReducerProtocol {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
+                state.diagram.gradeSystems = gradeSystems
                 return .task { .fetchEntries }
                 
             case .fetchEntries:
@@ -86,7 +87,7 @@ struct Dashboard: ReducerProtocol {
                     )
                 )
                 state.diagram.entries = entries
-                return .none
+                return .task { .diagram(.fetchSelectedSystem) }
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
                 return .task { .fetchEntries }

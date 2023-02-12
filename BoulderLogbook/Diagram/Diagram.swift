@@ -20,6 +20,7 @@ struct Diagram: ReducerProtocol {
         var gradeSystems: [GradeSystem] = []
         var filters: [Filter] = []
         var selectedSystem: GradeSystem?
+        var chartEntries: [Entry] = []
         @BindingState var selectedSegment: Segment = .week
         
         init(
@@ -31,53 +32,17 @@ struct Diagram: ReducerProtocol {
             self.gradeSystems = gradeSystems
             self.filters = filters
         }
-        
-        var chartEntries: [Entry] {
-            let chartEntries = entries
-                .sorted(by: { $0.date > $1.date })
-                .prefix(selectedSegment.tag)
-                .reduce(into: [Entry]()) { partialResult, entry in
-                    guard entry.gradeSystem == selectedSystem?.id,
-                          let selectedSystem = selectedSystem
-                    else {
-                        return
-                    }
-                    partialResult.append(
-                        contentsOf: selectedSystem.grades.compactMap { grade in
-                            if !filters.isEmpty,
-                               let filter = filters.first(where: { $0.id == grade.id }),
-                               !filter.isOn {
-                                return nil
-                            }
-                            let count = entry.tops.count(for: grade)
-                            if count > 0 {
-                                return Entry(
-                                    grade: grade,
-                                    date: entry.date.dayMonthDateString ?? "",
-                                    count: count
-                                )
-                            }
-                            return nil
-                        }
-                    )
-            }
-            return chartEntries
-        }
     }
     
     enum Action: Equatable, BindableAction {
-        case onAppear
-        case fetchGradeSystems
-        case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
         case fetchFilters
         case receiveFilters(TaskResult<[Filter]?>)
         case presentFilters
+        case setChartEntries
         case binding(BindingAction<State>)
     }
-    
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
     @Dependency(\.filterClient) var filterClient
     
     var body: some ReducerProtocol<State, Action> {
@@ -85,20 +50,6 @@ struct Diagram: ReducerProtocol {
             
         Reduce { state, action in
             switch action {
-            case .onAppear:
-                return .task { .fetchGradeSystems }
-                
-            case .fetchGradeSystems:
-                return .task {
-                    await .receiveGradeSystems(
-                        TaskResult { gradeSystemClient.fetchAvailableSystems() }
-                    )
-                }
-                
-            case let .receiveGradeSystems(.success(gradeSystems)):
-                state.gradeSystems = gradeSystems
-                return .task { .fetchSelectedSystem }
-                
             case .fetchSelectedSystem:
                 return .task {
                     await .receiveSelectedSystem(
@@ -108,11 +59,17 @@ struct Diagram: ReducerProtocol {
                     )
                 }
                 
-            case let .receiveSelectedSystem(.success(selected)):
+            case let .receiveSelectedSystem(.success(.some(selected))):
                 if let system = state.gradeSystems.first(where: { $0.id == selected }) {
                     state.selectedSystem = system
                 }
                 return .task { .fetchFilters }
+            
+            case .receiveSelectedSystem(.success(.none)):
+                state.selectedSystem = nil
+                state.filters = []
+                state.chartEntries = []
+                return .none
                 
             case .fetchFilters:
                 return .task {
@@ -131,7 +88,41 @@ struct Diagram: ReducerProtocol {
                     }
                 }
                 state.filters = availableFilters
+                return .task { .setChartEntries }
+                
+            case .setChartEntries:
+                state.chartEntries = state.entries
+                    .sorted(by: { $0.date > $1.date })
+                    .prefix(state.selectedSegment.tag)
+                    .reduce(into: [Diagram.State.Entry]()) { partialResult, entry in
+                        guard let selectedSystem = state.selectedSystem,
+                              entry.gradeSystem == selectedSystem.id
+                        else {
+                            return
+                        }
+                        partialResult.append(
+                            contentsOf: selectedSystem.grades.compactMap { grade in
+                                if !state.filters.isEmpty,
+                                   let filter = state.filters.first(where: { $0.id == grade.id }),
+                                   !filter.isOn {
+                                    return nil
+                                }
+                                let count = entry.tops.count(for: grade)
+                                if count > 0 {
+                                    return Diagram.State.Entry(
+                                        grade: grade,
+                                        date: entry.date.dayMonthDateString ?? "",
+                                        count: count
+                                    )
+                                }
+                                return nil
+                            }
+                        )
+                    }
                 return .none
+                
+            case .binding(\.$selectedSegment):
+                return .task { .setChartEntries }
                 
             default:
                 return .none

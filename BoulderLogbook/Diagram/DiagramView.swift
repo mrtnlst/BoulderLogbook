@@ -15,83 +15,87 @@ struct DiagramView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                if viewStore.selectedSystem == nil {
-                    emptyDataView(
-                        image: "hand.tap.fill",
-                        text: "Long press to configure diagram!"
-                    )
-                } else if viewStore.entries.count < 3 {
-                    emptyDataView(
-                        image: "chart.xyaxis.line",
-                        text: "Add \(3 - viewStore.entries.count) more entries for a fancy diagram!"
-                    )
-                } else {
-                    lineChartView()
-                        .frame(height: 150)
+                if !viewStore.availableSegments.isEmpty {
+                    picker()
                 }
+                VStack {
+                    if viewStore.selectedSystem == nil {
+                        emptyDataView(
+                            image: "hand.tap.fill",
+                            text: "Long press to configure diagram!"
+                        )
+                    } else if viewStore.entries.count < 3 {
+                        emptyDataView(
+                            image: "chart.xyaxis.line",
+                            text: "Add \(3 - viewStore.entries.count) more entries for a fancy diagram!"
+                        )
+                    } else {
+                        lineChartView()
+                            .frame(height: 150)
+                    }
+                }
+                .onLongPressGesture(
+                    minimumDuration: 0.2,
+                    perform: {
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        viewStore.send(.presentFilters)
+                    }
+                )
             }
-            .onAppear { viewStore.send(.onAppear) }
-            .onLongPressGesture(
-                minimumDuration: 0.2,
-                perform: {
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    viewStore.send(.presentFilters)
-                }
-            )
         }
     }
 }
 
 extension DiagramView {
+    @ViewBuilder func picker() -> some View {
+        WithViewStore(store) { viewStore in
+            Picker(
+                "Pick the number of sessions displayed in the chart!",
+                selection: viewStore.binding(\.$selectedSegment)
+            ) {
+                ForEach(viewStore.availableSegments, id: \.self) { segment in
+                    Text(segment.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.bottom, 4)
+        }
+    }
     @ViewBuilder func lineChartView() -> some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                if !viewStore.availableSegments.isEmpty {
-                    Picker(
-                        "Pick the number of sessions displayed in the chart!",
-                        selection: viewStore.binding(\.$selectedSegment)
-                    ) {
-                        ForEach(viewStore.availableSegments, id: \.self) { segment in
-                            Text(segment.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.bottom, 4)
-                }
-                let entries = viewStore.chartEntries
-                Chart(entries) { entry in
-                    LineMark(
-                        x: .value("Date", entry.date),
-                        y: .value("Tops", entry.count)
-                    )
-                    .foregroundStyle(by: .value("Grade", entry.grade.name))
-                    .lineStyle(.init(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                    .symbol(Circle())
-                }
-                .chartXScale(domain: .automatic(reversed: true))
-                .chartXAxis {
-                    AxisMarks { value in
-                        AxisGridLine()
-                        AxisTick()
-                        AxisValueLabel(centered: false) {
-                            if viewStore.hasXAxisValueLabel,
-                               let date = value.as(String.self) {
-                                Text(date)
-                            }
-                        }
-                    }
-                }
-                .chartYScale(domain: 0...viewStore.maximumValue)
-                .chartForegroundStyleScale(
-                    range: lineMarkColors(
-                        entries: entries,
-                        limit: viewStore.selectedSystem?.grades.count ?? 0
-                    )
+            let entries = viewStore.chartEntries
+            Chart(entries) { entry in
+                LineMark(
+                    x: .value("Date", entry.date),
+                    y: .value("Tops", entry.count)
                 )
-                .chartLegend(.hidden)
-//               FIXME: .animation(.default, value: viewStore.selectedSegment)
+                .foregroundStyle(by: .value("Grade", entry.grade.name))
+                .lineStyle(.init(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                .symbol(Circle())
             }
+            .chartXScale(domain: .automatic(reversed: true))
+            .chartXAxis {
+                AxisMarks { value in
+                    AxisGridLine()
+                    AxisTick()
+                    AxisValueLabel(centered: false) {
+                        if viewStore.hasXAxisValueLabel,
+                           let date = value.as(String.self) {
+                            Text(date)
+                        }
+                    }
+                }
+            }
+            .chartYScale(domain: 0...viewStore.maximumValue)
+            .chartForegroundStyleScale(
+                range: lineMarkColors(
+                    entries: entries,
+                    limit: viewStore.selectedSystem?.grades.count ?? 0
+                )
+            )
+            .chartLegend(.hidden)
+//               FIXME: .animation(.default, value: viewStore.selectedSegment)
         }
     }
     
@@ -126,7 +130,7 @@ extension DiagramView {
     }
 }
 
-struct LineChartView_Previews: PreviewProvider {
+struct Diagram_Previews: PreviewProvider {
     static var previews: some View {
         List {
             DiagramView(

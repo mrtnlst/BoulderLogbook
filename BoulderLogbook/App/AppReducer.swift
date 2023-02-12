@@ -120,8 +120,8 @@ struct AppReducer: ReducerProtocol {
                 return .task { .dashboard(.fetchGradeSystems) }
                 
             case .filterSheet(.saveFilters):
-                return .task { .dashboard(.diagram(.fetchFilters)) }
-                
+                return .task { .dashboard(.diagram(.fetchSelectedSystem)) }
+                                
             case .settings(_):
                 return .none
                 
