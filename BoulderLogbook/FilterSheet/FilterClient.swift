@@ -3,9 +3,7 @@ import Dependencies
 
 struct FilterClient {
     var fetchFilterSystem: () -> UUID?
-    var fetchFilters: () -> [Filter]?
     var saveFilterSystem: (UUID?) -> Void
-    var saveFilters: ([Filter]?) -> Void
 }
 
 extension DependencyValues {
@@ -29,26 +27,11 @@ extension FilterClient: DependencyKey {
                 }
                 return decodedData
             },
-            fetchFilters: {
-                guard let encodedData = defaults.object(forKey: filtersKey) as? Data,
-                      let decodedData = try? JSONDecoder().decode([Filter].self, from: encodedData)
-                else {
-                    return nil
-                }
-                return decodedData
-            },
             saveFilterSystem: { newValue in
                 if let data = try? JSONEncoder().encode(newValue) {
                     defaults.set(data, forKey: filterSystemKey)
                 } else {
                     defaults.set(nil, forKey: filterSystemKey)
-                }
-            },
-            saveFilters: { filters in
-                if let data = try? JSONEncoder().encode(filters) {
-                    defaults.set(data, forKey: filtersKey)
-                } else {
-                    defaults.set(nil, forKey: filtersKey)
                 }
             }
         )
@@ -57,9 +40,7 @@ extension FilterClient: DependencyKey {
     static let previewValue: Self = {
         return Self(
             fetchFilterSystem: { GradeSystem.mandala.id },
-            fetchFilters: { Filter.samples },
-            saveFilterSystem: { _ in },
-            saveFilters: { _ in }
+            saveFilterSystem: { _ in }
         )
     }()
 }

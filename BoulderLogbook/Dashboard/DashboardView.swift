@@ -25,8 +25,13 @@ extension DashboardView {
     @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
-                if !viewStore.diagram.isFetching {
-                    diagramView()
+                IfLetStore(
+                    store.scope(
+                        state: \.diagramPage,
+                        action: Dashboard.Action.diagramPage
+                    )
+                ) { diagramPageStore in
+                    DiagramPageView(store: diagramPageStore)
                 }
                 ForEachStore(
                     store.scope(
@@ -41,19 +46,6 @@ extension DashboardView {
                 viewStore.send(.onAppear)
             }
             .navigationTitle("Dashboard")
-        }
-    }
-    
-    @ViewBuilder func diagramView() -> some View {
-        Section {
-            WithViewStore(store) { viewStore in
-                DiagramView(
-                    store: store.scope(
-                        state: \.diagram,
-                        action: Dashboard.Action.diagram
-                    )
-                )
-            }
         }
     }
 }

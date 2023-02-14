@@ -19,7 +19,7 @@ struct EntryColorView: View {
     var body: some View {
         GeometryReader { reader in
             HStack(spacing: 0) {
-                ForEach(gradeSystem.grades.reversed()) { grade in
+                ForEach(gradeSystem.grades) { grade in
                     colorSegment(for: grade, and: reader.size.width)
                 }
             }

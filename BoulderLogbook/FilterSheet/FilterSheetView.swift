@@ -23,7 +23,6 @@ struct FilterSheetView: View {
                     }
                 }
                 Section { gradeSystems() }
-                Section { filters() }
             }
             .onAppear { viewStore.send(.onAppear) }
         }
@@ -54,21 +53,6 @@ extension FilterSheetView {
             .pickerStyle(.menu)
         }
     }
-    
-    @ViewBuilder func filters() -> some View {
-        WithViewStore(store) { viewStore in
-            ForEach(viewStore.binding(\.$filters)) { $filter in
-                Toggle(isOn: $filter.isOn) {
-                    HStack {
-                        let color = filter.grade.color
-                        Image(systemName: color.isBright ? "circle" : "circle.fill")
-                            .foregroundColor(color.isBright ? .none : color)
-                        Text(filter.grade.name)
-                    }
-                }
-            }
-        }
-    }
 }
 
 struct FilterSheetView_Previews: PreviewProvider {
@@ -78,8 +62,7 @@ struct FilterSheetView_Previews: PreviewProvider {
                 FilterSheetView(
                     store: Store(
                         initialState: FilterSheet.State(
-                            gradeSystems: [.mandala, .kletterarena],
-                            filters: FilterViewModel.samples
+                            gradeSystems: [.mandala, .kletterarena]
                         ),
                         reducer: FilterSheet()
                     )

@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct Dashboard: ReducerProtocol {
     struct State: Equatable {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
-        var diagram: Diagram.State = Diagram.State()
+        var diagramPage: DiagramPage.State?
         var gradeSystems: [GradeSystem] = []
     }
     
@@ -22,16 +22,12 @@ struct Dashboard: ReducerProtocol {
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
         case dashboardSection(id: Double, action: DashboardSection.Action)
-        case diagram(Diagram.Action)
+        case diagramPage(DiagramPage.Action)
     }
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some ReducerProtocol<State, Action> {
-        Scope(state: \.diagram, action: /Action.diagram) {
-            Diagram()
-        }
-
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -49,7 +45,6 @@ struct Dashboard: ReducerProtocol {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                state.diagram.gradeSystems = gradeSystems
                 return .task { .fetchEntries }
                 
             case .fetchEntries:
@@ -84,8 +79,11 @@ struct Dashboard: ReducerProtocol {
                         by: { $0.date > $1.date }
                     )
                 )
-                state.diagram.entries = entries
-                return .task { .diagram(.fetchSelectedSystem) }
+                state.diagramPage = DiagramPage.State(
+                    entries: entries,
+                    gradeSystems: state.gradeSystems
+                )
+                return .none
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
                 return .task { .fetchEntries }
@@ -96,6 +94,9 @@ struct Dashboard: ReducerProtocol {
         }
         .forEach(\.sections, action: /Action.dashboardSection) {
             DashboardSection()
+        }
+        .ifLet(\.diagramPage, action: /Action.diagramPage) {
+            DiagramPage()
         }
     }
 }

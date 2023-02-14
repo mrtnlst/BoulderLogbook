@@ -15,7 +15,6 @@ struct AppReducer: ReducerProtocol {
         var entryForm: EntryForm.State?
         var filterSheet: FilterSheet.State?
         var isPresentingForm: Bool = false
-        var isPresentingFilter: Bool = false
         var isPresentingSettings: Bool = false
         var path: [StoreOf<EntryDetail>] = []
     }
@@ -24,9 +23,7 @@ struct AppReducer: ReducerProtocol {
         case dashboard(Dashboard.Action)
         case settings(Settings.Action)
         case entryForm(EntryForm.Action)
-        case filterSheet(FilterSheet.Action)
         case setIsPresentingForm(Bool)
-        case setIsPresentingFilter(Bool)
         case setIsPresentingSettings(Bool)
         case setPath([StoreOf<EntryDetail>])
         case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
@@ -46,14 +43,7 @@ struct AppReducer: ReducerProtocol {
                 state.entryForm = isPresenting ? EntryForm.State() : nil
                 state.isPresentingForm = isPresenting
                 return .none
-                
-            case let .setIsPresentingFilter(isPresenting):
-                // TODO: Maybe move to Dashboard?
-                let systems = state.dashboard.gradeSystems
-                state.filterSheet = isPresenting ? FilterSheet.State(gradeSystems: systems) : nil
-                state.isPresentingFilter = isPresenting
-                return .none
-                
+
             case let .setIsPresentingSettings(isPresenting):
                 state.settings = isPresenting ? Settings.State() : nil
                 state.isPresentingSettings = isPresenting
@@ -93,10 +83,7 @@ struct AppReducer: ReducerProtocol {
                 )
                 state.isPresentingForm = true
                 return .none
-                
-            case .dashboard(.diagram(.presentFilters)):
-                return EffectPublisher(value: .setIsPresentingFilter(true))
-                
+   
             case .dashboard(_):
                 return .none
                 
@@ -115,22 +102,13 @@ struct AppReducer: ReducerProtocol {
                 
             case .deleteEntriesDidFinish(_):
                 return .task { .dashboard(.fetchGradeSystems) }
-                
-            case .filterSheet(.saveFilters):
-                return .task { .dashboard(.diagram(.fetchSelectedSystem)) }
                                 
             case .settings(_):
-                return .none
-                
-            case .filterSheet(_):
                 return .none
             }
         }
         .ifLet(\.entryForm, action: /Action.entryForm) {
             EntryForm()
-        }
-        .ifLet(\.filterSheet, action: /Action.filterSheet) {
-            FilterSheet()
         }
         .ifLet(\.settings, action: /Action.settings) {
             Settings()
