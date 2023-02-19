@@ -70,10 +70,10 @@ extension TopCountDiagramView {
                     y: .value("Tops", tops.count(for: grade))
                 )
                 .foregroundStyle(by: .value("Grade", grade.name))
-                .annotation(position: .overlay, alignment: .bottom) {
+                .annotation(position: .top, alignment: .bottom) {
                     if tops.count > 0 {
                         Text("\(tops.count(for: grade))")
-                            .foregroundColor(grade.color.isBright ? .black : .mandalaWhite)
+                            .foregroundColor(.secondary)
                             .font(.caption2)
                             .fontWeight(.semibold)
                     }
