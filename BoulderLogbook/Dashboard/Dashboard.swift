@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct Dashboard: ReducerProtocol {
     struct State: Equatable {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
-        var diagramPage: DiagramPage.State?
+        var diagramPage = DiagramPage.State()
         var gradeSystems: [GradeSystem] = []
     }
     
@@ -28,6 +28,10 @@ struct Dashboard: ReducerProtocol {
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some ReducerProtocol<State, Action> {
+        Scope(state: \.diagramPage, action: /Action.diagramPage) {
+            DiagramPage()
+        }
+        
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -45,7 +49,10 @@ struct Dashboard: ReducerProtocol {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .task { .fetchEntries }
+                return .merge(
+                    .task { .fetchEntries },
+                    .task { .diagramPage(.receiveGradeSystems(gradeSystems)) }
+                )
                 
             case .fetchEntries:
                 return .task {
@@ -79,11 +86,7 @@ struct Dashboard: ReducerProtocol {
                         by: { $0.date > $1.date }
                     )
                 )
-                state.diagramPage = DiagramPage.State(
-                    entries: entries,
-                    gradeSystems: state.gradeSystems
-                )
-                return .none
+                return .task { .diagramPage(.receiveEntries(entries)) }
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
                 return .task { .fetchEntries }
@@ -94,9 +97,6 @@ struct Dashboard: ReducerProtocol {
         }
         .forEach(\.sections, action: /Action.dashboardSection) {
             DashboardSection()
-        }
-        .ifLet(\.diagramPage, action: /Action.diagramPage) {
-            DiagramPage()
         }
     }
 }

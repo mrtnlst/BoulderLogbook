@@ -18,6 +18,8 @@
 		5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397B299AC84D00299CCA /* DiagramPageView.swift */; };
 		5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */; };
 		5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397F299ACCAF00299CCA /* TopCountDiagramView.swift */; };
+		5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3982299C215200299CCA /* SessionDiagram.swift */; };
+		5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3984299C215E00299CCA /* SessionDiagramView.swift */; };
 		5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0DF2A29942E4700B49A56 /* FilterClient.swift */; };
 		5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */; };
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
@@ -76,6 +78,8 @@
 		5B6D397B299AC84D00299CCA /* DiagramPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageView.swift; sourceTree = "<group>"; };
 		5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCountDiagram.swift; sourceTree = "<group>"; };
 		5B6D397F299ACCAF00299CCA /* TopCountDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCountDiagramView.swift; sourceTree = "<group>"; };
+		5B6D3982299C215200299CCA /* SessionDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDiagram.swift; sourceTree = "<group>"; };
+		5B6D3984299C215E00299CCA /* SessionDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDiagramView.swift; sourceTree = "<group>"; };
 		5BB0DF2A29942E4700B49A56 /* FilterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClient.swift; sourceTree = "<group>"; };
 		5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 			children = (
 				5B6D3976299AC7B100299CCA /* DiagramPage.swift */,
 				5B6D397B299AC84D00299CCA /* DiagramPageView.swift */,
+				5BD0E2C629A23A570079A826 /* SessionDiagram */,
 				5B6D3981299C201800299CCA /* TopCountDiagram */,
 			);
 			path = DiagramPage;
@@ -182,6 +187,15 @@
 				5B6D397F299ACCAF00299CCA /* TopCountDiagramView.swift */,
 			);
 			path = TopCountDiagram;
+			sourceTree = "<group>";
+		};
+		5BD0E2C629A23A570079A826 /* SessionDiagram */ = {
+			isa = PBXGroup;
+			children = (
+				5B6D3982299C215200299CCA /* SessionDiagram.swift */,
+				5B6D3984299C215E00299CCA /* SessionDiagramView.swift */,
+			);
+			path = SessionDiagram;
 			sourceTree = "<group>";
 		};
 		5BDD41F129868A9A00B84BA0 /* Settings */ = {
@@ -440,6 +454,7 @@
 				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
+				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
@@ -468,6 +483,7 @@
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
 				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
+				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5BDD42002987086800B84BA0 /* Top.swift in Sources */,
 				5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */,

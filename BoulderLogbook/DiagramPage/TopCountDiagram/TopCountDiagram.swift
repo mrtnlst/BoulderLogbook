@@ -10,11 +10,11 @@ import ComposableArchitecture
 
 struct TopCountDiagram: ReducerProtocol {
     struct State: Equatable {
-        private let entries: [Logbook.Section.Entry]
-        var gradeSystem: GradeSystem
+        var entries: [Logbook.Section.Entry]
+        var gradeSystem: GradeSystem?
         @BindingState var selectedSegment: Segment = .week
 
-        init(entries: [Logbook.Section.Entry], gradeSystem: GradeSystem) {
+        init(entries: [Logbook.Section.Entry] = [], gradeSystem: GradeSystem? = nil) {
             self.entries = entries
             self.gradeSystem = gradeSystem
         }
@@ -30,6 +30,7 @@ struct TopCountDiagram: ReducerProtocol {
     }
     
     enum Action: Equatable, BindableAction {
+        case presentFilters
         case binding(BindingAction<State>)
     }
     
@@ -54,10 +55,6 @@ struct TopCountDiagram: ReducerProtocol {
         
         Reduce { state, action in
             switch action {
-//            case .binding(\.$selectedSegment):
-//
-//                return .none
-                
             default:
                 return .none
             }

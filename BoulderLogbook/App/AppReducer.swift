@@ -16,6 +16,7 @@ struct AppReducer: ReducerProtocol {
         var filterSheet: FilterSheet.State?
         var isPresentingForm: Bool = false
         var isPresentingSettings: Bool = false
+        var isPresentingFilter: Bool = false
         var path: [StoreOf<EntryDetail>] = []
     }
     
@@ -23,8 +24,10 @@ struct AppReducer: ReducerProtocol {
         case dashboard(Dashboard.Action)
         case settings(Settings.Action)
         case entryForm(EntryForm.Action)
+        case filterSheet(FilterSheet.Action)
         case setIsPresentingForm(Bool)
         case setIsPresentingSettings(Bool)
+        case setIsPresentingFilter(Bool)
         case setPath([StoreOf<EntryDetail>])
         case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
         
@@ -48,6 +51,16 @@ struct AppReducer: ReducerProtocol {
                 state.settings = isPresenting ? Settings.State() : nil
                 state.isPresentingSettings = isPresenting
                 return .none
+                
+            case let .setIsPresentingFilter(isPresenting):
+                let systems = state.dashboard.gradeSystems // FIXME
+                state.filterSheet = isPresenting ? FilterSheet.State(gradeSystems: systems) : nil
+                state.isPresentingFilter = isPresenting
+                
+                if isPresenting {
+                    return .none
+                }
+                return .task { .dashboard(.diagramPage(.fetchSelectedSystem)) }
                 
             case let .setPath(path):
                 state.path = path
@@ -83,7 +96,11 @@ struct AppReducer: ReducerProtocol {
                 )
                 state.isPresentingForm = true
                 return .none
-   
+            
+            case .dashboard(.diagramPage(.presentFilters)),
+                 .dashboard(.diagramPage(.topCountDiagram(.presentFilters))):
+                return .task { .setIsPresentingFilter(true) }
+                
             case .dashboard(_):
                 return .none
                 
@@ -105,6 +122,9 @@ struct AppReducer: ReducerProtocol {
                                 
             case .settings(_):
                 return .none
+
+            case .filterSheet(_):
+                return .none
             }
         }
         .ifLet(\.entryForm, action: /Action.entryForm) {
@@ -112,6 +132,9 @@ struct AppReducer: ReducerProtocol {
         }
         .ifLet(\.settings, action: /Action.settings) {
             Settings()
+        }
+        .ifLet(\.filterSheet, action: /Action.filterSheet) {
+            FilterSheet()
         }
     }
 }

@@ -14,40 +14,21 @@ struct DiagramPageView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             TabView {
-                IfLetStore(
-                    store.scope(
+                TopCountDiagramView(
+                    store: store.scope(
                         state: \.topCountDiagram,
                         action: DiagramPage.Action.topCountDiagram
                     )
-                ) { topCountDiagramStore in
-                    TopCountDiagramView(
-                        store: topCountDiagramStore,
-                        onLongPressGesture: { viewStore.send(.setIsPresentingFilter(true)) }
-                    )
-                }
-                if viewStore.topCountDiagram == nil {
-                    emptyDataView()
-                }
-            }
-            .onAppear { viewStore.send(.fetchSelectedSystem) }
-            .frame(height: 150)
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .sheet(
-                isPresented: viewStore.binding(
-                    get: \.isPresentingFilter,
-                    send: DiagramPage.Action.setIsPresentingFilter
                 )
-            ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.filterSheet,
-                        action: DiagramPage.Action.filterSheet
+                SessionDiagramView(
+                    store: store.scope(
+                        state: \.sessionDiagram,
+                        action: DiagramPage.Action.sessionDiagram
                     )
-                ) { filterSheetStore in
-                    FilterSheetView(store: filterSheetStore)
-                }
-                .presentationDetents([.medium, .large])
+                )
             }
+            .frame(height: 170)
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
 }
@@ -57,16 +38,16 @@ extension DiagramPageView {
         WithViewStore(store, observe: { $0.entries}) { viewStore in
             HStack {
                 Spacer()
-                Image(systemName: "hand.tap.fill")
-                Text("Long press to configure diagrams!")
+                Button {
+                    viewStore.send(.presentFilters)
+                } label: {
+                    Image(systemName: "slider.horizontal.3")
+                }
+                .fontWeight(.bold)
+                Text("Tap filter button to configure diagrams!")
                 Spacer()
             }
             .font(.subheadline)
-            .onLongPressGesture(minimumDuration: 0.2) {
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                viewStore.send(.setIsPresentingFilter(true))
-            }
         }
     }
 }

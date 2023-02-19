@@ -25,14 +25,12 @@ extension DashboardView {
     @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
-                IfLetStore(
-                    store.scope(
+                DiagramPageView(
+                    store: store.scope(
                         state: \.diagramPage,
                         action: Dashboard.Action.diagramPage
                     )
-                ) { diagramPageStore in
-                    DiagramPageView(store: diagramPageStore)
-                }
+                )
                 ForEachStore(
                     store.scope(
                         state: \.sections,

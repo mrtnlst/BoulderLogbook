@@ -76,6 +76,22 @@ extension AppView {
                     SettingsView(store: settingsStore)
                 }
             }
+            .sheet(
+                isPresented: viewStore.binding(
+                    get: \.isPresentingFilter,
+                    send: AppReducer.Action.setIsPresentingFilter
+                )
+            ) {
+                IfLetStore(
+                    store.scope(
+                        state: \.filterSheet,
+                        action: AppReducer.Action.filterSheet
+                    )
+                ) { filterSheetStore in
+                    FilterSheetView(store: filterSheetStore)
+                }
+                .presentationDetents([.medium])
+            }
         }
     }
 }
