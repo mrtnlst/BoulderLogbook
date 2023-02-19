@@ -37,6 +37,7 @@ struct Dashboard: ReducerProtocol {
             case .onAppear:
                 return .concatenate(
                     .fireAndForget { gradeSystemClient.saveDefaultSystems() },
+                    .fireAndForget { entryClient.saveBackupEntries() },
                     .task { .fetchGradeSystems }
                 )
                 

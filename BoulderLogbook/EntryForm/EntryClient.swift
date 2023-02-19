@@ -11,6 +11,7 @@ import Dependencies
 struct EntryClient {
     var fetchEntries: () -> [Logbook.Section.Entry]
     var saveEntry: (Logbook.Section.Entry) -> Void
+    var saveBackupEntries: () -> Void
     var deleteEntry: (UUID) -> Void
     var deleteEntries: (UUID) -> Void
 }
@@ -52,6 +53,15 @@ extension EntryClient: DependencyKey {
                 let data = try? JSONEncoder().encode(entries)
                 defaults.set(data, forKey: entriesKey)
             },
+            saveBackupEntries: {
+                let backupEntriesKey = "backup-entries"
+                guard !defaults.bool(forKey: backupEntriesKey) else {
+                    return
+                }
+                let data = try? JSONEncoder().encode([Logbook.Section.Entry].backup)
+                defaults.set(data, forKey: entriesKey)
+                defaults.set(true, forKey: backupEntriesKey)
+            },
             deleteEntry: { oldValue in
                 guard let encodedData = defaults.object(forKey: entriesKey) as? Data,
                       var decodedData = try? JSONDecoder().decode([Logbook.Section.Entry].self, from: encodedData)
@@ -81,6 +91,7 @@ extension EntryClient: DependencyKey {
         return Self(
             fetchEntries: { return Logbook.Section.Entry.samples },
             saveEntry: { _ in },
+            saveBackupEntries: { },
             deleteEntry: { _ in },
             deleteEntries: { _ in }
         )
