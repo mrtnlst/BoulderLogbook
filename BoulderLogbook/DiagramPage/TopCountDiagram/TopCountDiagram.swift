@@ -21,11 +21,15 @@ struct TopCountDiagram: ReducerProtocol {
         
         var tops: [Top] {
             if let value = selectedSegment.value {
-                return entries.sorted(by: { $0.date > $1.date })
+                return entries
+                    .sorted(by: { $0.date > $1.date })
                     .prefix(value)
                     .reduce(into: [], { $0.append(contentsOf: $1.tops) })
+                    .successful()
             }
-            return entries.reduce(into: [], { $0.append(contentsOf: $1.tops) })
+            return entries
+                .reduce(into: [], { $0.append(contentsOf: $1.tops) })
+                .successful()
         }
     }
     
