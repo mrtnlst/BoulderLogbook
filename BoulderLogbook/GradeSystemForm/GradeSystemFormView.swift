@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct GradeSystemFormView: View {
     let store: StoreOf<GradeSystemForm>
     @FocusState private var focusedField: UUID?
+    private let nameTextFieldId = UUID()
     
     var body: some View {
         NavigationView {
@@ -20,26 +21,31 @@ struct GradeSystemFormView: View {
                         nameTextField()
                     }
                     Section(
-                        content: { gradesInput() },
+                        content: { gradesInputFields() },
                         header: { Text("Drag to set difficulty order") }
                     )
                     Section {
-                        buttons()
+                        actionButtons()
                             .listRowInsets(.zero)
                     }
                 }
-                .navigationTitle(
-                    viewStore.name.isEmpty
-                    ? "New Grade System"
-                    : viewStore.name
-                )
+                .navigationTitle("New Grade System")
                 .toolbar {
-                    if viewStore.grades.count > 1 {
-                        EditButton()
+                    ToolbarItemGroup(placement: .keyboard) {
+                        toolbarButtons()
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if viewStore.grades.count > 1 {
+                            EditButton()
+                        }
                     }
                 }
             }
         }
+        .interactiveDismissDisabled()
+        .scrollDismissesKeyboard(.interactively)
     }
 }
 
@@ -47,46 +53,35 @@ extension GradeSystemFormView {
     @ViewBuilder func nameTextField() -> some View {
         WithViewStore(store) { viewStore in
             TextField("Name", text: viewStore.binding(\.$name))
+                .focused($focusedField, equals: nameTextFieldId)
         }
     }
     
-    @ViewBuilder func gradesInput() -> some View {
+    @ViewBuilder func gradesInputFields() -> some View {
         WithViewStore(store) { viewStore in
-            List {
-                ForEach(viewStore.binding(\.$grades)) { $grade in
-                    HStack {
-                        ColorPicker(
-                            selection: $grade.color,
-                            supportsOpacity: false,
-                            label: {}
-                        )
-                        .labelsHidden()
-                        TextField(
-                            grade.color.description.capitalized,
-                            text: $grade.name
-                        )
-                        .id(grade.id)
-                        .focused($focusedField, equals: grade.id)
-                    }
-                    .onSubmit {
-                        guard let index = viewStore.grades.firstIndex(of: grade) else {
-                            return
-                        }
-                        if let nextGrade = viewStore.grades[safe: index + 1] {
-                            focusedField = nextGrade.id
-                        } else {
-                            viewStore.send(.addGrade)
-                            focusedField = viewStore.grades[safe: index + 1]?.id
-                        }
-                    }
+            ForEach(viewStore.binding(\.$grades)) { $grade in
+                HStack {
+                    ColorPicker(
+                        selection: $grade.color,
+                        supportsOpacity: false,
+                        label: {}
+                    )
+                    .labelsHidden()
+                    TextField(
+                        grade.color.description.capitalized,
+                        text: $grade.name
+                    )
+                    .focused($focusedField, equals: grade.id)
+                    .submitLabel(.done)
+                    .autocorrectionDisabled()
                 }
-                .onMove { viewStore.send(.moveGrade($0, $1)) }
-                .onDelete { viewStore.send(.deleteGrade($0)) }
             }
+            .onMove { viewStore.send(.moveGrade($0, $1)) }
+            .onDelete { viewStore.send(.deleteGrade($0)) }
         }
     }
     
-    @ViewBuilder func buttons() -> some View {
+    @ViewBuilder func actionButtons() -> some View {
         WithViewStore(store) { viewStore in
             RectangularButton(
                 title: "Save",
@@ -96,7 +91,6 @@ extension GradeSystemFormView {
                 }
             )
             .foregroundColor(.green)
-            
             RectangularButton(
                 title: "Cancel",
                 action: {
@@ -105,6 +99,44 @@ extension GradeSystemFormView {
                 }
             )
             .foregroundColor(.red)
+        }
+    }
+    
+    @ViewBuilder func toolbarButtons() -> some View {
+        WithViewStore(store) { viewStore in
+            Button(
+                action: { focusNextTextField(for: viewStore.grades, reversed: true) },
+                label: { Image(systemName: "chevron.up.circle")}
+            )
+            .disabled(focusedField == nameTextFieldId)
+            Button(
+                action: { focusNextTextField(for: viewStore.grades) },
+                label: { Image(systemName: "chevron.down.circle") }
+            )
+            Spacer()
+            Button(
+                action: {
+                    viewStore.send(.addGrade)
+                    focusNextTextField(for: viewStore.grades)
+                },
+                label: { Image(systemName: "plus.circle") }
+            )
+            .disabled(focusedField == nameTextFieldId)
+        }
+    }
+    
+    func focusNextTextField(for grades: [GradeSystem.Grade], reversed: Bool = false) {
+        let summand: Int = reversed ? -1 : 1
+        if let index = grades.firstIndex(where: { $0.id == focusedField }) {
+            if let nextGrade = grades[safe: index + summand] {
+                focusedField = nextGrade.id
+            } else if index + summand >= grades.count, grades.count > 0 {
+                focusedField = grades[0].id
+            } else if index + summand < 0, grades.count > 0 {
+                focusedField = grades[grades.count - 1].id
+            }
+        } else if focusedField == nameTextFieldId, grades.count > 0 {
+            focusedField = grades[0].id
         }
     }
 }
