@@ -4,6 +4,7 @@ import Dependencies
 struct FilterClient {
     var fetchFilterSystem: () -> UUID?
     var saveFilterSystem: (UUID?) -> Void
+    var deleteFilterSystem: (UUID) -> Void
 }
 
 extension DependencyValues {
@@ -33,6 +34,16 @@ extension FilterClient: DependencyKey {
                 } else {
                     defaults.set(nil, forKey: filterSystemKey)
                 }
+            },
+            deleteFilterSystem: { oldValue in
+                guard let encodedData = defaults.object(forKey: filterSystemKey) as? Data,
+                      let decodedData = try? JSONDecoder().decode(UUID.self, from: encodedData)
+                else {
+                    return
+                }
+                if oldValue == decodedData {
+                    defaults.set(nil, forKey: filterSystemKey)
+                }
             }
         )
     }()
@@ -40,7 +51,8 @@ extension FilterClient: DependencyKey {
     static let previewValue: Self = {
         return Self(
             fetchFilterSystem: { GradeSystem.mandala.id },
-            saveFilterSystem: { _ in }
+            saveFilterSystem: { _ in },
+            deleteFilterSystem: { _ in }
         )
     }()
 }

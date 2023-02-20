@@ -73,6 +73,12 @@ extension GradeSystemClient: DependencyKey {
                 
                 let data = try? JSONEncoder().encode(decodedData)
                 defaults.set(data, forKey: gradeSystemsKey)
+                
+                if let encodedData = defaults.object(forKey: selectedGradeSystemKey) as? Data,
+                   let decodedData = try? JSONDecoder().decode(UUID.self, from: encodedData),
+                   decodedData == oldValue {
+                    defaults.set(nil, forKey: selectedGradeSystemKey)
+                }
             },
             saveSelectedSystem: { newValue in
                 let data = try? JSONEncoder().encode(newValue)

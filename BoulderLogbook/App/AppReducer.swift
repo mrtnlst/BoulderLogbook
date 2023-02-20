@@ -34,6 +34,7 @@ struct AppReducer: ReducerProtocol {
         enum EntryClientResponse { case finished }
     }
     @Dependency(\.entryClient) var entryClient
+    @Dependency(\.filterClient) var filterClient
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -108,14 +109,17 @@ struct AppReducer: ReducerProtocol {
                 return .task { .dashboard(.fetchGradeSystems) }
                 
             case let .settings(.gradeSystemList(.delete(id))):
-                return .task {
-                    await .deleteEntriesDidFinish(
-                        TaskResult {
-                            entryClient.deleteEntries(id)
-                            return .finished
-                        }
-                    )
-                }
+                return .merge(
+                    .fireAndForget { filterClient.deleteFilterSystem(id) },
+                    .task {
+                        await .deleteEntriesDidFinish(
+                            TaskResult {
+                                entryClient.deleteEntries(id)
+                                return .finished
+                            }
+                        )
+                    }
+                )
                 
             case .deleteEntriesDidFinish(_):
                 return .task { .dashboard(.fetchGradeSystems) }

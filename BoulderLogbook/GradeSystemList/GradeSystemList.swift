@@ -14,6 +14,8 @@ struct GradeSystemList: ReducerProtocol {
         var selectedSystem: GradeSystem?
         var gradeSystemForm: GradeSystemForm.State?
         var isPresentingForm: Bool = false
+        var isPresentingConfirmation: Bool = false
+        var systemToDelete: GradeSystem?
     }
     
     enum Action: Equatable {
@@ -23,8 +25,12 @@ struct GradeSystemList: ReducerProtocol {
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
         case setIsPresentingForm(Bool)
+        case setIsPresentingConfirmation(Bool)
         case saveSelected(UUID)
         case saveSelectedDidFinish(TaskResult<ClientResponse>)
+        case setSystemToDelete(GradeSystem)
+        case confirmDelete
+        case cancelDelete
         case delete(UUID)
         case edit(UUID)
         case gradeSystemForm(GradeSystemForm.Action)
@@ -66,6 +72,10 @@ struct GradeSystemList: ReducerProtocol {
                 state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
                 return .none
                 
+            case let .setIsPresentingConfirmation(isPresenting):
+                state.isPresentingConfirmation = isPresenting
+                return .none
+                
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {
                     return .none
@@ -82,12 +92,26 @@ struct GradeSystemList: ReducerProtocol {
             case .saveSelectedDidFinish(_):
                 return .task { .fetchSelectedSystem }
                 
-            case let .delete(oldValue):
+            case let .setSystemToDelete(system):
+                state.systemToDelete = system
+                return .task { .setIsPresentingConfirmation(true) }
+                
+            case .confirmDelete:
+                guard let systemToDelete = state.systemToDelete else {
+                    return .none
+                }
+                return .task { .delete(systemToDelete.id) }
+                
+            case .cancelDelete:
+                state.systemToDelete = nil
+                return .none
+                
+            case let .delete(id):
                 return .merge(
-                    .fireAndForget { client.deleteSystem(oldValue) },
+                    .fireAndForget { client.deleteSystem(id) },
                     .task { .fetchGradeSystems }
                 )
-           
+                
             case let .edit(id):
                 guard let gradeSystem = state.gradeSystems.first (where: { $0.id == id }) else {
                     return .none

@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 struct GradeSystemListView: View {
     let store: StoreOf<GradeSystemList>
-    @State var showConfirmation = false
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -18,20 +17,6 @@ struct GradeSystemListView: View {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
                     selectionRow(gradeSystem: gradeSystem)
                     .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
-                    .alert(
-                        "Warning",
-                        isPresented: $showConfirmation,
-                        actions: {
-                            Button(
-                                "Delete",
-                                role: .destructive,
-                                action: { viewStore.send(.delete(gradeSystem.id)) }
-                            )
-                        },
-                        message: {
-                            Text("Deleting a grade system deletes all associated logbook entries!")
-                        }
-                    )
                 }
             }
             .navigationTitle("Grade Systems")
@@ -60,6 +45,17 @@ struct GradeSystemListView: View {
                     GradeSystemFormView(store: formStore)
                 }
             }
+            .alert(
+                "Warning",
+                isPresented: viewStore.binding(
+                    get: \.isPresentingConfirmation,
+                    send: GradeSystemList.Action.setIsPresentingConfirmation
+                ),
+                actions: { alertButtons() },
+                message: {
+                    Text("Deleting \(viewStore.systemToDelete?.name ?? "") removes all of its logbook entries!")
+                }
+            )
             .onAppear {
                 viewStore.send(.onAppear)
             }
@@ -93,7 +89,7 @@ extension GradeSystemListView {
     @ViewBuilder func swipeButtons(gradeSystem: GradeSystem) -> some View {
         WithViewStore(store) { viewStore in
             Button(
-                action: { showConfirmation = true },
+                action: { viewStore.send(.setSystemToDelete(gradeSystem)) },
                 label: { Label("Delete", systemImage: "trash") }
             )
             .tint(.red)
@@ -102,6 +98,21 @@ extension GradeSystemListView {
                 label: { Label("Edit", systemImage: "pencil") }
             )
             .tint(.orange)
+        }
+    }
+    
+    @ViewBuilder func alertButtons() -> some View {
+        WithViewStore(store) { viewStore in
+            Button(
+                "Delete",
+                role: .destructive,
+                action: { viewStore.send(.confirmDelete) }
+            )
+            Button(
+                "Cancel",
+                role: .cancel,
+                action: { viewStore.send(.cancelDelete) }
+            )
         }
     }
 }

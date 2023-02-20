@@ -81,16 +81,6 @@ struct DiagramPage: ReducerProtocol {
                 state.topCountDiagram.gradeSystem = nil
                 state.topCountDiagram.entries = []
                 return .none
-             
-//            case let .setIsPresentingFilter(isPresenting):
-//                let systems = state.gradeSystems
-//                state.filterSheet = isPresenting ? FilterSheet.State(gradeSystems: systems) : nil
-//                state.isPresentingFilter = isPresenting
-//
-//                if isPresenting {
-//                    return .none
-//                }
-//                return .task { .fetchSelectedSystem }
 
             default:
                 return .none
