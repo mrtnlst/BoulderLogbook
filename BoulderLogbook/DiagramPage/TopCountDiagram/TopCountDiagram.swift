@@ -39,8 +39,8 @@ struct TopCountDiagram: ReducerProtocol {
     }
     
     enum Segment: String, Equatable, CaseIterable {
-        case week = "Week"
-        case month = "Month"
+        case week = "Past 7"
+        case month = "Past 30"
         case all = "All-time"
         
         var value: Int? {
