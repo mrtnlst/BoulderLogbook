@@ -61,7 +61,7 @@ struct DashboardSectionView_Previews: PreviewProvider {
                     store: Store(
                         initialState: DashboardSection.State(
                             date: .now,
-                            entries: Logbook.Section.Entry.samples,
+                            entries: .samples,
                             gradeSystems: [.mandala]
                         ),
                         reducer: DashboardSection()

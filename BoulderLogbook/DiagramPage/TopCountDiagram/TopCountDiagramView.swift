@@ -92,7 +92,7 @@ struct TopCountDiagramView_Previews: PreviewProvider {
             TopCountDiagramView(
                 store: Store(
                     initialState: TopCountDiagram.State(
-                        entries: Logbook.Section.Entry.samples,
+                        entries: .samples,
                         gradeSystem: .mandala
                     ),
                     reducer: TopCountDiagram()

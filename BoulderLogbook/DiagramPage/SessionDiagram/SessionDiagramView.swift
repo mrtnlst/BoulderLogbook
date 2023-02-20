@@ -44,7 +44,7 @@ struct SessionDiagramView_Previews: PreviewProvider {
             SessionDiagramView(
                 store: Store(
                     initialState: SessionDiagram.State(
-                        entries: Logbook.Section.Entry.samples
+                        entries: .samples
                     ),
                     reducer: SessionDiagram()
                 )

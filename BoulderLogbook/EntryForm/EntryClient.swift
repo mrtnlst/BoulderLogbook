@@ -58,7 +58,7 @@ extension EntryClient: DependencyKey {
                 guard !defaults.bool(forKey: backupEntriesKey) else {
                     return
                 }
-                let data = try? JSONEncoder().encode([Logbook.Section.Entry].backup)
+                let data = try? JSONEncoder().encode([Logbook.Section.Entry].samples)
                 defaults.set(data, forKey: entriesKey)
                 defaults.set(true, forKey: backupEntriesKey)
             },
@@ -89,7 +89,7 @@ extension EntryClient: DependencyKey {
     
     static let previewValue: Self = {
         return Self(
-            fetchEntries: { return Logbook.Section.Entry.samples },
+            fetchEntries: { return .samples },
             saveEntry: { _ in },
             saveBackupEntries: { },
             deleteEntry: { _ in },

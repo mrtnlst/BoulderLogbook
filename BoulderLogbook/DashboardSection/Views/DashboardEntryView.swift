@@ -54,7 +54,7 @@ struct DashboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
         List {
             DashboardEntryView(
-                entry: .samples[0],
+                entry: [Logbook.Section.Entry].samples[0],
                 gradeSystem: .mandala
             )
         }

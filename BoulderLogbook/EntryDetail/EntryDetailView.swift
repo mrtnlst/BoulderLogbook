@@ -81,7 +81,7 @@ struct EntryView_Previews: PreviewProvider {
             EntryDetailView(
                 store: Store(
                     initialState: EntryDetail.State(
-                        entry: .samples[0],
+                        entry: [Logbook.Section.Entry].samples[0],
                         gradeSystem: .mandala
                     ),
                     reducer: EntryDetail()

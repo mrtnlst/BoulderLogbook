@@ -58,7 +58,7 @@ struct DiagramPageView_Previews: PreviewProvider {
             DiagramPageView(
                 store: Store(
                     initialState: DiagramPage.State(
-                        entries: Logbook.Section.Entry.samples,
+                        entries: .samples,
                         gradeSystems: [.mandala]
                     ),
                     reducer: DiagramPage()
