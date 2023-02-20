@@ -35,11 +35,17 @@ struct Dashboard: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+#if targetEnvironment(simulator)
                 return .concatenate(
                     .fireAndForget { gradeSystemClient.saveDefaultSystems() },
                     .fireAndForget { entryClient.saveBackupEntries() },
                     .task { .fetchGradeSystems }
                 )
+#else
+                return .concatenate(
+                    .task { .fetchGradeSystems }
+                )
+#endif
                 
             case .fetchGradeSystems:
                 return .task {
