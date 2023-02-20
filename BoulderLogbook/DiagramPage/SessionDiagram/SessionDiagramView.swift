@@ -29,9 +29,9 @@ struct SessionDiagramView: View {
                     }
                 }
             }
-            .chartXAxisLabel(position: .top, content: {
+            .chartXAxisLabel(position: .top) {
                 Text("Sessions per Month")
-            })
+            }
             .chartLegend(.hidden)
             .padding(.top, 4)
         }
