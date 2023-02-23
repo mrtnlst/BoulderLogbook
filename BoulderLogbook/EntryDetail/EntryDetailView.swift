@@ -23,8 +23,9 @@ struct EntryDetailView: View {
                 }
                 Section {
                     buttons()
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                 }
-                .listRowInsets(.zero)
             }
             .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
@@ -67,10 +68,12 @@ extension EntryDetailView {
     
     @ViewBuilder func buttons() -> some View {
         WithViewStore(store) { viewStore in
-            RectangularButton(title: "Edit", action: { viewStore.send(.edit(viewStore.entry)) })
-                .foregroundColor(.orange)
-            RectangularButton(title: "Delete", action: { viewStore.send(.delete(viewStore.entry.id)) })
-                .foregroundColor(.red)
+            RectangularButton.edit {
+                viewStore.send(.edit(viewStore.entry))
+            }
+            RectangularButton.delete {
+                viewStore.send(.delete(viewStore.entry.id))
+            }
         }
     }
 }

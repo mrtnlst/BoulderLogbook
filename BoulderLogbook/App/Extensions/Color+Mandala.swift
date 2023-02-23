@@ -19,6 +19,14 @@ extension Color {
 }
 
 extension Color {
+    static let darkPurple = Color(#colorLiteral(red: 0.2588235294, green: 0, blue: 0.2235294118, alpha: 1))
+    static let redPantone = Color(#colorLiteral(red: 0.9058823529, green: 0.1137254902, blue: 0.2117647059, alpha: 1))
+    static let darkPastelGreen = Color(#colorLiteral(red: 0.1254901961, green: 0.7490196078, blue: 0.3333333333, alpha: 1))
+    static let pumpkin = Color(#colorLiteral(red: 0.9764705882, green: 0.4117647059, blue: 0, alpha: 1))
+    static let ashGray = Color(#colorLiteral(red: 0.7764705882, green: 0.8470588235, blue: 0.8274509804, alpha: 1))
+}
+
+extension Color {
     var isBright: Bool {
         var white: CGFloat = 0.0
         let uiColor = UIColor(self)

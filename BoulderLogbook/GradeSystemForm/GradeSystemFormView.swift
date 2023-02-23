@@ -26,7 +26,8 @@ struct GradeSystemFormView: View {
                     )
                     Section {
                         actionButtons()
-                            .listRowInsets(.zero)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
                     }
                 }
                 .navigationTitle("New Grade System")
@@ -83,22 +84,14 @@ extension GradeSystemFormView {
     
     @ViewBuilder func actionButtons() -> some View {
         WithViewStore(store) { viewStore in
-            RectangularButton(
-                title: "Save",
-                action: {
-                    focusedField = nil
-                    viewStore.send(.save)
-                }
-            )
-            .foregroundColor(.green)
-            RectangularButton(
-                title: "Cancel",
-                action: {
-                    focusedField = nil
-                    viewStore.send(.cancel)
-                }
-            )
-            .foregroundColor(.red)
+            RectangularButton.save {
+                focusedField = nil
+                viewStore.send(.save)
+            }
+            RectangularButton.cancel {
+                focusedField = nil
+                viewStore.send(.cancel)
+            }
         }
     }
     

@@ -18,7 +18,8 @@ struct EntryFormView: View {
                 Section { tops() }
                 Section { datePicker() }
                 Section { buttons() }
-                    .listRowInsets(.zero)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
             }
             .navigationTitle("New Entry")
         }
@@ -146,10 +147,12 @@ extension EntryFormView {
     
     @ViewBuilder func buttons() -> some View {
         WithViewStore(store) { viewStore in
-            RectangularButton(title: "Save", action: { viewStore.send(.save) })
-                .foregroundColor(.green)
-            RectangularButton(title: "Cancel", action: { viewStore.send(.cancel) })
-                .foregroundColor(.red)
+            RectangularButton.save {
+                viewStore.send(.save)
+            }
+            RectangularButton.cancel {
+                viewStore.send(.cancel)
+            }
         }
     }
 }
