@@ -35,7 +35,7 @@ struct EntryColorView: View {
                     width: width / CGFloat(grades.count) * CGFloat(numberOfTops)
                 )
                 Text("\(numberOfTops)")
-                    .font(.caption2.weight(.light))
+                    .font(.caption.weight(.regular))
                     .foregroundColor(grade.color.isBright ? Color.black : Color.white)
             }
         }

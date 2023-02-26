@@ -13,18 +13,11 @@ struct DashboardEntryView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                EntryColorView(
-                    tops: entry.tops,
-                    gradeSystem: gradeSystem
-                )
-                HStack(spacing: 2) {
-                    Text("×")
-                        .font(.footnote.weight(.medium))
-                    Text("\(entry.tops.filter { !$0.isAttempt }.count)")
-                        .font(.footnote.weight(.medium))
-                }
-            }
+            EntryColorView(
+                tops: entry.tops,
+                gradeSystem: gradeSystem
+            )
+            .frame(minHeight: 20)
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
                 .foregroundColor(.secondary)
