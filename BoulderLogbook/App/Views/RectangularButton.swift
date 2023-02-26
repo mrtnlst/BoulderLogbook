@@ -9,16 +9,8 @@ import SwiftUI
 
 struct RectangularButton: View {
     let title: String
-    let titleColor: Color
     let image: String
     let action: () -> Void
-    
-    internal init(title: String, titleColor: Color = .white, image: String, action: @escaping () -> Void) {
-        self.title = title
-        self.titleColor = titleColor
-        self.image = image
-        self.action = action
-    }
 
     var body: some View {
         Button(
@@ -28,7 +20,6 @@ struct RectangularButton: View {
                     Image(systemName: image)
                     Text(title)
                 }
-                .foregroundColor(titleColor)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
             }
@@ -40,19 +31,19 @@ struct RectangularButton: View {
 extension RectangularButton {
     @ViewBuilder static func save(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Save", image: "checkmark", action: action)
-            .tint(.darkPastelGreen)
+            .tint(.green)
     }
     @ViewBuilder static func edit(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Edit", image: "pencil", action: action)
-            .tint(.pumpkin)
+            .tint(.orange)
     }
     @ViewBuilder static func delete(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Delete", image: "trash", action: action)
-            .tint(.redPantone)
+            .tint(.red)
     }
     @ViewBuilder static func cancel(action: @escaping () -> Void) -> some View {
-        RectangularButton(title: "Cancel", titleColor: .black, image: "xmark", action: action)
-            .tint(.ashGray)
+        RectangularButton(title: "Cancel", image: "xmark", action: action)
+            .tint(.gray)
     }
 }
 
