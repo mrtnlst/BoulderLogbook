@@ -25,39 +25,40 @@ struct RectangularButton: View {
             }
         )
         .buttonStyle(.borderedProminent)
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }
 
 extension RectangularButton {
     @ViewBuilder static func save(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Save", image: "checkmark", action: action)
-            .tint(.green)
+            .tint(.jade)
     }
     @ViewBuilder static func edit(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Edit", image: "pencil", action: action)
-            .tint(.orange)
+            .tint(.accentColor)
     }
     @ViewBuilder static func delete(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Delete", image: "trash", action: action)
-            .tint(.red)
+            .tint(.indianRed)
     }
     @ViewBuilder static func cancel(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Cancel", image: "xmark", action: action)
-            .tint(.gray)
+            .tint(.jet)
     }
 }
 
 struct RectangularButton_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(spacing: 20) {
+        List {
+            Section{
+                Text("Buttons")
+            }
             RectangularButton.save {}
             RectangularButton.delete {}
             RectangularButton.edit {}
             RectangularButton.cancel {}
-            RectangularButton(title: "Primary", image: "", action: {})
-                .tint(.accentColor)
-            Spacer()
         }
-        .padding()
     }
 }

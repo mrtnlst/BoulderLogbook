@@ -15,7 +15,7 @@ struct GradeSystem: Equatable, Codable, Identifiable, Hashable {
         var color: Color
         var difficulty: Int
         
-        init(id: UUID = UUID(), name: String = "", color: Color = .blue, difficulty: Int = 0) {
+        init(id: UUID = UUID(), name: String = "", color: Color = .mandalaBlue, difficulty: Int = 0) {
             self.id = id
             self.name = name
             self.color = color

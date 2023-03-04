@@ -17,7 +17,7 @@ struct DashboardEntryView: View {
                 tops: entry.tops,
                 gradeSystem: gradeSystem
             )
-            .frame(minHeight: 20)
+            .frame(minHeight: 18)
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
                 .foregroundColor(.secondary)

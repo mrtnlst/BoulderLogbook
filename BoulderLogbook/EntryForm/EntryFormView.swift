@@ -18,8 +18,6 @@ struct EntryFormView: View {
                 Section { tops() }
                 Section { datePicker() }
                 Section { buttons() }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
             }
             .navigationTitle("New Entry")
         }
@@ -90,7 +88,7 @@ extension EntryFormView {
                                         + viewStore.flashs.count(for: grade)
                                         + viewStore.onsights.count(for: grade)
                                         HStack(alignment: .firstTextBaseline) {
-                                            Text("Top: \(count)")
+                                            Text("Tops: \(count)")
                                             Text("A: \(viewStore.attempts.count(for: grade))")
                                                 .foregroundColor(.secondary)
                                         }

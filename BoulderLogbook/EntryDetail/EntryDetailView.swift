@@ -23,8 +23,6 @@ struct EntryDetailView: View {
                 }
                 Section {
                     buttons()
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
                 }
             }
             .navigationTitle(Text(viewStore.entry.date, style: .date))

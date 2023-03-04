@@ -9,6 +9,12 @@ import Foundation
 import SwiftUI
 
 extension Color {
+    static let jade = Color(#colorLiteral(red: 0.3411764706, green: 0.6549019608, blue: 0.4509803922, alpha: 1))
+    static let indianRed = Color(#colorLiteral(red: 0.8549019608, green: 0.3333333333, blue: 0.3215686275, alpha: 1))
+    static let jet = Color(#colorLiteral(red: 0.2117647059, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+}
+
+extension Color {
     static let mandalaBlue = Color(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1))
     static let mandalaRed = Color(#colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1))
     static let mandalaOrange = Color(#colorLiteral(red: 0.9803921569, green: 0.6392156863, blue: 0.1411764706, alpha: 1))

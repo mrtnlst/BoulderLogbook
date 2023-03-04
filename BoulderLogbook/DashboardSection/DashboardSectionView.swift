@@ -34,12 +34,13 @@ struct DashboardSectionView: View {
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
+                        .tint(.indianRed)
                         Button {
                             viewStore.send(.edit(ViewStore(entryStore).entry))
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
-                        .tint(.orange)
+                        .tint(.accentColor)
                     }
                 }
             } header: {

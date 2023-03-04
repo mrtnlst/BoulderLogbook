@@ -92,12 +92,12 @@ extension GradeSystemListView {
                 action: { viewStore.send(.setSystemToDelete(gradeSystem)) },
                 label: { Label("Delete", systemImage: "trash") }
             )
-            .tint(.red)
+            .tint(.indianRed)
             Button(
                 action: { viewStore.send(.edit(gradeSystem.id)) },
                 label: { Label("Edit", systemImage: "pencil") }
             )
-            .tint(.orange)
+            .tint(.accentColor)
         }
     }
     
