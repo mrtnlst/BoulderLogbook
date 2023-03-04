@@ -20,14 +20,15 @@ struct TopCountDiagram: ReducerProtocol {
         }
         
         var tops: [Top] {
+            let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem?.id })
             if let value = selectedSegment.value {
-                return entries
+                return filteredEntries
                     .sorted(by: { $0.date > $1.date })
                     .prefix(value)
                     .reduce(into: [], { $0.append(contentsOf: $1.tops) })
                     .successful()
             }
-            return entries
+            return filteredEntries
                 .reduce(into: [], { $0.append(contentsOf: $1.tops) })
                 .successful()
         }
