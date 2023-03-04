@@ -25,9 +25,7 @@ struct GradeSystemFormView: View {
                         header: { Text("Drag to set difficulty order") }
                     )
                     Section {
-                        actionButtons()
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
+                        buttons()
                     }
                 }
                 .navigationTitle("New Grade System")
@@ -69,7 +67,7 @@ extension GradeSystemFormView {
                     )
                     .labelsHidden()
                     TextField(
-                        grade.color.description.capitalized,
+                        "e.g. 'Blue', 'A' or '1'",
                         text: $grade.name
                     )
                     .focused($focusedField, equals: grade.id)
@@ -82,12 +80,13 @@ extension GradeSystemFormView {
         }
     }
     
-    @ViewBuilder func actionButtons() -> some View {
+    @ViewBuilder func buttons() -> some View {
         WithViewStore(store) { viewStore in
             RectangularButton.save {
                 focusedField = nil
                 viewStore.send(.save)
             }
+            .disabled(viewStore.name.isEmpty)
             RectangularButton.cancel {
                 focusedField = nil
                 viewStore.send(.cancel)

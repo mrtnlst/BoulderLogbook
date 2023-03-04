@@ -48,12 +48,10 @@ struct GradeSystemForm: ReducerProtocol {
                 guard !state.name.isEmpty else {
                     return .none
                 }
-                var grades = state.grades
-                grades.removeAll(where: { $0.name.isEmpty })
                 let gradeSystem = GradeSystem(
                     id: state.id,
                     name: state.name,
-                    grades: grades
+                    grades: state.grades
                 )
                 return .task {
                     await .saveDidFinish(
