@@ -16,6 +16,7 @@ struct EntryForm: ReducerProtocol {
         var flashs: [Top] // TODO: @BindingState?
         var onsights: [Top] // TODO: @BindingState?
         var gradeSystems: [GradeSystem] = []
+        var isEditing: Bool
         
         @BindingState var date: Date
         @BindingState var selectedSystemId: UUID?
@@ -33,7 +34,8 @@ struct EntryForm: ReducerProtocol {
             attempts: [Top] = [],
             flashs: [Top] = [],
             onsights: [Top] = [],
-            selectedSystem: UUID? = nil
+            selectedSystem: UUID? = nil,
+            isEditing: Bool = false
         ) {
             self.id = id
             self.date = date
@@ -42,6 +44,7 @@ struct EntryForm: ReducerProtocol {
             self.flashs = flashs
             self.onsights = onsights
             self.tempSelectedSystemId = selectedSystem
+            self.isEditing = isEditing
         }
     }
     

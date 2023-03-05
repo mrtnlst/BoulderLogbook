@@ -93,7 +93,8 @@ struct AppReducer: ReducerProtocol {
                     attempts: entry.tops.filter { $0.isAttempt },
                     flashs: entry.tops.filter { $0.wasFlash },
                     onsights: entry.tops.filter { $0.wasOnsight },
-                    selectedSystem: entry.gradeSystem
+                    selectedSystem: entry.gradeSystem,
+                    isEditing: true
                 )
                 state.isPresentingForm = true
                 return .none

@@ -13,13 +13,16 @@ struct EntryFormView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section { gradeSystems() }
-                Section { tops() }
-                Section { datePicker() }
-                Section { buttons() }
+            WithViewStore(store) { viewStore in
+                Form {
+                    Section { gradeSystems() }
+                    Section { tops() }
+                    Section { datePicker() }
+                    Section { buttons() }
+                }
+                .navigationTitle(viewStore.isEditing ? "Update Entry" : "New Entry")
+                .onAppear { viewStore.send(.onAppear) }
             }
-            .navigationTitle("New Entry")
         }
     }
 }
@@ -46,7 +49,7 @@ extension EntryFormView {
                 }
             )
             .pickerStyle(.menu)
-            .onAppear { viewStore.send(.onAppear) }
+            .disabled(viewStore.isEditing)
         }
     }
     
