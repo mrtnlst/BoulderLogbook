@@ -19,6 +19,8 @@ struct EntryForm: ReducerProtocol {
         
         @BindingState var date: Date
         @BindingState var selectedSystemId: UUID?
+        /// Temporary store selected value and assign after available systems are fetched. Avoids Picker warning in console.
+        fileprivate var tempSelectedSystemId: UUID?
         
         var selectedSystem: GradeSystem? {
             gradeSystems.first(where: { $0.id == selectedSystemId })
@@ -39,7 +41,7 @@ struct EntryForm: ReducerProtocol {
             self.attempts = attempts
             self.flashs = flashs
             self.onsights = onsights
-            self.selectedSystemId = selectedSystem
+            self.tempSelectedSystemId = selectedSystem
         }
     }
     
@@ -104,6 +106,9 @@ struct EntryForm: ReducerProtocol {
                     gradeSystemsCopy.append(contentsOf: gradeSystems)
                     state.gradeSystems = gradeSystemsCopy.distinct(by: \.id)
                 }
+                // Set `selectedSystemId` only when available values for SwiftUI.Picker are available.
+                state.selectedSystemId = state.tempSelectedSystemId
+                state.tempSelectedSystemId = nil
                 return .none
                 
             case let .receiveSelectedSystem(.success(selected)):
