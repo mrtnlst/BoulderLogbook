@@ -110,8 +110,10 @@ struct EntryForm: ReducerProtocol {
                     state.gradeSystems = gradeSystemsCopy.distinct(by: \.id)
                 }
                 // Set `selectedSystemId` only when available values for SwiftUI.Picker are available.
-                state.selectedSystemId = state.tempSelectedSystemId
-                state.tempSelectedSystemId = nil
+                if let tempSelectedSystemId = state.tempSelectedSystemId {
+                    state.selectedSystemId = tempSelectedSystemId
+                    state.tempSelectedSystemId = nil
+                }
                 return .none
                 
             case let .receiveSelectedSystem(.success(selected)):
