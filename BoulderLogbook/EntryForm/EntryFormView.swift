@@ -148,6 +148,7 @@ extension EntryFormView {
             RectangularButton.save {
                 viewStore.send(.save)
             }
+            .disabled(viewStore.selectedSystemId == nil)
             RectangularButton.cancel {
                 viewStore.send(.cancel)
             }
