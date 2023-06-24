@@ -47,7 +47,6 @@ extension GradeSystem {
         name: "Kletterarena",
         grades: []
     )
-
 }
 
 extension GradeSystem.Grade {
