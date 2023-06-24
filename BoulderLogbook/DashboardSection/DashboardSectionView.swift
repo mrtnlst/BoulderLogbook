@@ -21,7 +21,7 @@ struct DashboardSectionView: View {
                 ) { entryStore in
                     NavigationLink(value: entryStore) {
                         let entry = ViewStore(entryStore).entry
-                        if let gradeSystem = viewStore.gradeSystems.first { $0.id == entry.gradeSystem } {
+                        if let gradeSystem = viewStore.gradeSystems.first(where: { $0.id == entry.gradeSystem }) {
                             DashboardEntryView(
                                 entry: entry,
                                 gradeSystem: gradeSystem
