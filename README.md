@@ -13,11 +13,6 @@ A logbook to track you boulder sessions.
 * 📊 Display your past sessions in a list and review your progress using charts
 * 🎛️ Made a mistake? Just edit your session's tops or the date afterwards (thanks to [@ChrissisCorner](https://github.com/ChrissisCorner))
 
-
-## Roadmap
-
-* 🧗 A chart to view attempts vs. flashs. vs onsights
-
 ## Compatibility
 
 * 🚀 Requires iOS 16 and Xcode 14
