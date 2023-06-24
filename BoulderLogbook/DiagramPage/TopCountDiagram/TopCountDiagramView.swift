@@ -15,15 +15,26 @@ struct TopCountDiagramView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                HStack {
-                    picker()
-                    filterButton()
-                }
-                .padding(.bottom, 8)
-                if let gradeSystem = viewStore.gradeSystem {
-                    chart(grades: gradeSystem.grades, tops: viewStore.tops)
-                } else {
-                    chart(grades: GradeSystem.mandala.grades, tops: [])
+                picker()
+                    .padding(.bottom, 8)
+                ZStack {
+                    let tops = viewStore.tops
+                    let grades = viewStore.gradeSystem?.grades ?? []
+                    
+                    if grades.isEmpty {
+                        Text("Choose grade system in Settings.")
+                            .font(.footnote)
+                            .fontWeight(.medium)
+                    } else if tops.isEmpty {
+                        Text("No entries are available.")
+                            .font(.footnote)
+                            .fontWeight(.medium)
+                    }
+                    chart(
+                        grades: grades.isEmpty ? GradeSystem.mandala.grades : grades,
+                        tops: tops
+                    )
+                    .opacity(tops.isEmpty ? 0.5 : 1.0)
                 }
             }
         }
@@ -47,31 +58,23 @@ extension TopCountDiagramView {
     }
     
     @ViewBuilder func chart(grades: [GradeSystem.Grade], tops: [Top]) -> some View {
-        ZStack {
-            if tops.isEmpty {
-                Text("Use filter button  to configure diagrams!")
-                    .font(.footnote)
-                    .fontWeight(.medium)
-            }
-            Chart(grades) { grade in
-                BarMark(
-                    x: .value("Grade", grade.name),
-                    y: .value("Tops", tops.count(for: grade))
-                )
-                .foregroundStyle(by: .value("Grade", grade.name))
-                .annotation(position: .top, alignment: .bottom) {
-                    if tops.count > 0 {
-                        Text("\(tops.count(for: grade))")
-                            .foregroundColor(.secondary)
-                            .font(.caption2)
-                            .fontWeight(.semibold)
-                    }
+        Chart(grades) { grade in
+            BarMark(
+                x: .value("Grade", grade.name),
+                y: .value("Tops", tops.count(for: grade))
+            )
+            .foregroundStyle(by: .value("Grade", grade.name))
+            .annotation(position: .top, alignment: .bottom) {
+                if tops.count > 0 {
+                    Text("\(tops.count(for: grade))")
+                        .foregroundColor(.secondary)
+                        .font(.caption2)
+                        .fontWeight(.semibold)
                 }
             }
-            .chartForegroundStyleScale(range: grades.map { $0.color })
-            .chartLegend(.hidden)
-            .opacity(tops.isEmpty ? 0.5 : 1.0)
         }
+        .chartForegroundStyleScale(range: grades.map { $0.color })
+        .chartLegend(.hidden)
     }
 }
 
@@ -91,6 +94,15 @@ struct TopCountDiagramView_Previews: PreviewProvider {
             TopCountDiagramView(
                 store: Store(
                     initialState: TopCountDiagram.State(),
+                    reducer: TopCountDiagram()
+                )
+            )
+                .frame(height: 170)
+            TopCountDiagramView(
+                store: Store(
+                    initialState: TopCountDiagram.State(
+                        gradeSystem: GradeSystem.mandala
+                    ),
                     reducer: TopCountDiagram()
                 )
             )
