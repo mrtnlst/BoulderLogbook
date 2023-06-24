@@ -62,13 +62,9 @@ extension SummaryDiagramView {
         .chartXScale(domain: [0, (sections.map { $0.maxValue }.max() ?? 0) + 2])
         .chartForegroundStyleScale(range: GradeSystem.mandala.grades.map { $0.color })
         .chartLegend(.hidden)
-        .chartYAxis {
-            AxisMarks { _ in
-                AxisGridLine()
-            }
-        }
+        .chartYAxis {}
         .chartXAxisLabel(position: .top) {
-            Text("Tops of the last 7 days")
+            Text("Summary of the last 7 days")
         }
         .padding(.top, 4)
     }
@@ -80,10 +76,11 @@ extension SummaryDiagramView {
     ) -> some ChartContent {
         BarMark(
             x: .value("Top", value),
-            y: .value("Grade", grade.name)
+            y: .value("Grade", grade.name),
+            width: .ratio(1)
         )
         .foregroundStyle(by: .value("Grade", grade.name))
-        .annotation(position: .overlay, alignment: .center, spacing: 0) {
+        .annotation(position: .overlay, alignment: .center) {
             HStack(spacing: 0) {
                 Image(systemName: image)
                 Text("\(value)")
