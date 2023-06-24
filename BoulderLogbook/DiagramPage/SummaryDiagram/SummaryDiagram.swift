@@ -58,9 +58,5 @@ struct SummaryDiagram: ReducerProtocol {
     enum Action: Equatable {
     }
     
-    var body: some ReducerProtocol<State, Action> {
-        Reduce { _, _ in
-            return .none
-        }
-    }
+    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {}
 }
