@@ -14,6 +14,7 @@ struct DiagramPage: ReducerProtocol {
         var gradeSystems: [GradeSystem] = []
         var topCountDiagram = TopCountDiagram.State()
         var sessionDiagram = SessionDiagram.State()
+        var summaryDiagram = SummaryDiagram.State()
         
         init(
             entries: [Logbook.Section.Entry] = [],
@@ -22,11 +23,13 @@ struct DiagramPage: ReducerProtocol {
             self.entries = entries
             self.topCountDiagram.entries = entries
             self.sessionDiagram.entries = entries
+            self.summaryDiagram.entries = entries
             self.gradeSystems = gradeSystems
         
             // This is primarily used for Xcode Previews.
             if gradeSystems.count > 0 {
                 self.topCountDiagram.gradeSystem = gradeSystems[0]
+                self.summaryDiagram.gradeSystem = gradeSystems[0]
             }
         }
     }
@@ -36,9 +39,9 @@ struct DiagramPage: ReducerProtocol {
         case receiveEntries([Logbook.Section.Entry])
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
-        case presentFilters
         case topCountDiagram(TopCountDiagram.Action)
         case sessionDiagram(SessionDiagram.Action)
+        case summaryDiagram(SummaryDiagram.Action)
     }
     @Dependency(\.filterClient) var filterClient
     
@@ -49,7 +52,9 @@ struct DiagramPage: ReducerProtocol {
         Scope(state: \.sessionDiagram, action: /Action.sessionDiagram) {
             SessionDiagram()
         }
-        
+        Scope(state: \.summaryDiagram, action: /Action.summaryDiagram) {
+            SummaryDiagram()
+        }
         Reduce { state, action in
             switch action {
             case let .receiveGradeSystems(gradeSystems):
@@ -74,12 +79,16 @@ struct DiagramPage: ReducerProtocol {
                 if let system = state.gradeSystems.first(where: { $0.id == selected }) {
                     state.topCountDiagram.gradeSystem = system
                     state.topCountDiagram.entries = state.entries
+                    state.summaryDiagram.entries = state.entries
+                    state.summaryDiagram.gradeSystem = system
                 }
                 return .none
                 
             case .receiveSelectedSystem(.success(.none)):
                 state.topCountDiagram.gradeSystem = nil
                 state.topCountDiagram.entries = []
+                state.summaryDiagram.gradeSystem = nil
+                state.summaryDiagram.entries = []
                 return .none
 
             default:

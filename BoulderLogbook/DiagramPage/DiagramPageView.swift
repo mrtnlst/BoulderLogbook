@@ -26,28 +26,15 @@ struct DiagramPageView: View {
                         action: DiagramPage.Action.sessionDiagram
                     )
                 )
+                SummaryDiagramView(
+                    store: store.scope(
+                        state: \.summaryDiagram,
+                        action: DiagramPage.Action.summaryDiagram
+                    )
+                )
             }
-            .frame(height: 170)
+            .frame(height: 200)
             .tabViewStyle(.page(indexDisplayMode: .never))
-        }
-    }
-}
-
-extension DiagramPageView {
-    @ViewBuilder func emptyDataView() -> some View {
-        WithViewStore(store, observe: { $0.entries}) { viewStore in
-            HStack {
-                Spacer()
-                Button {
-                    viewStore.send(.presentFilters)
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                }
-                .fontWeight(.bold)
-                Text("Tap filter button to configure diagrams!")
-                Spacer()
-            }
-            .font(.subheadline)
         }
     }
 }
