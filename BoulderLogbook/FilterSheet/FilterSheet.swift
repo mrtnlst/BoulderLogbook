@@ -16,11 +16,14 @@ struct FilterSheet: ReducerProtocol {
     
     enum Action: Equatable, BindableAction {
         case onAppear
+        case fetchGradeSystems
+        case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
         case binding(BindingAction<State>)
     }
     
+    @Dependency(\.gradeSystemClient) var client
     @Dependency(\.filterClient) var filterClient
     
     var body: some ReducerProtocol<State, Action> {
@@ -29,6 +32,16 @@ struct FilterSheet: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                return .task { .fetchGradeSystems }
+                
+            case .fetchGradeSystems:
+                return .task {
+                    await .receiveGradeSystems(
+                        TaskResult { client.fetchAvailableSystems() }
+                    )
+                }
+            case let .receiveGradeSystems(.success(gradeSystems)):
+                state.gradeSystems = gradeSystems
                 return .task { .fetchSelectedSystem }
                 
             case .fetchSelectedSystem:

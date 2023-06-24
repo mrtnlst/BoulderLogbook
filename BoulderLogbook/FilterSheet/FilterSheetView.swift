@@ -15,15 +15,10 @@ struct FilterSheetView: View {
         WithViewStore(store) { viewStore in
             Form {
                 Section {
-                    HStack {
-                        Spacer()
-                        Text("Configure Diagram")
-                        Image(systemName: "switch.2")
-                        Spacer()
-                    }
+                    gradeSystems()
                 }
-                Section { gradeSystems() }
             }
+            .navigationTitle("Diagrams")
             .onAppear { viewStore.send(.onAppear) }
         }
     }
@@ -57,17 +52,15 @@ extension FilterSheetView {
 
 struct FilterSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Main View")
-            .sheet(isPresented: .constant(true)) {
-                FilterSheetView(
-                    store: Store(
-                        initialState: FilterSheet.State(
-                            gradeSystems: [.mandala, .kletterarena]
-                        ),
-                        reducer: FilterSheet()
-                    )
+        NavigationView {
+            FilterSheetView(
+                store: Store(
+                    initialState: FilterSheet.State(
+                        gradeSystems: [.mandala, .kletterarena]
+                    ),
+                    reducer: FilterSheet()
                 )
-                .presentationDetents([.medium])
-            }
+            )
+        }
     }
 }

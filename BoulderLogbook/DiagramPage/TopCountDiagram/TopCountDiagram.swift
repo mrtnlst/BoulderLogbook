@@ -35,7 +35,6 @@ struct TopCountDiagram: ReducerProtocol {
     }
     
     enum Action: Equatable, BindableAction {
-        case presentFilters
         case binding(BindingAction<State>)
     }
     

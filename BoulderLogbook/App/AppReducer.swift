@@ -13,10 +13,8 @@ struct AppReducer: ReducerProtocol {
         var dashboard: Dashboard.State = Dashboard.State()
         var settings: Settings.State?
         var entryForm: EntryForm.State?
-        var filterSheet: FilterSheet.State?
         var isPresentingForm: Bool = false
         var isPresentingSettings: Bool = false
-        var isPresentingFilter: Bool = false
         var path: [StoreOf<EntryDetail>] = []
     }
     
@@ -24,17 +22,11 @@ struct AppReducer: ReducerProtocol {
         case dashboard(Dashboard.Action)
         case settings(Settings.Action)
         case entryForm(EntryForm.Action)
-        case filterSheet(FilterSheet.Action)
         case setIsPresentingForm(Bool)
         case setIsPresentingSettings(Bool)
-        case setIsPresentingFilter(Bool)
         case setPath([StoreOf<EntryDetail>])
-        case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
-        
-        enum EntryClientResponse { case finished }
     }
     @Dependency(\.entryClient) var entryClient
-    @Dependency(\.filterClient) var filterClient
 
     var body: some ReducerProtocol<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -52,17 +44,7 @@ struct AppReducer: ReducerProtocol {
                 state.settings = isPresenting ? Settings.State() : nil
                 state.isPresentingSettings = isPresenting
                 return .none
-                
-            case let .setIsPresentingFilter(isPresenting):
-                let systems = state.dashboard.gradeSystems // FIXME
-                state.filterSheet = isPresenting ? FilterSheet.State(gradeSystems: systems) : nil
-                state.isPresentingFilter = isPresenting
-                
-                if isPresenting {
-                    return .none
-                }
-                return .task { .dashboard(.diagramPage(.fetchSelectedSystem)) }
-                
+
             case let .setPath(path):
                 state.path = path
                 return .none
@@ -98,37 +80,20 @@ struct AppReducer: ReducerProtocol {
                 )
                 state.isPresentingForm = true
                 return .none
-            
-            case .dashboard(.diagramPage(.presentFilters)),
-                 .dashboard(.diagramPage(.topCountDiagram(.presentFilters))):
-                return .task { .setIsPresentingFilter(true) }
-                
+
             case .dashboard(_):
                 return .none
                 
             case .settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish(_)))):
                 return .task { .dashboard(.fetchGradeSystems) }
                 
-            case let .settings(.gradeSystemList(.delete(id))):
-                return .merge(
-                    .fireAndForget { filterClient.deleteFilterSystem(id) },
-                    .task {
-                        await .deleteEntriesDidFinish(
-                            TaskResult {
-                                entryClient.deleteEntries(id)
-                                return .finished
-                            }
-                        )
-                    }
-                )
-                
-            case .deleteEntriesDidFinish(_):
+            case .settings(.deleteEntriesDidFinish):
                 return .task { .dashboard(.fetchGradeSystems) }
                                 
+            case .settings(.filterSheet(.binding)):
+                return .task { .dashboard(.diagramPage(.fetchSelectedSystem)) }
+                
             case .settings(_):
-                return .none
-
-            case .filterSheet(_):
                 return .none
             }
         }
@@ -137,9 +102,6 @@ struct AppReducer: ReducerProtocol {
         }
         .ifLet(\.settings, action: /Action.settings) {
             Settings()
-        }
-        .ifLet(\.filterSheet, action: /Action.filterSheet) {
-            FilterSheet()
         }
     }
 }

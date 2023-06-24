@@ -46,17 +46,6 @@ extension TopCountDiagramView {
         }
     }
     
-    @ViewBuilder func filterButton() -> some View {
-        WithViewStore(store) { viewStore in
-            Button {
-                viewStore.send(.presentFilters)
-            } label: {
-                Image(systemName: "slider.horizontal.3")
-            }
-            .fontWeight(.bold)
-        }
-    }
-    
     @ViewBuilder func chart(grades: [GradeSystem.Grade], tops: [Top]) -> some View {
         ZStack {
             if tops.isEmpty {

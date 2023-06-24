@@ -25,6 +25,16 @@ struct SettingsView: View {
                     } label: {
                         gradeSystemList()
                     }
+                    NavigationLink {
+                        FilterSheetView(
+                            store: store.scope(
+                                state: \.filterSheet,
+                                action: Settings.Action.filterSheet
+                            )
+                        )
+                    } label: {
+                        diagramFilter()
+                    }
                 }
                 .navigationTitle("Settings")
             }
@@ -40,6 +50,18 @@ extension SettingsView {
             },
             icon: {
                 Image(systemName: "square.fill.text.grid.1x2")
+                    .foregroundColor(.primary)
+            }
+        )
+    }
+    
+    @ViewBuilder func diagramFilter() -> some View {
+        Label(
+            title: {
+                Text("Diagrams")
+            },
+            icon: {
+                Image(systemName: "chart.bar.xaxis")
                     .foregroundColor(.primary)
             }
         )
