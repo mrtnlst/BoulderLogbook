@@ -79,7 +79,7 @@ extension GradeSystemListView {
                             .foregroundColor(.secondary)
                             .font(.subheadline)
                         Image(systemName: isSelected  ? "checkmark.circle" : "circle")
-                            .foregroundColor(isSelected ? .green : .secondary)
+                            .foregroundColor(isSelected ? .jadeGreen : .secondary)
                     }
                 }
             )
@@ -97,7 +97,7 @@ extension GradeSystemListView {
                 action: { viewStore.send(.edit(gradeSystem.id)) },
                 label: { Label("Edit", systemImage: "pencil") }
             )
-            .tint(.accentColor)
+            .tint(.hunyadiOrange)
         }
     }
     

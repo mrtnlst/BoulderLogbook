@@ -33,11 +33,11 @@ struct RectangularButton: View {
 extension RectangularButton {
     @ViewBuilder static func save(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Save", image: "checkmark", action: action)
-            .tint(.jade)
+            .tint(.jadeGreen)
     }
     @ViewBuilder static func edit(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Edit", image: "pencil", action: action)
-            .tint(.accentColor)
+            .tint(.hunyadiOrange)
     }
     @ViewBuilder static func delete(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Delete", image: "trash", action: action)
@@ -45,7 +45,7 @@ extension RectangularButton {
     }
     @ViewBuilder static func cancel(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Cancel", image: "xmark", action: action)
-            .tint(.jet)
+            .tint(.jetBlack)
     }
 }
 

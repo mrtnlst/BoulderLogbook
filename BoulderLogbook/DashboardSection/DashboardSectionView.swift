@@ -40,7 +40,7 @@ struct DashboardSectionView: View {
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
-                        .tint(.accentColor)
+                        .tint(.hunyadiOrange)
                     }
                 }
             } header: {
