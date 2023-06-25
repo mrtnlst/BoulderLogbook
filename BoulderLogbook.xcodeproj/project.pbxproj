@@ -38,6 +38,10 @@
 		5BDD420D2988319E00B84BA0 /* RectangularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD420C2988319E00B84BA0 /* RectangularButton.swift */; };
 		5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */; };
 		5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD421129885FA600B84BA0 /* Collection+safe.swift */; };
+		5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB332A48372B00E486DC /* AboutView.swift */; };
+		5BFAAB362A48400900E486DC /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB352A48400900E486DC /* About.swift */; };
+		5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB382A48401C00E486DC /* BundleClient.swift */; };
+		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* EntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
@@ -100,6 +104,10 @@
 		5BDD420C2988319E00B84BA0 /* RectangularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButton.swift; sourceTree = "<group>"; };
 		5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+zero.swift"; sourceTree = "<group>"; };
 		5BDD421129885FA600B84BA0 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
+		5BFAAB332A48372B00E486DC /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		5BFAAB352A48400900E486DC /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		5BFAAB382A48401C00E486DC /* BundleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleClient.swift; sourceTree = "<group>"; };
+		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFD11C3298E54AB00BD41BF /* EntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -217,6 +225,9 @@
 			children = (
 				5BDD41EF2986850700B84BA0 /* Settings.swift */,
 				5BDD41F229868AA400B84BA0 /* SettingsView.swift */,
+				5BFAAB372A48401000E486DC /* About */,
+				5B289AE429058BBF00EC6F0B /* FilterSheet */,
+				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -248,6 +259,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5BFAAB372A48401000E486DC /* About */ = {
+			isa = PBXGroup;
+			children = (
+				5BFAAB352A48400900E486DC /* About.swift */,
+				5BFAAB332A48372B00E486DC /* AboutView.swift */,
+				5BFAAB382A48401C00E486DC /* BundleClient.swift */,
+				5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		A9B07E392868579500AA6274 = {
 			isa = PBXGroup;
 			children = (
@@ -269,9 +291,7 @@
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9CE6761288004D300027885 /* EntryDetail */,
 				A9C300592982929C001B51C4 /* EntryForm */,
-				5B289AE429058BBF00EC6F0B /* FilterSheet */,
 				5BDD420B298829E100B84BA0 /* GradeSystemForm */,
-				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
@@ -468,6 +488,7 @@
 				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
+				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
@@ -476,10 +497,12 @@
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
+				5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */,
 				5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				5BDD41F82986905800B84BA0 /* GradeSystemList.swift in Sources */,
+				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
@@ -498,6 +521,7 @@
 				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
 				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
+				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
 				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,

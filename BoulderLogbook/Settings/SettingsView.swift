@@ -23,7 +23,7 @@ struct SettingsView: View {
                             )
                         )
                     } label: {
-                        gradeSystemList()
+                        listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
                     }
                     NavigationLink {
                         FilterSheetView(
@@ -33,7 +33,17 @@ struct SettingsView: View {
                             )
                         )
                     } label: {
-                        diagramFilter()
+                        listItem(title: "Diagrams", image: "chart.bar.xaxis")
+                    }
+                    NavigationLink {
+                        AboutView(
+                            store: Store(
+                                initialState: About.State(),
+                                reducer: About()
+                            )
+                        )
+                    } label: {
+                        listItem(title: "About", image: "info.circle")
                     }
                 }
                 .navigationTitle("Settings")
@@ -42,26 +52,14 @@ struct SettingsView: View {
     }
 }
 
-extension SettingsView {
-    @ViewBuilder func gradeSystemList() -> some View {
+private extension SettingsView {
+    @ViewBuilder func listItem(title: String, image: String) -> some View {
         Label(
             title: {
-                Text("Grade Systems")
+                Text(title)
             },
             icon: {
-                Image(systemName: "square.fill.text.grid.1x2")
-                    .foregroundColor(.primary)
-            }
-        )
-    }
-    
-    @ViewBuilder func diagramFilter() -> some View {
-        Label(
-            title: {
-                Text("Diagrams")
-            },
-            icon: {
-                Image(systemName: "chart.bar.xaxis")
+                Image(systemName: image)
                     .foregroundColor(.primary)
             }
         )
