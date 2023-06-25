@@ -37,7 +37,7 @@ struct SummaryDiagramView: View {
     }
 }
 
-extension SummaryDiagramView {
+private extension SummaryDiagramView {
     @ViewBuilder func barChart(
         with sections: [SummaryDiagram.BarMarkSection],
         grades: [GradeSystem.Grade]
@@ -59,10 +59,9 @@ extension SummaryDiagramView {
                     .opacity(0.4)
             }
         }
-        .chartXScale(domain: [0, (sections.map { $0.maxValue }.max() ?? 0) + 2])
+        .chartYScale(domain: [0, (sections.map { $0.maxValue }.max() ?? 0) + 3])
         .chartForegroundStyleScale(range: GradeSystem.mandala.grades.map { $0.color })
         .chartLegend(.hidden)
-        .chartYAxis {}
         .chartXAxisLabel(position: .top) {
             Text("Summary of the last 7 days")
         }
@@ -75,12 +74,11 @@ extension SummaryDiagramView {
         image: String
     ) -> some ChartContent {
         BarMark(
-            x: .value("Top", value),
-            y: .value("Grade", grade.name),
-            width: .ratio(1)
+            x: .value("Grade", grade.name),
+            y: .value("Top", value)
         )
         .foregroundStyle(by: .value("Grade", grade.name))
-        .annotation(position: .overlay, alignment: .center) {
+        .annotation(position: .overlay, alignment: .bottom) {
             HStack(spacing: 0) {
                 Image(systemName: image)
                 Text("\(value)")
