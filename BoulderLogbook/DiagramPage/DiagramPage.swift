@@ -16,6 +16,8 @@ struct DiagramPage: ReducerProtocol {
         var sessionDiagram = SessionDiagram.State()
         var summaryDiagram = SummaryDiagram.State()
         
+        @BindingState var selectedTab: Int = 0
+        
         init(
             entries: [Logbook.Section.Entry] = [],
             gradeSystems: [GradeSystem] = []
@@ -34,7 +36,9 @@ struct DiagramPage: ReducerProtocol {
         }
     }
     
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
+        case task
+        case receiveSelectedDiagram(TaskResult<Int?>)
         case receiveGradeSystems([GradeSystem])
         case receiveEntries([Logbook.Section.Entry])
         case fetchSelectedSystem
@@ -42,10 +46,13 @@ struct DiagramPage: ReducerProtocol {
         case topCountDiagram(TopCountDiagram.Action)
         case sessionDiagram(SessionDiagram.Action)
         case summaryDiagram(SummaryDiagram.Action)
+        case binding(BindingAction<State>)
     }
     @Dependency(\.filterClient) var filterClient
+    @Dependency(\.diagramPageClient) var diagramPageClient
     
     var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
         Scope(state: \.topCountDiagram, action: /Action.topCountDiagram) {
             TopCountDiagram()
         }
@@ -57,9 +64,20 @@ struct DiagramPage: ReducerProtocol {
         }
         Reduce { state, action in
             switch action {
+            case .task:
+                return .task {
+                    await .receiveSelectedDiagram(
+                        TaskResult {
+                            diagramPageClient.fetchSelectedDiagram()
+                        }
+                    )
+                }
+                
+            case let .receiveSelectedDiagram(.success(id)):
+                state.selectedTab = id ?? 0
+            
             case let .receiveGradeSystems(gradeSystems):
                 state.gradeSystems = gradeSystems
-                return .none
               
             case let .receiveEntries(entries):
                 state.entries = entries
@@ -82,18 +100,22 @@ struct DiagramPage: ReducerProtocol {
                     state.summaryDiagram.entries = state.entries
                     state.summaryDiagram.gradeSystem = system
                 }
-                return .none
                 
             case .receiveSelectedSystem(.success(.none)):
                 state.topCountDiagram.gradeSystem = nil
                 state.topCountDiagram.entries = []
                 state.summaryDiagram.gradeSystem = nil
                 state.summaryDiagram.entries = []
-                return .none
 
-            default:
-                return .none
+            case .binding(\.$selectedTab):
+                let id = state.selectedTab
+                return .fireAndForget {
+                    diagramPageClient.saveSelectedDiagram(id)
+                }
+                
+            default: ()
             }
+            return .none
         }
     }
 }

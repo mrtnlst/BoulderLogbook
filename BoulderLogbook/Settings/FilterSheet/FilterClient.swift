@@ -17,7 +17,6 @@ extension DependencyValues {
 extension FilterClient: DependencyKey {
     static let liveValue: Self = {
         let defaults = UserDefaults.standard
-        let filtersKey = "filters"
         let filterSystemKey = "filter-system"
         return Self(
             fetchFilterSystem: {

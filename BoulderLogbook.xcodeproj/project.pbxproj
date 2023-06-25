@@ -43,6 +43,7 @@
 		5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB382A48401C00E486DC /* BundleClient.swift */; };
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3C2A484BFB00E486DC /* LICENSE */; };
+		5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */; };
 		5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* EntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
@@ -110,6 +111,7 @@
 		5BFAAB382A48401C00E486DC /* BundleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleClient.swift; sourceTree = "<group>"; };
 		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageClient.swift; sourceTree = "<group>"; };
 		5BFD11C3298E54AB00BD41BF /* EntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				5B6D3976299AC7B100299CCA /* DiagramPage.swift */,
 				5B6D397B299AC84D00299CCA /* DiagramPageView.swift */,
+				5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */,
 				5BADFAAF2A4728BC0010E9DB /* SummaryDiagram */,
 				5BD0E2C629A23A570079A826 /* SessionDiagram */,
 				5B6D3981299C201800299CCA /* TopCountDiagram */,
@@ -534,6 +537,7 @@
 				5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */,
 				5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */,
 				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,
+				5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */,
 				5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */,
 				5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */,
 			);

@@ -13,26 +13,30 @@ struct DiagramPageView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            TabView {
+            TabView(selection: viewStore.binding(\.$selectedTab)) {
                 TopCountDiagramView(
                     store: store.scope(
                         state: \.topCountDiagram,
                         action: DiagramPage.Action.topCountDiagram
                     )
                 )
+                .tag(0)
                 SessionDiagramView(
                     store: store.scope(
                         state: \.sessionDiagram,
                         action: DiagramPage.Action.sessionDiagram
                     )
                 )
+                .tag(1)
                 SummaryDiagramView(
                     store: store.scope(
                         state: \.summaryDiagram,
                         action: DiagramPage.Action.summaryDiagram
                     )
                 )
+                .tag(2)
             }
+            .task { await viewStore.send(.task).finish() }
             .frame(height: 200)
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
