@@ -9,21 +9,36 @@ import Foundation
 import ComposableArchitecture
 
 struct AppReducer: ReducerProtocol {
+    struct Destination: ReducerProtocol {
+        enum State: Equatable {
+            case settings(Settings.State)
+            case entryForm(EntryForm.State)
+        }
+        enum Action {
+            case settings(Settings.Action)
+            case entryForm(EntryForm.Action)
+        }
+        var body: some ReducerProtocolOf<Self> {
+            Scope(state: /State.settings, action: /Action.settings) {
+                Settings()
+            }
+            Scope(state: /State.entryForm, action: /Action.entryForm) {
+                EntryForm()
+            }
+        }
+    }
+    
     struct State: Equatable {
+        @PresentationState var destination: Destination.State?
         var dashboard = Dashboard.State()
-        var settings: Settings.State?
-        var entryForm: EntryForm.State?
-        var isPresentingForm: Bool = false
-        var isPresentingSettings: Bool = false
         var path: [StoreOf<EntryDetail>] = []
     }
     
     enum Action {
+        case destination(PresentationAction<Destination.Action>)
         case dashboard(Dashboard.Action)
-        case settings(Settings.Action)
-        case entryForm(EntryForm.Action)
-        case setIsPresentingForm(Bool)
-        case setIsPresentingSettings(Bool)
+        case presentEntryForm
+        case presentSettings
         case setPath([StoreOf<EntryDetail>])
     }
     @Dependency(\.entryClient) var entryClient
@@ -32,28 +47,23 @@ struct AppReducer: ReducerProtocol {
         Scope(state: \.dashboard, action: /Action.dashboard) {
             Dashboard()
         }
-        
         Reduce { state, action in
             switch action {
-            case let .setIsPresentingForm(isPresenting):
-                state.entryForm = isPresenting ? EntryForm.State() : nil
-                state.isPresentingForm = isPresenting
+            case .presentEntryForm:
+                state.destination = .entryForm(EntryForm.State())
 
-            case let .setIsPresentingSettings(isPresenting):
-                state.settings = isPresenting ? Settings.State() : nil
-                state.isPresentingSettings = isPresenting
-
+            case .presentSettings:
+                state.destination = .settings(Settings.State())
+                
             case let .setPath(path):
                 state.path = path
                 
-            case .entryForm(.cancel):
-                return .send(.setIsPresentingForm(false))
+            case .destination(.presented(.entryForm(.cancel))):
+                state.destination = nil
                 
-            case .entryForm(.saveDidFinish(_)):
-                return .merge(
-                    .send(.setIsPresentingForm(false)),
-                    .send(.dashboard(.fetchEntries))
-                )
+            case .destination(.presented(.entryForm(.saveDidFinish))):
+                state.destination = nil
+                return .send(.dashboard(.fetchEntries))
                 
             case .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(_)))):
                 state.path = []
@@ -61,36 +71,34 @@ struct AppReducer: ReducerProtocol {
             case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
                 let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
                 state.path = []
-                state.entryForm = .init(
-                    id: entry.id,
-                    date: entry.date,
-                    tops: entry.tops.normal(),
-                    attempts: entry.tops.filter { $0.isAttempt },
-                    flashs: entry.tops.filter { $0.wasFlash },
-                    onsights: entry.tops.filter { $0.wasOnsight },
-                    selectedSystem: entry.gradeSystem,
-                    isEditing: true
+                state.destination = .entryForm(
+                    .init(
+                        id: entry.id,
+                        date: entry.date,
+                        tops: entry.tops.normal(),
+                        attempts: entry.tops.filter { $0.isAttempt },
+                        flashs: entry.tops.filter { $0.wasFlash },
+                        onsights: entry.tops.filter { $0.wasOnsight },
+                        selectedSystem: entry.gradeSystem,
+                        isEditing: true
+                    )
                 )
-                state.isPresentingForm = true
  
-            case .settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish))):
+            case .destination(.presented(.settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish))))):
                 return .send(.dashboard(.fetchGradeSystems))
                 
-            case .settings(.deleteEntriesDidFinish):
+            case .destination(.presented(.settings(.deleteEntriesDidFinish))):
                 return .send(.dashboard(.fetchGradeSystems))
                                 
-            case .settings(.filterSheet(.saveDidFinish)):
+            case .destination(.presented(.settings(.filterSheet(.saveDidFinish)))):
                 return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 
             default: ()
             }
             return .none
         }
-        .ifLet(\.entryForm, action: /Action.entryForm) {
-            EntryForm()
-        }
-        .ifLet(\.settings, action: /Action.settings) {
-            Settings()
+        .ifLet(\.$destination, action: /Action.destination) {
+          Destination()
         }
     }
 }

@@ -31,7 +31,7 @@ extension AppView {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        viewStore.send(.setIsPresentingSettings(true))
+                        viewStore.send(.presentSettings)
                     } label: {
                         Image(systemName: "gear")
                             .fontWeight(.bold)
@@ -39,7 +39,7 @@ extension AppView {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewStore.send(.setIsPresentingForm(true))
+                        viewStore.send(.presentEntryForm)
                     } label: {
                         Image(systemName: "plus")
                             .fontWeight(.bold)
@@ -47,34 +47,18 @@ extension AppView {
                 }
             }
             .sheet(
-                isPresented: viewStore.binding(
-                    get: \.isPresentingForm,
-                    send: AppReducer.Action.setIsPresentingForm
-                )
+                store: store.scope(state: \.$destination, action: { .destination($0) }),
+                state: /AppReducer.Destination.State.entryForm,
+                action: AppReducer.Destination.Action.entryForm
             ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.entryForm,
-                        action: AppReducer.Action.entryForm
-                    )
-                ) { formStore in
-                    EntryFormView(store: formStore)
-                }
+                EntryFormView(store: $0)
             }
             .sheet(
-                isPresented: viewStore.binding(
-                    get: \.isPresentingSettings,
-                    send: AppReducer.Action.setIsPresentingSettings
-                )
+                store: store.scope(state: \.$destination, action: { .destination($0) }),
+                state: /AppReducer.Destination.State.settings,
+                action: AppReducer.Destination.Action.settings
             ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.settings,
-                        action: AppReducer.Action.settings
-                    )
-                ) { settingsStore in
-                    SettingsView(store: settingsStore)
-                }
+                SettingsView(store: $0)
             }
         }
     }
