@@ -60,7 +60,7 @@ private extension SummaryDiagramView {
             }
         }
         .chartYScale(domain: [0, (sections.map { $0.maxValue }.max() ?? 0) + 3])
-        .chartForegroundStyleScale(range: GradeSystem.mandala.grades.map { $0.color })
+        .chartForegroundStyleScale(range: grades.map { $0.color })
         .chartLegend(.hidden)
         .chartXAxisLabel(position: .top) {
             Text("Summary of the last 7 days")
