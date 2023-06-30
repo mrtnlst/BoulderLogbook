@@ -20,7 +20,10 @@ struct FilterSheet: ReducerProtocol {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
+        case saveDidFinish(TaskResult<FilterClientResponse>)
         case binding(BindingAction<State>)
+        
+        enum FilterClientResponse { case finished }
     }
     
     @Dependency(\.gradeSystemClient) var client
@@ -32,37 +35,44 @@ struct FilterSheet: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .task { .fetchGradeSystems }
+                return .send(.fetchGradeSystems)
                 
             case .fetchGradeSystems:
-                return .task {
-                    await .receiveGradeSystems(
-                        TaskResult { client.fetchAvailableSystems() }
+                return .run { send in
+                    await send(
+                        .receiveGradeSystems(TaskResult { client.fetchAvailableSystems() } )
                     )
                 }
+                
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .task { .fetchSelectedSystem }
+                return .send(.fetchSelectedSystem)
                 
             case .fetchSelectedSystem:
-                return .task {
-                    await .receiveSelectedSystem(
-                        TaskResult { filterClient.fetchFilterSystem() }
+                return .run { send in
+                    await send(
+                        .receiveSelectedSystem(TaskResult { filterClient.fetchFilterSystem() })
                     )
                 }
                 
             case let .receiveSelectedSystem(.success(selected)):
                 state.selectedSystemId = selected
-                return .none
                 
             case .binding(\.$selectedSystemId):
-                return .fireAndForget { [state] in
-                    filterClient.saveFilterSystem(state.selectedSystemId)
+                return .run { [state] send in
+                    await send(
+                        .saveDidFinish(
+                            TaskResult {
+                                filterClient.saveFilterSystem(state.selectedSystemId)
+                                return .finished
+                            }
+                        )
+                    )
                 }
             
-            default:
-                return .none
+            default: ()
             }
+            return .none
         }
     }
 }

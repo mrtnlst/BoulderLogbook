@@ -53,12 +53,14 @@ struct GradeSystemForm: ReducerProtocol {
                     name: state.name,
                     grades: state.grades
                 )
-                return .task {
-                    await .saveDidFinish(
-                        TaskResult {
-                            gradeSystemClient.saveSystem(gradeSystem)
-                            return .finished
-                        }
+                return .run { send in
+                    await send(
+                        .saveDidFinish(
+                            TaskResult {
+                                gradeSystemClient.saveSystem(gradeSystem)
+                                return .finished
+                            }
+                        )
                     )
                 }
                 
@@ -70,7 +72,6 @@ struct GradeSystemForm: ReducerProtocol {
                 state.grades.append(
                     GradeSystem.Grade(difficulty: nextDifficulty)
                 )
-                return .none
             
             case let .moveGrade(from, to):
                 var grades = state.grades
@@ -79,7 +80,6 @@ struct GradeSystemForm: ReducerProtocol {
                     grades[index].difficulty = index
                 }
                 state.grades = grades
-                return .none
                 
             case let .deleteGrade(from):
                 var grades = state.grades
@@ -91,11 +91,10 @@ struct GradeSystemForm: ReducerProtocol {
                     grades.append(GradeSystem.Grade())
                 }
                 state.grades = grades
-                return .none
                 
-            default:
-                return .none
+            default: ()
             }
+            return .none
         }
     }
 }

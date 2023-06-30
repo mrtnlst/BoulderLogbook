@@ -37,33 +37,33 @@ struct Dashboard: ReducerProtocol {
             case .onAppear:
 #if targetEnvironment(simulator)
                 return .concatenate(
-                    .fireAndForget { gradeSystemClient.saveDefaultSystems() },
-                    .fireAndForget { entryClient.saveBackupEntries() },
-                    .task { .fetchGradeSystems }
+                    .run { _ in gradeSystemClient.saveDefaultSystems() },
+                    .run { _ in entryClient.saveBackupEntries() },
+                    .send(.fetchGradeSystems)
                 )
 #else
-                return .concatenate(
-                    .task { .fetchGradeSystems }
-                )
+                return .send(.fetchGradeSystems)
 #endif
                 
             case .fetchGradeSystems:
-                return .task {
-                    await .receiveGradeSystems(
-                        TaskResult { gradeSystemClient.fetchAvailableSystems() }
+                return .run { send in
+                    await send(
+                        .receiveGradeSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
                     )
                 }
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
                 return .merge(
-                    .task { .fetchEntries },
-                    .task { .diagramPage(.receiveGradeSystems(gradeSystems)) }
+                    .send(.fetchEntries),
+                    .send(.diagramPage(.receiveGradeSystems(gradeSystems)))
                 )
                 
             case .fetchEntries:
-                return .task {
-                    await .receiveEntries(TaskResult { entryClient.fetchEntries() })
+                return .run { send in
+                    await send(
+                        .receiveEntries(TaskResult { entryClient.fetchEntries() })
+                    )
                 }
                 
             case let .receiveEntries(.success(entries)):
@@ -93,14 +93,14 @@ struct Dashboard: ReducerProtocol {
                         by: { $0.date > $1.date }
                     )
                 )
-                return .task { .diagramPage(.receiveEntries(entries)) }
+                return .send(.diagramPage(.receiveEntries(entries)))
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
-                return .task { .fetchEntries }
+                return .send(.fetchEntries)
 
-            default:
-                return .none
+            default: ()
             }
+            return .none
         }
         .forEach(\.sections, action: /Action.dashboardSection) {
             DashboardSection()

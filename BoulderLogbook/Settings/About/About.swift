@@ -26,11 +26,9 @@ struct About: ReducerProtocol {
     func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
         switch action {
         case .task:
-            return .task {
-                await .receiveAppIcon(
-                    TaskResult {
-                        bundleClient.appIcon()
-                    }
+            return .run { send in
+                await send(
+                    .receiveAppIcon(TaskResult { bundleClient.appIcon() })
                 )
             }
             
@@ -39,15 +37,11 @@ struct About: ReducerProtocol {
             
         case .openMartin:
             let urlString = "https://iosdev.space/@mrtnlst"
-            return .fireAndForget {
-                uiApplicationClient.openLink(urlString)
-            }
+            return .run { _ in uiApplicationClient.openLink(urlString) }
             
         case .openTCA:
             let urlString = "https://github.com/pointfreeco/swift-composable-architecture/"
-            return .fireAndForget {
-                uiApplicationClient.openLink(urlString)
-            }
+            return .run { _ in uiApplicationClient.openLink(urlString) }
             
         default: ()
         }

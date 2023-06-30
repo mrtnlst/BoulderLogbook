@@ -37,13 +37,15 @@ struct Settings: ReducerProtocol {
             switch action {
             case let .gradeSystemList(.delete(id)):
                 return .merge(
-                    .fireAndForget { filterClient.deleteFilterSystem(id) },
-                    .task {
-                        await .deleteEntriesDidFinish(
-                            TaskResult {
-                                entryClient.deleteEntries(id)
-                                return .finished
-                            }
+                    .run { _ in filterClient.deleteFilterSystem(id) },
+                    .run { send in
+                        await send(
+                            .deleteEntriesDidFinish(
+                                TaskResult {
+                                    entryClient.deleteEntries(id)
+                                    return .finished
+                                }
+                            )
                         )
                     }
                 )

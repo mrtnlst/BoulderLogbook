@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct AppReducer: ReducerProtocol {
     struct State: Equatable {
-        var dashboard: Dashboard.State = Dashboard.State()
+        var dashboard = Dashboard.State()
         var settings: Settings.State?
         var entryForm: EntryForm.State?
         var isPresentingForm: Bool = false
@@ -38,32 +38,25 @@ struct AppReducer: ReducerProtocol {
             case let .setIsPresentingForm(isPresenting):
                 state.entryForm = isPresenting ? EntryForm.State() : nil
                 state.isPresentingForm = isPresenting
-                return .none
 
             case let .setIsPresentingSettings(isPresenting):
                 state.settings = isPresenting ? Settings.State() : nil
                 state.isPresentingSettings = isPresenting
-                return .none
 
             case let .setPath(path):
                 state.path = path
-                return .none
                 
             case .entryForm(.cancel):
-                return EffectPublisher(value: .setIsPresentingForm(false))
+                return .send(.setIsPresentingForm(false))
                 
             case .entryForm(.saveDidFinish(_)):
                 return .merge(
-                    EffectPublisher(value: .setIsPresentingForm(false)),
-                    EffectPublisher(value: .dashboard(.fetchEntries))
+                    .send(.setIsPresentingForm(false)),
+                    .send(.dashboard(.fetchEntries))
                 )
-                
-            case .entryForm(_):
-                return .none
                 
             case .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(_)))):
                 state.path = []
-                return .none
                 
             case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
                 let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
@@ -79,23 +72,19 @@ struct AppReducer: ReducerProtocol {
                     isEditing: true
                 )
                 state.isPresentingForm = true
-                return .none
-
-            case .dashboard(_):
-                return .none
-                
-            case .settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish(_)))):
-                return .task { .dashboard(.fetchGradeSystems) }
+ 
+            case .settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish))):
+                return .send(.dashboard(.fetchGradeSystems))
                 
             case .settings(.deleteEntriesDidFinish):
-                return .task { .dashboard(.fetchGradeSystems) }
+                return .send(.dashboard(.fetchGradeSystems))
                                 
-            case .settings(.filterSheet(.binding)):
-                return .task { .dashboard(.diagramPage(.fetchSelectedSystem)) }
+            case .settings(.filterSheet(.saveDidFinish)):
+                return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 
-            case .settings(_):
-                return .none
+            default: ()
             }
+            return .none
         }
         .ifLet(\.entryForm, action: /Action.entryForm) {
             EntryForm()

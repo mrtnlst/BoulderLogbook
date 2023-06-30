@@ -44,72 +44,71 @@ struct GradeSystemList: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .task { .fetchGradeSystems }
+                return .send(.fetchGradeSystems)
                 
             case .fetchGradeSystems:
-                return .task {
-                    await .receiveGradeSystems(
-                        TaskResult { client.fetchAvailableSystems() }
+                return .run { send in
+                    await send(
+                        .receiveGradeSystems(TaskResult { client.fetchAvailableSystems() })
                     )
                 }
+                
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .task { .fetchSelectedSystem }
+                return .send(.fetchSelectedSystem)
                 
             case .fetchSelectedSystem:
-                return .task {
-                    await .receiveSelectedSystem(
-                        TaskResult { client.fetchSelectedSystem() }
+                return .run { send in
+                    await send(
+                        .receiveSelectedSystem(TaskResult { client.fetchSelectedSystem() })
                     )
                 }
                 
             case let .receiveSelectedSystem(.success(selected)):
                 state.selectedSystem = state.gradeSystems.first(where: { $0.id == selected })
-                return .none
 
             case let .setIsPresentingForm(isPresenting):
                 state.isPresentingForm = isPresenting
                 state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
-                return .none
                 
             case let .setIsPresentingConfirmation(isPresenting):
                 state.isPresentingConfirmation = isPresenting
-                return .none
                 
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {
                     return .none
                 }
-                return .task {
-                    await .saveSelectedDidFinish(
-                        TaskResult {
-                            client.saveSelectedSystem(selected)
-                            return .finished
-                        }
+                return .run { send in
+                    await send(
+                        .saveSelectedDidFinish(
+                            TaskResult {
+                                client.saveSelectedSystem(selected)
+                                return .finished
+                            }
+                        )
                     )
                 }
                 
             case .saveSelectedDidFinish(_):
-                return .task { .fetchSelectedSystem }
+                return .send(.fetchSelectedSystem)
                 
             case let .setSystemToDelete(system):
                 state.systemToDelete = system
-                return .task { .setIsPresentingConfirmation(true) }
+                return .send(.setIsPresentingConfirmation(true))
                 
             case .confirmDelete:
                 guard let systemToDelete = state.systemToDelete else {
                     return .none
                 }
-                return .task { .delete(systemToDelete.id) }
+                return .send(.delete(systemToDelete.id))
                 
             case .cancelDelete:
                 state.systemToDelete = nil
-                return .none
                 
             case let .delete(id):
                 return .merge(
-                    .fireAndForget { client.deleteSystem(id) },
-                    .task { .fetchGradeSystems }
+                    .run { _ in client.deleteSystem(id) },
+                    .send(.fetchGradeSystems)
                 )
                 
             case let .edit(id):
@@ -123,20 +122,19 @@ struct GradeSystemList: ReducerProtocol {
                 )
                 state.gradeSystemForm = formState
                 state.isPresentingForm = true
-                return .none
     
             case .gradeSystemForm(.cancel):
-                return .task { .setIsPresentingForm(false) }
+                return .send(.setIsPresentingForm(false))
                 
             case .gradeSystemForm(.saveDidFinish(_)):
                 return .concatenate(
-                    .task { .setIsPresentingForm(false) },
-                    .task { .fetchGradeSystems }
+                    .send(.setIsPresentingForm(false)),
+                    .send(.fetchGradeSystems)
                 )
                 
-            default:
-                return .none
+            default: ()
             }
+            return .none
         }
         .ifLet(\.gradeSystemForm, action: /Action.gradeSystemForm) {
             GradeSystemForm()

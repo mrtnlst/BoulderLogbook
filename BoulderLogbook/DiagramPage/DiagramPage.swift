@@ -65,11 +65,9 @@ struct DiagramPage: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .task:
-                return .task {
-                    await .receiveSelectedDiagram(
-                        TaskResult {
-                            diagramPageClient.fetchSelectedDiagram()
-                        }
+                return .run { send in
+                    await send(
+                        .receiveSelectedDiagram(TaskResult { diagramPageClient.fetchSelectedDiagram() })
                     )
                 }
                 
@@ -82,14 +80,12 @@ struct DiagramPage: ReducerProtocol {
             case let .receiveEntries(entries):
                 state.entries = entries
                 state.sessionDiagram = SessionDiagram.State(entries: entries)
-                return .task { .fetchSelectedSystem }
+                return .send(.fetchSelectedSystem)
                   
             case .fetchSelectedSystem:
-                return .task {
-                    await .receiveSelectedSystem(
-                        TaskResult {
-                            filterClient.fetchFilterSystem()
-                        }
+                return .run { send in
+                    await send(
+                        .receiveSelectedSystem(TaskResult { filterClient.fetchFilterSystem() })
                     )
                 }
                 
@@ -109,7 +105,7 @@ struct DiagramPage: ReducerProtocol {
 
             case .binding(\.$selectedTab):
                 let id = state.selectedTab
-                return .fireAndForget {
+                return .run { _ in
                     diagramPageClient.saveSelectedDiagram(id)
                 }
                 

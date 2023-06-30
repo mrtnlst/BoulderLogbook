@@ -293,9 +293,7 @@
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A9B07E852868588700AA6274 /* App */,
 				A9C3005329829070001B51C4 /* Dashboard */,
-				A9C300542982907D001B51C4 /* DashboardSection */,
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
-				A9CE6761288004D300027885 /* EntryDetail */,
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BDD420B298829E100B84BA0 /* GradeSystemForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
@@ -350,6 +348,8 @@
 			children = (
 				A9C3005129828948001B51C4 /* Dashboard.swift */,
 				A9B07E7F2868588700AA6274 /* DashboardView.swift */,
+				A9C300542982907D001B51C4 /* DashboardSection */,
+				A9CE6761288004D300027885 /* EntryDetail */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -814,7 +814,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.50.1;
+				minimumVersion = 0.55.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -50,18 +50,20 @@ struct DashboardSection: ReducerProtocol {
             switch action {
             case let .delete(id),
                  let .entryDetail(id: _, action: .delete(id)):
-                return .task {
-                    await .deleteDidFinish(
-                        TaskResult {
-                            entryClient.deleteEntry(id)
-                            return .finished
-                        }
+                return .run { send in
+                    await send(
+                        .deleteDidFinish(
+                            TaskResult {
+                                entryClient.deleteEntry(id)
+                                return .finished
+                            }
+                        )
                     )
                 }
                 
-            default:
-                return .none
+            default: ()
             }
+            return .none
         }
         .forEach(\.entryStates, action: /Action.entryDetail) {
             EntryDetail()
