@@ -9,7 +9,7 @@ import UIKit
 import Dependencies
 
 struct UIApplicationClient {
-    var openLink: (String) -> ()
+    var openLink: (String) async -> ()
 }
 
 extension DependencyValues {
@@ -22,9 +22,9 @@ extension DependencyValues {
 extension UIApplicationClient: DependencyKey {
     static let liveValue: Self = {
         return Self(
-            openLink: { urlString in
+            openLink: { @MainActor urlString in
                 if let url = URL(string: urlString) {
-                    UIApplication.shared.open(url)
+                    await UIApplication.shared.open(url)
                 }
             }
         )

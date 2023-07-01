@@ -37,11 +37,11 @@ struct About: ReducerProtocol {
             
         case .openMartin:
             let urlString = "https://iosdev.space/@mrtnlst"
-            return .run { _ in uiApplicationClient.openLink(urlString) }
+            return .run { _ in await uiApplicationClient.openLink(urlString) }
             
         case .openTCA:
             let urlString = "https://github.com/pointfreeco/swift-composable-architecture/"
-            return .run { _ in uiApplicationClient.openLink(urlString) }
+            return .run { _ in await uiApplicationClient.openLink(urlString) }
             
         default: ()
         }
