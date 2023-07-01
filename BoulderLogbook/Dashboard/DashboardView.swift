@@ -12,17 +12,6 @@ struct DashboardView: View {
     let store: StoreOf<Dashboard>
     
     var body: some View {
-        listView()
-            .navigationDestination(
-                for: StoreOf<EntryDetail>.self
-            ) { detailStore in
-                EntryDetailView(store: detailStore)
-            }
-    }
-}
-
-extension DashboardView {
-    @ViewBuilder func listView() -> some View {
         WithViewStore(store) { viewStore in
             List {
                 DiagramPageView(

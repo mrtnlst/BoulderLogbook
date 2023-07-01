@@ -12,7 +12,8 @@ struct DashboardSection: ReducerProtocol {
     struct State: Equatable, Identifiable {
         var id: Double { date.timeIntervalSince1970 }
         let date: Date
-        var entryStates: IdentifiedArrayOf<EntryDetail.State> = []
+        @PresentationState var entryDetail: EntryDetail.State?
+        var entryDetailStates: IdentifiedArrayOf<EntryDetail.State>
         var gradeSystems: [GradeSystem] = []
         
         init(
@@ -22,14 +23,15 @@ struct DashboardSection: ReducerProtocol {
         ) {
             self.date = date
             self.gradeSystems = gradeSystems
-            
-            let entryStates: [EntryDetail.State] = entries.compactMap { entry in
-                guard let system = gradeSystems.first(where: { $0.id == entry.gradeSystem }) else {
-                    return nil
+            self.entryDetailStates = .init(uniqueElements: entries
+                .compactMap { entry in
+                    guard let system = gradeSystems.first(where: { $0.id == entry.gradeSystem }) else {
+                        return nil
+                    }
+                    return EntryDetail.State(entry: entry, gradeSystem: system)
                 }
-                return EntryDetail.State(entry: entry, gradeSystem: system)
-            }
-            self.entryStates = .init(uniqueElements: entryStates.sorted { $0.entry.date > $1.entry.date })
+                .sorted { $0.entry.date > $1.entry.date }
+            )
         }
     }
     
@@ -37,11 +39,13 @@ struct DashboardSection: ReducerProtocol {
         case delete(UUID)
         case deleteDidFinish(TaskResult<EntryClientResponse>)
         case edit(Logbook.Section.Entry)
-        case entryDetail(id: UUID, action: EntryDetail.Action)
+        case entryDetail(PresentationAction<EntryDetail.Action>)
+        case setNavigation(EntryDetail.State.ID)
         
         enum EntryClientResponse { case finished }
     }
     
+    @Dependency(\.dismiss) var dismiss
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
@@ -49,7 +53,7 @@ struct DashboardSection: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case let .delete(id),
-                 let .entryDetail(id: _, action: .delete(id)):
+                 let .entryDetail(.presented(.delete(id))):
                 return .run { send in
                     await send(
                         .deleteDidFinish(
@@ -61,11 +65,26 @@ struct DashboardSection: ReducerProtocol {
                     )
                 }
                 
+            case .deleteDidFinish:
+                state.entryDetail = nil
+                
+            case let .entryDetail(.presented(.edit(entry))):
+                state.entryDetail = nil
+                // Wait shortly after dismissing the detail view to avoid presenting
+                // the modal view detached while still being on the `EntryDetailView`.
+                return .run { send in
+                    try await Task.sleep(for: .milliseconds(50))
+                    await send(.edit(entry))
+                }
+                
+            case let .setNavigation(id):
+                state.entryDetail = state.entryDetailStates[id: id]
+                
             default: ()
             }
             return .none
         }
-        .forEach(\.entryStates, action: /Action.entryDetail) {
+        .ifLet(\.$entryDetail, action: /Action.entryDetail) {
             EntryDetail()
         }
     }

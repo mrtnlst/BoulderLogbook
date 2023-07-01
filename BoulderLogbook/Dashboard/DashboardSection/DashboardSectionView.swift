@@ -13,43 +13,46 @@ struct DashboardSectionView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            Section {
-                ForEachStore(
-                    store.scope(
-                        state: \.entryStates,
-                        action: DashboardSection.Action.entryDetail(id:action:))
-                ) { entryStore in
-                    NavigationLink(value: entryStore) {
-                        let entry = ViewStore(entryStore).entry
-                        if let gradeSystem = viewStore.gradeSystems.first(where: { $0.id == entry.gradeSystem }) {
-                            DashboardEntryView(
-                                entry: entry,
-                                gradeSystem: gradeSystem
-                            )
+                Section {
+                    ForEach(viewStore.entryDetailStates) { entryDetailState in
+                        Button(
+                            action: {
+                                viewStore.send(.setNavigation(entryDetailState.id))
+                            },
+                            label: {
+                                DashboardEntryView(
+                                    entry: entryDetailState.entry,
+                                    gradeSystem: entryDetailState.gradeSystem
+                                )
+                            }
+                        )
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                viewStore.send(.delete(entryDetailState.id))
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            .tint(.indianRed)
+                            Button {
+                                viewStore.send(.edit(entryDetailState.entry))
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            .tint(.hunyadiOrange)
                         }
                     }
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewStore.send(.delete(ViewStore(entryStore).entry.id))
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        .tint(.indianRed)
-                        Button {
-                            viewStore.send(.edit(ViewStore(entryStore).entry))
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(.hunyadiOrange)
-                    }
+                } header: {
+                    Text(
+                        viewStore.date,
+                        format: .dateTime.year().month(.wide)
+                    )
                 }
-            } header: {
-                Text(
-                    viewStore.date,
-                    format: .dateTime.year().month(.wide)
-                )
-            }
-            .headerProminence(.increased)
+                .headerProminence(.increased)
+        }
+        .navigationDestination(
+            store: store.scope(state: \.$entryDetail, action: { .entryDetail($0) })
+        ) {
+            EntryDetailView(store: $0)
         }
     }
 }

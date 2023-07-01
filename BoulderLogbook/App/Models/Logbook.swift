@@ -7,11 +7,9 @@
 
 import Foundation
 
-public struct Logbook: Equatable {
-    
-    public struct Section: Equatable {
-        
-        public struct Entry: Identifiable, Equatable, Hashable, Codable {
+struct Logbook: Equatable {
+    struct Section: Equatable {
+        struct Entry: Identifiable, Equatable, Hashable, Codable {
             public let id: UUID
             var date: Date
             var tops: [Top]

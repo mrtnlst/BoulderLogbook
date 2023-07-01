@@ -61,7 +61,6 @@
 		A9C300582982913F001B51C4 /* EntryForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C300572982913F001B51C4 /* EntryForm.swift */; };
 		A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005A298292F8001B51C4 /* AppReducer.swift */; };
 		A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryDetailView.swift */; };
-		A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,7 +130,6 @@
 		A9C300572982913F001B51C4 /* EntryForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForm.swift; sourceTree = "<group>"; };
 		A9C3005A298292F8001B51C4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
-		A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreOf+EntryDetail.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,7 +377,6 @@
 			children = (
 				A9435D8329826290001DC22B /* EntryDetail.swift */,
 				A9CE6763288004E400027885 /* EntryDetailView.swift */,
-				A9D4995A28805069001BC4F2 /* StoreOf+EntryDetail.swift */,
 			);
 			path = EntryDetail;
 			sourceTree = "<group>";
@@ -525,7 +522,6 @@
 				5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */,
 				5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */,
 				5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */,
-				A9D4995B28805069001BC4F2 /* StoreOf+EntryDetail.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
 				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
 				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,

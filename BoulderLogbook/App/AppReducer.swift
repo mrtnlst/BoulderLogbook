@@ -31,7 +31,6 @@ struct AppReducer: ReducerProtocol {
     struct State: Equatable {
         @PresentationState var destination: Destination.State?
         var dashboard = Dashboard.State()
-        var path: [StoreOf<EntryDetail>] = []
     }
     
     enum Action {
@@ -39,7 +38,6 @@ struct AppReducer: ReducerProtocol {
         case dashboard(Dashboard.Action)
         case presentEntryForm
         case presentSettings
-        case setPath([StoreOf<EntryDetail>])
     }
     @Dependency(\.entryClient) var entryClient
 
@@ -54,10 +52,7 @@ struct AppReducer: ReducerProtocol {
 
             case .presentSettings:
                 state.destination = .settings(Settings.State())
-                
-            case let .setPath(path):
-                state.path = path
-                
+
             case .destination(.presented(.entryForm(.cancel))):
                 state.destination = nil
                 
@@ -65,12 +60,7 @@ struct AppReducer: ReducerProtocol {
                 state.destination = nil
                 return .send(.dashboard(.fetchEntries))
                 
-            case .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .delete(_)))):
-                state.path = []
-                
-            case let .dashboard(.dashboardSection(id: _, action: .edit(entry))),
-                let .dashboard(.dashboardSection(id: _, action: .entryDetail(id: _, action: .edit(entry)))):
-                state.path = []
+            case let .dashboard(.dashboardSection(id: _, action: .edit(entry))):
                 state.destination = .entryForm(
                     .init(
                         id: entry.id,

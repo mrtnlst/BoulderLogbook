@@ -13,18 +13,6 @@ struct AppView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            NavigationStack(
-                path: viewStore.binding(get: \.path, send: AppReducer.Action.setPath)
-            ) {
-                dashboardView()
-            }
-        }
-    }
-}
-
-extension AppView {
-    @ViewBuilder func dashboardView() -> some View {
-        WithViewStore(store) { viewStore in
             DashboardView(
                 store: store.scope(state: \.dashboard, action: AppReducer.Action.dashboard)
             )

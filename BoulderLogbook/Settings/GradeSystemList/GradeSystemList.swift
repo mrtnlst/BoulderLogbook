@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct GradeSystemList: ReducerProtocol {
-    public struct State: Equatable {
+    struct State: Equatable {
         var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
         var gradeSystemForm: GradeSystemForm.State?

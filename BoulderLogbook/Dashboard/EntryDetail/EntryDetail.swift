@@ -8,9 +8,9 @@
 import Foundation
 import ComposableArchitecture
 
-public struct EntryDetail: Equatable, ReducerProtocol {
-    public struct State: Equatable, Identifiable {
-        public let id: UUID
+struct EntryDetail: ReducerProtocol {
+    struct State: Equatable, Identifiable {
+        let id: UUID
         let entry: Logbook.Section.Entry
         var gradeSystem: GradeSystem
         
@@ -24,12 +24,19 @@ public struct EntryDetail: Equatable, ReducerProtocol {
         }
     }
     
-    public enum Action: Equatable {
+    enum Action: Equatable {
         case delete(UUID)
         case edit(Logbook.Section.Entry)
     }
-    
-    public func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    @Dependency(\.dismiss) var dismiss
+
+    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case .edit:
+            return .run { _ in await dismiss() }
+            
+        default: ()
+        }
         return .none
     }
 }
