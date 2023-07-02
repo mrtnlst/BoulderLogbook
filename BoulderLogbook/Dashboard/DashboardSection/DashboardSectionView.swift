@@ -13,41 +13,41 @@ struct DashboardSectionView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-                Section {
-                    ForEach(viewStore.entryDetailStates) { entryDetailState in
-                        Button(
-                            action: {
-                                viewStore.send(.setNavigation(entryDetailState.id))
-                            },
-                            label: {
-                                DashboardEntryView(
-                                    entry: entryDetailState.entry,
-                                    gradeSystem: entryDetailState.gradeSystem
-                                )
-                            }
-                        )
-                        .swipeActions {
-                            Button(role: .destructive) {
-                                viewStore.send(.delete(entryDetailState.id))
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                            .tint(.indianRed)
-                            Button {
-                                viewStore.send(.edit(entryDetailState.entry))
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
-                            .tint(.hunyadiOrange)
+            Section {
+                ForEach(viewStore.entryDetailStates) { entryDetailState in
+                    Button(
+                        action: {
+                            viewStore.send(.setNavigation(entryDetailState.id))
+                        },
+                        label: {
+                            DashboardEntryView(
+                                entry: entryDetailState.entry,
+                                gradeSystem: entryDetailState.gradeSystem
+                            )
                         }
-                    }
-                } header: {
-                    Text(
-                        viewStore.date,
-                        format: .dateTime.year().month(.wide)
                     )
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            viewStore.send(.delete(entryDetailState.id))
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.indianRed)
+                        Button {
+                            viewStore.send(.edit(entryDetailState.entry))
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(.hunyadiOrange)
+                    }
                 }
-                .headerProminence(.increased)
+            } header: {
+                Text(
+                    viewStore.date,
+                    format: .dateTime.year().month(.wide)
+                )
+            }
+            .headerProminence(.increased)
         }
         .navigationDestination(
             store: store.scope(state: \.$entryDetail, action: { .entryDetail($0) })

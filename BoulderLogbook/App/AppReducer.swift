@@ -78,7 +78,7 @@ struct AppReducer: ReducerProtocol {
                     )
                 )
  
-            case .destination(.presented(.settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish))))):
+            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.gradeSystemForm(.saveDidFinish))))))):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
                     .send(.dashboard(.diagramPage(.fetchGradeSystems)))
@@ -90,7 +90,7 @@ struct AppReducer: ReducerProtocol {
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                                 
-            case .destination(.presented(.settings(.filterSheet(.saveDidFinish)))):
+            case .destination(.presented(.settings(.destination(.presented(.diagramConfiguration(.saveDidFinish)))))):
                 return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 
             default: ()

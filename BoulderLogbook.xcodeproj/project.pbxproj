@@ -23,6 +23,9 @@
 		5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */; };
 		5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */; };
 		5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3742A51AD20006265F0 /* ViewState.swift */; };
+		5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3762A51E5E1006265F0 /* AppIconList.swift */; };
+		5B6DB3792A51E5E9006265F0 /* AppIconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3782A51E5E9006265F0 /* AppIconListView.swift */; };
+		5B6DB37B2A51EB95006265F0 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB37A2A51EB95006265F0 /* AppIconView.swift */; };
 		5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */; };
 		5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */; };
 		5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0DF2A29942E4700B49A56 /* FilterClient.swift */; };
@@ -43,7 +46,6 @@
 		5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD421129885FA600B84BA0 /* Collection+safe.swift */; };
 		5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB332A48372B00E486DC /* AboutView.swift */; };
 		5BFAAB362A48400900E486DC /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB352A48400900E486DC /* About.swift */; };
-		5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB382A48401C00E486DC /* BundleClient.swift */; };
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3C2A484BFB00E486DC /* LICENSE */; };
 		5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */; };
@@ -93,6 +95,9 @@
 		5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		5B6DB3742A51AD20006265F0 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
+		5B6DB3762A51E5E1006265F0 /* AppIconList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconList.swift; sourceTree = "<group>"; };
+		5B6DB3782A51E5E9006265F0 /* AppIconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconListView.swift; sourceTree = "<group>"; };
+		5B6DB37A2A51EB95006265F0 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagram.swift; sourceTree = "<group>"; };
 		5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagramView.swift; sourceTree = "<group>"; };
 		5BB0DF2A29942E4700B49A56 /* FilterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClient.swift; sourceTree = "<group>"; };
@@ -113,7 +118,6 @@
 		5BDD421129885FA600B84BA0 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		5BFAAB332A48372B00E486DC /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		5BFAAB352A48400900E486DC /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
-		5BFAAB382A48401C00E486DC /* BundleClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleClient.swift; sourceTree = "<group>"; };
 		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageClient.swift; sourceTree = "<group>"; };
@@ -234,7 +238,9 @@
 			children = (
 				5BDD41EF2986850700B84BA0 /* Settings.swift */,
 				5BDD41F229868AA400B84BA0 /* SettingsView.swift */,
+				5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */,
 				5BFAAB372A48401000E486DC /* About */,
+				5BF68DDF2A5207660071C3F6 /* AppIconList */,
 				5B289AE429058BBF00EC6F0B /* FilterSheet */,
 				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 			);
@@ -263,11 +269,21 @@
 		5BDD420E298831A400B84BA0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5BDD420C2988319E00B84BA0 /* RectangularButton.swift */,
-				5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */,
+				5B6DB37A2A51EB95006265F0 /* AppIconView.swift */,
 				5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */,
+				5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */,
+				5BDD420C2988319E00B84BA0 /* RectangularButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5BF68DDF2A5207660071C3F6 /* AppIconList */ = {
+			isa = PBXGroup;
+			children = (
+				5B6DB3762A51E5E1006265F0 /* AppIconList.swift */,
+				5B6DB3782A51E5E9006265F0 /* AppIconListView.swift */,
+			);
+			path = AppIconList;
 			sourceTree = "<group>";
 		};
 		5BFAAB372A48401000E486DC /* About */ = {
@@ -275,8 +291,6 @@
 			children = (
 				5BFAAB352A48400900E486DC /* About.swift */,
 				5BFAAB332A48372B00E486DC /* AboutView.swift */,
-				5BFAAB382A48401C00E486DC /* BundleClient.swift */,
-				5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -508,11 +522,11 @@
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
 				5B1A806E2896E3F700530B01 /* Color+Additions.swift in Sources */,
+				5B6DB3792A51E5E9006265F0 /* AppIconListView.swift in Sources */,
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
 				5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
-				5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */,
 				5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
@@ -527,6 +541,7 @@
 				5BDD420D2988319E00B84BA0 /* RectangularButton.swift in Sources */,
 				5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
+				5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
 				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
@@ -548,6 +563,7 @@
 				5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */,
 				5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */,
 				5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */,
+				5B6DB37B2A51EB95006265F0 /* AppIconView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +701,7 @@
 		A9B07E702868579900AA6274 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_3 AppIcon_2";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -715,6 +732,7 @@
 		A9B07E712868579900AA6274 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_3 AppIcon_2";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;

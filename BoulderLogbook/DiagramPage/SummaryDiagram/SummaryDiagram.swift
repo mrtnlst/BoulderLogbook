@@ -70,8 +70,6 @@ struct SummaryDiagram: ReducerProtocol {
                 )
             }
             state.viewState = .idle(models)
-            
-        default: ()
         }
         return .none
     }

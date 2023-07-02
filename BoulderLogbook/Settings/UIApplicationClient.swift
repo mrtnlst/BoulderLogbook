@@ -10,6 +10,7 @@ import Dependencies
 
 struct UIApplicationClient {
     var openLink: (String) async -> ()
+    var setAlternateIconName: (String?) async -> ()
 }
 
 extension DependencyValues {
@@ -26,6 +27,9 @@ extension UIApplicationClient: DependencyKey {
                 if let url = URL(string: urlString) {
                     await UIApplication.shared.open(url)
                 }
+            },
+            setAlternateIconName: { @MainActor iconName in
+                UIApplication.shared.setAlternateIconName(iconName)
             }
         )
     }()

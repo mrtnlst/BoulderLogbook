@@ -39,7 +39,6 @@ struct SessionDiagram: ReducerProtocol {
                 }
                 state.viewState = .idle(models)
             }
-        default: ()
         }
         return .none
     }

@@ -15,7 +15,7 @@ struct AboutView: View {
         WithViewStore(store) { viewStore in
             VStack {
                 Spacer(minLength: 20)
-                appIcon(icon: viewStore.appIcon)
+                AppIconView(iconName: "AppIcon")
                 Text("Boulder Logbook")
                     .font(.headline)
                 Text("1.0.0")
@@ -53,21 +53,6 @@ struct AboutView: View {
                 
             }
             .navigationTitle("About")
-            .task { await viewStore.send(.task).finish() }
-        }
-    }
-}
-
-extension AboutView {
-    @ViewBuilder func appIcon(icon: UIImage?) -> some View {
-        if let icon = icon {
-            Image(uiImage: icon)
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .shadow(radius: 4)
-        } else {
-            Image(systemName: "app.dashed")
-                .resizable()
-                .frame(width: 60, height: 60)
         }
     }
 }
