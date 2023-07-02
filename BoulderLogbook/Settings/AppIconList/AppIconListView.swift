@@ -13,9 +13,13 @@ struct AppIconListView: View {
     
     var body: some View {
         List {
-            appIconRow(title: "Classic Icon", fileName: "AppIcon")
-            appIconRow(title: "Alternative 1", fileName: "AppIcon_2")
-            appIconRow(title: "Alternative 2", fileName: "AppIcon_3")
+            Section {
+                appIconRow(title: "Classic Icon", fileName: "AppIcon")
+            }
+            Section("Unlockable via In-App Purchase") {
+                appIconRow(title: "Aurora", fileName: "AppIcon_2")
+                appIconRow(title: "Dark Berry", fileName: "AppIcon_3")
+            }
         }
         .navigationTitle("App Icons")
     }
@@ -42,11 +46,13 @@ extension AppIconListView {
 
 struct AppIconListView_Previews: PreviewProvider {
     static var previews: some View {
-        AppIconListView(
-            store: Store(
-                initialState: .init(),
-                reducer: AppIconList()
+        NavigationStack {
+            AppIconListView(
+                store: Store(
+                    initialState: .init(),
+                    reducer: AppIconList()
+                )
             )
-        )
+        }
     }
 }
