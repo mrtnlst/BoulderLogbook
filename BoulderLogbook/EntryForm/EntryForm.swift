@@ -19,9 +19,12 @@ struct EntryForm: ReducerProtocol {
         var isEditing: Bool
         
         @BindingState var date: Date
+        @BindingState var notes: String
         @BindingState var selectedSystemId: UUID?
         /// Temporary store selected value and assign after available systems are fetched. Avoids Picker warning in console.
         fileprivate var tempSelectedSystemId: UUID?
+        
+        let notesPlaceHolder = "Additional notes …"
         
         var selectedSystem: GradeSystem? {
             gradeSystems.first(where: { $0.id == selectedSystemId })
@@ -30,6 +33,7 @@ struct EntryForm: ReducerProtocol {
         init(
             id: UUID = UUID(),
             date: Date = .now,
+            notes: String? = nil,
             tops: [Top] = [],
             attempts: [Top] = [],
             flashs: [Top] = [],
@@ -39,6 +43,7 @@ struct EntryForm: ReducerProtocol {
         ) {
             self.id = id
             self.date = date
+            self.notes = notes ?? notesPlaceHolder
             self.tops = tops
             self.attempts = attempts
             self.flashs = flashs
@@ -164,6 +169,7 @@ struct EntryForm: ReducerProtocol {
                 let entry = Logbook.Section.Entry(
                     id: state.id,
                     date: state.date,
+                    notes: state.notes,
                     tops: state.tops + state.attempts + state.flashs + state.onsights,
                     gradeSystem: gradeSystemId
                 )

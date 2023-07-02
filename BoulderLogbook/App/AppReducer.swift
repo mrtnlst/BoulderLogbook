@@ -68,6 +68,7 @@ struct AppReducer: ReducerProtocol {
                     .init(
                         id: entry.id,
                         date: entry.date,
+                        notes: entry.notes,
                         tops: entry.tops.normal(),
                         attempts: entry.tops.filter { $0.isAttempt },
                         flashs: entry.tops.filter { $0.wasFlash },

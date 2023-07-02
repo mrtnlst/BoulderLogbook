@@ -25,7 +25,14 @@ struct EntryDetailView: View {
                     .frame(height: 200)
                 }
                 Section {
-                    gradesSystem()
+                    gradesSystem(name: viewStore.gradeSystem.name)
+                }
+                Section {
+                    if let notes = viewStore.entry.notes {
+                        self.notes(text: notes)
+                    } else {
+                        EmptyView()
+                    }
                 }
                 Section {
                     buttons()
@@ -38,24 +45,36 @@ struct EntryDetailView: View {
 }
 
 extension EntryDetailView {
-    @ViewBuilder func gradesSystem() -> some View {
-        WithViewStore(store) { viewStore in
-            HStack {
-                Label(
-                    title: { Text("Grade System") },
-                    icon: {
-                        Image(systemName: "square.fill.text.grid.1x2")
-                            .foregroundColor(.primary)
-                    }
-                )
-                Spacer()
-                Text(viewStore.gradeSystem.name)
-                    .foregroundColor(.secondary)
-            }
+    func gradesSystem(name: String) -> some View {
+        HStack {
+            Label(
+                title: { Text("Grade System") },
+                icon: {
+                    Image(systemName: "square.fill.text.grid.1x2")
+                        .foregroundColor(.primary)
+                }
+            )
+            Spacer()
+            Text(name)
+                .foregroundColor(.secondary)
         }
     }
     
-    @ViewBuilder func buttons() -> some View {
+    func notes(text: String) -> some View {
+        HStack {
+            Label(
+                title: {
+                    Text(text)
+                },
+                icon: {
+                    Image(systemName: "note.text")
+                        .foregroundColor(.primary)
+                }
+            )
+        }
+    }
+    
+    func buttons() -> some View {
         WithViewStore(store) { viewStore in
             RectangularButton.edit {
                 viewStore.send(.edit(viewStore.entry))
@@ -75,6 +94,7 @@ struct EntryView_Previews: PreviewProvider {
                     initialState: EntryDetail.State(
                         entry: Logbook.Section.Entry.init(
                             date: .now,
+                            notes: "Boulder Cup, 22ºC",
                             tops: [
                                 .init(
                                     id: UUID(),

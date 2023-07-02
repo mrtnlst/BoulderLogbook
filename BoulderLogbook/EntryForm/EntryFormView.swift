@@ -18,6 +18,7 @@ struct EntryFormView: View {
                     Section { gradeSystems() }
                     Section { tops() }
                     Section { datePicker() }
+                    Section { notes() }
                     Section { buttons() }
                 }
                 .navigationTitle(viewStore.isEditing ? "Update Entry" : "New Entry")
@@ -143,6 +144,19 @@ extension EntryFormView {
                 )
                 .foregroundColor(.primary)
             }
+        }
+    }
+    
+    @ViewBuilder func notes() -> some View {
+        WithViewStore(store) { viewStore in
+            TextEditor(text: viewStore.binding(\.$notes))
+                .foregroundColor(viewStore.notes == viewStore.notesPlaceHolder ? .gray : .primary)
+                .onTapGesture {
+                    if viewStore.notes == viewStore.notesPlaceHolder {
+                        viewStore.send(.binding(.set(\.$notes, "")))
+                    }
+                }
+                .lineLimit(3)
         }
     }
     
