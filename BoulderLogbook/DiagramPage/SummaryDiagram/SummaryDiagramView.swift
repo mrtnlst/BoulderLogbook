@@ -29,26 +29,6 @@ struct SummaryDiagramView: View {
                 EmptyMessageView(message: message)
                     .frame(maxWidth: .infinity)
             }
-//            ZStack {
-//                let models = viewStore.models
-//                let grades = viewStore.gradeSystem?.grades ?? []
-//
-//                if grades.isEmpty {
-//                    Text("Choose grade system in Settings.")
-//                        .font(.footnote)
-//                        .fontWeight(.medium)
-//                } else if models.isEmpty {
-//                    Text("No entries are available.")
-//                        .font(.footnote)
-//                        .fontWeight(.medium)
-//                }
-//                barChart(
-//                    with: models,
-//                    grades: grades.isEmpty ? GradeSystem.mandala.grades : grades,
-//                    hasWeekFilter: viewStore.hasWeekFilter
-//                )
-//                .opacity(models.isEmpty ? 0.5 : 1.0)
-//            }
         }
     }
 }
@@ -59,22 +39,28 @@ private extension SummaryDiagramView {
         hasWeekFilter: Bool
     ) -> some View {
         let grades = models.first?.gradeSystem.grades ?? []
-        Chart(models) { section in
-            if section.tops > 0 {
-                barMark(value: section.tops, grade: section.grade, image: "triangle.fill")
+        Chart(models) { model in
+            if model.tops > 0 {
+                barMark(value: model.tops, grade: model.grade, image: "triangle.fill")
             }
-            if section.attempts > 0 {
-                barMark(value: section.attempts, grade: section.grade, image: "figure.fall")
+            if model.attempts > 0 {
+                barMark(value: model.attempts, grade: model.grade, image: "figure.fall")
                     .opacity(0.8)
             }
-            if section.flash > 0 {
-                barMark(value: section.flash, grade: section.grade, image: "bolt.fill")
+            if model.flash > 0 {
+                barMark(value: model.flash, grade: model.grade, image: "bolt.fill")
                     .opacity(0.6)
             }
-            if section.onsight > 0 {
-                barMark(value: section.onsight, grade: section.grade, image: "eye.fill")
+            if model.onsight > 0 {
+                barMark(value: model.onsight, grade: model.grade, image: "eye.fill")
                     .opacity(0.4)
             }
+            // Show grades without tops. Fixes mapping of colors via `chartForegroundStyleScale`.
+            BarMark(
+                x: .value("Grade", model.grade.name),
+                y: .value("Top", 0)
+            )
+            .foregroundStyle(by: .value("Grade", model.grade.name))
         }
         .chartYScale(domain: [0, (models.map { $0.maxValue }.max() ?? 0) + 1])
         .chartForegroundStyleScale(range: grades.map { $0.color })
@@ -153,8 +139,8 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
                                     grade: GradeSystem.Grade.mandalaBlack,
-                                    tops: 2,
-                                    attempts: 1,
+                                    tops: 0,
+                                    attempts: 0,
                                     flash: 0,
                                     onsight: 0
                                 ),
@@ -164,6 +150,22 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                     tops: 1,
                                     attempts: 3,
                                     flash: 0,
+                                    onsight: 0
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaYellow,
+                                    tops: 0,
+                                    attempts: 0,
+                                    flash: 0,
+                                    onsight: 0
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaPurple,
+                                    tops: 1,
+                                    attempts: 4,
+                                    flash: 3,
                                     onsight: 0
                                 )
                             ])
