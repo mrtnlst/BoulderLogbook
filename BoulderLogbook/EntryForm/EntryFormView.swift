@@ -22,6 +22,7 @@ struct EntryFormView: View {
                     Section { buttons() }
                 }
                 .navigationTitle(viewStore.isEditing ? "Update Entry" : "New Entry")
+                .scrollDismissesKeyboard(.interactively)
                 .onAppear { viewStore.send(.onAppear) }
             }
         }
