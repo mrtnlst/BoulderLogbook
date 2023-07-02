@@ -20,6 +20,9 @@
 		5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397F299ACCAF00299CCA /* TopCountDiagramView.swift */; };
 		5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3982299C215200299CCA /* SessionDiagram.swift */; };
 		5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3984299C215E00299CCA /* SessionDiagramView.swift */; };
+		5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */; };
+		5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */; };
+		5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB3742A51AD20006265F0 /* ViewState.swift */; };
 		5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */; };
 		5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */; };
 		5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0DF2A29942E4700B49A56 /* FilterClient.swift */; };
@@ -87,6 +90,9 @@
 		5B6D397F299ACCAF00299CCA /* TopCountDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCountDiagramView.swift; sourceTree = "<group>"; };
 		5B6D3982299C215200299CCA /* SessionDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDiagram.swift; sourceTree = "<group>"; };
 		5B6D3984299C215E00299CCA /* SessionDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDiagramView.swift; sourceTree = "<group>"; };
+		5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
+		5B6DB3742A51AD20006265F0 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagram.swift; sourceTree = "<group>"; };
 		5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagramView.swift; sourceTree = "<group>"; };
 		5BB0DF2A29942E4700B49A56 /* FilterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClient.swift; sourceTree = "<group>"; };
@@ -258,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				5BDD420C2988319E00B84BA0 /* RectangularButton.swift */,
+				5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */,
+				5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -337,6 +345,7 @@
 				5B1A807F28A7D6BF00530B01 /* Logbook.swift */,
 				5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */,
 				5BDD41FF2987086800B84BA0 /* Top.swift */,
+				5B6DB3742A51AD20006265F0 /* ViewState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -495,11 +504,13 @@
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
+				5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
 				5B1A806E2896E3F700530B01 /* Color+Additions.swift in Sources */,
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
+				5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
 				5BFAAB392A48401C00E486DC /* BundleClient.swift in Sources */,
 				5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */,
@@ -518,6 +529,7 @@
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
+				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
 				5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */,
 				5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */,
 				5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */,

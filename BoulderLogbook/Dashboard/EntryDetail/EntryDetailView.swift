@@ -16,7 +16,13 @@ struct EntryDetailView: View {
         WithViewStore(store) { viewStore in
             List {
                 Section {
-                    chart(tops: viewStore.entry.tops, gradeSystem: viewStore.gradeSystem)
+                    SummaryDiagramView(
+                        store: store.scope(
+                            state: \.summaryDiagram,
+                            action: EntryDetail.Action.summaryDiagram
+                        )
+                    )
+                    .frame(height: 200)
                 }
                 Section {
                     gradesSystem()
@@ -25,28 +31,13 @@ struct EntryDetailView: View {
                     buttons()
                 }
             }
+            .onAppear { viewStore.send(.onAppear) }
             .navigationTitle(Text(viewStore.entry.date, style: .date))
         }
     }
 }
 
 extension EntryDetailView {
-    @ViewBuilder func chart(tops: [Top], gradeSystem: GradeSystem) -> some View {
-        let grades = tops.successful().grades(for: gradeSystem)
-        Chart {
-            ForEach(gradeSystem.grades, id: \.self) { grade in
-                BarMark(
-                    x: .value("Grade", grade.name),
-                    y: .value("Tops", grades.filter { $0 == grade }.count)
-                )
-                .foregroundStyle(by: .value("Grade", grade.name))
-            }
-        }
-        .chartForegroundStyleScale(range: gradeSystem.grades.map { $0.color })
-        .chartLegend(.hidden)
-        .frame(height: 200)
-    }
-    
     @ViewBuilder func gradesSystem() -> some View {
         WithViewStore(store) { viewStore in
             HStack {
@@ -82,7 +73,61 @@ struct EntryView_Previews: PreviewProvider {
             EntryDetailView(
                 store: Store(
                     initialState: EntryDetail.State(
-                        entry: [Logbook.Section.Entry].samples[0],
+                        entry: Logbook.Section.Entry.init(
+                            date: .now,
+                            tops: [
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaBlack.id,
+                                    isAttempt: false,
+                                    wasFlash: true,
+                                    wasOnsight: false
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaBlack.id,
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: false
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: true
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: true
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: true
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaRed.id,
+                                    isAttempt: false,
+                                    wasFlash: true,
+                                    wasOnsight: false
+                                ),
+                                .init(
+                                    id: UUID(),
+                                    grade: GradeSystem.Grade.mandalaRed.id,
+                                    isAttempt: false,
+                                    wasFlash: false,
+                                    wasOnsight: false
+                                )
+                            ],
+                            gradeSystem: GradeSystem.mandala.id
+                        ),
                         gradeSystem: .mandala
                     ),
                     reducer: EntryDetail()

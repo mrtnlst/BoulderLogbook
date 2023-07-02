@@ -58,7 +58,10 @@ struct AppReducer: ReducerProtocol {
                 
             case .destination(.presented(.entryForm(.saveDidFinish))):
                 state.destination = nil
-                return .send(.dashboard(.fetchEntries))
+                return .merge(
+                    .send(.dashboard(.fetchEntries)),
+                    .send(.dashboard(.diagramPage(.fetchEntries)))
+                )
                 
             case let .dashboard(.dashboardSection(id: _, action: .edit(entry))):
                 state.destination = .entryForm(
@@ -75,10 +78,16 @@ struct AppReducer: ReducerProtocol {
                 )
  
             case .destination(.presented(.settings(.gradeSystemList(.gradeSystemForm(.saveDidFinish))))):
-                return .send(.dashboard(.fetchGradeSystems))
+                return .merge(
+                    .send(.dashboard(.fetchGradeSystems)),
+                    .send(.dashboard(.diagramPage(.fetchGradeSystems)))
+                )
                 
             case .destination(.presented(.settings(.deleteEntriesDidFinish))):
-                return .send(.dashboard(.fetchGradeSystems))
+                return .merge(
+                    .send(.dashboard(.fetchGradeSystems)),
+                    .send(.dashboard(.diagramPage(.fetchEntries)))
+                )
                                 
             case .destination(.presented(.settings(.filterSheet(.saveDidFinish)))):
                 return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))

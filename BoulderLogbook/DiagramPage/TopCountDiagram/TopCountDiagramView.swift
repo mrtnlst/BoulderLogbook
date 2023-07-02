@@ -14,28 +14,24 @@ struct TopCountDiagramView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                picker()
-                    .padding(.bottom, 8)
-                ZStack {
-                    let tops = viewStore.tops
-                    let grades = viewStore.gradeSystem?.grades ?? []
-                    
-                    if grades.isEmpty {
-                        Text("Choose grade system in Settings.")
-                            .font(.footnote)
-                            .fontWeight(.medium)
-                    } else if tops.isEmpty {
-                        Text("No entries are available.")
-                            .font(.footnote)
-                            .fontWeight(.medium)
-                    }
-                    chart(
-                        grades: grades.isEmpty ? GradeSystem.mandala.grades : grades,
+            switch viewStore.viewState {
+            case .loading:
+                LoadingIndicator()
+                    .frame(maxWidth: .infinity)
+                
+            case let .idle(tops):
+                VStack {
+                    picker()
+                        .padding(.bottom, 4)
+                    barChart(
+                        grades: viewStore.gradeSystem?.grades ?? [],
                         tops: tops
                     )
-                    .opacity(tops.isEmpty ? 0.5 : 1.0)
                 }
+                
+            case let .empty(message):
+                EmptyMessageView(message: message)
+                    .frame(maxWidth: .infinity)
             }
         }
     }
@@ -53,11 +49,11 @@ extension TopCountDiagramView {
                 }
             }
             .pickerStyle(.segmented)
-            .disabled(viewStore.tops.isEmpty ? true : false)
+            .disabled(viewStore.gradeSystem == nil ? true : false)
         }
     }
     
-    @ViewBuilder func chart(grades: [GradeSystem.Grade], tops: [Top]) -> some View {
+    @ViewBuilder func barChart(grades: [GradeSystem.Grade], tops: [Top]) -> some View {
         Chart(grades) { grade in
             BarMark(
                 x: .value("Grade", grade.name),
@@ -81,32 +77,44 @@ extension TopCountDiagramView {
 struct TopCountDiagramView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(
-                        entries: .samples,
-                        gradeSystem: .mandala
-                    ),
-                    reducer: TopCountDiagram()
+            Section {
+                TopCountDiagramView(
+                    store: Store(
+                        initialState: TopCountDiagram.State(
+                        ),
+                        reducer: TopCountDiagram()
+                    )
                 )
-            )
                 .frame(height: 170)
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(),
-                    reducer: TopCountDiagram()
+            }
+            Section {
+                TopCountDiagramView(
+                    store: Store(
+                        initialState: TopCountDiagram.State(
+                            viewState: .idle([
+                                .sample1,
+                                .sample1,
+                                .sample5,
+                                .sample6
+                            ]),
+                            gradeSystem: .mandala
+                        ),
+                        reducer: TopCountDiagram()
+                    )
                 )
-            )
                 .frame(height: 170)
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(
-                        gradeSystem: GradeSystem.mandala
-                    ),
-                    reducer: TopCountDiagram()
+            }
+            Section {
+                TopCountDiagramView(
+                    store: Store(
+                        initialState: TopCountDiagram.State(
+                            viewState: .empty("No entries available!")
+                        ),
+                        reducer: TopCountDiagram()
+                    )
                 )
-            )
                 .frame(height: 170)
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ struct BoulderLogbookApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack {   
+            NavigationStack {
                 AppView(store: Self.store)
             }
         }

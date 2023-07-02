@@ -12,44 +12,38 @@ struct DiagramPage: ReducerProtocol {
     struct State: Equatable {
         var entries: [Logbook.Section.Entry] = []
         var gradeSystems: [GradeSystem] = []
+        var selectedGradeSystem: GradeSystem.ID?
+        
         var topCountDiagram = TopCountDiagram.State()
         var sessionDiagram = SessionDiagram.State()
-        var summaryDiagram = SummaryDiagram.State()
+        var summaryDiagram = SummaryDiagram.State(hasWeekFilter: true)
         
         @BindingState var selectedTab: Int = 0
-        
-        init(
-            entries: [Logbook.Section.Entry] = [],
-            gradeSystems: [GradeSystem] = []
-        ) {
-            self.entries = entries
-            self.topCountDiagram.entries = entries
-            self.sessionDiagram.entries = entries
-            self.summaryDiagram.entries = entries
-            self.gradeSystems = gradeSystems
-        
-            // This is primarily used for Xcode Previews.
-            if gradeSystems.count > 0 {
-                self.topCountDiagram.gradeSystem = gradeSystems[0]
-                self.summaryDiagram.gradeSystem = gradeSystems[0]
-            }
-        }
     }
     
     enum Action: Equatable, BindableAction {
-        case task
+        case onAppear
         case receiveSelectedDiagram(TaskResult<Int?>)
-        case receiveGradeSystems([GradeSystem])
-        case receiveEntries([Logbook.Section.Entry])
+
+        case fetchEntries
+        case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
+        
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
+
+        case fetchGradeSystems
+        case receiveGradeSystems(TaskResult<[GradeSystem]>)
+        
         case topCountDiagram(TopCountDiagram.Action)
         case sessionDiagram(SessionDiagram.Action)
         case summaryDiagram(SummaryDiagram.Action)
         case binding(BindingAction<State>)
     }
+    
     @Dependency(\.filterClient) var filterClient
     @Dependency(\.diagramPageClient) var diagramPageClient
+    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
@@ -64,24 +58,44 @@ struct DiagramPage: ReducerProtocol {
         }
         Reduce { state, action in
             switch action {
-            case .task:
-                return .run { send in
-                    await send(
-                        .receiveSelectedDiagram(TaskResult { diagramPageClient.fetchSelectedDiagram() })
-                    )
-                }
+            case .onAppear:
+                return .merge(
+                    .run { send in
+                        await send(
+                            .receiveSelectedDiagram(TaskResult { diagramPageClient.fetchSelectedDiagram() })
+                        )
+                    },
+                    .send(.fetchEntries)
+                )
                 
             case let .receiveSelectedDiagram(.success(id)):
                 state.selectedTab = id ?? 0
+                
+            case .fetchEntries:
+                return .run { send in
+                    await send(
+                        .receiveEntries(TaskResult { entryClient.fetchEntries() })
+                    )
+                }
             
-            case let .receiveGradeSystems(gradeSystems):
-                state.gradeSystems = gradeSystems
-              
-            case let .receiveEntries(entries):
+            case let .receiveEntries(.success(entries)):
                 state.entries = entries
-                state.sessionDiagram = SessionDiagram.State(entries: entries)
+                return .merge(
+                    .send(.fetchGradeSystems),
+                    .send(.sessionDiagram(.receiveEntries(entries)))
+                )
+                
+            case .fetchGradeSystems:
+                return .run { send in
+                    await send(
+                        .receiveGradeSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+                    )
+                }
+                
+            case let .receiveGradeSystems(.success(gradeSystems)):
+                state.gradeSystems = gradeSystems
                 return .send(.fetchSelectedSystem)
-                  
+            
             case .fetchSelectedSystem:
                 return .run { send in
                     await send(
@@ -89,20 +103,18 @@ struct DiagramPage: ReducerProtocol {
                     )
                 }
                 
-            case let .receiveSelectedSystem(.success(.some(selected))):
-                if let system = state.gradeSystems.first(where: { $0.id == selected }) {
-                    state.topCountDiagram.gradeSystem = system
-                    state.topCountDiagram.entries = state.entries
-                    state.summaryDiagram.entries = state.entries
-                    state.summaryDiagram.gradeSystem = system
-                }
+            case let .receiveSelectedSystem(.success(selected)):
+                state.selectedGradeSystem = selected
+                let gradeSystem = state.gradeSystems.first(where: { $0.id == selected })
+                return .merge(
+                    .send(.summaryDiagram(.receiveData(state.entries, gradeSystem))),
+                    .send(.topCountDiagram(.receiveData(state.entries, gradeSystem)))
+                )
                 
-            case .receiveSelectedSystem(.success(.none)):
-                state.topCountDiagram.gradeSystem = nil
-                state.topCountDiagram.entries = []
-                state.summaryDiagram.gradeSystem = nil
-                state.summaryDiagram.entries = []
-
+            case .topCountDiagram(.fetchData):
+                let gradeSystem = state.gradeSystems.first(where: { $0.id == state.selectedGradeSystem })
+                return .send(.topCountDiagram(.receiveData(state.entries, gradeSystem)))
+                
             case .binding(\.$selectedTab):
                 let id = state.selectedTab
                 return .run { _ in

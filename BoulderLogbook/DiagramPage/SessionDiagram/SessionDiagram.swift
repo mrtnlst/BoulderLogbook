@@ -10,35 +10,42 @@ import ComposableArchitecture
 
 struct SessionDiagram: ReducerProtocol {
     struct State: Equatable {
-        var entries: [Logbook.Section.Entry]
-        var months: [Month] = []
-        
-        init(
-            entries: [Logbook.Section.Entry] = [],
-            calendar: Calendar = Calendar.current
-        ) {
-            self.entries = entries
-            self.months = monthRangesOfPastYear(using: calendar).map { monthRange in
-                let sessionCount = entries.filter { monthRange.contains($0.date) }.count
-                let monthIndex = calendar.component(.month, from: monthRange.lowerBound) - 1
-                let monthSymbol = calendar.shortMonthSymbols[monthIndex]
-                let month = Month(date: monthSymbol, count: sessionCount)
-                return month
-            }
-        }
+        var viewState: ViewState<[Model], String> = .loading
     }
-    struct Month: Equatable, Identifiable {
+            
+    enum Action: Equatable {
+        case receiveEntries([Logbook.Section.Entry])
+    }
+    
+    struct Model: Equatable, Identifiable {
         let id: UUID = UUID()
         let date: String
         var count: Int
     }
-            
-    enum Action: Equatable {}
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {}
+    @Dependency(\.calendar) var calendar
+    
+    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+        switch action {
+        case let .receiveEntries(entries):
+            if entries.isEmpty {
+                state.viewState = .empty("No sessions available!")
+            } else {
+                let models = monthRangesOfPastYear(using: calendar).map { monthRange in
+                    let sessionCount = entries.filter { monthRange.contains($0.date) }.count
+                    let monthIndex = calendar.component(.month, from: monthRange.lowerBound) - 1
+                    let monthSymbol = calendar.shortMonthSymbols[monthIndex]
+                    return Model(date: monthSymbol, count: sessionCount)
+                }
+                state.viewState = .idle(models)
+            }
+        default: ()
+        }
+        return .none
+    }
 }
 
-extension SessionDiagram.State {
+extension SessionDiagram {
     func monthRangesOfPastYear(using calendar: Calendar) -> [Range<Date>] {
         guard let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: .now) else {
             return []

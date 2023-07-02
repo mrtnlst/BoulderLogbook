@@ -14,35 +14,52 @@ struct SummaryDiagramView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            ZStack {
-                let sections = viewStore.sections
-                let grades = viewStore.gradeSystem?.grades ?? []
-               
-                if grades.isEmpty {
-                    Text("Choose grade system in Settings.")
-                        .font(.footnote)
-                        .fontWeight(.medium)
-                } else if sections.isEmpty {
-                    Text("No entries are available.")
-                        .font(.footnote)
-                        .fontWeight(.medium)
-                }
+            switch viewStore.viewState {
+            case .loading:
+                LoadingIndicator()
+                    .frame(maxWidth: .infinity)
+                
+            case let .idle(models):
                 barChart(
-                    with: sections,
-                    grades: grades.isEmpty ? GradeSystem.mandala.grades : grades
+                    models: models,
+                    hasWeekFilter: viewStore.hasWeekFilter
                 )
-                .opacity(sections.isEmpty ? 0.5 : 1.0)
+
+            case let .empty(message):
+                EmptyMessageView(message: message)
+                    .frame(maxWidth: .infinity)
             }
+//            ZStack {
+//                let models = viewStore.models
+//                let grades = viewStore.gradeSystem?.grades ?? []
+//
+//                if grades.isEmpty {
+//                    Text("Choose grade system in Settings.")
+//                        .font(.footnote)
+//                        .fontWeight(.medium)
+//                } else if models.isEmpty {
+//                    Text("No entries are available.")
+//                        .font(.footnote)
+//                        .fontWeight(.medium)
+//                }
+//                barChart(
+//                    with: models,
+//                    grades: grades.isEmpty ? GradeSystem.mandala.grades : grades,
+//                    hasWeekFilter: viewStore.hasWeekFilter
+//                )
+//                .opacity(models.isEmpty ? 0.5 : 1.0)
+//            }
         }
     }
 }
 
 private extension SummaryDiagramView {
     @ViewBuilder func barChart(
-        with sections: [SummaryDiagram.BarMarkSection],
-        grades: [GradeSystem.Grade]
+        models: [SummaryDiagram.Model],
+        hasWeekFilter: Bool
     ) -> some View {
-        Chart(sections) { section in
+        let grades = models.first?.gradeSystem.grades ?? []
+        Chart(models) { section in
             if section.tops > 0 {
                 barMark(value: section.tops, grade: section.grade, image: "triangle.fill")
             }
@@ -59,11 +76,13 @@ private extension SummaryDiagramView {
                     .opacity(0.4)
             }
         }
-        .chartYScale(domain: [0, (sections.map { $0.maxValue }.max() ?? 0) + 3])
+        .chartYScale(domain: [0, (models.map { $0.maxValue }.max() ?? 0) + 1])
         .chartForegroundStyleScale(range: grades.map { $0.color })
         .chartLegend(.hidden)
         .chartXAxisLabel(position: .top) {
-            Text("Summary of the last 7 days")
+            if hasWeekFilter {
+                Text("Summary of the last 7 days")
+            }
         }
         .padding(.top, 4)
     }
@@ -92,36 +111,79 @@ private extension SummaryDiagramView {
 struct SummaryDiagramView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            SummaryDiagramView(
-                store: Store(
-                    initialState: .init(
-                        entries: .samples,
-                        gradeSystem: .mandala
-                    ),
-                    reducer: SummaryDiagram()
+            Section {
+                SummaryDiagramView(
+                    store: Store(
+                        initialState: .init(hasWeekFilter: true),
+                        reducer: SummaryDiagram()
+                    )
                 )
-            )
-            .frame(height: 200)
-            SummaryDiagramView(
-                store: Store(
-                    initialState: .init(
-                        entries: [],
-                        gradeSystem: .mandala
-                    ),
-                    reducer: SummaryDiagram()
+                .frame(height: 170)
+            }
+            Section {
+                SummaryDiagramView(
+                    store: Store(
+                        initialState: SummaryDiagram.State(
+                            hasWeekFilter: true,
+                            viewState: .idle([
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaBlue,
+                                    tops: 3,
+                                    attempts: 0,
+                                    flash: 0,
+                                    onsight: 0
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaRed,
+                                    tops: 3,
+                                    attempts: 0,
+                                    flash: 2,
+                                    onsight: 2
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaOrange,
+                                    tops: 0,
+                                    attempts: 0,
+                                    flash: 1,
+                                    onsight: 2
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaBlack,
+                                    tops: 2,
+                                    attempts: 1,
+                                    flash: 0,
+                                    onsight: 0
+                                ),
+                                SummaryDiagram.Model(
+                                    gradeSystem: .mandala,
+                                    grade: GradeSystem.Grade.mandalaWhite,
+                                    tops: 1,
+                                    attempts: 3,
+                                    flash: 0,
+                                    onsight: 0
+                                )
+                            ])
+                        ),
+                        reducer: SummaryDiagram())
                 )
-            )
-            .frame(height: 200)
-            SummaryDiagramView(
-                store: Store(
-                    initialState: .init(
-                        entries: [],
-                        gradeSystem: nil
-                    ),
-                    reducer: SummaryDiagram()
+                .frame(height: 200)
+            }
+            Section {
+                SummaryDiagramView(
+                    store: Store(
+                        initialState: .init(
+                            hasWeekFilter: true,
+                            viewState: .empty("No entries available!")
+                        ),
+                        reducer: SummaryDiagram()
+                    )
                 )
-            )
-            .frame(height: 200)
+                .frame(height: 170)
+            }
         }
     }
 }

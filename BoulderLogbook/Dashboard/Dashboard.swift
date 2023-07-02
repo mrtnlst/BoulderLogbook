@@ -31,7 +31,6 @@ struct Dashboard: ReducerProtocol {
         Scope(state: \.diagramPage, action: /Action.diagramPage) {
             DiagramPage()
         }
-        
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -54,10 +53,7 @@ struct Dashboard: ReducerProtocol {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .merge(
-                    .send(.fetchEntries),
-                    .send(.diagramPage(.receiveGradeSystems(gradeSystems)))
-                )
+                return .send(.fetchEntries)
                 
             case .fetchEntries:
                 return .run { send in
@@ -93,11 +89,13 @@ struct Dashboard: ReducerProtocol {
                         by: { $0.date > $1.date }
                     )
                 )
-                return .send(.diagramPage(.receiveEntries(entries)))
                 
             case .dashboardSection(id: _, action: .deleteDidFinish(_)):
-                return .send(.fetchEntries)
-
+                return .merge(
+                    .send(.fetchEntries),
+                    .send(.diagramPage(.fetchEntries))
+                )
+                
             default: ()
             }
             return .none

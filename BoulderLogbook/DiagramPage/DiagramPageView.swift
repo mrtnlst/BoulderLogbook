@@ -36,10 +36,10 @@ struct DiagramPageView: View {
                 )
                 .tag(2)
             }
-            .task { await viewStore.send(.task).finish() }
-            .frame(height: 200)
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .onAppear { viewStore.send(.onAppear) }
         }
+        .frame(height: 200)
     }
 }
 
@@ -48,19 +48,7 @@ struct DiagramPageView_Previews: PreviewProvider {
         List {
             DiagramPageView(
                 store: Store(
-                    initialState: DiagramPage.State(
-                        entries: .samples,
-                        gradeSystems: [.mandala]
-                    ),
-                    reducer: DiagramPage()
-                )
-            )
-            DiagramPageView(
-                store: Store(
-                    initialState: DiagramPage.State(
-                        entries: [],
-                        gradeSystems: []
-                    ),
+                    initialState: DiagramPage.State(),
                     reducer: DiagramPage()
                 )
             )

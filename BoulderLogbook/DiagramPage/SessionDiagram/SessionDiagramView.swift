@@ -11,36 +11,39 @@ import ComposableArchitecture
 
 struct SessionDiagramView: View {
     let store: StoreOf<SessionDiagram>
+    @ScaledMetric var size: CGFloat = 1
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            ZStack {
-                if viewStore.entries.isEmpty {
-                    Text("No entries are available.")
-                        .font(.footnote)
-                        .fontWeight(.medium)
-                }
-                barChart(months: viewStore.months)
+            switch viewStore.viewState {
+            case .loading:
+                LoadingIndicator()
+                    .frame(maxWidth: .infinity)
+
+            case let .idle(models):
+                barChart(models: models)
+
+            case let .empty(message):
+                EmptyMessageView(message: message)
+                    .frame(maxWidth: .infinity)
             }
         }
     }
 }
 
 extension SessionDiagramView {
-    @ViewBuilder func barChart(months: [SessionDiagram.Month]) -> some View {
-        Chart(months) { session in
+    func barChart(models: [SessionDiagram.Model]) -> some View {
+        Chart(models) { model in
             BarMark(
-                x: .value("Month", session.date),
-                y: .value("Tops", session.count)
+                x: .value("Month", model.date),
+                y: .value("Tops", model.count)
             )
-            .foregroundStyle(by: .value("Month", session.date))
+            .foregroundStyle(by: .value("Month", model.date))
             .annotation(position: .overlay, alignment: .bottom) {
-                if session.count > 0 {
-                    Text("\(session.count)")
-                        .foregroundColor(.white)
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                }
+                Text("\(model.count)")
+                    .foregroundColor(.white)
+                    .font(.caption2)
+                    .fontWeight(.semibold)
             }
         }
         .chartXAxisLabel(position: .top) {
@@ -54,22 +57,42 @@ extension SessionDiagramView {
 struct SessionDiagramView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            SessionDiagramView(
-                store: Store(
-                    initialState: SessionDiagram.State(
-                        entries: .samples
-                    ),
-                    reducer: SessionDiagram()
+            Section {
+                SessionDiagramView(
+                    store: Store(
+                        initialState: SessionDiagram.State(),
+                        reducer: SessionDiagram()
+                    )
                 )
-            )
-            SessionDiagramView(
-                store: Store(
-                    initialState: SessionDiagram.State(
-                        entries: []
-                    ),
-                    reducer: SessionDiagram()
+                .frame(height: 200)
+            }
+            Section {
+                SessionDiagramView(
+                    store: Store(
+                        initialState: SessionDiagram.State(
+                            viewState: .idle([
+                                .init(date: "Apr", count: 12),
+                                .init(date: "May", count: 1),
+                                .init(date: "Jun", count: 6),
+                                .init(date: "Jul", count: 10)
+                            ])
+                        ),
+                        reducer: SessionDiagram()
+                    )
                 )
-            )
+                .frame(height: 200)
+            }
+            Section {
+                SessionDiagramView(
+                    store: Store(
+                        initialState: SessionDiagram.State(
+                            viewState: .empty("No sessions available!")
+                        ),
+                        reducer: SessionDiagram()
+                    )
+                )
+                .frame(height: 200)
+            }
         }
     }
 }

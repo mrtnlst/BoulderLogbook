@@ -13,6 +13,7 @@ struct EntryDetail: ReducerProtocol {
         let id: UUID
         let entry: Logbook.Section.Entry
         var gradeSystem: GradeSystem
+        var summaryDiagram = SummaryDiagram.State(hasWeekFilter: false)
         
         init(
             entry: Logbook.Section.Entry,
@@ -25,18 +26,29 @@ struct EntryDetail: ReducerProtocol {
     }
     
     enum Action: Equatable {
+        case onAppear
         case delete(UUID)
         case edit(Logbook.Section.Entry)
+        case summaryDiagram(SummaryDiagram.Action)
     }
+    
     @Dependency(\.dismiss) var dismiss
 
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-        switch action {
-        case .edit:
-            return .run { _ in await dismiss() }
-            
-        default: ()
+    var body: some ReducerProtocolOf<Self> {
+        Scope(state: \.summaryDiagram, action: /Action.summaryDiagram) {
+            SummaryDiagram()
         }
-        return .none
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return .send(.summaryDiagram(.receiveData([state.entry], state.gradeSystem)))
+                
+            case .edit:
+                return .run { _ in await dismiss() }
+                
+            default: ()
+            }
+            return .none
+        }
     }
 }
