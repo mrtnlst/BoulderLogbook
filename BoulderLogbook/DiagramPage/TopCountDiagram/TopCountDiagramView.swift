@@ -29,7 +29,7 @@ struct TopCountDiagramView: View {
                     )
                 }
                 
-            case let .empty(message):
+            case let .error(message):
                 EmptyMessageView(message: message)
                     .frame(maxWidth: .infinity)
             }
@@ -108,7 +108,7 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                 TopCountDiagramView(
                     store: Store(
                         initialState: TopCountDiagram.State(
-                            viewState: .empty("No entries available!")
+                            viewState: .error("No entries available!")
                         ),
                         reducer: TopCountDiagram()
                     )

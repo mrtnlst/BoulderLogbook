@@ -43,7 +43,7 @@ struct TopCountDiagram: ReducerProtocol {
             case let .receiveData(entries, gradeSystem):
                 state.gradeSystem = gradeSystem
                 guard let gradeSystem = gradeSystem else {
-                    state.viewState = .empty("Choose grade system in Settings!")
+                    state.viewState = .error("Choose grade system in Settings!")
                     return .none
                 }
                 let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem.id })
@@ -61,7 +61,7 @@ struct TopCountDiagram: ReducerProtocol {
                         .successful()
                 }
                 if tops.isEmpty {
-                    state.viewState = .empty("No entries available!")
+                    state.viewState = .error("No entries available!")
                 } else {
                     state.viewState = .idle(tops)
                 }

@@ -29,7 +29,7 @@ struct SessionDiagram: ReducerProtocol {
         switch action {
         case let .receiveEntries(entries):
             if entries.isEmpty {
-                state.viewState = .empty("No sessions available!")
+                state.viewState = .error("No sessions available!")
             } else {
                 let models = monthRangesOfPastYear(using: calendar).map { monthRange in
                     let sessionCount = entries.filter { monthRange.contains($0.date) }.count

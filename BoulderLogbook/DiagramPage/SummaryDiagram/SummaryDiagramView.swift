@@ -25,7 +25,7 @@ struct SummaryDiagramView: View {
                     hasWeekFilter: viewStore.hasWeekFilter
                 )
 
-            case let .empty(message):
+            case let .error(message):
                 EmptyMessageView(message: message)
                     .frame(maxWidth: .infinity)
             }
@@ -179,7 +179,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                     store: Store(
                         initialState: .init(
                             hasWeekFilter: true,
-                            viewState: .empty("No entries available!")
+                            viewState: .error("No entries available!")
                         ),
                         reducer: SummaryDiagram()
                     )

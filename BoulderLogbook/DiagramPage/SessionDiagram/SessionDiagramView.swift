@@ -23,7 +23,7 @@ struct SessionDiagramView: View {
             case let .idle(models):
                 barChart(models: models)
 
-            case let .empty(message):
+            case let .error(message):
                 EmptyMessageView(message: message)
                     .frame(maxWidth: .infinity)
             }
@@ -86,7 +86,7 @@ struct SessionDiagramView_Previews: PreviewProvider {
                 SessionDiagramView(
                     store: Store(
                         initialState: SessionDiagram.State(
-                            viewState: .empty("No sessions available!")
+                            viewState: .error("No sessions available!")
                         ),
                         reducer: SessionDiagram()
                     )

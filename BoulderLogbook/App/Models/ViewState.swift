@@ -8,5 +8,5 @@
 enum ViewState<T: Equatable, E: Equatable>: Equatable {
     case loading
     case idle(T)
-    case empty(E? = nil)
+    case error(E? = nil)
 }

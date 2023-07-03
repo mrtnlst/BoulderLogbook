@@ -33,12 +33,12 @@ struct SummaryDiagram: ReducerProtocol {
         switch action {
         case let .receiveData(entries, gradeSystem):
             guard !entries.isEmpty else {
-                state.viewState = .empty("No entries available!")
+                state.viewState = .error("No entries available!")
                 return .none
             }
             
             guard let gradeSystem = gradeSystem else {
-                state.viewState = .empty("Choose grade system in Settings!")
+                state.viewState = .error("Choose grade system in Settings!")
                 return .none
             }
             let filteredTops = entries
@@ -55,7 +55,7 @@ struct SummaryDiagram: ReducerProtocol {
                 )
                 .reduce(into: [], { $0.append(contentsOf: $1.tops) })
             guard !filteredTops.isEmpty else {
-                state.viewState = .empty("No entries available!")
+                state.viewState = .error("No entries available!")
                 return .none
             }
             let models = gradeSystem.grades.compactMap { grade in
