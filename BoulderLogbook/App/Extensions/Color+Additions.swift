@@ -13,6 +13,7 @@ extension Color {
     static let indianRed = Color(#colorLiteral(red: 0.8549019608, green: 0.3333333333, blue: 0.3215686275, alpha: 1))
     static let jetBlack = Color(#colorLiteral(red: 0.2117647059, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
     static let hunyadiOrange = Color(#colorLiteral(red: 0.9960784314, green: 0.7254901961, blue: 0.3725490196, alpha: 1))
+    static let blueDeFrance = Color(#colorLiteral(red: 0.1882352941, green: 0.5137254902, blue: 0.862745098, alpha: 1))
 }
 
 extension Color {
