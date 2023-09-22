@@ -385,6 +385,54 @@ extension [Logbook.Section.Entry] {
             date: Date(timeIntervalSince1970: 1689358182),
             tops: [.sample7, .sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1689707996),
+            tops: [.sample5, .sample4, .sample3, .sample3, .sample3, .sample2, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1689966176),
+            tops: [.sample5, .sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample2, .sample2, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1689966176),
+            tops: [.sample5, .sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample2, .sample2, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1690571336),
+            tops: [.sample7, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1690829756),
+            tops: [.sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1691355416),
+            tops: [.sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1691355416),
+            tops: [.sample7, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1695059456),
+            tops: [.sample7, .sample7, .sample5, .sample5, .sample4, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         )
     ]
 }
