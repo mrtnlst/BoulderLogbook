@@ -91,12 +91,15 @@ private extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(
-            store: Store(
-                initialState: Settings.State()
-            ) {
-                Settings()
+        Text("")
+            .sheet(isPresented: .constant(true)) {
+                SettingsView(
+                    store: Store(
+                        initialState: Settings.State()
+                    ) {
+                        Settings()
+                    }
+                )
             }
-        )
     }
 }

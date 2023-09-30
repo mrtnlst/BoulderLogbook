@@ -14,8 +14,6 @@
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
 		5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
-		5B6B930F2A5346A90013D634 /* StoreKitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6B930E2A5346A90013D634 /* StoreKitClient.swift */; };
-		5B6B93112A5346DF0013D634 /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6B93102A5346DF0013D634 /* InAppPurchase.swift */; };
 		5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3976299AC7B100299CCA /* DiagramPage.swift */; };
 		5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397B299AC84D00299CCA /* DiagramPageView.swift */; };
 		5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */; };
@@ -88,9 +86,6 @@
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 		5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetView.swift; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
-		5B6B930D2A53392F0013D634 /* InAppPurchaseConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = InAppPurchaseConfiguration.storekit; sourceTree = "<group>"; };
-		5B6B930E2A5346A90013D634 /* StoreKitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitClient.swift; sourceTree = "<group>"; };
-		5B6B93102A5346DF0013D634 /* InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
 		5B6D3976299AC7B100299CCA /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
 		5B6D397B299AC84D00299CCA /* DiagramPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageView.swift; sourceTree = "<group>"; };
 		5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCountDiagram.swift; sourceTree = "<group>"; };
@@ -202,7 +197,6 @@
 			children = (
 				5BB0DF2A29942E4700B49A56 /* FilterClient.swift */,
 				5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */,
-				5B6B930E2A5346A90013D634 /* StoreKitClient.swift */,
 				5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */,
 			);
 			path = Clients;
@@ -332,7 +326,6 @@
 				5BDD420B298829E100B84BA0 /* GradeSystemForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
-				5B6B930D2A53392F0013D634 /* InAppPurchaseConfiguration.storekit */,
 			);
 			path = BoulderLogbook;
 			sourceTree = "<group>";
@@ -375,7 +368,6 @@
 				5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */,
 				5BDD41FF2987086800B84BA0 /* Top.swift */,
 				5B6DB3742A51AD20006265F0 /* ViewState.swift */,
-				5B6B93102A5346DF0013D634 /* InAppPurchase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -550,7 +542,6 @@
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,
-				5B6B930F2A5346A90013D634 /* StoreKitClient.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
@@ -576,7 +567,6 @@
 				5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */,
 				5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */,
 				5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */,
-				5B6B93112A5346DF0013D634 /* InAppPurchase.swift in Sources */,
 				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,
 				5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */,
 				5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */,
