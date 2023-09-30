@@ -18,7 +18,13 @@ struct DiagramPage: Reducer {
         var sessionDiagram = SessionDiagram.State()
         var summaryDiagram = SummaryDiagram.State(hasWeekFilter: true)
         
-        @BindingState var selectedTab: Int = 0
+        @BindingState var selectedTab: Tab = .topCount
+        
+        enum Tab: Int, Hashable, CaseIterable {
+            case topCount
+            case session
+            case summary
+        }
     }
     
     enum Action: Equatable, BindableAction {
@@ -69,7 +75,7 @@ struct DiagramPage: Reducer {
                 )
                 
             case let .receiveSelectedDiagram(.success(id)):
-                state.selectedTab = id ?? 0
+                state.selectedTab = .init(rawValue: id ?? 0) ?? .topCount
                 
             case .fetchEntries:
                 return .run { send in
@@ -116,9 +122,8 @@ struct DiagramPage: Reducer {
                 return .send(.topCountDiagram(.receiveData(state.entries, gradeSystem)))
                 
             case .binding(\.$selectedTab):
-                let id = state.selectedTab
-                return .run { _ in
-                    diagramPageClient.saveSelectedDiagram(id)
+                return .run { [tab = state.selectedTab] _ in
+                    diagramPageClient.saveSelectedDiagram(tab.rawValue)
                 }
                 
             default: ()

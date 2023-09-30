@@ -13,33 +13,48 @@ struct DiagramPageView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            TabView(selection: viewStore.$selectedTab) {
-                TopCountDiagramView(
-                    store: store.scope(
-                        state: \.topCountDiagram,
-                        action: DiagramPage.Action.topCountDiagram
+            VStack(alignment: .center) {
+                TabView(selection: viewStore.$selectedTab) {
+                    TopCountDiagramView(
+                        store: store.scope(
+                            state: \.topCountDiagram,
+                            action: DiagramPage.Action.topCountDiagram
+                        )
                     )
-                )
-                .tag(0)
-                SessionDiagramView(
-                    store: store.scope(
-                        state: \.sessionDiagram,
-                        action: DiagramPage.Action.sessionDiagram
+                    .tag(DiagramPage.State.Tab.topCount)
+                    SessionDiagramView(
+                        store: store.scope(
+                            state: \.sessionDiagram,
+                            action: DiagramPage.Action.sessionDiagram
+                        )
                     )
-                )
-                .tag(1)
-                SummaryDiagramView(
-                    store: store.scope(
-                        state: \.summaryDiagram,
-                        action: DiagramPage.Action.summaryDiagram
+                    .tag(DiagramPage.State.Tab.session)
+                    SummaryDiagramView(
+                        store: store.scope(
+                            state: \.summaryDiagram,
+                            action: DiagramPage.Action.summaryDiagram
+                        )
                     )
-                )
-                .tag(2)
+                    .tag(DiagramPage.State.Tab.summary)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .onAppear { viewStore.send(.onAppear) }
+                .frame(height: 200)
+                
+                HStack {
+                    ForEach(DiagramPage.State.Tab.allCases, id: \.rawValue) { tab in
+                        Capsule()
+                            .foregroundColor(Color.secondary)
+                            .frame(
+                                width: viewStore.selectedTab == tab ? 8 : 6,
+                                height: viewStore.selectedTab == tab ? 8 : 6
+                            )
+                            .opacity(viewStore.selectedTab == tab ? 0.8 : 0.4)
+                    }
+                }
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .onAppear { viewStore.send(.onAppear) }
+            .listRowSeparator(.hidden)
         }
-        .frame(height: 200)
     }
 }
 
