@@ -11,9 +11,10 @@ import ComposableArchitecture
 @main
 struct BoulderLogbookApp: App {
     static var store = Store(
-        initialState: AppReducer.State(),
-        reducer: AppReducer()
-    )
+        initialState: AppReducer.State()
+    ) {
+        AppReducer()
+    }
     
     var body: some Scene {
         WindowGroup {

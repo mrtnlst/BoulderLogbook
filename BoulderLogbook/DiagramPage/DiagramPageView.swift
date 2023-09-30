@@ -12,8 +12,8 @@ struct DiagramPageView: View {
     let store: StoreOf<DiagramPage>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
-            TabView(selection: viewStore.binding(\.$selectedTab)) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            TabView(selection: viewStore.$selectedTab) {
                 TopCountDiagramView(
                     store: store.scope(
                         state: \.topCountDiagram,
@@ -48,9 +48,10 @@ struct DiagramPageView_Previews: PreviewProvider {
         List {
             DiagramPageView(
                 store: Store(
-                    initialState: DiagramPage.State(),
-                    reducer: DiagramPage()
-                )
+                    initialState: DiagramPage.State()
+                ) {
+                    DiagramPage()
+                }
             )
         }
     }

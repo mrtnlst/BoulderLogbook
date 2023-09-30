@@ -15,7 +15,7 @@ struct GradeSystemFormView: View {
     
     var body: some View {
         NavigationView {
-            WithViewStore(store) { viewStore in
+            WithViewStore(store, observe: { $0 }) { viewStore in
                 Form {
                     Section {
                         nameTextField()
@@ -49,16 +49,16 @@ struct GradeSystemFormView: View {
 }
 
 extension GradeSystemFormView {
-    @ViewBuilder func nameTextField() -> some View {
-        WithViewStore(store) { viewStore in
-            TextField("Name", text: viewStore.binding(\.$name))
+    @MainActor func nameTextField() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            TextField("Name", text: viewStore.$name)
                 .focused($focusedField, equals: nameTextFieldId)
         }
     }
     
-    @ViewBuilder func gradesInputFields() -> some View {
-        WithViewStore(store) { viewStore in
-            ForEach(viewStore.binding(\.$grades)) { $grade in
+    @MainActor func gradesInputFields() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            ForEach(viewStore.$grades) { $grade in
                 HStack {
                     ColorPicker(
                         selection: $grade.color,
@@ -81,7 +81,7 @@ extension GradeSystemFormView {
     }
     
     @ViewBuilder func buttons() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             RectangularButton.save {
                 focusedField = nil
                 viewStore.send(.save)
@@ -95,7 +95,7 @@ extension GradeSystemFormView {
     }
     
     @ViewBuilder func toolbarButtons() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Button(
                 action: { focusNextTextField(for: viewStore.grades, reversed: true) },
                 label: { Image(systemName: "chevron.up.circle")}
@@ -137,9 +137,10 @@ struct GradeSystemFormView_Previews: PreviewProvider {
     static var previews: some View {
         GradeSystemFormView(
             store: Store(
-                initialState: GradeSystemForm.State(),
-                reducer: GradeSystemForm()
-            )
+                initialState: GradeSystemForm.State()
+            ) {
+                GradeSystemForm()
+            }
         )
     }
 }

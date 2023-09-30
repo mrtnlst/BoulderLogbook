@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct TopCountDiagram: ReducerProtocol {
+struct TopCountDiagram: Reducer {
     struct State: Equatable {
         var viewState: ViewState<[Top], String> = .loading
         var gradeSystem: GradeSystem?
@@ -35,7 +35,7 @@ struct TopCountDiagram: ReducerProtocol {
         }
     }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         BindingReducer()
         
         Reduce { state, action in

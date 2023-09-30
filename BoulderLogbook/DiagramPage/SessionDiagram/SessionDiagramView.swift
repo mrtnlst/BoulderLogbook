@@ -14,7 +14,7 @@ struct SessionDiagramView: View {
     @ScaledMetric var size: CGFloat = 1
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             switch viewStore.viewState {
             case .loading:
                 LoadingIndicator()
@@ -60,9 +60,10 @@ struct SessionDiagramView_Previews: PreviewProvider {
             Section {
                 SessionDiagramView(
                     store: Store(
-                        initialState: SessionDiagram.State(),
-                        reducer: SessionDiagram()
-                    )
+                        initialState: SessionDiagram.State()
+                    ) {
+                        SessionDiagram()
+                    }
                 )
                 .frame(height: 200)
             }
@@ -76,9 +77,10 @@ struct SessionDiagramView_Previews: PreviewProvider {
                                 .init(date: "Jun", count: 6),
                                 .init(date: "Jul", count: 10)
                             ])
-                        ),
-                        reducer: SessionDiagram()
-                    )
+                        )
+                    ) {
+                        SessionDiagram()
+                    }
                 )
                 .frame(height: 200)
             }
@@ -87,9 +89,10 @@ struct SessionDiagramView_Previews: PreviewProvider {
                     store: Store(
                         initialState: SessionDiagram.State(
                             viewState: .error("No sessions available!")
-                        ),
-                        reducer: SessionDiagram()
-                    )
+                        )
+                    ) {
+                        SessionDiagram()
+                    }
                 )
                 .frame(height: 200)
             }

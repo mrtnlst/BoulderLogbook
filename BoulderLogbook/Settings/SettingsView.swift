@@ -13,7 +13,7 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack {
-            WithViewStore(store) { viewStore in
+            WithViewStore(store, observe: { $0 }) { viewStore in
                 List {
                     Button {
                         viewStore.send(.setGradeSystemListNavigation)
@@ -93,9 +93,10 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(
             store: Store(
-                initialState: Settings.State(),
-                reducer: Settings()
-            )
+                initialState: Settings.State()
+            ) {
+                Settings()
+            }
         )
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct SummaryDiagram: ReducerProtocol {
+struct SummaryDiagram: Reducer {
     struct State: Equatable {
         let hasWeekFilter: Bool
         var viewState: ViewState<[Model], String> = .loading
@@ -29,7 +29,7 @@ struct SummaryDiagram: ReducerProtocol {
         var maxValue: Int { [tops, attempts, flash, onsight].reduce(0, +) }
     }
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .receiveData(entries, gradeSystem):
             guard !entries.isEmpty else {

@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct GradeSystemForm: ReducerProtocol {
+struct GradeSystemForm: Reducer {
     struct State: Equatable {
         let id: UUID
         @BindingState var name: String
@@ -39,7 +39,7 @@ struct GradeSystemForm: ReducerProtocol {
     
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         BindingReducer()
         
         Reduce { state, action in

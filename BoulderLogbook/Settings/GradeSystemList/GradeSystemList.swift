@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct GradeSystemList: ReducerProtocol {
+struct GradeSystemList: Reducer {
     struct State: Equatable {
         var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
@@ -40,7 +40,7 @@ struct GradeSystemList: ReducerProtocol {
     
     @Dependency(\.gradeSystemClient) var client
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

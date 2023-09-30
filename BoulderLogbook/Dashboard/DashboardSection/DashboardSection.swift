@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct DashboardSection: ReducerProtocol {
+struct DashboardSection: Reducer {
     struct State: Equatable, Identifiable {
         var id: Double { date.timeIntervalSince1970 }
         let date: Date
@@ -49,7 +49,7 @@ struct DashboardSection: ReducerProtocol {
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .delete(id),

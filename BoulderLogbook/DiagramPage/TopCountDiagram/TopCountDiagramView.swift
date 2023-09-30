@@ -13,7 +13,7 @@ struct TopCountDiagramView: View {
     let store: StoreOf<TopCountDiagram>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             switch viewStore.viewState {
             case .loading:
                 LoadingIndicator()
@@ -38,11 +38,12 @@ struct TopCountDiagramView: View {
 }
 
 extension TopCountDiagramView {
-    @ViewBuilder func picker() -> some View {
-        WithViewStore(store) { viewStore in
+    @MainActor
+    func picker() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Picker(
                 "Pick the number of sessions displayed in the chart!",
-                selection: viewStore.binding(\.$selectedSegment)
+                selection: viewStore.$selectedSegment
             ) {
                 ForEach(TopCountDiagram.Segment.allCases, id: \.self) { segment in
                     Text(segment.rawValue)
@@ -81,9 +82,10 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                 TopCountDiagramView(
                     store: Store(
                         initialState: TopCountDiagram.State(
-                        ),
-                        reducer: TopCountDiagram()
-                    )
+                        )
+                    ) {
+                        TopCountDiagram()
+                    }
                 )
                 .frame(height: 170)
             }
@@ -98,9 +100,10 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                                 .sample6
                             ]),
                             gradeSystem: .mandala
-                        ),
-                        reducer: TopCountDiagram()
-                    )
+                        )
+                    ) {
+                        TopCountDiagram()
+                    }
                 )
                 .frame(height: 170)
             }
@@ -109,9 +112,10 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                     store: Store(
                         initialState: TopCountDiagram.State(
                             viewState: .error("No entries available!")
-                        ),
-                        reducer: TopCountDiagram()
-                    )
+                        )
+                    ) {
+                        TopCountDiagram()
+                    }
                 )
                 .frame(height: 170)
             }

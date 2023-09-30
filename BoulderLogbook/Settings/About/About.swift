@@ -8,7 +8,7 @@
 import UIKit
 import ComposableArchitecture
 
-struct About: ReducerProtocol {
+struct About: Reducer {
     struct State: Equatable {}
     
     enum Action: Equatable {
@@ -18,7 +18,7 @@ struct About: ReducerProtocol {
     
     @Dependency(\.uiApplicationClient) var uiApplicationClient
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .openMartin:
             let urlString = "https://iosdev.space/@mrtnlst"

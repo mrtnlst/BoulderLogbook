@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct FilterSheet: ReducerProtocol {
+struct FilterSheet: Reducer {
     struct State: Equatable {
         var gradeSystems: [GradeSystem] = []
         @BindingState var selectedSystemId: UUID?
@@ -29,7 +29,7 @@ struct FilterSheet: ReducerProtocol {
     @Dependency(\.gradeSystemClient) var client
     @Dependency(\.filterClient) var filterClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         BindingReducer()
         
         Reduce { state, action in

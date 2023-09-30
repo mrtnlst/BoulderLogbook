@@ -12,7 +12,7 @@ struct GradeSystemListView: View {
     let store: StoreOf<GradeSystemList>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
                     selectionRow(gradeSystem: gradeSystem)
@@ -65,7 +65,7 @@ struct GradeSystemListView: View {
 
 extension GradeSystemListView {
     @ViewBuilder func selectionRow(gradeSystem: GradeSystem) -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Button(
                 action: { viewStore.send(.saveSelected(gradeSystem.id)) },
                 label: {
@@ -87,7 +87,7 @@ extension GradeSystemListView {
     }
     
     @ViewBuilder func swipeButtons(gradeSystem: GradeSystem) -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Button(
                 action: { viewStore.send(.setSystemToDelete(gradeSystem)) },
                 label: { Label("Delete", systemImage: "trash") }
@@ -102,7 +102,7 @@ extension GradeSystemListView {
     }
     
     @ViewBuilder func alertButtons() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Button(
                 "Delete",
                 role: .destructive,
@@ -122,10 +122,11 @@ struct GradeSystemListView_Previews: PreviewProvider {
         NavigationView {
             GradeSystemListView(
                 store: Store(
-                    initialState: GradeSystemList.State(),
-                    reducer: GradeSystemList()
+                    initialState: GradeSystemList.State()
+                ) {
+                    GradeSystemList()
                         .dependency(\.gradeSystemClient, .previewValue)
-                )
+                }
             )
         }
     }

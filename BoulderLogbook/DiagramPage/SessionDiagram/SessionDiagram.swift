@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct SessionDiagram: ReducerProtocol {
+struct SessionDiagram: Reducer {
     struct State: Equatable {
         var viewState: ViewState<[Model], String> = .loading
     }
@@ -25,7 +25,7 @@ struct SessionDiagram: ReducerProtocol {
     
     @Dependency(\.calendar) var calendar
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .receiveEntries(entries):
             if entries.isEmpty {

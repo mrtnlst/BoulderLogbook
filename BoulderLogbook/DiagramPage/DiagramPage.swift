@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct DiagramPage: ReducerProtocol {
+struct DiagramPage: Reducer {
     struct State: Equatable {
         var entries: [Logbook.Section.Entry] = []
         var gradeSystems: [GradeSystem] = []
@@ -45,7 +45,7 @@ struct DiagramPage: ReducerProtocol {
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         BindingReducer()
         Scope(state: \.topCountDiagram, action: /Action.topCountDiagram) {
             TopCountDiagram()

@@ -13,7 +13,7 @@ struct EntryFormView: View {
     
     var body: some View {
         NavigationView {
-            WithViewStore(store) { viewStore in
+            WithViewStore(store, observe: { $0 }) { viewStore in
                 Form {
                     Section { gradeSystems() }
                     Section { tops() }
@@ -30,10 +30,10 @@ struct EntryFormView: View {
 }
 
 extension EntryFormView {
-    @ViewBuilder func gradeSystems() -> some View {
-        WithViewStore(store) { viewStore in
+    @MainActor func gradeSystems() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Picker(
-                selection: viewStore.binding(\.$selectedSystemId),
+                selection: viewStore.$selectedSystemId,
                 content: {
                     Text("None")
                         .tag(UUID?.none)
@@ -56,7 +56,7 @@ extension EntryFormView {
     }
     
     @ViewBuilder func tops() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             ForEach(viewStore.selectedSystem?.grades ?? []) { grade in
                 DisclosureGroup(
                     content: {
@@ -132,10 +132,10 @@ extension EntryFormView {
         )
     }
             
-    @ViewBuilder func datePicker() -> some View {
-        WithViewStore(store) { viewStore in
+    @MainActor func datePicker() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             DatePicker(
-                selection: viewStore.binding(\.$date),
+                selection: viewStore.$date,
                 in: ...Date(),
                 displayedComponents: [.hourAndMinute, .date]
             ) {
@@ -148,9 +148,9 @@ extension EntryFormView {
         }
     }
     
-    @ViewBuilder func notes() -> some View {
-        WithViewStore(store) { viewStore in
-            TextEditor(text: viewStore.binding(\.$notes))
+    @MainActor func notes() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            TextEditor(text: viewStore.$notes)
                 .foregroundColor(viewStore.notes == viewStore.notesPlaceHolder ? .gray : .primary)
                 .onTapGesture {
                     if viewStore.notes == viewStore.notesPlaceHolder {
@@ -162,7 +162,7 @@ extension EntryFormView {
     }
     
     @ViewBuilder func buttons() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             RectangularButton.save {
                 viewStore.send(.save)
             }
@@ -178,10 +178,11 @@ struct EntryFormView_Previews: PreviewProvider {
     static var previews: some View {
         EntryFormView(
             store: Store(
-                initialState: EntryForm.State(),
-                reducer: EntryForm()
+                initialState: EntryForm.State()
+            ) {
+                EntryForm()
                     .dependency(\.gradeSystemClient, .previewValue)
-            )
+            }
         )
     }
 }

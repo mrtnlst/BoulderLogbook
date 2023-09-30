@@ -8,8 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct AppReducer: ReducerProtocol {
-    struct Destination: ReducerProtocol {
+struct AppReducer: Reducer {
+    struct Destination: Reducer {
         enum State: Equatable {
             case settings(Settings.State)
             case entryForm(EntryForm.State)
@@ -18,7 +18,7 @@ struct AppReducer: ReducerProtocol {
             case settings(Settings.Action)
             case entryForm(EntryForm.Action)
         }
-        var body: some ReducerProtocolOf<Self> {
+        var body: some ReducerOf<Self> {
             Scope(state: /State.settings, action: /Action.settings) {
                 Settings()
             }
@@ -41,7 +41,7 @@ struct AppReducer: ReducerProtocol {
     }
     @Dependency(\.entryClient) var entryClient
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
             Dashboard()
         }

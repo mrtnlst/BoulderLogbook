@@ -12,7 +12,7 @@ struct DashboardSectionView: View {
     let store: StoreOf<DashboardSection>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Section {
                 ForEach(viewStore.entryDetailStates) { entryDetailState in
                     Button(
@@ -67,9 +67,10 @@ struct DashboardSectionView_Previews: PreviewProvider {
                             date: .now,
                             entries: .samples,
                             gradeSystems: [.mandala]
-                        ),
-                        reducer: DashboardSection()
-                    )
+                        )
+                    ) {
+                        DashboardSection()
+                    }
                 )
             }
         }

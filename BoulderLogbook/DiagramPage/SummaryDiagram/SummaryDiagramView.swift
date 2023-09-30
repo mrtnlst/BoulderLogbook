@@ -13,7 +13,7 @@ struct SummaryDiagramView: View {
     let store: StoreOf<SummaryDiagram>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             switch viewStore.viewState {
             case .loading:
                 LoadingIndicator()
@@ -99,10 +99,9 @@ struct SummaryDiagramView_Previews: PreviewProvider {
         List {
             Section {
                 SummaryDiagramView(
-                    store: Store(
-                        initialState: .init(hasWeekFilter: true),
-                        reducer: SummaryDiagram()
-                    )
+                    store: Store(initialState: .init(hasWeekFilter: true)) {
+                        SummaryDiagram()
+                    }
                 )
                 .frame(height: 170)
             }
@@ -169,8 +168,10 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                     onsight: 0
                                 )
                             ])
-                        ),
-                        reducer: SummaryDiagram())
+                        )
+                    ) {
+                        SummaryDiagram()
+                    }
                 )
                 .frame(height: 200)
             }
@@ -180,9 +181,10 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                         initialState: .init(
                             hasWeekFilter: true,
                             viewState: .error("No entries available!")
-                        ),
-                        reducer: SummaryDiagram()
-                    )
+                        )
+                    ) {
+                        SummaryDiagram()
+                    }
                 )
                 .frame(height: 170)
             }

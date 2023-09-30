@@ -8,8 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct Settings: ReducerProtocol {
-    struct Destination: ReducerProtocol {
+struct Settings: Reducer {
+    struct Destination: Reducer {
         enum State: Equatable {
             case gradeSystemList(GradeSystemList.State)
             case diagramConfiguration(FilterSheet.State)
@@ -23,7 +23,7 @@ struct Settings: ReducerProtocol {
             case appIconList(AppIconList.Action)
             case about(About.Action)
         }
-        var body: some ReducerProtocolOf<Self> {
+        var body: some ReducerOf<Self> {
             Scope(state: /State.gradeSystemList, action: /Action.gradeSystemList) {
                 GradeSystemList()
             }
@@ -57,7 +57,7 @@ struct Settings: ReducerProtocol {
     @Dependency(\.filterClient) var filterClient
     @Dependency(\.entryClient) var entryClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
        Reduce { state, action in
             switch action {
             case let .destination(.presented(.gradeSystemList(.delete(id)))):

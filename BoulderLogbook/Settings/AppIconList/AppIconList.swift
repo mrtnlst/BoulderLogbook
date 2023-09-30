@@ -8,7 +8,7 @@
 import UIKit
 import ComposableArchitecture
 
-struct AppIconList: ReducerProtocol {
+struct AppIconList: Reducer {
     struct State: Equatable {
         var inAppPurchase: InAppPurchase?
         var hasInAppPurchase: Bool = false
@@ -27,7 +27,7 @@ struct AppIconList: ReducerProtocol {
     @Dependency(\.uiApplicationClient) var uiApplicationClient
     @Dependency(\.storeKitClient) var storeKitClient
     
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .onAppear:
             return .merge (

@@ -12,7 +12,7 @@ struct FilterSheetView: View {
     let store: StoreOf<FilterSheet>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Form {
                 Section {
                     gradeSystems()
@@ -25,10 +25,11 @@ struct FilterSheetView: View {
 }
 
 extension FilterSheetView {
-    @ViewBuilder func gradeSystems() -> some View {
-        WithViewStore(store) { viewStore in
+    @MainActor
+    func gradeSystems() -> some View {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Picker(
-                selection: viewStore.binding(\.$selectedSystemId),
+                selection: viewStore.$selectedSystemId,
                 content: {
                     Text("None")
                         .tag(UUID?.none)
@@ -57,9 +58,10 @@ struct FilterSheetView_Previews: PreviewProvider {
                 store: Store(
                     initialState: FilterSheet.State(
                         gradeSystems: [.mandala, .kletterarena]
-                    ),
-                    reducer: FilterSheet()
-                )
+                    )
+                ) {
+                    FilterSheet()
+                }
             )
         }
     }

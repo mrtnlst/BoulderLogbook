@@ -12,7 +12,7 @@ struct AppView: View {
     let store: StoreOf<AppReducer>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             DashboardView(
                 store: store.scope(state: \.dashboard, action: AppReducer.Action.dashboard)
             )
@@ -56,9 +56,10 @@ struct AppView_Previews: PreviewProvider {
     static var previews: some View {
         AppView(
             store: Store(
-                initialState: AppReducer.State(),
-                reducer: AppReducer()
-            )
+                initialState: AppReducer.State()
+            ) {
+                AppReducer()
+            }
         )
     }
 }

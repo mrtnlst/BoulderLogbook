@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct Dashboard: ReducerProtocol {
+struct Dashboard: Reducer {
     struct State: Equatable {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
         var diagramPage = DiagramPage.State()
@@ -27,7 +27,7 @@ struct Dashboard: ReducerProtocol {
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Scope(state: \.diagramPage, action: /Action.diagramPage) {
             DiagramPage()
         }

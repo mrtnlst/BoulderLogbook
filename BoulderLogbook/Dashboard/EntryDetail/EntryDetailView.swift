@@ -13,7 +13,7 @@ struct EntryDetailView: View {
     let store: StoreOf<EntryDetail>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 Section {
                     SummaryDiagramView(
@@ -75,7 +75,7 @@ extension EntryDetailView {
     }
     
     func buttons() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             RectangularButton.edit {
                 viewStore.send(.edit(viewStore.entry))
             }
@@ -149,9 +149,10 @@ struct EntryView_Previews: PreviewProvider {
                             gradeSystem: GradeSystem.mandala.id
                         ),
                         gradeSystem: .mandala
-                    ),
-                    reducer: EntryDetail()
-                )
+                    )
+                ) {
+                    EntryDetail()
+                }
             )
         }
     }

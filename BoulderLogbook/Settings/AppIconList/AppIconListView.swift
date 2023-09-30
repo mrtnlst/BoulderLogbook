@@ -13,7 +13,7 @@ struct AppIconListView: View {
     let store: StoreOf<AppIconList>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 Section {
                     appIconRow(title: "Classic Icon", fileName: "AppIcon")
@@ -37,7 +37,7 @@ struct AppIconListView: View {
 
 extension AppIconListView {
     func inAppPurchaseView() -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
                 if !viewStore.hasInAppPurchase,
                    let inAppPurchase = viewStore.inAppPurchase {
@@ -69,7 +69,7 @@ extension AppIconListView {
 
 extension AppIconListView {
     func appIconRow(title: String, fileName: String) -> some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             Button {
                 viewStore.send(
                     .selectAppIcon(fileName == "AppIcon" ? nil : fileName)
@@ -91,9 +91,10 @@ struct AppIconListView_Previews: PreviewProvider {
         NavigationStack {
             AppIconListView(
                 store: Store(
-                    initialState: .init(),
-                    reducer: AppIconList()
-                )
+                    initialState: .init()
+                ) {
+                    AppIconList()
+                }
             )
         }
     }

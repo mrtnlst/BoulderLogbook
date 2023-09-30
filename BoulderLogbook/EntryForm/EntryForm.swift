@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct EntryForm: ReducerProtocol {
+struct EntryForm: Reducer {
     struct State: Equatable {
         let id: UUID
         var tops: [Top] // TODO: @BindingState?
@@ -78,7 +78,7 @@ struct EntryForm: ReducerProtocol {
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         BindingReducer()
         
         Reduce { state, action in

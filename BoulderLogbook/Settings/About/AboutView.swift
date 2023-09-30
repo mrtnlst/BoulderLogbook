@@ -12,7 +12,7 @@ struct AboutView: View {
     let store: StoreOf<About>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
                 Spacer(minLength: 20)
                 AppIconView(iconName: "AppIcon")
@@ -61,7 +61,9 @@ struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             AboutView(
-                store: Store(initialState: .init(), reducer: About())
+                store: Store(initialState: .init()) {
+                    About()
+                }
             )
         }
     }

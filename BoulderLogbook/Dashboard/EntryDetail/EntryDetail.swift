@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct EntryDetail: ReducerProtocol {
+struct EntryDetail: Reducer {
     struct State: Equatable, Identifiable {
         let id: UUID
         let entry: Logbook.Section.Entry
@@ -34,7 +34,7 @@ struct EntryDetail: ReducerProtocol {
     
     @Dependency(\.dismiss) var dismiss
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Scope(state: \.summaryDiagram, action: /Action.summaryDiagram) {
             SummaryDiagram()
         }

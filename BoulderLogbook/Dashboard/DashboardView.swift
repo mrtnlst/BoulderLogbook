@@ -12,7 +12,7 @@ struct DashboardView: View {
     let store: StoreOf<Dashboard>
     
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             List {
                 DiagramPageView(
                     store: store.scope(
@@ -42,11 +42,12 @@ struct DashboardView_Previews: PreviewProvider {
         NavigationStack {
             DashboardView(
                 store: Store(
-                    initialState: Dashboard.State(),
-                    reducer: Dashboard()
+                    initialState: Dashboard.State()
+                ) {
+                    Dashboard()
                         .dependency(\.entryClient, .previewValue)
                         .dependency(\.gradeSystemClient, .previewValue)
-                )
+                }
             )
         }
     }
