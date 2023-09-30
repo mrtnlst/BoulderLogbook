@@ -433,6 +433,12 @@ extension [Logbook.Section.Entry] {
             date: Date(timeIntervalSince1970: 1695059456),
             tops: [.sample7, .sample7, .sample5, .sample5, .sample4, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1695754012),
+            tops: [.sample5, .sample5, .sample4, .init(id: UUID(), grade: GradeSystem.Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .sample3, .sample3, .sample2, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         )
     ]
 }
