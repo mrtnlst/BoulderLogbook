@@ -169,7 +169,7 @@ struct EntryForm: Reducer {
                 let entry = Logbook.Section.Entry(
                     id: state.id,
                     date: state.date,
-                    notes: state.notes,
+                    notes: state.notes == state.notesPlaceHolder ? nil : state.notes,
                     tops: state.tops + state.attempts + state.flashs + state.onsights,
                     gradeSystem: gradeSystemId
                 )
