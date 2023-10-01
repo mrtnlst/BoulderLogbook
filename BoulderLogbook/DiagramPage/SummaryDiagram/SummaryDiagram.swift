@@ -11,11 +11,24 @@ import ComposableArchitecture
 struct SummaryDiagram: Reducer {
     struct State: Equatable {
         let hasWeekFilter: Bool
-        var viewState: ViewState<[Model], String> = .loading
+        var viewState: ViewState<[Model], DataError> = .loading
+        
+        enum DataError {
+            case noEntries
+            case noGradeSystem
+            
+            var text: String {
+                switch self {
+                case .noEntries: return "No entries available!"
+                case .noGradeSystem: return "Create or select grade system in Settings!"
+                }
+            }
+        }
     }
     
     enum Action: Equatable {
         case receiveData([Logbook.Section.Entry], GradeSystem?)
+        case didPressEmptyView
     }
     
     struct Model: Identifiable, Equatable {
@@ -32,13 +45,12 @@ struct SummaryDiagram: Reducer {
     func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case let .receiveData(entries, gradeSystem):
-            guard !entries.isEmpty else {
-                state.viewState = .error("No entries available!")
+            guard let gradeSystem = gradeSystem else {
+                state.viewState = .error(.noGradeSystem)
                 return .none
             }
-            
-            guard let gradeSystem = gradeSystem else {
-                state.viewState = .error("Choose grade system in Settings!")
+            guard !entries.isEmpty else {
+                state.viewState = .error(.noEntries)
                 return .none
             }
             let filteredTops = entries
@@ -55,7 +67,7 @@ struct SummaryDiagram: Reducer {
                 )
                 .reduce(into: [], { $0.append(contentsOf: $1.tops) })
             guard !filteredTops.isEmpty else {
-                state.viewState = .error("No entries available!")
+                state.viewState = .error(.noEntries)
                 return .none
             }
             let models = gradeSystem.grades.compactMap { grade in
@@ -70,6 +82,8 @@ struct SummaryDiagram: Reducer {
                 )
             }
             state.viewState = .idle(models)
+            
+        default: ()
         }
         return .none
     }

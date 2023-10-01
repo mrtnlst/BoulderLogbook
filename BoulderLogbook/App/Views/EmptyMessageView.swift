@@ -10,9 +10,15 @@ import SwiftUI
 struct EmptyMessageView: View {
     @ScaledMetric var size: CGFloat = 1
     let message: String?
+    let action: (() -> Void)?
+    
+    init(message: String?, action: (() -> Void)? = nil) {
+        self.message = message
+        self.action = action
+    }
     
     var body: some View {
-        Label {
+        let label = Label {
             Text(message ?? "")
         } icon: {
             ZStack {
@@ -25,14 +31,31 @@ struct EmptyMessageView: View {
         }
         .font(.callout)
         .fontWeight(.medium)
+        
+        if let action = action {
+            Button {
+                action()
+            } label: {
+                label
+            }
+            .buttonStyle(.plain)
+        } else {
+            label
+        }
     }
 }
 
 struct EmptyMessageView_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            EmptyMessageView(message: "No entries available")
-                .frame(maxWidth: .infinity)
+            Section {
+                EmptyMessageView(message: "No entries available")
+                    .frame(maxWidth: .infinity)
+            }
+            Section {
+                EmptyMessageView(message: "Create or select grade system from Settings!", action: {})
+                    .frame(maxWidth: .infinity)
+            }
         }
     }
 }

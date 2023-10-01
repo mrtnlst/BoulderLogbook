@@ -93,6 +93,10 @@ struct AppReducer: Reducer {
             case .destination(.presented(.settings(.destination(.presented(.diagramConfiguration(.saveDidFinish)))))):
                 return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 
+            case .dashboard(.diagramPage(.topCountDiagram(.didPressEmptyView))),
+                 .dashboard(.diagramPage(.summaryDiagram(.didPressEmptyView))):
+                return .send(.presentSettings)
+                
             default: ()
             }
             return .none

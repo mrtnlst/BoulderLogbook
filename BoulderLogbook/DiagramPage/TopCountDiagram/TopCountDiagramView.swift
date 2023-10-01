@@ -30,7 +30,9 @@ struct TopCountDiagramView: View {
                 }
                 
             case let .error(message):
-                EmptyMessageView(message: message)
+                EmptyMessageView(message: message) {
+                    viewStore.send(.didPressEmptyView)
+                }
                     .frame(maxWidth: .infinity)
             }
         }

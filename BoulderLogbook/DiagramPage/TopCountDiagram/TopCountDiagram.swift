@@ -19,6 +19,7 @@ struct TopCountDiagram: Reducer {
         case binding(BindingAction<State>)
         case fetchData
         case receiveData([Logbook.Section.Entry], GradeSystem?)
+        case didPressEmptyView
     }
     
     enum Segment: String, Equatable, CaseIterable {
@@ -43,7 +44,7 @@ struct TopCountDiagram: Reducer {
             case let .receiveData(entries, gradeSystem):
                 state.gradeSystem = gradeSystem
                 guard let gradeSystem = gradeSystem else {
-                    state.viewState = .error("Choose grade system in Settings!")
+                    state.viewState = .error("Create or select grade system in Settings!")
                     return .none
                 }
                 let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem.id })
