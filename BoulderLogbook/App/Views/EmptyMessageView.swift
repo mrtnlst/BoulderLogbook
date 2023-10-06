@@ -18,9 +18,7 @@ struct EmptyMessageView: View {
     }
     
     var body: some View {
-        let label = Label {
-            Text(message ?? "")
-        } icon: {
+        let label = HStack(spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 7 * size)
                     .frame(width: 28 * size, height: 28 * size)
@@ -28,9 +26,10 @@ struct EmptyMessageView: View {
                 Image(systemName: "exclamationmark")
                     .foregroundColor(.white)
             }
+            Text(message ?? "")
         }
-        .font(.callout)
-        .fontWeight(.medium)
+            .font(.callout)
+            .fontWeight(.medium)
         
         if let action = action {
             Button {
