@@ -24,7 +24,7 @@
 		</dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>AppIcon-2</key>
+			<key>AppIcon_2</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
@@ -33,7 +33,7 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>AppIcon-3</key>
+			<key>AppIcon_3</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
