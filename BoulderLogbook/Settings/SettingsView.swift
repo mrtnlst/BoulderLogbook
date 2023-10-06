@@ -49,7 +49,7 @@ struct SettingsView: View {
                     state: /Settings.Destination.State.diagramConfiguration,
                     action: Settings.Destination.Action.diagramConfiguration
                 ) {
-                    FilterSheetView(store: $0)
+                    DiagramConfigurationView(store: $0)
                 }
                 .navigationDestination(
                     store: store.scope(state: \.$destination, action: { .destination($0) }),

@@ -1,5 +1,5 @@
 //
-//  FilterSheet.swift
+//  DiagramPage.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 23.01.23.
@@ -8,7 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
-struct FilterSheet: Reducer {
+struct DiagramConfiguration: Reducer {
     struct State: Equatable {
         var gradeSystems: [GradeSystem] = []
         @BindingState var selectedSystemId: UUID?

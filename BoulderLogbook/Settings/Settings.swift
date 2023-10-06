@@ -12,14 +12,14 @@ struct Settings: Reducer {
     struct Destination: Reducer {
         enum State: Equatable {
             case gradeSystemList(GradeSystemList.State)
-            case diagramConfiguration(FilterSheet.State)
+            case diagramConfiguration(DiagramConfiguration.State)
             case appIconList(AppIconList.State)
             case about(About.State)
         }
         
         enum Action: Equatable {
             case gradeSystemList(GradeSystemList.Action)
-            case diagramConfiguration(FilterSheet.Action)
+            case diagramConfiguration(DiagramConfiguration.Action)
             case appIconList(AppIconList.Action)
             case about(About.Action)
         }
@@ -28,7 +28,7 @@ struct Settings: Reducer {
                 GradeSystemList()
             }
             Scope(state: /State.diagramConfiguration, action: /Action.diagramConfiguration) {
-                FilterSheet()
+                DiagramConfiguration()
             }
             Scope(state: /State.appIconList, action: /Action.appIconList) {
                 AppIconList()

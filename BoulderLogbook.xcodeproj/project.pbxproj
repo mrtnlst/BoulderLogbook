@@ -12,7 +12,7 @@
 		5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */; };
 		5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* Logbook.swift */; };
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
-		5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */; };
+		5B289AE229058BAF00EC6F0B /* DiagramConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B289AE129058BAF00EC6F0B /* DiagramConfigurationView.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3976299AC7B100299CCA /* DiagramPage.swift */; };
 		5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397B299AC84D00299CCA /* DiagramPageView.swift */; };
@@ -29,7 +29,7 @@
 		5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */; };
 		5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */; };
 		5BB0DF2B29942E4700B49A56 /* FilterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0DF2A29942E4700B49A56 /* FilterClient.swift */; };
-		5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */; };
+		5BC0C9BC297F29EF00E8C567 /* DiagramConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC0C9BB297F29EF00E8C567 /* DiagramConfiguration.swift */; };
 		5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD8298928B647CC0053BE8E /* EntryColorView.swift */; };
 		5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41ED2986819600B84BA0 /* Color+Codable.swift */; };
 		5BDD41F02986850700B84BA0 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD41EF2986850700B84BA0 /* Settings.swift */; };
@@ -84,7 +84,7 @@
 		5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEntryView.swift; sourceTree = "<group>"; };
 		5B1A807F28A7D6BF00530B01 /* Logbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
-		5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheetView.swift; sourceTree = "<group>"; };
+		5B289AE129058BAF00EC6F0B /* DiagramConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramConfigurationView.swift; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
 		5B6D3976299AC7B100299CCA /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
 		5B6D397B299AC84D00299CCA /* DiagramPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageView.swift; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 		5BADFAAB2A47287A0010E9DB /* SummaryDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagram.swift; sourceTree = "<group>"; };
 		5BADFAAD2A4728890010E9DB /* SummaryDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDiagramView.swift; sourceTree = "<group>"; };
 		5BB0DF2A29942E4700B49A56 /* FilterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClient.swift; sourceTree = "<group>"; };
-		5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
+		5BC0C9BB297F29EF00E8C567 /* DiagramConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramConfiguration.swift; sourceTree = "<group>"; };
 		5BD8298928B647CC0053BE8E /* EntryColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryColorView.swift; sourceTree = "<group>"; };
 		5BDD41ED2986819600B84BA0 /* Color+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Codable.swift"; sourceTree = "<group>"; };
 		5BDD41EF2986850700B84BA0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -183,13 +183,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5B289AE429058BBF00EC6F0B /* FilterSheet */ = {
+		5B289AE429058BBF00EC6F0B /* DiagramConfiguration */ = {
 			isa = PBXGroup;
 			children = (
-				5BC0C9BB297F29EF00E8C567 /* FilterSheet.swift */,
-				5B289AE129058BAF00EC6F0B /* FilterSheetView.swift */,
+				5BC0C9BB297F29EF00E8C567 /* DiagramConfiguration.swift */,
+				5B289AE129058BAF00EC6F0B /* DiagramConfigurationView.swift */,
 			);
-			path = FilterSheet;
+			path = DiagramConfiguration;
 			sourceTree = "<group>";
 		};
 		5B6B93122A5365C90013D634 /* Clients */ = {
@@ -250,7 +250,7 @@
 				5B6B93122A5365C90013D634 /* Clients */,
 				5BFAAB372A48401000E486DC /* About */,
 				5BF68DDF2A5207660071C3F6 /* AppIconList */,
-				5B289AE429058BBF00EC6F0B /* FilterSheet */,
+				5B289AE429058BBF00EC6F0B /* DiagramConfiguration */,
 				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 			);
 			path = Settings;
@@ -525,7 +525,7 @@
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
-				5B289AE229058BAF00EC6F0B /* FilterSheetView.swift in Sources */,
+				5B289AE229058BAF00EC6F0B /* DiagramConfigurationView.swift in Sources */,
 				5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
@@ -570,7 +570,7 @@
 				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,
 				5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */,
 				5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */,
-				5BC0C9BC297F29EF00E8C567 /* FilterSheet.swift in Sources */,
+				5BC0C9BC297F29EF00E8C567 /* DiagramConfiguration.swift in Sources */,
 				5B6DB37B2A51EB95006265F0 /* AppIconView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

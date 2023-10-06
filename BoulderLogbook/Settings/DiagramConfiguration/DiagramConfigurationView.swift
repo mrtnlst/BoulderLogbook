@@ -1,5 +1,5 @@
 //
-//  FilterSheetView.swift
+//  DiagramSettingsView.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 23.10.22.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct FilterSheetView: View {
-    let store: StoreOf<FilterSheet>
+struct DiagramConfigurationView: View {
+    let store: StoreOf<DiagramConfiguration>
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -24,7 +24,7 @@ struct FilterSheetView: View {
     }
 }
 
-extension FilterSheetView {
+extension DiagramConfigurationView {
     @MainActor
     func gradeSystems() -> some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -51,16 +51,16 @@ extension FilterSheetView {
     }
 }
 
-struct FilterSheetView_Previews: PreviewProvider {
+struct DiagramConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            FilterSheetView(
+            DiagramConfigurationView(
                 store: Store(
-                    initialState: FilterSheet.State(
+                    initialState: DiagramConfiguration.State(
                         gradeSystems: [.mandala, .kletterarena]
                     )
                 ) {
-                    FilterSheet()
+                    DiagramConfiguration()
                 }
             )
         }
