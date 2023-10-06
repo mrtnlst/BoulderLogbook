@@ -20,7 +20,7 @@ struct SummaryDiagram: Reducer {
             var text: String {
                 switch self {
                 case .noEntries: return "No entries available!"
-                case .noGradeSystem: return "Create or select grade system in Settings!"
+                case .noGradeSystem: return "Start by creating a Grade System in Settings!"
                 }
             }
         }

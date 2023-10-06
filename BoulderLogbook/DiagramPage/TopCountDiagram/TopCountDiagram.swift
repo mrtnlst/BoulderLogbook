@@ -44,7 +44,7 @@ struct TopCountDiagram: Reducer {
             case let .receiveData(entries, gradeSystem):
                 state.gradeSystem = gradeSystem
                 guard let gradeSystem = gradeSystem else {
-                    state.viewState = .error("Create or select grade system in Settings!")
+                    state.viewState = .error("Start by creating a Grade System in Settings!")
                     return .none
                 }
                 let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem.id })
