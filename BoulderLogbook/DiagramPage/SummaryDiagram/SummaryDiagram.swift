@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct SummaryDiagram: Reducer {
+@Reducer
+struct SummaryDiagram {
     struct State: Equatable {
         let hasWeekFilter: Bool
         var viewState: ViewState<[Model], DataError> = .loading
@@ -20,7 +21,7 @@ struct SummaryDiagram: Reducer {
             var text: String {
                 switch self {
                 case .noEntries: return "No entries available!"
-                case .noGradeSystem: return "Start by creating a Grade System in Settings!"
+                case .noGradeSystem: return "Create or select a Grade System for your Diagrams!"
                 }
             }
         }

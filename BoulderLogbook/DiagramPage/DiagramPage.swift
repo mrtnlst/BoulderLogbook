@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct DiagramPage: Reducer {
+@Reducer
+struct DiagramPage {
     struct State: Equatable {
         var entries: [Logbook.Section.Entry] = []
         var gradeSystems: [GradeSystem] = []

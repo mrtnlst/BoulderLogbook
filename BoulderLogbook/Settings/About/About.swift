@@ -8,7 +8,8 @@
 import UIKit
 import ComposableArchitecture
 
-struct About: Reducer {
+@Reducer
+struct About {
     struct State: Equatable {}
     
     enum Action: Equatable {

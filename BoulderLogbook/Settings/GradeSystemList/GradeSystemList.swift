@@ -8,32 +8,50 @@
 import Foundation
 import ComposableArchitecture
 
-struct GradeSystemList: Reducer {
+@Reducer
+struct GradeSystemList {
+    @Reducer
+    struct Destination {
+        enum State: Equatable {
+            case gradeSystemForm(GradeSystemForm.State)
+            case confirmationDialog(ConfirmationDialogState<Action.Confirmation>)
+        }
+        enum Action: Equatable {
+            case gradeSystemForm(GradeSystemForm.Action)
+            case confirmationDialog(PresentationAction<Confirmation>)
+            
+            enum Confirmation {
+                case delete
+            }
+        }
+        var body: some ReducerOf<Self> {
+            Scope(state: \.gradeSystemForm, action: \.gradeSystemForm) {
+                GradeSystemForm()
+            }
+        }
+    }
+    
     struct State: Equatable {
+        @PresentationState var destination: Destination.State?
         var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
-        var gradeSystemForm: GradeSystemForm.State?
-        var isPresentingForm: Bool = false
-        var isPresentingConfirmation: Bool = false
         var systemToDelete: GradeSystem?
     }
     
     enum Action: Equatable {
+        case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchGradeSystems
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<UUID?>)
-        case setIsPresentingForm(Bool)
-        case setIsPresentingConfirmation(Bool)
+        case presentGradeSystemForm
+        case presentConfirmation
         case saveSelected(UUID)
         case saveSelectedDidFinish(TaskResult<ClientResponse>)
         case setSystemToDelete(GradeSystem)
-        case confirmDelete
-        case cancelDelete
         case delete(UUID)
         case edit(UUID)
-        case gradeSystemForm(GradeSystemForm.Action)
         
         enum ClientResponse { case finished }
     }
@@ -65,15 +83,30 @@ struct GradeSystemList: Reducer {
                 }
                 
             case let .receiveSelectedSystem(.success(selected)):
-                state.selectedSystem = state.gradeSystems.first(where: { $0.id == selected })
+                state.selectedSystem = state.gradeSystems.first(
+                    where: { $0.id == selected }
+                )
 
-            case let .setIsPresentingForm(isPresenting):
-                state.isPresentingForm = isPresenting
-                state.gradeSystemForm = isPresenting ? GradeSystemForm.State() : nil
+            case .presentGradeSystemForm:
+                state.destination = .gradeSystemForm(GradeSystemForm.State())
                 
-            case let .setIsPresentingConfirmation(isPresenting):
-                state.isPresentingConfirmation = isPresenting
-                
+            case .presentConfirmation:
+                let name = state.systemToDelete?.name ?? ""
+                state.destination = .confirmationDialog(
+                    ConfirmationDialogState {
+                        TextState("Warning")
+                    } actions: {
+                        ButtonState(role: .destructive, action: .delete) {
+                            TextState("Delete")
+                        }
+                    } message: {
+                        TextState("Deleting \(name) removes all of its logbook entries!")
+                    }
+                )
+
+            case .destination(.presented(.confirmationDialog(.dismiss))):
+                state.destination = nil
+
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {
                     return .none
@@ -94,17 +127,14 @@ struct GradeSystemList: Reducer {
                 
             case let .setSystemToDelete(system):
                 state.systemToDelete = system
-                return .send(.setIsPresentingConfirmation(true))
+                return .send(.presentConfirmation)
                 
-            case .confirmDelete:
+            case .destination(.presented(.confirmationDialog(.presented(.delete)))):
                 guard let systemToDelete = state.systemToDelete else {
                     return .none
                 }
                 return .send(.delete(systemToDelete.id))
-                
-            case .cancelDelete:
-                state.systemToDelete = nil
-                
+
             case let .delete(id):
                 return .merge(
                     .run { _ in client.deleteSystem(id) },
@@ -120,24 +150,21 @@ struct GradeSystemList: Reducer {
                     name: gradeSystem.name,
                     grades: gradeSystem.grades
                 )
-                state.gradeSystemForm = formState
-                state.isPresentingForm = true
-    
-            case .gradeSystemForm(.cancel):
-                return .send(.setIsPresentingForm(false))
+                state.destination = .gradeSystemForm(formState)
+
+            case .destination(.presented(.gradeSystemForm(.cancel))):
+                state.destination = nil
                 
-            case .gradeSystemForm(.saveDidFinish(_)):
-                return .concatenate(
-                    .send(.setIsPresentingForm(false)),
-                    .send(.fetchGradeSystems)
-                )
+            case .destination(.presented(.gradeSystemForm(.saveDidFinish))):
+                state.destination = nil
+                return .send(.fetchGradeSystems)
                 
             default: ()
             }
             return .none
         }
-        .ifLet(\.gradeSystemForm, action: /Action.gradeSystemForm) {
-            GradeSystemForm()
+        .ifLet(\.$destination, action: \.destination) {
+          Destination()
         }
     }
 }

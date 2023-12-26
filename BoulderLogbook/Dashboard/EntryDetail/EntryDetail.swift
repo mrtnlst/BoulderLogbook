@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct EntryDetail: Reducer {
+@Reducer
+struct EntryDetail {
     struct State: Equatable, Identifiable {
         let id: UUID
         let entry: Logbook.Section.Entry

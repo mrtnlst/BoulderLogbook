@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct DiagramConfiguration: Reducer {
+@Reducer
+struct DiagramConfiguration {
     struct State: Equatable {
         var gradeSystems: [GradeSystem] = []
         @BindingState var selectedSystemId: UUID?

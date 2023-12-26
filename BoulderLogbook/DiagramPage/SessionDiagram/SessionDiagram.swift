@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct SessionDiagram: Reducer {
+@Reducer
+struct SessionDiagram {
     struct State: Equatable {
         var viewState: ViewState<[Model], String> = .loading
     }

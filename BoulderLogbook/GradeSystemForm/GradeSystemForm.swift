@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct GradeSystemForm: Reducer {
+@Reducer
+struct GradeSystemForm {
     struct State: Equatable {
         let id: UUID
         @BindingState var name: String

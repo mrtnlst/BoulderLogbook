@@ -8,8 +8,10 @@
 import Foundation
 import ComposableArchitecture
 
-struct AppReducer: Reducer {
-    struct Destination: Reducer {
+@Reducer
+struct AppReducer {
+    @Reducer
+    struct Destination {
         enum State: Equatable {
             case settings(Settings.State)
             case entryForm(EntryForm.State)
@@ -19,10 +21,10 @@ struct AppReducer: Reducer {
             case entryForm(EntryForm.Action)
         }
         var body: some ReducerOf<Self> {
-            Scope(state: /State.settings, action: /Action.settings) {
+            Scope(state: \.settings, action: \.settings) {
                 Settings()
             }
-            Scope(state: /State.entryForm, action: /Action.entryForm) {
+            Scope(state: \.entryForm, action: \.entryForm) {
                 EntryForm()
             }
         }
@@ -38,6 +40,8 @@ struct AppReducer: Reducer {
         case dashboard(Dashboard.Action)
         case presentEntryForm
         case presentSettings
+        case presentGradeSystemList
+        case presentDiagramConfiguration
     }
     @Dependency(\.entryClient) var entryClient
 
@@ -53,6 +57,14 @@ struct AppReducer: Reducer {
             case .presentSettings:
                 state.destination = .settings(Settings.State())
 
+            case .presentGradeSystemList:
+                state.destination = .settings(Settings.State())
+                return .send(.destination(.presented(.settings(.setGradeSystemListNavigation))))
+
+            case .presentDiagramConfiguration:
+                state.destination = .settings(Settings.State())
+                return .send(.destination(.presented(.settings(.setDiagramConfigurationNavigation))))
+
             case .destination(.presented(.entryForm(.cancel))):
                 state.destination = nil
                 
@@ -63,7 +75,7 @@ struct AppReducer: Reducer {
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                 
-            case let .dashboard(.dashboardSection(id: _, action: .edit(entry))):
+            case let .dashboard(.dashboardSection(.element(_, .edit(entry)))):
                 state.destination = .entryForm(
                     .init(
                         id: entry.id,
@@ -78,7 +90,7 @@ struct AppReducer: Reducer {
                     )
                 )
  
-            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.gradeSystemForm(.saveDidFinish))))))):
+            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))))):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
                     .send(.dashboard(.diagramPage(.fetchGradeSystems)))
@@ -95,13 +107,16 @@ struct AppReducer: Reducer {
                 
             case .dashboard(.diagramPage(.topCountDiagram(.didPressEmptyView))),
                  .dashboard(.diagramPage(.summaryDiagram(.didPressEmptyView))):
-                return .send(.presentSettings)
-                
+                if !state.dashboard.gradeSystems.isEmpty {
+                    return .send(.presentDiagramConfiguration)
+                }
+                return .send(.presentGradeSystemList)
+
             default: ()
             }
             return .none
         }
-        .ifLet(\.$destination, action: /Action.destination) {
+        .ifLet(\.$destination, action: \.destination) {
           Destination()
         }
     }

@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct TopCountDiagram: Reducer {
+@Reducer
+struct TopCountDiagram {
     struct State: Equatable {
         var viewState: ViewState<[Top], String> = .loading
         var gradeSystem: GradeSystem?
@@ -44,7 +45,7 @@ struct TopCountDiagram: Reducer {
             case let .receiveData(entries, gradeSystem):
                 state.gradeSystem = gradeSystem
                 guard let gradeSystem = gradeSystem else {
-                    state.viewState = .error("Start by creating a Grade System in Settings!")
+                    state.viewState = .error("Create or select a Grade System for your Diagrams!")
                     return .none
                 }
                 let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem.id })

@@ -38,30 +38,34 @@ struct SettingsView: View {
                 }
                 .navigationTitle("Settings")
                 .navigationDestination(
-                    store: store.scope(state: \.$destination, action: { .destination($0) }),
-                    state: /Settings.Destination.State.gradeSystemList,
-                    action: Settings.Destination.Action.gradeSystemList
+                    store: store.scope(
+                        state: \.$destination.gradeSystemList,
+                        action: \.destination.gradeSystemList
+                    )
                 ) {
                     GradeSystemListView(store: $0)
                 }
                 .navigationDestination(
-                    store: store.scope(state: \.$destination, action: { .destination($0) }),
-                    state: /Settings.Destination.State.diagramConfiguration,
-                    action: Settings.Destination.Action.diagramConfiguration
+                    store: store.scope(
+                        state: \.$destination.diagramConfiguration,
+                        action: \.destination.diagramConfiguration
+                    )
                 ) {
                     DiagramConfigurationView(store: $0)
                 }
                 .navigationDestination(
-                    store: store.scope(state: \.$destination, action: { .destination($0) }),
-                    state: /Settings.Destination.State.appIconList,
-                    action: Settings.Destination.Action.appIconList
+                    store: store.scope(
+                        state: \.$destination.appIconList,
+                        action: \.destination.appIconList
+                    )
                 ) {
                     AppIconListView(store: $0)
                 }
                 .navigationDestination(
-                    store: store.scope(state: \.$destination, action: { .destination($0) }),
-                    state: /Settings.Destination.State.about,
-                    action: Settings.Destination.Action.about
+                    store: store.scope(
+                        state: \.$destination.about,
+                        action: \.destination.about
+                    )
                 ) {
                     AboutView(store: $0)
                 }

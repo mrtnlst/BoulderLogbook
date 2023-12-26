@@ -17,13 +17,13 @@ struct DashboardView: View {
                 DiagramPageView(
                     store: store.scope(
                         state: \.diagramPage,
-                        action: Dashboard.Action.diagramPage
+                        action: \.diagramPage
                     )
                 )
                 ForEachStore(
                     store.scope(
                         state: \.sections,
-                        action: Dashboard.Action.dashboardSection(id:action:)
+                        action: \.dashboardSection
                     )
                 ) { sectionStore in
                     DashboardSectionView(store: sectionStore)

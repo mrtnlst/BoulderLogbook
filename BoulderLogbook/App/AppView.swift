@@ -14,7 +14,10 @@ struct AppView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             DashboardView(
-                store: store.scope(state: \.dashboard, action: AppReducer.Action.dashboard)
+                store: store.scope(
+                    state: \.dashboard,
+                    action: \.dashboard
+                )
             )
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -35,16 +38,18 @@ struct AppView: View {
                 }
             }
             .sheet(
-                store: store.scope(state: \.$destination, action: { .destination($0) }),
-                state: /AppReducer.Destination.State.entryForm,
-                action: AppReducer.Destination.Action.entryForm
+                store: store.scope(
+                    state: \.$destination.entryForm,
+                    action:  \.destination.entryForm
+                )
             ) {
                 EntryFormView(store: $0)
             }
             .sheet(
-                store: store.scope(state: \.$destination, action: { .destination($0) }),
-                state: /AppReducer.Destination.State.settings,
-                action: AppReducer.Destination.Action.settings
+                store: store.scope(
+                    state: \.$destination.settings,
+                    action: \.destination.settings
+                )
             ) {
                 SettingsView(store: $0)
             }

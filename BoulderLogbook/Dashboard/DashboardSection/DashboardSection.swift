@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct DashboardSection: Reducer {
+@Reducer
+struct DashboardSection {
     struct State: Equatable, Identifiable {
         var id: Double { date.timeIntervalSince1970 }
         let date: Date
@@ -84,7 +85,7 @@ struct DashboardSection: Reducer {
             }
             return .none
         }
-        .ifLet(\.$entryDetail, action: /Action.entryDetail) {
+        .ifLet(\.$entryDetail, action: \.entryDetail) {
             EntryDetail()
         }
     }

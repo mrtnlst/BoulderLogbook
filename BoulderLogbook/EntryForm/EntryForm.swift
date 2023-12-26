@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct EntryForm: Reducer {
+@Reducer
+struct EntryForm {
     struct State: Equatable {
         let id: UUID
         var tops: [Top] // TODO: @BindingState?

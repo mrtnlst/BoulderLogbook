@@ -8,8 +8,10 @@
 import Foundation
 import ComposableArchitecture
 
-struct Settings: Reducer {
-    struct Destination: Reducer {
+@Reducer
+struct Settings {
+    @Reducer
+    struct Destination {
         enum State: Equatable {
             case gradeSystemList(GradeSystemList.State)
             case diagramConfiguration(DiagramConfiguration.State)
@@ -24,16 +26,16 @@ struct Settings: Reducer {
             case about(About.Action)
         }
         var body: some ReducerOf<Self> {
-            Scope(state: /State.gradeSystemList, action: /Action.gradeSystemList) {
+            Scope(state: \.gradeSystemList, action: \.gradeSystemList) {
                 GradeSystemList()
             }
-            Scope(state: /State.diagramConfiguration, action: /Action.diagramConfiguration) {
+            Scope(state: \.diagramConfiguration, action: \.diagramConfiguration) {
                 DiagramConfiguration()
             }
-            Scope(state: /State.appIconList, action: /Action.appIconList) {
+            Scope(state: \.appIconList, action: \.appIconList) {
                 AppIconList()
             }
-            Scope(state: /State.about, action: /Action.about) {
+            Scope(state: \.about, action: \.about) {
                 About()
             }
         }
@@ -91,7 +93,7 @@ struct Settings: Reducer {
             }
             return .none
         }
-       .ifLet(\.$destination, action: /Action.destination) {
+       .ifLet(\.$destination, action: \.destination) {
          Destination()
        }
     }

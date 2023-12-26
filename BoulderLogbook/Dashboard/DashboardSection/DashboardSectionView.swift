@@ -50,7 +50,7 @@ struct DashboardSectionView: View {
             .headerProminence(.increased)
         }
         .navigationDestination(
-            store: store.scope(state: \.$entryDetail, action: { .entryDetail($0) })
+            store: store.scope(state: \.$entryDetail, action: \.entryDetail)
         ) {
             EntryDetailView(store: $0)
         }

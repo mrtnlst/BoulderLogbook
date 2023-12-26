@@ -8,7 +8,8 @@
 import UIKit
 import ComposableArchitecture
 
-struct AppIconList: Reducer {
+@Reducer
+struct AppIconList {
     struct State: Equatable {
         var currentIconName: String?
         

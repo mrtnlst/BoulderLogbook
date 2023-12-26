@@ -19,43 +19,33 @@ struct GradeSystemListView: View {
                     .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
                 }
             }
+            .confirmationDialog(
+                store: store.scope(
+                    state: \.$destination.confirmationDialog,
+                    action: \.destination.confirmationDialog
+                )
+            )
+            .sheet(
+                store: store.scope(
+                    state: \.$destination.gradeSystemForm,
+                    action: \.destination.gradeSystemForm
+                ),
+                onDismiss: nil,
+                content: {
+                    GradeSystemFormView(store: $0)
+                }
+            )
             .navigationTitle("Grade Systems")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        viewStore.send(.setIsPresentingForm(true))
+                        viewStore.send(.presentGradeSystemForm)
                     } label: {
                         Image(systemName: "plus")
                             .fontWeight(.bold)
                     }
                 }
             }
-            .sheet(
-                isPresented: viewStore.binding(
-                    get: \.isPresentingForm,
-                    send: GradeSystemList.Action.setIsPresentingForm
-                )
-            ) {
-                IfLetStore(
-                    store.scope(
-                        state: \.gradeSystemForm,
-                        action: GradeSystemList.Action.gradeSystemForm
-                    )
-                ) { formStore in
-                    GradeSystemFormView(store: formStore)
-                }
-            }
-            .alert(
-                "Warning",
-                isPresented: viewStore.binding(
-                    get: \.isPresentingConfirmation,
-                    send: GradeSystemList.Action.setIsPresentingConfirmation
-                ),
-                actions: { alertButtons() },
-                message: {
-                    Text("Deleting \(viewStore.systemToDelete?.name ?? "") removes all of its logbook entries!")
-                }
-            )
             .onAppear {
                 viewStore.send(.onAppear)
             }
@@ -98,21 +88,6 @@ extension GradeSystemListView {
                 label: { Label("Edit", systemImage: "pencil") }
             )
             .tint(.hunyadiOrange)
-        }
-    }
-    
-    @ViewBuilder func alertButtons() -> some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            Button(
-                "Delete",
-                role: .destructive,
-                action: { viewStore.send(.confirmDelete) }
-            )
-            Button(
-                "Cancel",
-                role: .cancel,
-                action: { viewStore.send(.cancelDelete) }
-            )
         }
     }
 }

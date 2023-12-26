@@ -8,7 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct Dashboard: Reducer {
+@Reducer
+struct Dashboard {
     struct State: Equatable {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
         var diagramPage = DiagramPage.State()
@@ -21,7 +22,7 @@ struct Dashboard: Reducer {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
-        case dashboardSection(id: Double, action: DashboardSection.Action)
+        case dashboardSection(IdentifiedActionOf<DashboardSection>)
         case diagramPage(DiagramPage.Action)
     }
     @Dependency(\.entryClient) var entryClient
@@ -90,7 +91,7 @@ struct Dashboard: Reducer {
                     )
                 )
                 
-            case .dashboardSection(id: _, action: .deleteDidFinish(_)):
+            case .dashboardSection(.element(_, .deleteDidFinish(_))):
                 return .merge(
                     .send(.fetchEntries),
                     .send(.diagramPage(.fetchEntries))
@@ -100,7 +101,7 @@ struct Dashboard: Reducer {
             }
             return .none
         }
-        .forEach(\.sections, action: /Action.dashboardSection) {
+        .forEach(\.sections, action: \.dashboardSection) {
             DashboardSection()
         }
     }

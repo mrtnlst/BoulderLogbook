@@ -18,21 +18,21 @@ struct DiagramPageView: View {
                     TopCountDiagramView(
                         store: store.scope(
                             state: \.topCountDiagram,
-                            action: DiagramPage.Action.topCountDiagram
+                            action: \.topCountDiagram
                         )
                     )
                     .tag(DiagramPage.State.Tab.topCount)
                     SessionDiagramView(
                         store: store.scope(
                             state: \.sessionDiagram,
-                            action: DiagramPage.Action.sessionDiagram
+                            action: \.sessionDiagram
                         )
                     )
                     .tag(DiagramPage.State.Tab.session)
                     SummaryDiagramView(
                         store: store.scope(
                             state: \.summaryDiagram,
-                            action: DiagramPage.Action.summaryDiagram
+                            action: \.summaryDiagram
                         )
                     )
                     .tag(DiagramPage.State.Tab.summary)
