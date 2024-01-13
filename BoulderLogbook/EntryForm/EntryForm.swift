@@ -12,13 +12,13 @@ import ComposableArchitecture
 struct EntryForm {
     struct State: Equatable {
         let id: UUID
-        var tops: [Top] // TODO: @BindingState?
-        var attempts: [Top] // TODO: @BindingState?
-        var flashs: [Top] // TODO: @BindingState?
-        var onsights: [Top] // TODO: @BindingState?
+        var tops: [Top]
+        var attempts: [Top]
+        var flashs: [Top]
+        var onsights: [Top]
         var gradeSystems: [GradeSystem] = []
         var isEditing: Bool
-        
+
         @BindingState var date: Date
         @BindingState var notes: String
         @BindingState var selectedSystemId: UUID?
@@ -60,14 +60,10 @@ struct EntryForm {
         case fetchSelectedSystem
         case receiveAvailableSystems(TaskResult<[GradeSystem]>)
         case receiveSelectedSystem(TaskResult<UUID?>)
-        case increaseTop(GradeSystem.Grade)
-        case decreaseTop(GradeSystem.Grade)
-        case increaseAttempt(GradeSystem.Grade)
-        case decreaseAttempt(GradeSystem.Grade)
-        case increaseFlash(GradeSystem.Grade)
-        case decreaseFlash(GradeSystem.Grade)
-        case increaseOnsight(GradeSystem.Grade)
-        case decreaseOnsight(GradeSystem.Grade)
+        case topStepperChanged(Int, GradeSystem.Grade)
+        case attemptStepperChanged(Int, GradeSystem.Grade)
+        case flashStepperChanged(Int, GradeSystem.Grade)
+        case onsightStepperChanged(Int, GradeSystem.Grade)
         case save
         case saveDidFinish(TaskResult<EntryClientResponse>)
         case cancel
@@ -126,41 +122,49 @@ struct EntryForm {
                     return .none
                 }
                 state.selectedSystemId = selected
-            
-            case let .increaseTop(grade):
-                let top = Top(grade: grade.id)
-                state.tops.append(top)
                 
-            case let .decreaseTop(grade):
-                if let index = state.tops.firstIndex(where: { $0.grade == grade.id }) {
-                    state.tops.remove(at: index)
+            case let .topStepperChanged(value, grade):
+                if value > state.tops.count {
+                    state.tops.append(
+                        Top(grade: grade.id)
+                    )
+                } else {
+                    if let index = state.tops.firstIndex(where: { $0.grade == grade.id }) {
+                        state.tops.remove(at: index)
+                    }
                 }
-                
-            case let .increaseAttempt(grade):
-                let attempt = Top(grade: grade.id, isAttempt: true)
-                state.attempts.append(attempt)
-                
-            case let .decreaseAttempt(grade):
-                if let index = state.attempts.firstIndex(where: { $0.grade == grade.id }) {
-                    state.attempts.remove(at: index)
+
+            case let .attemptStepperChanged(value, grade):
+                if value > state.attempts.count {
+                    state.attempts.append(
+                        Top(grade: grade.id, isAttempt: true)
+                    )
+                } else {
+                    if let index = state.attempts.firstIndex(where: { $0.grade == grade.id }) {
+                        state.attempts.remove(at: index)
+                    }
                 }
-                
-            case let .increaseFlash(grade):
-                let flash = Top(grade: grade.id, wasFlash: true)
-                state.flashs.append(flash)
-                
-            case let .decreaseFlash(grade):
-                if let index = state.flashs.firstIndex(where: { $0.grade == grade.id }) {
-                    state.flashs.remove(at: index)
+
+            case let .flashStepperChanged(value, grade):
+                if value > state.flashs.count {
+                    state.flashs.append(
+                        Top(grade: grade.id, wasFlash: true)
+                    )
+                } else {
+                    if let index = state.flashs.firstIndex(where: { $0.grade == grade.id }) {
+                        state.flashs.remove(at: index)
+                    }
                 }
-                
-            case let .increaseOnsight(grade):
-                let onsight = Top(grade: grade.id, wasOnsight: true)
-                state.onsights.append(onsight)
-                
-            case let .decreaseOnsight(grade):
-                if let index = state.onsights.firstIndex(where: { $0.grade == grade.id }) {
-                    state.onsights.remove(at: index)
+
+            case let .onsightStepperChanged(value, grade):
+                if value > state.onsights.count {
+                    state.onsights.append(
+                        Top(grade: grade.id, wasOnsight: true)
+                    )
+                } else {
+                    if let index = state.onsights.firstIndex(where: { $0.grade == grade.id }) {
+                        state.onsights.remove(at: index)
+                    }
                 }
                 
             case .save:
