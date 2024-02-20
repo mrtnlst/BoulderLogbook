@@ -14,11 +14,11 @@ struct AppIconListView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            List {
-                Section {
+            PlainList {
+                PlainSection {
                     appIconRow(for: .classic)
                 }
-                Section("App Icon Pack") {
+                PlainSection("App Icon Pack") {
                     appIconRow(for: .aurora)
                     appIconRow(for: .darkBerry)
                 }
@@ -47,7 +47,7 @@ extension AppIconListView {
                     let isAlternativeSelected = icon.fileName == viewStore.currentIconName
                     let isSelected = isClassicSelected || isAlternativeSelected
                     Image(systemName: isSelected ? "checkmark.circle" : "circle")
-                        .foregroundColor(isSelected ? .jadeGreen : .secondary)
+                        .foregroundStyle(isSelected ? .success : .primaryText)
                 }
             }
         }

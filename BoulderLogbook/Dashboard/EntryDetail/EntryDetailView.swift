@@ -14,8 +14,8 @@ struct EntryDetailView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            List {
-                Section {
+            PlainList {
+                PlainSection {
                     SummaryDiagramView(
                         store: store.scope(
                             state: \.summaryDiagram,
@@ -24,17 +24,17 @@ struct EntryDetailView: View {
                     )
                     .frame(height: 200)
                 }
-                Section {
+                PlainSection {
                     gradesSystem(name: viewStore.gradeSystem.name)
                 }
-                Section {
+                PlainSection {
                     if let notes = viewStore.entry.notes {
                         self.notes(text: notes)
                     } else {
                         EmptyView()
                     }
                 }
-                Section {
+                PlainSection {
                     buttons()
                 }
             }
@@ -47,31 +47,16 @@ struct EntryDetailView: View {
 extension EntryDetailView {
     func gradesSystem(name: String) -> some View {
         HStack {
-            Label(
-                title: { Text("Grade System") },
-                icon: {
-                    Image(systemName: "square.fill.text.grid.1x2")
-                        .foregroundColor(.primary)
-                }
-            )
+            Label("Grade System", systemImage: "square.fill.text.grid.1x2")
             Spacer()
             Text(name)
-                .foregroundColor(.secondary)
         }
+        .foregroundStyle(.primaryText)
     }
     
     func notes(text: String) -> some View {
-        HStack {
-            Label(
-                title: {
-                    Text(text)
-                },
-                icon: {
-                    Image(systemName: "note.text")
-                        .foregroundColor(.primary)
-                }
-            )
-        }
+        Label(text, systemImage: "note.text")
+            .foregroundStyle(.primaryText)
     }
     
     func buttons() -> some View {

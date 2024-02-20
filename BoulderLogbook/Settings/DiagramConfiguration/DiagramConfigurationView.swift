@@ -13,8 +13,8 @@ struct DiagramConfigurationView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Form {
-                Section {
+            PlainList {
+                PlainSection {
                     gradeSystems()
                 }
             }
@@ -43,7 +43,7 @@ extension DiagramConfigurationView {
                         title: { Text("Grade System") },
                         icon: { Image(systemName: "square.fill.text.grid.1x2") }
                     )
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primaryText)
                 }
             )
             .pickerStyle(.menu)

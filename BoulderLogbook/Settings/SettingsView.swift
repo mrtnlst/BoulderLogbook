@@ -14,7 +14,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             WithViewStore(store, observe: { $0 }) { viewStore in
-                List {
+                PlainList {
                     Button {
                         viewStore.send(.setGradeSystemListNavigation)
                     } label: {
@@ -71,6 +71,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -82,12 +83,12 @@ private extension SettingsView {
                     Text(title)
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.primaryText)
                 }
             },
             icon: {
                 Image(systemName: image)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primaryText)
             }
         )
     }

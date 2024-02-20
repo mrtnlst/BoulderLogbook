@@ -13,7 +13,7 @@ struct GradeSystemListView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            List {
+            PlainList {
                 ForEach(viewStore.gradeSystems) { gradeSystem in
                     selectionRow(gradeSystem: gradeSystem)
                     .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
@@ -56,53 +56,52 @@ struct GradeSystemListView: View {
 extension GradeSystemListView {
     @ViewBuilder func selectionRow(gradeSystem: GradeSystem) -> some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Button(
-                action: { viewStore.send(.saveSelected(gradeSystem.id)) },
-                label: {
-                    let isSelected = viewStore.selectedSystem?.id == gradeSystem.id
-                    HStack {
-                        Text(gradeSystem.name)
-                            .foregroundColor(.primary)
-                            .font(.body)
-                        Spacer()
-                        Text(isSelected ? "Default" : "")
-                            .foregroundColor(.secondary)
-                            .font(.subheadline)
-                        Image(systemName: isSelected  ? "checkmark.circle" : "circle")
-                            .foregroundColor(isSelected ? .jadeGreen : .secondary)
-                    }
+            Button {
+                viewStore.send(.saveSelected(gradeSystem.id))
+            } label: {
+                let isSelected = viewStore.selectedSystem?.id == gradeSystem.id
+                HStack {
+                    Text(gradeSystem.name)
+                        .foregroundStyle(.primaryText)
+                        .font(.body)
+                    Spacer()
+                    Text(isSelected ? "Default" : "")
+                        .foregroundStyle(.tertiaryText)
+                        .font(.subheadline)
+                    Image(systemName: isSelected  ? "checkmark.circle" : "circle")
+                        .foregroundColor(isSelected ? .araSuccess : .tertiaryText)
                 }
-            )
+            }
         }
     }
     
     @ViewBuilder func swipeButtons(gradeSystem: GradeSystem) -> some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Button(
-                action: { viewStore.send(.setSystemToDelete(gradeSystem)) },
-                label: { Label("Delete", systemImage: "trash") }
-            )
-            .tint(.indianRed)
-            Button(
-                action: { viewStore.send(.edit(gradeSystem.id)) },
-                label: { Label("Edit", systemImage: "pencil") }
-            )
-            .tint(.hunyadiOrange)
+            Button {
+                viewStore.send(.setSystemToDelete(gradeSystem))
+            } label: { 
+                Label("Delete", systemImage: "trash")
+            }
+            .tint(.araError)
+            Button {
+                viewStore.send(.edit(gradeSystem.id))
+            } label: { 
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.araWarning)
         }
     }
 }
 
-struct GradeSystemListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            GradeSystemListView(
-                store: Store(
-                    initialState: GradeSystemList.State()
-                ) {
-                    GradeSystemList()
-                        .dependency(\.gradeSystemClient, .previewValue)
-                }
-            )
-        }
+#Preview {
+    NavigationView {
+        GradeSystemListView(
+            store: Store(
+                initialState: GradeSystemList.State()
+            ) {
+                GradeSystemList()
+                    .dependency(\.gradeSystemClient, .previewValue)
+            }
+        )
     }
 }

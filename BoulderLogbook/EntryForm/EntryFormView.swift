@@ -12,20 +12,21 @@ struct EntryFormView: View {
     let store: StoreOf<EntryForm>
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             WithViewStore(store, observe: { $0 }) { viewStore in
-                Form {
-                    Section { gradeSystems() }
-                    Section { tops() }
-                    Section { datePicker() }
-                    Section { notes() }
-                    Section { buttons() }
+                PlainList {
+                    PlainSection { gradeSystems() }
+                    PlainSection { tops() }
+                    PlainSection { datePicker() }
+                    PlainSection { notes() }
+                    PlainSection { buttons() }
                 }
                 .navigationTitle(viewStore.isEditing ? "Update Entry" : "New Entry")
                 .scrollDismissesKeyboard(.interactively)
                 .onAppear { viewStore.send(.onAppear) }
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -44,7 +45,7 @@ extension EntryFormView {
                     title: { Text("Grade System") },
                     icon: { Image(systemName: "square.fill.text.grid.1x2") }
                 )
-                .foregroundColor(.primary)
+                .foregroundStyle(.primaryText)
             }
             .pickerStyle(.menu)
             .disabled(viewStore.isEditing)
@@ -88,22 +89,20 @@ extension EntryFormView {
                     Stepper(
                         value: viewStore.binding(get: \.tops.count, send: { .topStepperChanged($0, grade)} ),
                         label: {
-                            Label(
-                                title: {
-                                    let count = viewStore.tops.count(for: grade)
-                                    + viewStore.flashs.count(for: grade)
-                                    + viewStore.onsights.count(for: grade)
-                                    HStack(alignment: .firstTextBaseline) {
-                                        Text("Tops: \(count)")
-                                        Text("A: \(viewStore.attempts.count(for: grade))")
-                                            .foregroundColor(.secondary)
-                                    }
-                                },
-                                icon: {
-                                    Image(systemName: "triangle.fill")
-                                        .foregroundColor(grade.color)
+                            Label {
+                                let count = viewStore.tops.count(for: grade)
+                                + viewStore.flashs.count(for: grade)
+                                + viewStore.onsights.count(for: grade)
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text("Tops: \(count)")
+                                        .foregroundStyle(.primaryText)
+                                    Text("A: \(viewStore.attempts.count(for: grade))")
+                                        .foregroundStyle(.tertiaryText)
                                 }
-                            )
+                            } icon: {
+                                Image(systemName: "triangle.fill")
+                                    .foregroundColor(grade.color)
+                            }
                         }
                     )
                 }
@@ -120,10 +119,13 @@ extension EntryFormView {
         Stepper(
             value: value,
             label: {
-                Label(
-                    title: { Text(title) },
-                    icon: { Image(systemName: icon).foregroundColor(color) }
-                )
+                Label {
+                    Text(title)
+                        .foregroundStyle(.primaryText)
+                } icon: {
+                    Image(systemName: icon)
+                        .foregroundColor(color)
+                }
             }
         )
     }
@@ -139,21 +141,22 @@ extension EntryFormView {
                     title: { Text("Date") },
                     icon: { Image(systemName: "calendar") }
                 )
-                .foregroundColor(.primary)
+                .foregroundStyle(.primaryText)
             }
         }
     }
     
     @MainActor func notes() -> some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
+            let isNotEdited = viewStore.notes == viewStore.notesPlaceHolder
             TextEditor(text: viewStore.$notes)
-                .foregroundColor(viewStore.notes == viewStore.notesPlaceHolder ? .gray : .primary)
+                .textEditorStyle(.plain)
+                .foregroundStyle(isNotEdited ? .secondaryText : .primaryText)
                 .onTapGesture {
-                    if viewStore.notes == viewStore.notesPlaceHolder {
+                    if isNotEdited {
                         viewStore.send(.binding(.set(\.$notes, "")))
                     }
                 }
-                .lineLimit(3)
         }
     }
     

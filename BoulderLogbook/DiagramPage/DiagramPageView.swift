@@ -44,7 +44,7 @@ struct DiagramPageView: View {
                 HStack {
                     ForEach(DiagramPage.State.Tab.allCases, id: \.rawValue) { tab in
                         Capsule()
-                            .foregroundColor(Color.secondary)
+                            .foregroundStyle(.primaryText)
                             .frame(
                                 width: viewStore.selectedTab == tab ? 8 : 6,
                                 height: viewStore.selectedTab == tab ? 8 : 6
@@ -60,7 +60,7 @@ struct DiagramPageView: View {
 
 struct DiagramPageView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
+        PlainList {
             DiagramPageView(
                 store: Store(
                     initialState: DiagramPage.State()

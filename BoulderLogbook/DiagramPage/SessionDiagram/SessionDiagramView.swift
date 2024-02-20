@@ -41,13 +41,30 @@ extension SessionDiagramView {
             .foregroundStyle(by: .value("Month", model.date))
             .annotation(position: .overlay, alignment: .bottom) {
                 Text("\(model.count)")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.primaryText)
                     .font(.caption2)
                     .fontWeight(.semibold)
             }
         }
         .chartXAxisLabel(position: .top) {
             Text("Sessions per Month")
+                .foregroundStyle(.primaryText)
+        }
+        .chartXAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
+            }
+        }
+        .chartYAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
+            }
         }
         .chartLegend(.hidden)
         .padding(.top, 4)
@@ -56,8 +73,8 @@ extension SessionDiagramView {
 
 struct SessionDiagramView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            Section {
+        PlainList {
+            PlainSection("Loading") {
                 SessionDiagramView(
                     store: Store(
                         initialState: SessionDiagram.State()
@@ -67,7 +84,7 @@ struct SessionDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 200)
             }
-            Section {
+            PlainSection("Diagram") {
                 SessionDiagramView(
                     store: Store(
                         initialState: SessionDiagram.State(
@@ -84,7 +101,7 @@ struct SessionDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 200)
             }
-            Section {
+            PlainSection("Empty") {
                 SessionDiagramView(
                     store: Store(
                         initialState: SessionDiagram.State(

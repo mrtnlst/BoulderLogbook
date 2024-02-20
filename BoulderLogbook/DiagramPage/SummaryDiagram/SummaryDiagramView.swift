@@ -73,6 +73,23 @@ private extension SummaryDiagramView {
         .chartXAxisLabel(position: .top) {
             if hasWeekFilter {
                 Text("Summary of the last 7 days")
+                    .foregroundStyle(.primaryText)
+            }
+        }
+        .chartXAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
+            }
+        }
+        .chartYAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
             }
         }
         .padding(.top, 4)
@@ -93,7 +110,7 @@ private extension SummaryDiagramView {
                 Image(systemName: image)
                 Text("\(value)")
             }
-            .foregroundColor(grade.color.isBright ? .black : .white)
+            .foregroundStyle(grade.color.isBright ? .primaryTextDark : .primaryText)
             .font(.caption)
         }
     }
@@ -101,8 +118,8 @@ private extension SummaryDiagramView {
 
 struct SummaryDiagramView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            Section {
+        PlainList {
+            PlainSection("Loading") {
                 SummaryDiagramView(
                     store: Store(initialState: .init(hasWeekFilter: true)) {
                         SummaryDiagram()
@@ -110,7 +127,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 170)
             }
-            Section {
+            PlainSection("Diagram") {
                 SummaryDiagramView(
                     store: Store(
                         initialState: SummaryDiagram.State(
@@ -180,7 +197,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 200)
             }
-            Section {
+            PlainSection("Empty") {
                 SummaryDiagramView(
                     store: Store(
                         initialState: .init(

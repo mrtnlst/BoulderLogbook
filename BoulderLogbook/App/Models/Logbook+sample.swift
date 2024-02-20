@@ -493,6 +493,30 @@ extension [Logbook.Section.Entry] {
             date: Date(timeIntervalSince1970: 1703606300),
             tops: [.sample7, .sample7, .sample7, .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample3, .sample2],
             gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1704744658),
+            tops: [.sample7, .sample5, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample2, .sample2],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1704973498),
+            tops: [.sample4, .sample4, .sample3, .sample2, .sample2, .sample2, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1705352338),
+            tops: [.sample7, .sample7, .sample5, .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
+        ),
+        .init(
+            id: UUID(),
+            date: Date(timeIntervalSince1970: 1705958338),
+            tops: [.sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            gradeSystem: GradeSystem.mandala.id
         )
     ]
 }

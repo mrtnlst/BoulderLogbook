@@ -21,6 +21,7 @@ struct BoulderLogbookApp: App {
             NavigationStack {
                 AppView(store: Self.store)
             }
+            .preferredColorScheme(.dark)
         }
     }
 }

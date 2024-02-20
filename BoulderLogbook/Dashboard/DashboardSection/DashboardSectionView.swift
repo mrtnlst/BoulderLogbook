@@ -13,32 +13,29 @@ struct DashboardSectionView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Section {
+            PlainSection {
                 ForEach(viewStore.entryDetailStates) { entryDetailState in
-                    Button(
-                        action: {
-                            viewStore.send(.setNavigation(entryDetailState.id))
-                        },
-                        label: {
-                            DashboardEntryView(
-                                entry: entryDetailState.entry,
-                                gradeSystem: entryDetailState.gradeSystem
-                            )
-                        }
-                    )
+                    Button {
+                        viewStore.send(.setNavigation(entryDetailState.id))
+                    } label: {
+                        DashboardEntryView(
+                            entry: entryDetailState.entry,
+                            gradeSystem: entryDetailState.gradeSystem
+                        )
+                    }
                     .swipeActions {
                         Button(role: .destructive) {
                             viewStore.send(.delete(entryDetailState.id))
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
-                        .tint(.indianRed)
+                        .tint(.araError)
                         Button {
                             viewStore.send(.edit(entryDetailState.entry))
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
-                        .tint(.hunyadiOrange)
+                        .tint(.araWarning)
                     }
                 }
             } header: {
@@ -46,8 +43,9 @@ struct DashboardSectionView: View {
                     viewStore.date,
                     format: .dateTime.year().month(.wide)
                 )
+                .font(.title3)
+                .fontWeight(.semibold)
             }
-            .headerProminence(.increased)
         }
         .navigationDestination(
             store: store.scope(state: \.$entryDetail, action: \.entryDetail)
@@ -60,7 +58,7 @@ struct DashboardSectionView: View {
 struct DashboardSectionView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            List {
+            PlainList {
                 DashboardSectionView(
                     store: Store(
                         initialState: DashboardSection.State(

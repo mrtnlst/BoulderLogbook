@@ -13,47 +13,37 @@ struct AboutView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            VStack {
-                Spacer(minLength: 20)
-                AppIconView(iconName: "AppIcon")
-                Text("Boulder Logbook")
-                    .font(.headline)
-                Text("1.0.0")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                List {
-                    Section("Developed by") {
-                        Button(
-                            action: {
-                                viewStore.send(.openMartin)
-                            },
-                            label: {
-                                Text("Martin List")
-                            }
-                        )
-                        .foregroundColor(.blue)
+            PlainList {
+                PlainSection {
+                    VStack(alignment: .center) {
+                        AppIconView(iconName: "AppIcon")
+                        Text("Boulder Logbook")
+                            .font(.headline)
+                        Text("1.0.0")
+                            .font(.caption)
                     }
-                    .listSectionSeparator(.hidden)
-                    Section("Open Source Software") {
-                        Button(
-                            action: {
-                                viewStore.send(.openTCA)
-                            },
-                            label: {
-                                Text("The Composable Architecture")
-                            }
-                        )
-                        .foregroundColor(.blue)
-                        
-                    }
-                    .listSectionSeparator(.hidden)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
                 }
-                .buttonStyle(PlainButtonStyle())
-                .listStyle(.plain)
-                
+                PlainSection("Developed by") {
+                    Button {
+                        viewStore.send(.openMartin)
+                    } label: {
+                        Text("Martin List")
+                    }
+                    .foregroundColor(.accentColor)
+                }
+                PlainSection("Open Source Software") {
+                    Button {
+                        viewStore.send(.openTCA)
+                    } label: {
+                        Text("The Composable Architecture")
+                    }
+                    .foregroundColor(.accentColor)
+                }
             }
-            .navigationTitle("About")
         }
+        .navigationTitle("About")
     }
 }
 

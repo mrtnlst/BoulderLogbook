@@ -11,7 +11,7 @@ import ComposableArchitecture
 
 struct TopCountDiagramView: View {
     let store: StoreOf<TopCountDiagram>
-    
+
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             switch viewStore.viewState {
@@ -28,7 +28,7 @@ struct TopCountDiagramView: View {
                         tops: tops
                     )
                 }
-                
+
             case let .error(message):
                 EmptyMessageView(message: message) {
                     viewStore.send(.didPressEmptyView)
@@ -43,15 +43,14 @@ extension TopCountDiagramView {
     @MainActor
     func picker() -> some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            Picker(
-                "Pick the number of sessions displayed in the chart!",
+            PlainPicker(
+                title: "Pick the number of sessions displayed in the chart!",
                 selection: viewStore.$selectedSegment
             ) {
                 ForEach(TopCountDiagram.Segment.allCases, id: \.self) { segment in
                     Text(segment.rawValue)
                 }
             }
-            .pickerStyle(.segmented)
             .disabled(viewStore.gradeSystem == nil ? true : false)
         }
     }
@@ -66,7 +65,7 @@ extension TopCountDiagramView {
             .annotation(position: .top, alignment: .bottom) {
                 if tops.count > 0 {
                     Text("\(tops.count(for: grade))")
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.primaryText)
                         .font(.caption2)
                         .fontWeight(.semibold)
                 }
@@ -74,13 +73,29 @@ extension TopCountDiagramView {
         }
         .chartForegroundStyleScale(range: grades.map { $0.color })
         .chartLegend(.hidden)
+        .chartXAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
+            }
+        }
+        .chartYAxis {
+            AxisMarks(values: .automatic) {
+                AxisValueLabel()
+                    .foregroundStyle(.primaryText)
+                AxisGridLine()
+                    .foregroundStyle(.primaryText.opacity(0.4))
+            }
+        }
     }
 }
 
 struct TopCountDiagramView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            Section {
+        PlainList {
+            PlainSection("Loading") {
                 TopCountDiagramView(
                     store: Store(
                         initialState: TopCountDiagram.State(
@@ -91,7 +106,7 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 170)
             }
-            Section {
+            PlainSection("Diagram") {
                 TopCountDiagramView(
                     store: Store(
                         initialState: TopCountDiagram.State(
@@ -109,7 +124,7 @@ struct TopCountDiagramView_Previews: PreviewProvider {
                 )
                 .frame(height: 170)
             }
-            Section {
+            PlainSection("Empty") {
                 TopCountDiagramView(
                     store: Store(
                         initialState: TopCountDiagram.State(

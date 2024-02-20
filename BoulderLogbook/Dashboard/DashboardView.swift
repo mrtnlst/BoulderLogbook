@@ -13,7 +13,7 @@ struct DashboardView: View {
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            List {
+            PlainList {
                 DiagramPageView(
                     store: store.scope(
                         state: \.diagramPage,

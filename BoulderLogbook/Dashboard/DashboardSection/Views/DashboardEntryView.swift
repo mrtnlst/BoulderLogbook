@@ -20,16 +20,17 @@ struct DashboardEntryView: View {
             .frame(minHeight: 18)
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.primaryText)
                 .padding(.leading, 2)
         }
         .padding(.vertical, 8)
+        .listRowBackground(Color.rowBackground)
     }
 }
 
 struct DashboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
+        PlainList {
             DashboardEntryView(
                 entry: [Logbook.Section.Entry].samples[0],
                 gradeSystem: .mandala

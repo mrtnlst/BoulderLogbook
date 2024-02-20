@@ -7,10 +7,30 @@
 
 import SwiftUI
 
+struct PrimaryButtonStyle: ButtonStyle {
+    let tintColor: Color
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .background(configuration.isPressed ? tintColor.opacity(0.1) : .background)
+            .foregroundStyle(.primaryText)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(
+                        tintColor,
+                        lineWidth: configuration.isPressed ? 3 : 2
+                    )
+            )
+    }
+}
+
+
 struct RectangularButton: View {
     let title: String
     let image: String
     let action: () -> Void
+    @Environment(\.isEnabled) private var isEnabled: Bool
 
     var body: some View {
         Button(
@@ -20,11 +40,14 @@ struct RectangularButton: View {
                     Image(systemName: image)
                     Text(title)
                 }
-                .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
+                .tracking(1.75)
+                .fontWeight(.medium)
+                .textCase(.uppercase)
+                .font(.subheadline)
             }
         )
-        .buttonStyle(.borderedProminent)
+        .opacity(isEnabled ? 1.0 : 0.4)
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
     }
@@ -33,32 +56,31 @@ struct RectangularButton: View {
 extension RectangularButton {
     @ViewBuilder static func save(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Save", image: "checkmark", action: action)
-            .tint(.jadeGreen)
+            .buttonStyle(PrimaryButtonStyle(tintColor: .araPrimary))
     }
     @ViewBuilder static func edit(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Edit", image: "pencil", action: action)
-            .tint(.hunyadiOrange)
+            .buttonStyle(PrimaryButtonStyle(tintColor: .araWarning))
     }
     @ViewBuilder static func delete(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Delete", image: "trash", action: action)
-            .tint(.indianRed)
+            .buttonStyle(PrimaryButtonStyle(tintColor: .araError))
     }
     @ViewBuilder static func cancel(action: @escaping () -> Void) -> some View {
         RectangularButton(title: "Cancel", image: "xmark", action: action)
-            .tint(.jetBlack)
+            .buttonStyle(PrimaryButtonStyle(tintColor: .tertiaryText))
     }
 }
 
 struct RectangularButton_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            Section{
-                Text("Buttons")
+        PlainList {
+            PlainSection("Buttons") {
+                RectangularButton.save {}
+                RectangularButton.delete {}
+                RectangularButton.edit {}
+                RectangularButton.cancel {}
             }
-            RectangularButton.save {}
-            RectangularButton.delete {}
-            RectangularButton.edit {}
-            RectangularButton.cancel {}
         }
     }
 }

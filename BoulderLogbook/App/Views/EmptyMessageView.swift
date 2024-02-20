@@ -22,9 +22,9 @@ struct EmptyMessageView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 7 * size)
                     .frame(width: 28 * size, height: 28 * size)
-                    .foregroundColor(.indianRed)
+                    .foregroundColor(.araError)
                 Image(systemName: "exclamationmark")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.primaryText)
             }
             Text(message ?? "")
         }
@@ -46,12 +46,12 @@ struct EmptyMessageView: View {
 
 struct EmptyMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            Section {
+        PlainList {
+            PlainSection("Empty") {
                 EmptyMessageView(message: "No entries available")
                     .frame(maxWidth: .infinity)
             }
-            Section {
+            PlainSection("More Text") {
                 EmptyMessageView(message: "Create or select grade system from Settings!", action: {})
                     .frame(maxWidth: .infinity)
             }

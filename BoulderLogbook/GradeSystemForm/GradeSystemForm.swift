@@ -14,7 +14,13 @@ struct GradeSystemForm {
         let id: UUID
         @BindingState var name: String
         @BindingState var grades: [GradeSystem.Grade]
-        
+        @BindingState var focusedField: Field?
+
+        enum Field: Hashable {
+            case name
+            case newGrade(UUID)
+        }
+
         init(
             id: UUID = UUID(),
             name: String = "",
@@ -28,6 +34,7 @@ struct GradeSystemForm {
     
     enum Action: BindableAction, Equatable {
         case save
+        case onSubmitNameField
         case addGrade
         case moveGrade(IndexSet, Int)
         case deleteGrade(IndexSet)
@@ -49,10 +56,12 @@ struct GradeSystemForm {
                 guard !state.name.isEmpty else {
                     return .none
                 }
+                var grades = state.grades
+                grades.removeAll { $0.name.isEmpty }
                 let gradeSystem = GradeSystem(
                     id: state.id,
                     name: state.name,
-                    grades: state.grades
+                    grades: grades
                 )
                 return .run { send in
                     await send(
@@ -64,16 +73,21 @@ struct GradeSystemForm {
                         )
                     )
                 }
-                
+
+            case .onSubmitNameField:
+                if let id = state.grades.first?.id {
+                    state.focusedField = .newGrade(id)
+                }
+
             case .addGrade:
                 var nextDifficulty: Int = 0
                 if let lastDifficulty = state.grades.last?.difficulty {
                     nextDifficulty = lastDifficulty + 1
                 }
-                state.grades.append(
-                    GradeSystem.Grade(difficulty: nextDifficulty)
-                )
-            
+                let grade = GradeSystem.Grade(difficulty: nextDifficulty)
+                state.grades.append(grade)
+                state.focusedField = .newGrade(grade.id)
+
             case let .moveGrade(from, to):
                 var grades = state.grades
                 grades.move(fromOffsets: from, toOffset: to)
