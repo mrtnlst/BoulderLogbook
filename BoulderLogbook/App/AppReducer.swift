@@ -41,7 +41,7 @@ struct AppReducer {
         case presentEntryForm
         case presentSettings
         case presentGradeSystemList
-        case presentDiagramConfiguration
+        case presentGradeSystemConfiguration
     }
     @Dependency(\.entryClient) var entryClient
 
@@ -61,9 +61,9 @@ struct AppReducer {
                 state.destination = .settings(Settings.State())
                 return .send(.destination(.presented(.settings(.setGradeSystemListNavigation))))
 
-            case .presentDiagramConfiguration:
+            case .presentGradeSystemConfiguration:
                 state.destination = .settings(Settings.State())
-                return .send(.destination(.presented(.settings(.setDiagramConfigurationNavigation))))
+                return .send(.destination(.presented(.settings(.setGradeSystemListNavigation))))
 
             case .destination(.presented(.entryForm(.cancel))):
                 state.destination = nil
@@ -102,13 +102,13 @@ struct AppReducer {
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                                 
-            case .destination(.presented(.settings(.destination(.presented(.diagramConfiguration(.saveDidFinish)))))):
-                return .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
+            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.saveSelectedDidFinish)))))):
+                return .send(.dashboard(.diagramPage(.fetchEntries)))
                 
             case .dashboard(.diagramPage(.topCountDiagram(.didPressEmptyView))),
                  .dashboard(.diagramPage(.summaryDiagram(.didPressEmptyView))):
                 if !state.dashboard.gradeSystems.isEmpty {
-                    return .send(.presentDiagramConfiguration)
+                    return .send(.presentGradeSystemConfiguration)
                 }
                 return .send(.presentGradeSystemList)
 

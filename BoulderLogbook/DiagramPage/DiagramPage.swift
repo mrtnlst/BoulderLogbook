@@ -47,7 +47,6 @@ struct DiagramPage {
         case binding(BindingAction<State>)
     }
     
-    @Dependency(\.filterClient) var filterClient
     @Dependency(\.diagramPageClient) var diagramPageClient
     @Dependency(\.entryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
@@ -106,7 +105,7 @@ struct DiagramPage {
             case .fetchSelectedSystem:
                 return .run { send in
                     await send(
-                        .receiveSelectedSystem(TaskResult { filterClient.fetchFilterSystem() })
+                        .receiveSelectedSystem(TaskResult { gradeSystemClient.fetchSelectedSystem() })
                     )
                 }
                 

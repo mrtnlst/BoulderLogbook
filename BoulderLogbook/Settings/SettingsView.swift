@@ -21,11 +21,6 @@ struct SettingsView: View {
                         listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
                     }
                     Button {
-                        viewStore.send(.setDiagramConfigurationNavigation)
-                    } label: {
-                        listItem(title: "Diagrams", image: "chart.bar.xaxis")
-                    }
-                    Button {
                         viewStore.send(.setAppIconListNavigation)
                     } label: {
                         listItem(title: "App Icons", image: "app.dashed")
@@ -44,14 +39,6 @@ struct SettingsView: View {
                     )
                 ) {
                     GradeSystemListView(store: $0)
-                }
-                .navigationDestination(
-                    store: store.scope(
-                        state: \.$destination.diagramConfiguration,
-                        action: \.destination.diagramConfiguration
-                    )
-                ) {
-                    DiagramConfigurationView(store: $0)
                 }
                 .navigationDestination(
                     store: store.scope(
