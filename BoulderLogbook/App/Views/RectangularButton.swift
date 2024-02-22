@@ -12,7 +12,7 @@ struct PrimaryButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding()
+            .padding(12)
             .background(configuration.isPressed ? tintColor.opacity(0.1) : .background)
             .foregroundStyle(.primaryText)
             .overlay(
@@ -41,7 +41,7 @@ struct RectangularButton: View {
                     Text(title)
                 }
                 .frame(maxWidth: .infinity)
-                .tracking(1.75)
+                .tracking(1)
                 .fontWeight(.medium)
                 .textCase(.uppercase)
                 .font(.subheadline)
