@@ -63,6 +63,9 @@
 		A9B07E992868588700AA6274 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E7F2868588700AA6274 /* DashboardView.swift */; };
 		A9B07EAB2868588700AA6274 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8B2868588700AA6274 /* AppView.swift */; };
 		A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E982868588700AA6274 /* EntryFormView.swift */; };
+		A9BE3A422B87721D004DD728 /* ColorPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A412B87721D004DD728 /* ColorPickerSheet.swift */; };
+		A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A432B8A1A85004DD728 /* ColorPickerSheetFeature.swift */; };
+		A9BE3A462B8A26B2004DD728 /* Color+isEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A452B8A26B2004DD728 /* Color+isEqual.swift */; };
 		A9C3005229828948001B51C4 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005129828948001B51C4 /* Dashboard.swift */; };
 		A9C300582982913F001B51C4 /* EntryForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C300572982913F001B51C4 /* EntryForm.swift */; };
 		A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005A298292F8001B51C4 /* AppReducer.swift */; };
@@ -138,6 +141,9 @@
 		A9B07E7F2868588700AA6274 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A9B07E8B2868588700AA6274 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		A9B07E982868588700AA6274 /* EntryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFormView.swift; sourceTree = "<group>"; };
+		A9BE3A412B87721D004DD728 /* ColorPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheet.swift; sourceTree = "<group>"; };
+		A9BE3A432B8A1A85004DD728 /* ColorPickerSheetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetFeature.swift; sourceTree = "<group>"; };
+		A9BE3A452B8A26B2004DD728 /* Color+isEqual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+isEqual.swift"; sourceTree = "<group>"; };
 		A9C3005129828948001B51C4 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A9C300572982913F001B51C4 /* EntryForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForm.swift; sourceTree = "<group>"; };
 		A9C3005A298292F8001B51C4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
@@ -169,6 +175,7 @@
 				5BDD421129885FA600B84BA0 /* Collection+safe.swift */,
 				5B1A806D2896E3F700530B01 /* Color+Additions.swift */,
 				5BDD41ED2986819600B84BA0 /* Color+Codable.swift */,
+				A9BE3A452B8A26B2004DD728 /* Color+isEqual.swift */,
 				5B1A808128A7DA0D00530B01 /* Date+Additions.swift */,
 				5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */,
 				5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */,
@@ -242,6 +249,7 @@
 				5B6B93122A5365C90013D634 /* Clients */,
 				5BFAAB372A48401000E486DC /* About */,
 				5BF68DDF2A5207660071C3F6 /* AppIconList */,
+				5BDD420B298829E100B84BA0 /* GradeSystemForm */,
 				5BDD41FB2986909C00B84BA0 /* GradeSystemList */,
 			);
 			path = Settings;
@@ -261,6 +269,8 @@
 			children = (
 				5BDD4209298829DB00B84BA0 /* GradeSystemForm.swift */,
 				5BDD4207298829D600B84BA0 /* GradeSystemFormView.swift */,
+				A9BE3A412B87721D004DD728 /* ColorPickerSheet.swift */,
+				A9BE3A432B8A1A85004DD728 /* ColorPickerSheetFeature.swift */,
 			);
 			path = GradeSystemForm;
 			sourceTree = "<group>";
@@ -325,7 +335,6 @@
 				A9C3005329829070001B51C4 /* Dashboard */,
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9C300592982929C001B51C4 /* EntryForm */,
-				5BDD420B298829E100B84BA0 /* GradeSystemForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
 				A9B07E412868579900AA6274 /* Assets.xcassets */,
 			);
@@ -524,6 +533,7 @@
 			files = (
 				A9C3005229828948001B51C4 /* Dashboard.swift in Sources */,
 				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
+				A9BE3A462B8A26B2004DD728 /* Color+isEqual.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
@@ -556,6 +566,7 @@
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
 				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
+				A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */,
 				5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */,
 				5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */,
 				5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */,
@@ -566,6 +577,7 @@
 				5BE273FB2B5870C60004DD27 /* PlainList.swift in Sources */,
 				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
+				A9BE3A422B87721D004DD728 /* ColorPickerSheet.swift in Sources */,
 				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5BDD42002987086800B84BA0 /* Top.swift in Sources */,

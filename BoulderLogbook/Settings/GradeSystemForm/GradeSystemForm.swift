@@ -15,6 +15,7 @@ struct GradeSystemForm {
         @BindingState var name: String
         @BindingState var grades: [GradeSystem.Grade]
         @BindingState var focusedField: Field?
+        @PresentationState var colorPicker: ColorPickerFeature.State?
 
         enum Field: Hashable {
             case name
@@ -40,6 +41,8 @@ struct GradeSystemForm {
         case deleteGrade(IndexSet)
         case saveDidFinish(TaskResult<ClientResponse>)
         case cancel
+        case presentColorPicker(GradeSystem.Grade)
+        case colorPicker(PresentationAction<ColorPickerFeature.Action>)
         case binding(BindingAction<State>)
 
         enum ClientResponse { case finished }
@@ -106,10 +109,21 @@ struct GradeSystemForm {
                     grades.append(GradeSystem.Grade())
                 }
                 state.grades = grades
-                
+
+            case let .presentColorPicker(grade):
+                state.colorPicker = .init(grade: grade)
+
+            case let .colorPicker(.presented(.didSelectColor(color, grade))):
+                if let index = state.grades.firstIndex(where: { $0.id == grade.id }) {
+                    state.grades[index].color = color
+                }
+
             default: ()
             }
             return .none
+        }
+        .ifLet(\.$colorPicker, action: \.colorPicker) {
+            ColorPickerFeature()
         }
     }
 }

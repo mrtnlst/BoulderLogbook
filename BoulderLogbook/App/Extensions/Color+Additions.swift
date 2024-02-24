@@ -13,13 +13,18 @@ extension Color {
     static let araBlack = Color(#colorLiteral(red: 0.07058823529, green: 0.07450980392, blue: 0.09019607843, alpha: 1)) // #121317
     static let araDarkBlue = Color(#colorLiteral(red: 0.1568627451, green: 0.1843137255, blue: 0.337254902, alpha: 1)) // #282F56
     static let araBlue = Color(#colorLiteral(red: 0.3411764706, green: 0.5647058824, blue: 0.9176470588, alpha: 1)) // #5790EA
+    static let araLightBlue = Color(#colorLiteral(red: 0.4196078431, green: 0.7215686275, blue: 0.9960784314, alpha: 1)) // #6BB8FE
     static let araTurquoise = Color(#colorLiteral(red: 0.4980392157, green: 0.9137254902, blue: 0.9215686275, alpha: 1)) // #7FE9EB
+    static let araBrown = Color(#colorLiteral(red: 0.4352941176, green: 0.1568627451, blue: 0.1529411765, alpha: 1)) // #6F2827
     static let araRed = Color(#colorLiteral(red: 0.8980392157, green: 0.3960784314, blue: 0.3960784314, alpha: 1)) // #E56565
+    static let araLightRed = Color(#colorLiteral(red: 1, green: 0.5176470588, blue: 0.5294117647, alpha: 1)) // #FF8487
     static let araGreen = Color(#colorLiteral(red: 0.05098039216, green: 0.5960784314, blue: 0.4078431373, alpha: 1)) // #0D9868
     static let araLightGreen = Color(#colorLiteral(red: 0.1019607843, green: 0.8784313725, blue: 0.5921568627, alpha: 1)) // #1AE097
+    static let araOrange = Color(#colorLiteral(red: 0.9882352941, green: 0.631372549, blue: 0.4, alpha: 1)) // #FCA166
     static let araYellow = Color(#colorLiteral(red: 1, green: 0.7647058824, blue: 0.3215686275, alpha: 1)) // #FFC352
     static let araLightYellow = Color(#colorLiteral(red: 1, green: 0.9411764706, blue: 0.4862745098, alpha: 1)) // #FFF07C
     static let araPurple = Color(#colorLiteral(red: 0.8392156863, green: 0.3333333333, blue: 0.9294117647, alpha: 1)) // #D655ED
+    static let araLightPurple = Color(#colorLiteral(red: 0.8588235294, green: 0.5019607843, blue: 0.7058823529, alpha: 1)) // #DB80B4
 
     // Main
     static let araPrimary = araPurple
@@ -58,6 +63,27 @@ extension Color {
     static let mandalaWhite = araTextPrimary
     static let mandalaYellow = araLightYellow
     static let mandalaPurple = araPrimary
+}
+
+extension Color {
+    static var araAll: [Color] = [
+        .araMidGray,
+        .araDarkBlue,
+        .araBlue,
+        .araLightBlue,
+        .araTurquoise,
+        .araGreen,
+        .araLightGreen,
+        .araLightYellow,
+        .araYellow,
+        .araOrange,
+        .araLightRed,
+        .araRed,
+        .araBrown,
+        .araLightPurple,
+        .araPurple,
+        .araTextPrimary
+    ]
 }
 
 extension Color {

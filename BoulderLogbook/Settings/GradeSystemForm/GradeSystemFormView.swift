@@ -21,7 +21,8 @@ struct GradeSystemFormView: View {
                     }
                     PlainSection {
                         gradesInputFields()
-                    } header: { Text("Drag to set difficulty order")
+                    } header: { 
+                        Text("Drag to set difficulty order")
                     }
                     PlainSection {
                         buttons()
@@ -36,8 +37,17 @@ struct GradeSystemFormView: View {
                         }
                     }
                 }
+                .sheet(
+                    store: store.scope(
+                        state: \.$colorPicker,
+                        action: \.colorPicker
+                    )
+                ) {
+                    ColorPickerSheet(store: $0)
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
+                }
             }
-
         }
         .interactiveDismissDisabled()
         .scrollDismissesKeyboard(.interactively)
@@ -67,12 +77,14 @@ extension GradeSystemFormView {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ForEach(viewStore.$grades) { $grade in
                 HStack {
-                    ColorPicker(
-                        selection: $grade.color,
-                        supportsOpacity: false,
-                        label: {}
-                    )
-                    .labelsHidden()
+                    Button {
+                        viewStore.send(.presentColorPicker(grade))
+                    } label: {
+                        Image(systemName: "pencil.circle.fill")
+                            .foregroundColor(grade.color)
+                            .font(.title)
+                    }
+
                     TextField(
                         "",
                         text: $grade.name,

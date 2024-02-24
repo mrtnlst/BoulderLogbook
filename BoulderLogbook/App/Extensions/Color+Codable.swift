@@ -10,7 +10,7 @@
 import UIKit
 import SwiftUI
 
-fileprivate extension Color {
+extension Color {
     var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
         var r: CGFloat = 0
         var g: CGFloat = 0
