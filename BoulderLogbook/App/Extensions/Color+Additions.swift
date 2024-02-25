@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Colors
 extension Color {
     // Colors
     static let araBlack = Color(#colorLiteral(red: 0.07058823529, green: 0.07450980392, blue: 0.09019607843, alpha: 1)) // #121317
@@ -65,6 +66,7 @@ extension Color {
     static let mandalaPurple = araPrimary
 }
 
+// MARK: - araAll
 extension Color {
     static var araAll: [Color] = [
         .araMidGray,
@@ -86,11 +88,23 @@ extension Color {
     ]
 }
 
+// MARK: - isBright
 extension Color {
     var isBright: Bool {
         var white: CGFloat = 0.0
         let uiColor = UIColor(self)
         uiColor.getWhite(&white, alpha: nil)
         return white >= 0.85 // Don't use white background
+    }
+}
+
+// MARK: - isEqual
+extension Color {
+    func isEqual(to color: Color) -> Bool {
+        let color1Components = colorComponents
+        let color2Components = color.colorComponents
+        return Int((color1Components?.red ?? 0) * 1000) == Int((color2Components?.red ?? 0) * 1000)
+            && Int((color1Components?.blue ?? 0) * 1000) == Int((color2Components?.blue ?? 0) * 1000)
+            && Int((color1Components?.green ?? 0) * 1000) == Int((color2Components?.green ?? 0) * 1000)
     }
 }

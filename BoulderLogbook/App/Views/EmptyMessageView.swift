@@ -22,7 +22,7 @@ struct EmptyMessageView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 7 * size)
                     .frame(width: 28 * size, height: 28 * size)
-                    .foregroundColor(.araError)
+                    .foregroundStyle(.error)
                 Image(systemName: "exclamationmark")
                     .foregroundStyle(.primaryText)
             }

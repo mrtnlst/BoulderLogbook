@@ -36,7 +36,7 @@ struct EntryColorView: View {
                 )
                 Text("\(numberOfTops)")
                     .font(.caption.weight(.regular))
-                    .foregroundColor(grade.color.isBright ? Color.black : Color.white)
+                    .foregroundStyle(grade.color.isBright ? Color.black : Color.white)
             }
         }
     }

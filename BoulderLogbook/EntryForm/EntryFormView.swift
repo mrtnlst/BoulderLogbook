@@ -101,7 +101,7 @@ extension EntryFormView {
                                 }
                             } icon: {
                                 Image(systemName: "triangle.fill")
-                                    .foregroundColor(grade.color)
+                                    .foregroundStyle(grade.color)
                             }
                         }
                     )
@@ -124,7 +124,7 @@ extension EntryFormView {
                         .foregroundStyle(.primaryText)
                 } icon: {
                     Image(systemName: icon)
-                        .foregroundColor(color)
+                        .foregroundStyle(color)
                 }
             }
         )

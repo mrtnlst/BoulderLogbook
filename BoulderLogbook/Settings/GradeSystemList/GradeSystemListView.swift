@@ -67,9 +67,11 @@ extension GradeSystemListView {
                     Spacer()
                     Text(isSelected ? "Default" : "")
                         .foregroundStyle(.tertiaryText)
-                        .font(.subheadline)
+                        .font(.headline)
+                        .fontWeight(.regular)
                     Image(systemName: isSelected  ? "checkmark.circle" : "circle")
-                        .foregroundColor(isSelected ? .araSuccess : .tertiaryText)
+                        .font(.title3)
+                        .foregroundStyle(isSelected ? .success : .tertiaryText)
                 }
             }
         }

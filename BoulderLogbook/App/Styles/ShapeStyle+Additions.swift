@@ -15,4 +15,6 @@ extension ShapeStyle where Self == Color {
     static var background: Color { .araBackground }
     static var rowBackground: Color { .araRowBackground }
     static var success: Color { .araSuccess }
+    static var error: Color { .araError }
+    static var accent: Color { .araAccent }
 }

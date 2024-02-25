@@ -31,7 +31,7 @@ struct AboutView: View {
                     } label: {
                         Text("Martin List")
                     }
-                    .foregroundColor(.accentColor)
+                    .foregroundStyle(.accent)
                 }
                 PlainSection("Open Source Software") {
                     Button {
@@ -39,7 +39,7 @@ struct AboutView: View {
                     } label: {
                         Text("The Composable Architecture")
                     }
-                    .foregroundColor(.accentColor)
+                    .foregroundStyle(.accent)
                 }
             }
         }

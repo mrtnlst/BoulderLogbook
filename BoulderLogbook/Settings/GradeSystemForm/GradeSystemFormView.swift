@@ -81,7 +81,7 @@ extension GradeSystemFormView {
                         viewStore.send(.presentColorPicker(grade))
                     } label: {
                         Image(systemName: "pencil.circle.fill")
-                            .foregroundColor(grade.color)
+                            .foregroundStyle(grade.color)
                             .font(.title)
                     }
 
