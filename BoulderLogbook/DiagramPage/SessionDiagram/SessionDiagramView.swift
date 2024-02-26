@@ -46,7 +46,7 @@ extension SessionDiagramView {
                     .fontWeight(.semibold)
             }
         }
-        .chartForegroundStyleScale(range: [Color.araPrimary])
+        .chartForegroundStyleScale(range: [Color.accentColor])
         .chartXAxisLabel(position: .top) {
             Text("Sessions per Month")
                 .foregroundStyle(.primaryText)
