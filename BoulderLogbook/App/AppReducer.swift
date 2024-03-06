@@ -93,7 +93,7 @@ struct AppReducer {
             case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))))):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
-                    .send(.dashboard(.diagramPage(.fetchGradeSystems)))
+                    .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 )
                 
             case .destination(.presented(.settings(.deleteEntriesDidFinish))):

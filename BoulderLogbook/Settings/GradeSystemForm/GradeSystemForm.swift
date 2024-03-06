@@ -13,7 +13,7 @@ struct GradeSystemForm {
     struct State: Equatable {
         let id: UUID
         @BindingState var name: String
-        @BindingState var grades: [GradeSystem.Grade]
+        @BindingState var grades: [Grade]
         @BindingState var focusedField: Field?
         @PresentationState var colorPicker: ColorPickerFeature.State?
 
@@ -25,7 +25,7 @@ struct GradeSystemForm {
         init(
             id: UUID = UUID(),
             name: String = "",
-            grades: [GradeSystem.Grade] = [GradeSystem.Grade()]
+            grades: [Grade] = [Grade()]
         ) {
             self.id = id
             self.name = name
@@ -41,7 +41,7 @@ struct GradeSystemForm {
         case deleteGrade(IndexSet)
         case saveDidFinish(TaskResult<ClientResponse>)
         case cancel
-        case presentColorPicker(GradeSystem.Grade)
+        case presentColorPicker(Grade)
         case colorPicker(PresentationAction<ColorPickerFeature.Action>)
         case binding(BindingAction<State>)
 
@@ -87,7 +87,7 @@ struct GradeSystemForm {
                 if let lastDifficulty = state.grades.last?.difficulty {
                     nextDifficulty = lastDifficulty + 1
                 }
-                let grade = GradeSystem.Grade(difficulty: nextDifficulty)
+                let grade = Grade(difficulty: nextDifficulty)
                 state.grades.append(grade)
                 state.focusedField = .newGrade(grade.id)
 
@@ -106,7 +106,7 @@ struct GradeSystemForm {
                     grades[index].difficulty = index
                 }
                 if grades.isEmpty {
-                    grades.append(GradeSystem.Grade())
+                    grades.append(Grade())
                 }
                 state.grades = grades
 

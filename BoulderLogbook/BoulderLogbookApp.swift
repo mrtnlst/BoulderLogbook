@@ -10,12 +10,13 @@ import ComposableArchitecture
 
 @main
 struct BoulderLogbookApp: App {
+    static let dependencies = Dependencies()
     static var store = Store(
         initialState: AppReducer.State()
     ) {
         AppReducer()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             NavigationStack {

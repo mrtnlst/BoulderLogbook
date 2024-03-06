@@ -59,11 +59,11 @@ struct EntryForm {
         case fetchAvailableSystems
         case fetchSelectedSystem
         case receiveAvailableSystems(TaskResult<[GradeSystem]>)
-        case receiveSelectedSystem(TaskResult<UUID?>)
-        case topStepperChanged(Int, GradeSystem.Grade)
-        case attemptStepperChanged(Int, GradeSystem.Grade)
-        case flashStepperChanged(Int, GradeSystem.Grade)
-        case onsightStepperChanged(Int, GradeSystem.Grade)
+        case receiveSelectedSystem(TaskResult<GradeSystem?>)
+        case topStepperChanged(Int, Grade)
+        case attemptStepperChanged(Int, Grade)
+        case flashStepperChanged(Int, Grade)
+        case onsightStepperChanged(Int, Grade)
         case save
         case saveDidFinish(TaskResult<EntryClientResponse>)
         case cancel
@@ -121,7 +121,9 @@ struct EntryForm {
                 guard state.selectedSystemId == nil else {
                     return .none
                 }
-                state.selectedSystemId = selected
+                if let selected {
+                    state.selectedSystemId = selected.id
+                }
                 
             case let .topStepperChanged(value, grade):
                 if value > state.tops.count {

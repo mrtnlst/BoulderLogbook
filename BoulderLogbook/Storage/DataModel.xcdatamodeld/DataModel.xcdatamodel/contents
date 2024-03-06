@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Grade" representedClassName="GradeMO" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Binary"/>
+        <attribute name="difficulty" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="gradeSystem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GradeSystem" inverseName="grades" inverseEntity="GradeSystem"/>
+    </entity>
+    <entity name="GradeSystem" representedClassName="GradeSystemMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="grades" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="gradeSystem" inverseEntity="Grade"/>
+    </entity>
+</model>

@@ -44,7 +44,7 @@ struct GradeSystemList {
         case fetchGradeSystems
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
-        case receiveSelectedSystem(TaskResult<UUID?>)
+        case receiveSelectedSystem(TaskResult<GradeSystem?>)
         case presentGradeSystemForm
         case presentConfirmation
         case saveSelected(UUID)
@@ -83,9 +83,7 @@ struct GradeSystemList {
                 }
                 
             case let .receiveSelectedSystem(.success(selected)):
-                state.selectedSystem = state.gradeSystems.first(
-                    where: { $0.id == selected }
-                )
+                state.selectedSystem = selected
 
             case .presentGradeSystemForm:
                 state.destination = .gradeSystemForm(GradeSystemForm.State())

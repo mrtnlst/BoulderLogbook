@@ -251,13 +251,13 @@ extension [Logbook.Section.Entry] {
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1676485620),
-            tops: [.sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1],
+            tops: [.sample7, .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1676917822),
-            tops: [.init(id: UUID(), grade: GradeSystem.Grade.mandalaPurple.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1],
+            tops: [.init(id: UUID(), grade: Grade.mandalaPurple.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
@@ -365,25 +365,25 @@ extension [Logbook.Section.Entry] {
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1687610917),
-            tops: [.sample7, .sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            tops: [.sample7, .sample7, .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1688586462),
-            tops: [.sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample6, .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
+            tops: [.sample7, .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample6, .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1688918202),
-            tops: [.sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1, .sample1],
+            tops: [.sample7, .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample4, .sample3, .sample3, .sample3, .sample3, .sample2, .sample2, .sample2, .sample2, .sample1, .sample1, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1689358182),
-            tops: [.sample7, .sample7, .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1],
+            tops: [.sample7, .sample7, .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaYellow.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaWhite.id, isAttempt: true, wasFlash: false, wasOnsight: false), .sample5, .sample4, .sample4, .sample4, .sample3, .sample3, .sample2, .sample2, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(
@@ -437,7 +437,7 @@ extension [Logbook.Section.Entry] {
         .init(
             id: UUID(),
             date: Date(timeIntervalSince1970: 1695754012),
-            tops: [.sample5, .sample5, .sample4, .init(id: UUID(), grade: GradeSystem.Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .init(id: UUID(), grade: GradeSystem.Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .sample3, .sample3, .sample2, .sample1, .sample1],
+            tops: [.sample5, .sample5, .sample4, .init(id: UUID(), grade: Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .init(id: UUID(), grade: Grade.mandalaBlack.id, isAttempt: false, wasFlash: true, wasOnsight: false), .sample3, .sample3, .sample2, .sample1, .sample1],
             gradeSystem: GradeSystem.mandala.id
         ),
         .init(

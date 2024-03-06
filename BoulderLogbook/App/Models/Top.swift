@@ -30,7 +30,7 @@ struct Top: Codable, Equatable, Identifiable, Hashable {
 }
 
 extension [Top] {
-    func count(for grade: GradeSystem.Grade) -> Int {
+    func count(for grade: Grade) -> Int {
         return self.filter { $0.grade == grade.id }.count
     }
     
@@ -42,7 +42,7 @@ extension [Top] {
         return self.filter { !$0.isAttempt && !$0.wasFlash && !$0.wasOnsight }
     }
     
-    func grades(for system: GradeSystem?) -> [GradeSystem.Grade] {
+    func grades(for system: GradeSystem?) -> [Grade] {
         return self.map { $0.grade }.compactMap { gradeId in
             system?.grades.first(where: { $0.id == gradeId }) ?? nil
         }
@@ -50,11 +50,11 @@ extension [Top] {
 }
 
 extension Top {
-    static let sample1 = Top(grade: GradeSystem.Grade.mandalaBlue.id)
-    static let sample2 = Top(grade: GradeSystem.Grade.mandalaRed.id)
-    static let sample3 = Top(grade: GradeSystem.Grade.mandalaOrange.id)
-    static let sample4 = Top(grade: GradeSystem.Grade.mandalaBlack.id)
-    static let sample5 = Top(grade: GradeSystem.Grade.mandalaWhite.id)
-    static let sample6 = Top(grade: GradeSystem.Grade.mandalaYellow.id)
-    static let sample7 = Top(grade: GradeSystem.Grade.mandalaPurple.id)
+    static let sample1 = Top(grade: Grade.mandalaBlue.id)
+    static let sample2 = Top(grade: Grade.mandalaRed.id)
+    static let sample3 = Top(grade: Grade.mandalaOrange.id)
+    static let sample4 = Top(grade: Grade.mandalaBlack.id)
+    static let sample5 = Top(grade: Grade.mandalaWhite.id)
+    static let sample6 = Top(grade: Grade.mandalaYellow.id)
+    static let sample7 = Top(grade: Grade.mandalaPurple.id)
 }

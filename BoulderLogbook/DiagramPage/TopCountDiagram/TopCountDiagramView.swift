@@ -55,7 +55,7 @@ extension TopCountDiagramView {
         }
     }
     
-    @ViewBuilder func barChart(grades: [GradeSystem.Grade], tops: [Top]) -> some View {
+    @ViewBuilder func barChart(grades: [Grade], tops: [Top]) -> some View {
         Chart(grades) { grade in
             BarMark(
                 x: .value("Grade", grade.name),

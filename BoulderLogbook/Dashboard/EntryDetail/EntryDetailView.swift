@@ -83,49 +83,49 @@ struct EntryView_Previews: PreviewProvider {
                             tops: [
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaBlack.id,
+                                    grade: Grade.mandalaBlack.id,
                                     isAttempt: false,
                                     wasFlash: true,
                                     wasOnsight: false
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaBlack.id,
+                                    grade: Grade.mandalaBlack.id,
                                     isAttempt: false,
                                     wasFlash: false,
                                     wasOnsight: false
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    grade: Grade.mandalaBlue.id,
                                     isAttempt: false,
                                     wasFlash: false,
                                     wasOnsight: true
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    grade: Grade.mandalaBlue.id,
                                     isAttempt: false,
                                     wasFlash: false,
                                     wasOnsight: true
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaBlue.id,
+                                    grade: Grade.mandalaBlue.id,
                                     isAttempt: false,
                                     wasFlash: false,
                                     wasOnsight: true
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaRed.id,
+                                    grade: Grade.mandalaRed.id,
                                     isAttempt: false,
                                     wasFlash: true,
                                     wasOnsight: false
                                 ),
                                 .init(
                                     id: UUID(),
-                                    grade: GradeSystem.Grade.mandalaRed.id,
+                                    grade: Grade.mandalaRed.id,
                                     isAttempt: false,
                                     wasFlash: false,
                                     wasOnsight: false

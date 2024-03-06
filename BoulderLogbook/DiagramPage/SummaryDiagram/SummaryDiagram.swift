@@ -35,7 +35,7 @@ struct SummaryDiagram {
     struct Model: Identifiable, Equatable {
         let id: UUID = UUID()
         let gradeSystem: GradeSystem
-        let grade: GradeSystem.Grade
+        let grade: Grade
         let tops: Int
         let attempts: Int
         let flash: Int

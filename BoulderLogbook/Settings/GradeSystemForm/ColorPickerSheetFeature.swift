@@ -11,11 +11,11 @@ import ComposableArchitecture
 @Reducer
 struct ColorPickerFeature {
     struct State: Equatable {
-        var grade: GradeSystem.Grade
+        var grade: Grade
     }
 
     enum Action: Equatable {
-        case didSelectColor(Color, GradeSystem.Grade)
+        case didSelectColor(Color, Grade)
     }
 
     func reduce(into state: inout State, action: Action) -> Effect<Action> {

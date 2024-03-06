@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EntryColorView: View {
-    let grades: [GradeSystem.Grade]
+    let grades: [Grade]
     let gradeSystem: GradeSystem
 
     init(tops: [Top], gradeSystem: GradeSystem) {
@@ -27,7 +27,7 @@ struct EntryColorView: View {
         .cornerRadius(8)
     }
     
-    @ViewBuilder func colorSegment(for grade: GradeSystem.Grade, and width: CGFloat) -> some View {
+    @ViewBuilder func colorSegment(for grade: Grade, and width: CGFloat) -> some View {
         let numberOfTops = grades.filter { $0 == grade }.count
         if numberOfTops > 0 {
             ZStack {

@@ -97,7 +97,7 @@ private extension SummaryDiagramView {
     
     @ChartContentBuilder func barMark(
         value: Int,
-        grade: GradeSystem.Grade,
+        grade: Grade,
         image: String
     ) -> some ChartContent {
         BarMark(
@@ -135,7 +135,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                             viewState: .idle([
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaBlue,
+                                    grade: Grade.mandalaBlue,
                                     tops: 3,
                                     attempts: 0,
                                     flash: 0,
@@ -143,7 +143,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaRed,
+                                    grade: Grade.mandalaRed,
                                     tops: 3,
                                     attempts: 0,
                                     flash: 2,
@@ -151,7 +151,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaOrange,
+                                    grade: Grade.mandalaOrange,
                                     tops: 0,
                                     attempts: 0,
                                     flash: 1,
@@ -159,7 +159,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaBlack,
+                                    grade: Grade.mandalaBlack,
                                     tops: 0,
                                     attempts: 0,
                                     flash: 0,
@@ -167,7 +167,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaWhite,
+                                    grade: Grade.mandalaWhite,
                                     tops: 1,
                                     attempts: 3,
                                     flash: 0,
@@ -175,7 +175,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaYellow,
+                                    grade: Grade.mandalaYellow,
                                     tops: 0,
                                     attempts: 0,
                                     flash: 0,
@@ -183,7 +183,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                                 ),
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
-                                    grade: GradeSystem.Grade.mandalaPurple,
+                                    grade: Grade.mandalaPurple,
                                     tops: 1,
                                     attempts: 4,
                                     flash: 3,

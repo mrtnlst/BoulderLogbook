@@ -42,7 +42,10 @@ struct Dashboard {
                     .send(.fetchGradeSystems)
                 )
 #else
-                return .send(.fetchGradeSystems)
+                return .concatenate(
+                    .run { _ in gradeSystemClient.migrateGradeSystems() },
+                    .send(.fetchGradeSystems)
+                )
 #endif
                 
             case .fetchGradeSystems:

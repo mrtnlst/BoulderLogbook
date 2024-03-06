@@ -54,6 +54,7 @@
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
+		A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFAFC2B8E9649008D34CA /* Dependencies.swift */; };
 		A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961AB5C29827D8700AD89DD /* DashboardSection.swift */; };
 		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
 		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
@@ -65,6 +66,12 @@
 		A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E982868588700AA6274 /* EntryFormView.swift */; };
 		A9BE3A422B87721D004DD728 /* ColorPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A412B87721D004DD728 /* ColorPickerSheet.swift */; };
 		A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A432B8A1A85004DD728 /* ColorPickerSheetFeature.swift */; };
+		A9BE3A492B8D159D004DD728 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A472B8D159D004DD728 /* DataModel.xcdatamodeld */; };
+		A9BE3A4C2B8D15C1004DD728 /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A4B2B8D15C1004DD728 /* CoreDataStorage.swift */; };
+		A9BE3A4E2B8D1713004DD728 /* GradeSystemMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A4D2B8D1713004DD728 /* GradeSystemMO.swift */; };
+		A9BE3A502B8D1774004DD728 /* GradeMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A4F2B8D1774004DD728 /* GradeMO.swift */; };
+		A9BE3A532B8D1856004DD728 /* GradeSystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A522B8D1856004DD728 /* GradeSystemService.swift */; };
+		A9BE3A552B8D1B3A004DD728 /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A542B8D1B3A004DD728 /* Grade.swift */; };
 		A9C3005229828948001B51C4 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005129828948001B51C4 /* Dashboard.swift */; };
 		A9C300582982913F001B51C4 /* EntryForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C300572982913F001B51C4 /* EntryForm.swift */; };
 		A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005A298292F8001B51C4 /* AppReducer.swift */; };
@@ -130,6 +137,7 @@
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
 		A9435D8529826D6B001DC22B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A94CFAFC2B8E9649008D34CA /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		A961AB5C29827D8700AD89DD /* DashboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSection.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,6 +150,12 @@
 		A9B07E982868588700AA6274 /* EntryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFormView.swift; sourceTree = "<group>"; };
 		A9BE3A412B87721D004DD728 /* ColorPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheet.swift; sourceTree = "<group>"; };
 		A9BE3A432B8A1A85004DD728 /* ColorPickerSheetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetFeature.swift; sourceTree = "<group>"; };
+		A9BE3A482B8D159D004DD728 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		A9BE3A4B2B8D15C1004DD728 /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
+		A9BE3A4D2B8D1713004DD728 /* GradeSystemMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemMO.swift; sourceTree = "<group>"; };
+		A9BE3A4F2B8D1774004DD728 /* GradeMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeMO.swift; sourceTree = "<group>"; };
+		A9BE3A522B8D1856004DD728 /* GradeSystemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemService.swift; sourceTree = "<group>"; };
+		A9BE3A542B8D1B3A004DD728 /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		A9C3005129828948001B51C4 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A9C300572982913F001B51C4 /* EntryForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForm.swift; sourceTree = "<group>"; };
 		A9C3005A298292F8001B51C4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
@@ -192,7 +206,6 @@
 		5B6B93122A5365C90013D634 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */,
 				5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */,
 			);
 			path = Clients;
@@ -328,6 +341,8 @@
 			children = (
 				A9435D8529826D6B001DC22B /* Info.plist */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
+				A94CFAFC2B8E9649008D34CA /* Dependencies.swift */,
+				A9BE3A4A2B8D15AE004DD728 /* Storage */,
 				A9B07E852868588700AA6274 /* App */,
 				A9C3005329829070001B51C4 /* Dashboard */,
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
@@ -372,11 +387,33 @@
 		A9B07E8C2868588700AA6274 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A9BE3A542B8D1B3A004DD728 /* Grade.swift */,
 				5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */,
 				5B1A807F28A7D6BF00530B01 /* Logbook.swift */,
 				5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */,
 				5BDD41FF2987086800B84BA0 /* Top.swift */,
 				5B6DB3742A51AD20006265F0 /* ViewState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A9BE3A4A2B8D15AE004DD728 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A9BE3A472B8D159D004DD728 /* DataModel.xcdatamodeld */,
+				A9BE3A4B2B8D15C1004DD728 /* CoreDataStorage.swift */,
+				A9CA5FFA2B9893A100C04BCC /* Clients */,
+				A9CA5FF92B98938B00C04BCC /* Services */,
+				A9BE3A512B8D183E004DD728 /* Models */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		A9BE3A512B8D183E004DD728 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A9BE3A4F2B8D1774004DD728 /* GradeMO.swift */,
+				A9BE3A4D2B8D1713004DD728 /* GradeSystemMO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -410,6 +447,22 @@
 				A9B07E982868588700AA6274 /* EntryFormView.swift */,
 			);
 			path = EntryForm;
+			sourceTree = "<group>";
+		};
+		A9CA5FF92B98938B00C04BCC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A9BE3A522B8D1856004DD728 /* GradeSystemService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A9CA5FFA2B9893A100C04BCC /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */,
+			);
+			path = Clients;
 			sourceTree = "<group>";
 		};
 		A9CE6761288004D300027885 /* EntryDetail */ = {
@@ -534,6 +587,7 @@
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
+				A9BE3A4C2B8D15C1004DD728 /* CoreDataStorage.swift in Sources */,
 				5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
@@ -542,10 +596,15 @@
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
 				5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */,
+				A9BE3A502B8D1774004DD728 /* GradeMO.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
+				A9BE3A4E2B8D1713004DD728 /* GradeSystemMO.swift in Sources */,
 				5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */,
+				A9BE3A552B8D1B3A004DD728 /* Grade.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
+				A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
+				A9BE3A532B8D1856004DD728 /* GradeSystemService.swift in Sources */,
 				5BE273F92B5862C90004DD27 /* PlainPicker.swift in Sources */,
 				5BDD41F82986905800B84BA0 /* GradeSystemList.swift in Sources */,
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
@@ -561,6 +620,7 @@
 				5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
+				A9BE3A492B8D159D004DD728 /* DataModel.xcdatamodeld in Sources */,
 				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
 				A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */,
 				5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */,
@@ -876,6 +936,19 @@
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A9BE3A472B8D159D004DD728 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A9BE3A482B8D159D004DD728 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = A9BE3A482B8D159D004DD728 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A9B07E3A2868579500AA6274 /* Project object */;
 }

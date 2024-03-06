@@ -13,7 +13,7 @@ struct DiagramPage {
     struct State: Equatable {
         var entries: [Logbook.Section.Entry] = []
         var gradeSystems: [GradeSystem] = []
-        var selectedGradeSystem: GradeSystem.ID?
+        var selectedGradeSystem: GradeSystem?
         
         var topCountDiagram = TopCountDiagram.State()
         var sessionDiagram = SessionDiagram.State()
@@ -31,16 +31,10 @@ struct DiagramPage {
     enum Action: Equatable, BindableAction {
         case onAppear
         case receiveSelectedDiagram(TaskResult<Int?>)
-
         case fetchEntries
         case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
-        
         case fetchSelectedSystem
-        case receiveSelectedSystem(TaskResult<UUID?>)
-
-        case fetchGradeSystems
-        case receiveGradeSystems(TaskResult<[GradeSystem]>)
-        
+        case receiveSelectedSystem(TaskResult<GradeSystem?>)
         case topCountDiagram(TopCountDiagram.Action)
         case sessionDiagram(SessionDiagram.Action)
         case summaryDiagram(SummaryDiagram.Action)
@@ -87,21 +81,10 @@ struct DiagramPage {
             case let .receiveEntries(.success(entries)):
                 state.entries = entries
                 return .merge(
-                    .send(.fetchGradeSystems),
+                    .send(.fetchSelectedSystem),
                     .send(.sessionDiagram(.receiveEntries(entries)))
                 )
-                
-            case .fetchGradeSystems:
-                return .run { send in
-                    await send(
-                        .receiveGradeSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
-                    )
-                }
-                
-            case let .receiveGradeSystems(.success(gradeSystems)):
-                state.gradeSystems = gradeSystems
-                return .send(.fetchSelectedSystem)
-            
+
             case .fetchSelectedSystem:
                 return .run { send in
                     await send(
@@ -111,15 +94,13 @@ struct DiagramPage {
                 
             case let .receiveSelectedSystem(.success(selected)):
                 state.selectedGradeSystem = selected
-                let gradeSystem = state.gradeSystems.first(where: { $0.id == selected })
                 return .merge(
-                    .send(.summaryDiagram(.receiveData(state.entries, gradeSystem))),
-                    .send(.topCountDiagram(.receiveData(state.entries, gradeSystem)))
+                    .send(.summaryDiagram(.receiveData(state.entries, selected))),
+                    .send(.topCountDiagram(.receiveData(state.entries, selected)))
                 )
                 
             case .topCountDiagram(.fetchData):
-                let gradeSystem = state.gradeSystems.first(where: { $0.id == state.selectedGradeSystem })
-                return .send(.topCountDiagram(.receiveData(state.entries, gradeSystem)))
+                return .send(.topCountDiagram(.receiveData(state.entries, state.selectedGradeSystem)))
                 
             case .binding(\.$selectedTab):
                 return .run { [tab = state.selectedTab] _ in
