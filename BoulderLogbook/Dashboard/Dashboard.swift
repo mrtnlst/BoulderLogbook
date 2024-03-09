@@ -20,12 +20,12 @@ struct Dashboard {
         case onAppear
         case fetchGradeSystems
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
-        case fetchEntries
-        case receiveEntries(TaskResult<[Logbook.Section.Entry]>)
+        case fetchSections
+        case receiveSections(TaskResult<[Logbook.Section]>)
         case dashboardSection(IdentifiedActionOf<DashboardSection>)
         case diagramPage(DiagramPage.Action)
     }
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var logbookEntryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
@@ -37,13 +37,15 @@ struct Dashboard {
             case .onAppear:
 #if targetEnvironment(simulator)
                 return .concatenate(
-                    .run { _ in gradeSystemClient.saveDefaultSystems() },
-                    .run { _ in entryClient.saveBackupEntries() },
+                    .run { _ in await gradeSystemClient.saveDefaultSystems() },
+                    .run { _ in logbookEntryClient.saveBackupEntries() },
+                    .run { _ in await logbookEntryClient.migrateEntries() },
                     .send(.fetchGradeSystems)
                 )
 #else
                 return .concatenate(
-                    .run { _ in gradeSystemClient.migrateGradeSystems() },
+                    .run { _ in await gradeSystemClient.migrateGradeSystems() },
+                    .run { _ in await logbookEntryClient.migrateEntries() },
                     .send(.fetchGradeSystems)
                 )
 #endif
@@ -51,37 +53,22 @@ struct Dashboard {
             case .fetchGradeSystems:
                 return .run { send in
                     await send(
-                        .receiveGradeSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+                        .receiveGradeSystems(TaskResult { await gradeSystemClient.fetchAvailableSystems() })
                     )
                 }
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .send(.fetchEntries)
-                
-            case .fetchEntries:
+                return .send(.fetchSections)
+
+            case .fetchSections:
                 return .run { send in
                     await send(
-                        .receiveEntries(TaskResult { entryClient.fetchEntries() })
+                        .receiveSections(TaskResult { await logbookEntryClient.fetchSections() })
                     )
                 }
                 
-            case let .receiveEntries(.success(entries)):
-                let sections = entries.reduce(into: [Logbook.Section]()) { partialResult, entry in
-                    guard let sectionDate = entry.date.yearMonthDate else {
-                        return
-                    }
-                    if let indexOfSection = partialResult.firstIndex(where: { $0.date == sectionDate }) {
-                        partialResult[indexOfSection].entries.append(entry)
-                    } else {
-                        partialResult.append(
-                            .init(
-                                date: sectionDate,
-                                entries: [entry]
-                            )
-                        )
-                    }
-                }
+            case let .receiveSections(.success(sections)):
                 state.sections = .init(
                     uniqueElements: sections.map { section in
                         DashboardSection.State(
@@ -96,7 +83,7 @@ struct Dashboard {
                 
             case .dashboardSection(.element(_, .deleteDidFinish(_))):
                 return .merge(
-                    .send(.fetchEntries),
+                    .send(.fetchSections),
                     .send(.diagramPage(.fetchEntries))
                 )
                 

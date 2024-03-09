@@ -43,7 +43,7 @@ struct AppReducer {
         case presentGradeSystemList
         case presentGradeSystemConfiguration
     }
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
 
     var body: some Reducer<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -71,7 +71,7 @@ struct AppReducer {
             case .destination(.presented(.entryForm(.saveDidFinish))):
                 state.destination = nil
                 return .merge(
-                    .send(.dashboard(.fetchEntries)),
+                    .send(.dashboard(.fetchSections)),
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                 

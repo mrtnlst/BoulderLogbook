@@ -8,10 +8,13 @@
 import Foundation
 
 struct Dependencies {
-    let storage = CoreDataStorage()
+    let storage = CoreDataStorage.shared
     let gradeSystemService: GradeSystemService
+    let logbookEntryService: LogbookEntryService
 
     init() {
-        self.gradeSystemService = GradeSystemService(storage: storage)
+        let backgroundContext = storage.storeContainer.newBackgroundContext()
+        self.gradeSystemService = GradeSystemService(storage: storage, backgroundContext: backgroundContext)
+        self.logbookEntryService = LogbookEntryService(storage: storage, backgroundContext: backgroundContext)
     }
 }

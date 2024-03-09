@@ -42,7 +42,7 @@ struct DiagramPage {
     }
     
     @Dependency(\.diagramPageClient) var diagramPageClient
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
@@ -74,7 +74,7 @@ struct DiagramPage {
             case .fetchEntries:
                 return .run { send in
                     await send(
-                        .receiveEntries(TaskResult { entryClient.fetchEntries() })
+                        .receiveEntries(TaskResult { await entryClient.fetchEntries() })
                     )
                 }
             
@@ -88,7 +88,7 @@ struct DiagramPage {
             case .fetchSelectedSystem:
                 return .run { send in
                     await send(
-                        .receiveSelectedSystem(TaskResult { gradeSystemClient.fetchSelectedSystem() })
+                        .receiveSelectedSystem(TaskResult { await gradeSystemClient.fetchSelectedSystem() })
                     )
                 }
                 

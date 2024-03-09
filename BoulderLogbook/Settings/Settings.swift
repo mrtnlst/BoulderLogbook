@@ -50,7 +50,7 @@ struct Settings {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
     
     var body: some Reducer<State, Action> {
        Reduce { state, action in
@@ -61,7 +61,7 @@ struct Settings {
                         await send(
                             .deleteEntriesDidFinish(
                                 TaskResult {
-                                    entryClient.deleteEntries(id)
+                                    await entryClient.deleteEntries(id)
                                     return .finished
                                 }
                             )

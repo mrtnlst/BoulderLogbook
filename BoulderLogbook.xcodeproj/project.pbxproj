@@ -50,7 +50,7 @@
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3C2A484BFB00E486DC /* LICENSE */; };
 		5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */; };
-		5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* EntryClient.swift */; };
+		5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
@@ -75,6 +75,10 @@
 		A9C3005229828948001B51C4 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005129828948001B51C4 /* Dashboard.swift */; };
 		A9C300582982913F001B51C4 /* EntryForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C300572982913F001B51C4 /* EntryForm.swift */; };
 		A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3005A298292F8001B51C4 /* AppReducer.swift */; };
+		A9CA5FFC2B9896A300C04BCC /* LogbookEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA5FFB2B9896A300C04BCC /* LogbookEntryService.swift */; };
+		A9CA5FFE2B98996C00C04BCC /* TopMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA5FFD2B98996C00C04BCC /* TopMO.swift */; };
+		A9CA60002B989A7300C04BCC /* LogbookEntryMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA5FFF2B989A7300C04BCC /* LogbookEntryMO.swift */; };
+		A9CA60022B989B2900C04BCC /* LogbookSectionMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CA60012B989B2900C04BCC /* LogbookSectionMO.swift */; };
 		A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CE6763288004E400027885 /* EntryDetailView.swift */; };
 /* End PBXBuildFile section */
 
@@ -132,7 +136,7 @@
 		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageClient.swift; sourceTree = "<group>"; };
-		5BFD11C3298E54AB00BD41BF /* EntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryClient.swift; sourceTree = "<group>"; };
+		5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
@@ -159,6 +163,10 @@
 		A9C3005129828948001B51C4 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		A9C300572982913F001B51C4 /* EntryForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForm.swift; sourceTree = "<group>"; };
 		A9C3005A298292F8001B51C4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		A9CA5FFB2B9896A300C04BCC /* LogbookEntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryService.swift; sourceTree = "<group>"; };
+		A9CA5FFD2B98996C00C04BCC /* TopMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMO.swift; sourceTree = "<group>"; };
+		A9CA5FFF2B989A7300C04BCC /* LogbookEntryMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryMO.swift; sourceTree = "<group>"; };
+		A9CA60012B989B2900C04BCC /* LogbookSectionMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookSectionMO.swift; sourceTree = "<group>"; };
 		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -414,6 +422,9 @@
 			children = (
 				A9BE3A4F2B8D1774004DD728 /* GradeMO.swift */,
 				A9BE3A4D2B8D1713004DD728 /* GradeSystemMO.swift */,
+				A9CA5FFF2B989A7300C04BCC /* LogbookEntryMO.swift */,
+				A9CA60012B989B2900C04BCC /* LogbookSectionMO.swift */,
+				A9CA5FFD2B98996C00C04BCC /* TopMO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -443,7 +454,6 @@
 			isa = PBXGroup;
 			children = (
 				A9C300572982913F001B51C4 /* EntryForm.swift */,
-				5BFD11C3298E54AB00BD41BF /* EntryClient.swift */,
 				A9B07E982868588700AA6274 /* EntryFormView.swift */,
 			);
 			path = EntryForm;
@@ -453,6 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				A9BE3A522B8D1856004DD728 /* GradeSystemService.swift */,
+				A9CA5FFB2B9896A300C04BCC /* LogbookEntryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -460,6 +471,7 @@
 		A9CA5FFA2B9893A100C04BCC /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */,
 				5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */,
 			);
 			path = Clients;
@@ -582,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9C3005229828948001B51C4 /* Dashboard.swift in Sources */,
+				A9CA60022B989B2900C04BCC /* LogbookSectionMO.swift in Sources */,
 				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
@@ -599,7 +612,7 @@
 				A9BE3A502B8D1774004DD728 /* GradeMO.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
 				A9BE3A4E2B8D1713004DD728 /* GradeSystemMO.swift in Sources */,
-				5BFD11C4298E54AB00BD41BF /* EntryClient.swift in Sources */,
+				5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */,
 				A9BE3A552B8D1B3A004DD728 /* Grade.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
 				A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */,
@@ -617,6 +630,7 @@
 				5BDD420D2988319E00B84BA0 /* RectangularButton.swift in Sources */,
 				5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
+				A9CA5FFC2B9896A300C04BCC /* LogbookEntryService.swift in Sources */,
 				5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
@@ -630,6 +644,7 @@
 				5BDD41F329868AA400B84BA0 /* SettingsView.swift in Sources */,
 				A9B07E992868588700AA6274 /* DashboardView.swift in Sources */,
 				A9C3005B298292F8001B51C4 /* AppReducer.swift in Sources */,
+				A9CA5FFE2B98996C00C04BCC /* TopMO.swift in Sources */,
 				5BE273FB2B5870C60004DD27 /* PlainList.swift in Sources */,
 				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
@@ -637,6 +652,7 @@
 				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5BDD42002987086800B84BA0 /* Top.swift in Sources */,
+				A9CA60002B989A7300C04BCC /* LogbookEntryMO.swift in Sources */,
 				5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */,
 				5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */,
 				5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */,

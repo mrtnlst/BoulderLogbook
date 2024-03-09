@@ -67,7 +67,7 @@ struct GradeSystemList {
             case .fetchGradeSystems:
                 return .run { send in
                     await send(
-                        .receiveGradeSystems(TaskResult { client.fetchAvailableSystems() })
+                        .receiveGradeSystems(TaskResult { await client.fetchAvailableSystems() })
                     )
                 }
                 
@@ -78,7 +78,7 @@ struct GradeSystemList {
             case .fetchSelectedSystem:
                 return .run { send in
                     await send(
-                        .receiveSelectedSystem(TaskResult { client.fetchSelectedSystem() })
+                        .receiveSelectedSystem(TaskResult { await client.fetchSelectedSystem() })
                     )
                 }
                 
@@ -134,8 +134,8 @@ struct GradeSystemList {
                 return .send(.delete(systemToDelete.id))
 
             case let .delete(id):
-                return .merge(
-                    .run { _ in client.deleteSystem(id) },
+                return .concatenate(
+                    .run { _ in await client.deleteSystem(id) },
                     .send(.fetchGradeSystems)
                 )
                 

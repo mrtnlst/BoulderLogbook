@@ -8,9 +8,10 @@
 import CoreData
 
 final class CoreDataStorage {
+    static let shared = CoreDataStorage()
     let storeContainer: NSPersistentContainer
 
-    init() {
+    private init() {
         self.storeContainer = NSPersistentContainer(name: "DataModel")
         self.storeContainer.loadPersistentStores { _, error in
              if let error = error as NSError? {
@@ -26,13 +27,14 @@ extension CoreDataStorage {
     }
 
     func fetch<T: NSManagedObject>(
-        predicate: NSPredicate? = nil
+        predicate: NSPredicate? = nil,
+        on context: NSManagedObjectContext
     ) -> [T] {
         let request = T.fetchRequest()
         request.predicate = predicate
 
         do {
-            let result = try mainContext.fetch(request)
+            let result = try context.fetch(request)
             return result as? [T] ?? []
         } catch {
             debugPrint(error)
@@ -40,17 +42,21 @@ extension CoreDataStorage {
         }
     }
 
-    func insert<T: NSManagedObject>() -> T {
-        return T(context: mainContext)
+    func insert<T: NSManagedObject>(
+        into context: NSManagedObjectContext
+    ) -> T {
+        return T(context: context)
     }
 
-    func delete(object: NSManagedObject) {
-        mainContext.delete(object)
+    func delete(object: NSManagedObject, from context: NSManagedObjectContext) {
+        context.delete(object)
     }
 
-    func save() {
+    func save(
+        on context: NSManagedObjectContext
+    ) {
         do {
-            try mainContext.save()
+            try context.save()
         } catch {
             debugPrint(error.localizedDescription)
         }

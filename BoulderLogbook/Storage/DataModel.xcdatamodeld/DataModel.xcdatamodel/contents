@@ -12,4 +12,24 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="grades" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="gradeSystem" inverseEntity="Grade"/>
     </entity>
+    <entity name="LogbookEntry" representedClassName="LogbookEntryMO" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="gradeSystem" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogbookSection" inverseName="entries" inverseEntity="LogbookSection"/>
+        <relationship name="tops" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Top" inverseName="entry" inverseEntity="Top"/>
+    </entity>
+    <entity name="LogbookSection" representedClassName="LogbookSectionMO" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LogbookEntry" inverseName="section" inverseEntity="LogbookEntry"/>
+    </entity>
+    <entity name="Top" representedClassName="TopMO" syncable="YES">
+        <attribute name="grade" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="wasAttempt" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="wasFlash" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="wasOnsight" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogbookEntry" inverseName="tops" inverseEntity="LogbookEntry"/>
+    </entity>
 </model>

@@ -72,7 +72,7 @@ struct EntryForm {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
@@ -89,7 +89,7 @@ struct EntryForm {
             case .fetchAvailableSystems:
                 return .run { send in
                     await send(
-                        .receiveAvailableSystems(TaskResult { gradeSystemClient.fetchAvailableSystems() })
+                        .receiveAvailableSystems(TaskResult { await gradeSystemClient.fetchAvailableSystems() })
                     )
                 }
                 
@@ -99,7 +99,7 @@ struct EntryForm {
                 }
                 return .run { send in
                     await send(
-                        .receiveSelectedSystem(TaskResult { gradeSystemClient.fetchSelectedSystem() })
+                        .receiveSelectedSystem(TaskResult { await gradeSystemClient.fetchSelectedSystem() })
                     )
                 }
                 
@@ -180,11 +180,15 @@ struct EntryForm {
                     tops: state.tops + state.attempts + state.flashs + state.onsights,
                     gradeSystem: gradeSystemId
                 )
-                return .run { send in
+                return .run { [isEditing = state.isEditing] send in
                     await send(
                         .saveDidFinish(
                             TaskResult {
-                                entryClient.saveEntry(entry)
+                                if isEditing {
+                                    await entryClient.updateEntry(entry)
+                                } else {
+                                    await entryClient.saveEntry(entry)
+                                }
                                 return .finished
                             }
                         )

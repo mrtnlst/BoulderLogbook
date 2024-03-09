@@ -70,7 +70,7 @@ struct GradeSystemForm {
                     await send(
                         .saveDidFinish(
                             TaskResult {
-                                gradeSystemClient.saveSystem(gradeSystem)
+                                await gradeSystemClient.saveSystem(gradeSystem)
                                 return .finished
                             }
                         )

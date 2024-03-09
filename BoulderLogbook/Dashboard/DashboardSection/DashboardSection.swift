@@ -47,7 +47,7 @@ struct DashboardSection {
     }
     
     @Dependency(\.dismiss) var dismiss
-    @Dependency(\.entryClient) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
     @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
@@ -59,7 +59,7 @@ struct DashboardSection {
                     await send(
                         .deleteDidFinish(
                             TaskResult {
-                                entryClient.deleteEntry(id)
+                                await entryClient.deleteEntry(id)
                                 return .finished
                             }
                         )

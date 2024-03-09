@@ -5,7 +5,7 @@
 //  Created by Martin List on 26.02.24.
 //
 
-import SwiftUI
+import CoreData
 
 fileprivate extension String {
     static let gradeSystemsKey = "grade-systems"
@@ -14,13 +14,15 @@ fileprivate extension String {
 }
 
 final class GradeSystemService {
-    let storage: CoreDataStorage
-    let defaults: UserDefaults
-    let decoder: JSONDecoder
-    let encoder: JSONEncoder
+    private let storage: CoreDataStorage
+    private let backgroundContext: NSManagedObjectContext
+    private let defaults: UserDefaults
+    private let decoder: JSONDecoder
+    private let encoder: JSONEncoder
 
     init(
         storage: CoreDataStorage,
+        backgroundContext: NSManagedObjectContext,
         defaults: UserDefaults = .standard,
         decoder: JSONDecoder = .init(),
         encoder: JSONEncoder = .init()
@@ -29,52 +31,69 @@ final class GradeSystemService {
         self.defaults = defaults
         self.decoder = decoder
         self.encoder = encoder
+        self.backgroundContext = backgroundContext
     }
 
-    func fetchAvailableSystems() -> [GradeSystem] {
-        let gradeSystems: [GradeSystemMO] = storage.fetch()
-        return gradeSystems.map { $0.toGradeSystem(with: decoder) }
+    func fetchAvailableSystems() async -> [GradeSystem] {
+        await withCheckedContinuation { continuation in
+            backgroundContext.performAndWait {
+                let gradeSystems: [GradeSystemMO] = storage.fetch(on: backgroundContext)
+                continuation.resume(
+                    returning: gradeSystems.map { $0.toGradeSystem(with: decoder) }
+                )
+            }
+        }
     }
 
-    func fetchSelectedSystem() -> GradeSystem? {
+    func fetchSelectedSystem() async -> GradeSystem? {
         guard let encodedData = defaults.object(forKey: .selectedGradeSystemKey) as? Data,
               let decodedData = try? decoder.decode(UUID.self, from: encodedData) else {
             return nil
         }
-
-        let gradeSystem: GradeSystemMO? = storage.fetch(
-            predicate: .init(
-                format: "%K == %@", #keyPath(GradeSystemMO.id), decodedData as NSUUID
-            )
-        ).first
-        return gradeSystem?.toGradeSystem(with: decoder)
+        return await withCheckedContinuation { continuation in
+            backgroundContext.performAndWait {
+                let gradeSystem: GradeSystemMO? = storage.fetch(
+                    predicate: .init(
+                        format: "%K == %@", #keyPath(GradeSystemMO.id), decodedData as NSUUID
+                    ),
+                    on: backgroundContext
+                ).first
+                continuation.resume(returning: gradeSystem?.toGradeSystem(with: decoder))
+            }
+        }
     }
 
-    func saveSystem(_ system: GradeSystem) {
-        if let gradeSystem: GradeSystemMO = storage.fetch(
-            predicate: .init(
-                format: "%K == %@", #keyPath(GradeSystemMO.id), system.id as NSUUID
-            )
-        ).first {
-            storage.delete(object: gradeSystem)
-        }
+    func saveSystem(_ system: GradeSystem) async {
+        await withCheckedContinuation { continuation in
+            backgroundContext.performAndWait {
+                if let gradeSystem: GradeSystemMO = storage.fetch(
+                    predicate: .init(
+                        format: "%K == %@", #keyPath(GradeSystemMO.id), system.id as NSUUID
+                    ),
+                    on: backgroundContext
+                ).first {
+                    storage.delete(object: gradeSystem, from: backgroundContext)
+                }
 
-        let newSystem: GradeSystemMO = storage.insert()
-        newSystem.id = system.id
-        newSystem.name = system.name
-        let grades = system.grades.compactMap { grade -> GradeMO? in
-            guard let color = try? encoder.encode(grade.color) else {
-                return nil
+                let newSystem: GradeSystemMO = storage.insert(into: backgroundContext)
+                newSystem.id = system.id
+                newSystem.name = system.name
+                let grades = system.grades.compactMap { grade -> GradeMO? in
+                    guard let color = try? encoder.encode(grade.color) else {
+                        return nil
+                    }
+                    let gradeMO: GradeMO = storage.insert(into: backgroundContext)
+                    gradeMO.id = grade.id
+                    gradeMO.difficulty = NSNumber(value: grade.difficulty)
+                    gradeMO.name = grade.name
+                    gradeMO.color = color
+                    return gradeMO
+                }
+                newSystem.grades = Set(grades)
+                storage.save(on: backgroundContext)
+                continuation.resume()
             }
-            let gradeMO: GradeMO = storage.insert()
-            gradeMO.id = grade.id
-            gradeMO.difficulty = NSNumber(value: grade.difficulty)
-            gradeMO.name = grade.name
-            gradeMO.color = color
-            return gradeMO
         }
-        newSystem.grades = Set(grades)
-        storage.save()
     }
 
     func saveSelectedSystem(for id: UUID) {
@@ -82,64 +101,50 @@ final class GradeSystemService {
         defaults.set(data, forKey: .selectedGradeSystemKey)
     }
 
-    func deleteSystem(for id: UUID) {
-        guard let system: GradeSystemMO = storage.fetch(
-            predicate: .init(
-                format: "%K == %@", #keyPath(GradeSystemMO.id), id as NSUUID
-            )
-        ).first else {
-            return
-        }
-        storage.delete(object: system)
-
-        if let selectedSystem = fetchSelectedSystem(), id == selectedSystem.id {
+    func deleteSystem(for id: UUID) async {
+        if let selectedSystem = await fetchSelectedSystem(), id == selectedSystem.id {
             defaults.set(nil, forKey: .selectedGradeSystemKey)
+        }
+        await withCheckedContinuation { continuation in
+            backgroundContext.performAndWait {
+                guard let system: GradeSystemMO = storage.fetch(
+                    predicate: .init(
+                        format: "%K == %@", #keyPath(GradeSystemMO.id), id as NSUUID
+                    ),
+                    on: backgroundContext
+                ).first else {
+                    continuation.resume()
+                    return
+                }
+                storage.delete(object: system, from: backgroundContext)
+                continuation.resume()
+            }
         }
     }
 
-    func saveDefaultSystems() {
+    func saveDefaultSystems() async {
         guard !defaults.bool(forKey: .defaultGradeSystems) else {
             return
         }
 
-        let availableSystems = fetchAvailableSystems()
+        let availableSystems = await fetchAvailableSystems()
         guard !availableSystems.contains(where: { $0.id == GradeSystem.mandala.id }) else {
             return
         }
-        saveSystem(.mandala)
+        await saveSystem(.mandala)
         defaults.set(true, forKey: .defaultGradeSystems)
     }
 
-    func migrateGradeSystems() {
+    func migrateGradeSystems() async {
         guard let encodedData = defaults.object(forKey: .gradeSystemsKey) as? Data,
               let decodedData = try? decoder.decode([GradeSystem].self, from: encodedData) else {
             return
         }
-        let availableSystems = fetchAvailableSystems()
-        decodedData.forEach { gradeSystem in
+        let availableSystems = await fetchAvailableSystems()
+        for gradeSystem in decodedData {
             if !availableSystems.contains(where: { $0.id == gradeSystem.id }) {
-                saveSystem(gradeSystem)
+                await saveSystem(gradeSystem)
             }
-        }
-    }
-}
-
-extension GradeSystemService {
-    func toClient() -> GradeSystemClient {
-        .init {
-            self.fetchAvailableSystems()
-        } fetchSelectedSystem: {
-            self.fetchSelectedSystem()
-        } saveSystem: {
-            self.saveSystem($0)
-        } deleteSystem: {
-            self.deleteSystem(for: $0)
-        } saveSelectedSystem: {
-            self.saveSelectedSystem(for: $0)
-        } saveDefaultSystems: {
-            self.saveDefaultSystems()
-        } migrateGradeSystems: {
-            self.migrateGradeSystems()
         }
     }
 }
