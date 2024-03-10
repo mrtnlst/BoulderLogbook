@@ -20,10 +20,7 @@ struct SummaryDiagramView: View {
                     .frame(maxWidth: .infinity)
                 
             case let .idle(models):
-                barChart(
-                    models: models,
-                    hasWeekFilter: viewStore.hasWeekFilter
-                )
+                barChart(models: models)
 
             case let .error(error):
                 let action: () -> Void = { viewStore.send(.didPressEmptyView) }
@@ -40,8 +37,7 @@ struct SummaryDiagramView: View {
 
 private extension SummaryDiagramView {
     @ViewBuilder func barChart(
-        models: [SummaryDiagram.Model],
-        hasWeekFilter: Bool
+        models: [SummaryDiagram.Model]
     ) -> some View {
         let grades = models.first?.gradeSystem.grades ?? []
         Chart(models) { model in
@@ -71,10 +67,8 @@ private extension SummaryDiagramView {
         .chartForegroundStyleScale(range: grades.map { $0.color })
         .chartLegend(.hidden)
         .chartXAxisLabel(position: .top) {
-            if hasWeekFilter {
-                Text("Summary of the last 7 days")
-                    .foregroundStyle(.primaryText)
-            }
+            Text("Summary of the last Session")
+                .foregroundStyle(.primaryText)
         }
         .chartXAxis {
             AxisMarks(values: .automatic) {
@@ -121,7 +115,7 @@ struct SummaryDiagramView_Previews: PreviewProvider {
         PlainList {
             PlainSection("Loading") {
                 SummaryDiagramView(
-                    store: Store(initialState: .init(hasWeekFilter: true)) {
+                    store: Store(initialState: .init()) {
                         SummaryDiagram()
                     }
                 )
@@ -131,7 +125,6 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                 SummaryDiagramView(
                     store: Store(
                         initialState: SummaryDiagram.State(
-                            hasWeekFilter: true,
                             viewState: .idle([
                                 SummaryDiagram.Model(
                                     gradeSystem: .mandala,
@@ -201,7 +194,6 @@ struct SummaryDiagramView_Previews: PreviewProvider {
                 SummaryDiagramView(
                     store: Store(
                         initialState: .init(
-                            hasWeekFilter: true,
                             viewState: .error(.noEntries)
                         )
                     ) {

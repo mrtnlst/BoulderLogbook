@@ -11,7 +11,6 @@ import ComposableArchitecture
 @Reducer
 struct SummaryDiagram {
     struct State: Equatable {
-        let hasWeekFilter: Bool
         var viewState: ViewState<[Model], DataError> = .loading
         
         enum DataError {
@@ -57,15 +56,7 @@ struct SummaryDiagram {
             let filteredTops = entries
                 .filter({ $0.gradeSystem == gradeSystem.id })
                 .sorted(by: { $0.date > $1.date })
-            // Only use entries from the last 7 days.
-                .prefix(
-                    while: { entry in
-                        if state.hasWeekFilter {
-                            return entry.date > Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? .now
-                        }
-                        return true
-                    }
-                )
+                .prefix(1)
                 .reduce(into: [], { $0.append(contentsOf: $1.tops) })
             guard !filteredTops.isEmpty else {
                 state.viewState = .error(.noEntries)

@@ -14,7 +14,7 @@ struct EntryDetail {
         let id: UUID
         let entry: Logbook.Section.Entry
         var gradeSystem: GradeSystem
-        var summaryDiagram = SummaryDiagram.State(hasWeekFilter: false)
+        var summaryDiagram = SummaryDiagram.State()
         
         init(
             entry: Logbook.Section.Entry,

@@ -17,7 +17,7 @@ struct DiagramPage {
         
         var topCountDiagram = TopCountDiagram.State()
         var sessionDiagram = SessionDiagram.State()
-        var summaryDiagram = SummaryDiagram.State(hasWeekFilter: true)
+        var summaryDiagram = SummaryDiagram.State()
         
         @BindingState var selectedTab: Tab = .topCount
         
