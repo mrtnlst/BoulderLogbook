@@ -28,6 +28,8 @@ struct DashboardView: View {
                 ) { sectionStore in
                     DashboardSectionView(store: sectionStore)
                 }
+                TotalAmountView(amount: viewStore.numberOfEntries)
+                CreditsView()
             }
             .onAppear {
                 viewStore.send(.onAppear)
@@ -45,8 +47,6 @@ struct DashboardView_Previews: PreviewProvider {
                     initialState: Dashboard.State()
                 ) {
                     Dashboard()
-                        .dependency(\.logbookEntryClient, .previewValue)
-                        .dependency(\.gradeSystemClient, .previewValue)
                 }
             )
         }

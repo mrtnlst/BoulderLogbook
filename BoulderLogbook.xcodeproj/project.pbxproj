@@ -20,6 +20,8 @@
 		5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B60B50B2B60562B00917DB5 /* PlainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60B50A2B60562B00917DB5 /* PlainSection.swift */; };
+		5B6B2C622BF1472C00A17549 /* TotalAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */; };
+		5B6B2C642BF149D400A17549 /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6B2C632BF149D400A17549 /* CreditsView.swift */; };
 		5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D3976299AC7B100299CCA /* DiagramPage.swift */; };
 		5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397B299AC84D00299CCA /* DiagramPageView.swift */; };
 		5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */; };
@@ -109,6 +111,8 @@
 		5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+Additions.swift"; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
 		5B60B50A2B60562B00917DB5 /* PlainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSection.swift; sourceTree = "<group>"; };
+		5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalAmountView.swift; sourceTree = "<group>"; };
+		5B6B2C632BF149D400A17549 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
 		5B6D3976299AC7B100299CCA /* DiagramPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPage.swift; sourceTree = "<group>"; };
 		5B6D397B299AC84D00299CCA /* DiagramPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageView.swift; sourceTree = "<group>"; };
 		5B6D397D299ACCA400299CCA /* TopCountDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCountDiagram.swift; sourceTree = "<group>"; };
@@ -441,6 +445,8 @@
 			children = (
 				A9C3005129828948001B51C4 /* Dashboard.swift */,
 				A9B07E7F2868588700AA6274 /* DashboardView.swift */,
+				5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */,
+				5B6B2C632BF149D400A17549 /* CreditsView.swift */,
 				A9C300542982907D001B51C4 /* DashboardSection */,
 				A9CE6761288004D300027885 /* EntryDetail */,
 			);
@@ -618,6 +624,7 @@
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
+				5B6B2C642BF149D400A17549 /* CreditsView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				A9BE3A4C2B8D15C1004DD728 /* CoreDataStorage.swift in Sources */,
 				5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */,
@@ -639,6 +646,7 @@
 				A9BE3A532B8D1856004DD728 /* GradeSystemService.swift in Sources */,
 				5BE273F92B5862C90004DD27 /* PlainPicker.swift in Sources */,
 				5BDD41F82986905800B84BA0 /* GradeSystemList.swift in Sources */,
+				5B6B2C622BF1472C00A17549 /* TotalAmountView.swift in Sources */,
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
 				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,

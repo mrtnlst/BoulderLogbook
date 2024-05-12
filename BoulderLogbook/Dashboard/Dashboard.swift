@@ -14,6 +14,10 @@ struct Dashboard {
         var sections: IdentifiedArrayOf<DashboardSection.State> = []
         var diagramPage = DiagramPage.State()
         var gradeSystems: [GradeSystem] = []
+
+        var numberOfEntries: Int {
+            sections.reduce(into: 0, { $0 += $1.entryDetailStates.count})
+        }
     }
     
     enum Action: Equatable {
