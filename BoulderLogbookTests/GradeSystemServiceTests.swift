@@ -29,7 +29,8 @@ final class GradeSystemServiceTests: XCTestCase {
 
     func test_migrateGradeSystems() async throws {
         // Given
-        try setupInUserDefaults([GradeSystem.mandala], for: "grade-systems")
+        let expectedSystem = GradeSystem.mandala
+        try setupInUserDefaults([expectedSystem], for: "grade-systems")
 
         // When
         await sut.migrateGradeSystems()
@@ -37,11 +38,66 @@ final class GradeSystemServiceTests: XCTestCase {
         // Then
         let results = await sut.fetchAvailableSystems()
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first?.id, GradeSystem.mandala.id)
-        XCTAssertEqual(results.first?.name, GradeSystem.mandala.name)
-        XCTAssertEqual(results.first?.grades.count, GradeSystem.mandala.grades.count)
-        GradeSystem.mandala.grades.forEach { grade in
-            let migratedGrade = results.first?.grades.first(where: { $0.id == grade.id })
+        XCTAssertEqual(results.first?.id, expectedSystem.id)
+        XCTAssertEqual(results.first?.name, expectedSystem.name)
+        XCTAssertEqual(results.first?.grades.count, expectedSystem.grades.count)
+        validate(gradeSystem1: results.first, inComparisonTo: expectedSystem)
+    }
+
+    func test_saveSystem() async throws {
+        // Given
+        let expectedSystem = GradeSystem.mandala
+
+        // When
+        await sut.saveSystem(expectedSystem)
+
+        // Then
+        let results = await sut.fetchAvailableSystems()
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first?.id, expectedSystem.id)
+        XCTAssertEqual(results.first?.name, expectedSystem.name)
+        XCTAssertEqual(results.first?.grades.count, expectedSystem.grades.count)
+        validate(gradeSystem1: results.first, inComparisonTo: expectedSystem)
+    }
+
+    func test_deleteSystem() async throws {
+        // Given
+        let expectedSystem = GradeSystem.mandala
+        await sut.saveSystem(expectedSystem)
+        let availableSystems = await sut.fetchAvailableSystems()
+        XCTAssertFalse(availableSystems.isEmpty)
+
+        // When
+        await sut.deleteSystem(for: expectedSystem.id)
+
+        // Then
+        let emptyResult = await sut.fetchAvailableSystems()
+        XCTAssertTrue(emptyResult.isEmpty)
+    }
+
+    func test_saveSelectedSystem() async {
+        // Given
+        let expectedSystem = GradeSystem.mandala
+        await sut.saveSystem(expectedSystem)
+
+        // When
+        sut.saveSelectedSystem(for: expectedSystem.id)
+
+        // The
+        let result = await sut.fetchSelectedSystem()
+        validate(gradeSystem1: result, inComparisonTo: expectedSystem)
+    }
+}
+
+private extension GradeSystemServiceTests {
+    private func setupInUserDefaults(_ object: Encodable, for key: String) throws {
+        let data = try JSONEncoder().encode(object)
+        userDefaults.set(data, forKey: key)
+    }
+
+    private func validate(gradeSystem1: GradeSystem?, inComparisonTo gradeSystem2: GradeSystem) {
+        gradeSystem2.grades.forEach { grade in
+            let migratedGrade = gradeSystem1?.grades.first(where: { $0.id == grade.id })
             XCTAssertEqual(migratedGrade?.name, grade.name)
             XCTAssertEqual(migratedGrade?.difficulty, grade.difficulty)
             for (index, color) in (grade.color.cgColor?.components ?? []).enumerated() {
@@ -51,12 +107,5 @@ final class GradeSystemServiceTests: XCTestCase {
                 XCTAssertTrue(delta < acceptableDelta)
             }
         }
-    }
-}
-
-private extension GradeSystemServiceTests {
-    private func setupInUserDefaults(_ object: Encodable, for key: String) throws {
-        let data = try JSONEncoder().encode(object)
-        userDefaults.set(data, forKey: key)
     }
 }
