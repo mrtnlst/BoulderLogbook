@@ -14,14 +14,14 @@ fileprivate extension String {
 }
 
 final class GradeSystemService {
-    private let storage: CoreDataStorage
+    private let storage: CoreDataStorageType
     private let backgroundContext: NSManagedObjectContext
     private let defaults: UserDefaults
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
     init(
-        storage: CoreDataStorage,
+        storage: CoreDataStorageType,
         backgroundContext: NSManagedObjectContext,
         defaults: UserDefaults = .standard,
         decoder: JSONDecoder = .init(),

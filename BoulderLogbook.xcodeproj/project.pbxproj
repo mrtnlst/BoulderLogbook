@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B049E4F2BF0CF1B00A70A50 /* BoulderLogbookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E4E2BF0CF1B00A70A50 /* BoulderLogbookTests.swift */; };
+		5B049E572BF0CF9600A70A50 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9BE3A472B8D159D004DD728 /* DataModel.xcdatamodeld */; };
+		5B049E592BF0DD0D00A70A50 /* CoreDataStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E582BF0DD0D00A70A50 /* CoreDataStorageMock.swift */; };
+		5B049E5D2BF0E15800A70A50 /* GradeSystemServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E5C2BF0E15800A70A50 /* GradeSystemServiceTests.swift */; };
+		5B049E5F2BF0E16600A70A50 /* LogbookEntryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E5E2BF0E16600A70A50 /* LogbookEntryServiceTests.swift */; };
 		5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A806B2896DA4900530B01 /* DashboardSectionView.swift */; };
 		5B1A806E2896E3F700530B01 /* Color+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A806D2896E3F700530B01 /* Color+Additions.swift */; };
 		5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */; };
@@ -56,8 +61,6 @@
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFAFC2B8E9649008D34CA /* Dependencies.swift */; };
 		A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961AB5C29827D8700AD89DD /* DashboardSection.swift */; };
-		A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E572868579900AA6274 /* Tests_iOS.swift */; };
-		A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
 		A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B07E412868579900AA6274 /* Assets.xcassets */; };
 		A9B07E7D2868582700AA6274 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A9B07E7C2868582700AA6274 /* ComposableArchitecture */; };
@@ -83,16 +86,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A9B07E542868579900AA6274 /* PBXContainerItemProxy */ = {
+		5B049E502BF0CF1B00A70A50 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9B07E3A2868579500AA6274 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A9B07E452868579900AA6274;
-			remoteInfo = "BoulderLogbook (iOS)";
+			remoteInfo = BoulderLogbook;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B049E4C2BF0CF1B00A70A50 /* BoulderLogbookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoulderLogbookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B049E4E2BF0CF1B00A70A50 /* BoulderLogbookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookTests.swift; sourceTree = "<group>"; };
+		5B049E582BF0DD0D00A70A50 /* CoreDataStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageMock.swift; sourceTree = "<group>"; };
+		5B049E5C2BF0E15800A70A50 /* GradeSystemServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemServiceTests.swift; sourceTree = "<group>"; };
+		5B049E5E2BF0E16600A70A50 /* LogbookEntryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryServiceTests.swift; sourceTree = "<group>"; };
 		5B1A806B2896DA4900530B01 /* DashboardSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionView.swift; sourceTree = "<group>"; };
 		5B1A806D2896E3F700530B01 /* Color+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Additions.swift"; sourceTree = "<group>"; };
 		5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEntryView.swift; sourceTree = "<group>"; };
@@ -145,10 +153,7 @@
 		A961AB5C29827D8700AD89DD /* DashboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSection.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A9B07E462868579900AA6274 /* Logbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Logbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9B07E532868579900AA6274 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9B07E572868579900AA6274 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
-		A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		A9B07E462868579900AA6274 /* BoulderLogbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoulderLogbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B07E7F2868588700AA6274 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A9B07E8B2868588700AA6274 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		A9B07E982868588700AA6274 /* EntryFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFormView.swift; sourceTree = "<group>"; };
@@ -171,6 +176,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5B049E492BF0CF1B00A70A50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B07E432868579900AA6274 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -179,16 +191,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9B07E502868579900AA6274 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B049E4D2BF0CF1B00A70A50 /* BoulderLogbookTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B049E4E2BF0CF1B00A70A50 /* BoulderLogbookTests.swift */,
+				5B049E5C2BF0E15800A70A50 /* GradeSystemServiceTests.swift */,
+				5B049E5E2BF0E16600A70A50 /* LogbookEntryServiceTests.swift */,
+				5B049E582BF0DD0D00A70A50 /* CoreDataStorageMock.swift */,
+			);
+			path = BoulderLogbookTests;
+			sourceTree = "<group>";
+		};
 		5B1A80772896EBD100530B01 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,7 +355,7 @@
 				A936856228686CAC00E34B6C /* README.md */,
 				5BFAAB3C2A484BFB00E486DC /* LICENSE */,
 				A9B07E3E2868579600AA6274 /* BoulderLogbook */,
-				A9B07E562868579900AA6274 /* Tests iOS */,
+				5B049E4D2BF0CF1B00A70A50 /* BoulderLogbookTests */,
 				A9B07E472868579900AA6274 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -364,19 +380,10 @@
 		A9B07E472868579900AA6274 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9B07E462868579900AA6274 /* Logbook.app */,
-				A9B07E532868579900AA6274 /* Tests iOS.xctest */,
+				A9B07E462868579900AA6274 /* BoulderLogbook.app */,
+				5B049E4C2BF0CF1B00A70A50 /* BoulderLogbookTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		A9B07E562868579900AA6274 /* Tests iOS */ = {
-			isa = PBXGroup;
-			children = (
-				A9B07E572868579900AA6274 /* Tests_iOS.swift */,
-				A9B07E592868579900AA6274 /* Tests_iOSLaunchTests.swift */,
-			);
-			path = "Tests iOS";
 			sourceTree = "<group>";
 		};
 		A9B07E852868588700AA6274 /* App */ = {
@@ -489,6 +496,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5B049E4B2BF0CF1B00A70A50 /* BoulderLogbookTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B049E522BF0CF1B00A70A50 /* Build configuration list for PBXNativeTarget "BoulderLogbookTests" */;
+			buildPhases = (
+				5B049E482BF0CF1B00A70A50 /* Sources */,
+				5B049E492BF0CF1B00A70A50 /* Frameworks */,
+				5B049E4A2BF0CF1B00A70A50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5B049E512BF0CF1B00A70A50 /* PBXTargetDependency */,
+			);
+			name = BoulderLogbookTests;
+			productName = BoulderLogbookTests;
+			productReference = 5B049E4C2BF0CF1B00A70A50 /* BoulderLogbookTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A9B07E452868579900AA6274 /* BoulderLogbook */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9B07E6F2868579900AA6274 /* Build configuration list for PBXNativeTarget "BoulderLogbook" */;
@@ -506,26 +531,8 @@
 				A9B07E7C2868582700AA6274 /* ComposableArchitecture */,
 			);
 			productName = "BoulderLogbook (iOS)";
-			productReference = A9B07E462868579900AA6274 /* Logbook.app */;
+			productReference = A9B07E462868579900AA6274 /* BoulderLogbook.app */;
 			productType = "com.apple.product-type.application";
-		};
-		A9B07E522868579900AA6274 /* Tests iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A9B07E752868579900AA6274 /* Build configuration list for PBXNativeTarget "Tests iOS" */;
-			buildPhases = (
-				A9B07E4F2868579900AA6274 /* Sources */,
-				A9B07E502868579900AA6274 /* Frameworks */,
-				A9B07E512868579900AA6274 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A9B07E552868579900AA6274 /* PBXTargetDependency */,
-			);
-			name = "Tests iOS";
-			productName = "Tests iOS";
-			productReference = A9B07E532868579900AA6274 /* Tests iOS.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -534,15 +541,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					5B049E4B2BF0CF1B00A70A50 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = A9B07E452868579900AA6274;
+					};
 					A9B07E452868579900AA6274 = {
 						CreatedOnToolsVersion = 13.3.1;
-					};
-					A9B07E522868579900AA6274 = {
-						CreatedOnToolsVersion = 13.3.1;
-						TestTargetID = A9B07E452868579900AA6274;
 					};
 				};
 			};
@@ -563,12 +570,19 @@
 			projectRoot = "";
 			targets = (
 				A9B07E452868579900AA6274 /* BoulderLogbook */,
-				A9B07E522868579900AA6274 /* Tests iOS */,
+				5B049E4B2BF0CF1B00A70A50 /* BoulderLogbookTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5B049E4A2BF0CF1B00A70A50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B07E442868579900AA6274 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -579,16 +593,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9B07E512868579900AA6274 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5B049E482BF0CF1B00A70A50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B049E5D2BF0E15800A70A50 /* GradeSystemServiceTests.swift in Sources */,
+				5B049E5F2BF0E16600A70A50 /* LogbookEntryServiceTests.swift in Sources */,
+				5B049E592BF0DD0D00A70A50 /* CoreDataStorageMock.swift in Sources */,
+				5B049E572BF0CF9600A70A50 /* DataModel.xcdatamodeld in Sources */,
+				5B049E4F2BF0CF1B00A70A50 /* BoulderLogbookTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B07E422868579900AA6274 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -663,26 +682,67 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9B07E4F2868579900AA6274 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A9B07E5A2868579900AA6274 /* Tests_iOSLaunchTests.swift in Sources */,
-				A9B07E582868579900AA6274 /* Tests_iOS.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A9B07E552868579900AA6274 /* PBXTargetDependency */ = {
+		5B049E512BF0CF1B00A70A50 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9B07E452868579900AA6274 /* BoulderLogbook */;
-			targetProxy = A9B07E542868579900AA6274 /* PBXContainerItemProxy */;
+			targetProxy = 5B049E502BF0CF1B00A70A50 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5B049E532BF0CF1B00A70A50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SRTZB38F2W;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbookTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoulderLogbook.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BoulderLogbook";
+			};
+			name = Debug;
+		};
+		5B049E542BF0CF1B00A70A50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SRTZB38F2W;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbookTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoulderLogbook.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BoulderLogbook";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		A9B07E6D2868579900AA6274 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -820,7 +880,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
-				PRODUCT_NAME = Logbook;
+				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -852,7 +912,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
-				PRODUCT_NAME = Logbook;
+				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -861,50 +921,18 @@
 			};
 			name = Release;
 		};
-		A9B07E762868579900AA6274 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F9XCK3V2AT;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.martinlist.Tests-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "BoulderLogbook (iOS)";
-			};
-			name = Debug;
-		};
-		A9B07E772868579900AA6274 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F9XCK3V2AT;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.martinlist.Tests-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "BoulderLogbook (iOS)";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5B049E522BF0CF1B00A70A50 /* Build configuration list for PBXNativeTarget "BoulderLogbookTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B049E532BF0CF1B00A70A50 /* Debug */,
+				5B049E542BF0CF1B00A70A50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9B07E3D2868579500AA6274 /* Build configuration list for PBXProject "BoulderLogbook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -919,15 +947,6 @@
 			buildConfigurations = (
 				A9B07E702868579900AA6274 /* Debug */,
 				A9B07E712868579900AA6274 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A9B07E752868579900AA6274 /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A9B07E762868579900AA6274 /* Debug */,
-				A9B07E772868579900AA6274 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

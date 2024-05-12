@@ -7,7 +7,16 @@
 
 import CoreData
 
-final class CoreDataStorage {
+protocol CoreDataStorageType {
+    var storeContainer: NSPersistentContainer { get }
+    var mainContext: NSManagedObjectContext { get }
+    func fetch<T: NSManagedObject>(predicate: NSPredicate?, on context: NSManagedObjectContext) -> [T]
+    func insert<T: NSManagedObject>(into context: NSManagedObjectContext) -> T
+    func delete(object: NSManagedObject, from context: NSManagedObjectContext)
+    func save(on context: NSManagedObjectContext)
+}
+
+final class CoreDataStorage: CoreDataStorageType {
     static let shared = CoreDataStorage()
     let storeContainer: NSPersistentContainer
 
@@ -21,7 +30,7 @@ final class CoreDataStorage {
     }
 }
 
-extension CoreDataStorage {
+extension CoreDataStorageType {
     var mainContext: NSManagedObjectContext {
         storeContainer.viewContext
     }
