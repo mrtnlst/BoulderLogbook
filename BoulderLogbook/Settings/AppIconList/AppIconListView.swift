@@ -19,6 +19,9 @@ struct AppIconListView: View {
             PlainSection("App Icon Pack") {
                 appIconRow(for: .aurora)
                 appIconRow(for: .darkBerry)
+                appIconRow(for: .lemon)
+                appIconRow(for: .fairyDust)
+                appIconRow(for: .midnight)
             }
         }
         .navigationTitle("App Icons")
