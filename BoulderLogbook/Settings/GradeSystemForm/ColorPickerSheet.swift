@@ -17,22 +17,20 @@ struct ColorPickerSheet: View {
 
     var body: some View {
         ScrollView {
-            WithViewStore(store, observe: \.grade) { viewStore in
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(Color.araAll, id: \.self) { color in
-                        Button {
-                            viewStore.send(.didSelectColor(color, viewStore.state))
-                        } label: {
-                            let isSelected = viewStore.state.color.isEqual(to: color)
-                            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle.fill")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                        }
-                        .accentColor(color)
+            LazyVGrid(columns: columns, spacing: 20) {
+                ForEach(Color.araAll, id: \.self) { color in
+                    Button {
+                        store.send(.didSelectColor(color, store.grade))
+                    } label: {
+                        let isSelected = store.grade.color.isEqual(to: color)
+                        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle.fill")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
                     }
+                    .accentColor(color)
                 }
-                .padding()
             }
+            .padding()
         }
         .background {
             Color.araRowBackground

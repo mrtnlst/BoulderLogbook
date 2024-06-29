@@ -9,53 +9,51 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SettingsView: View {
-    let store: StoreOf<Settings>
-    
+    @Bindable var store: StoreOf<Settings>
+
     var body: some View {
         NavigationStack {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                PlainList {
-                    Button {
-                        viewStore.send(.setGradeSystemListNavigation)
-                    } label: {
-                        listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
-                    }
-                    Button {
-                        viewStore.send(.setAppIconListNavigation)
-                    } label: {
-                        listItem(title: "App Icons", image: "app.dashed")
-                    }
-                    Button {
-                        viewStore.send(.setAboutNavigation)
-                    } label: {
-                        listItem(title: "About", image: "info.circle")
-                    }
+            PlainList {
+                Button {
+                    store.send(.setGradeSystemListNavigation)
+                } label: {
+                    listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
                 }
-                .navigationTitle("Settings")
-                .navigationDestination(
-                    store: store.scope(
-                        state: \.$destination.gradeSystemList,
-                        action: \.destination.gradeSystemList
-                    )
-                ) {
-                    GradeSystemListView(store: $0)
+                Button {
+                    store.send(.setAppIconListNavigation)
+                } label: {
+                    listItem(title: "App Icons", image: "app.dashed")
                 }
-                .navigationDestination(
-                    store: store.scope(
-                        state: \.$destination.appIconList,
-                        action: \.destination.appIconList
-                    )
-                ) {
-                    AppIconListView(store: $0)
+                Button {
+                    store.send(.setAboutNavigation)
+                } label: {
+                    listItem(title: "About", image: "info.circle")
                 }
-                .navigationDestination(
-                    store: store.scope(
-                        state: \.$destination.about,
-                        action: \.destination.about
-                    )
-                ) {
-                    AboutView(store: $0)
-                }
+            }
+            .navigationTitle("Settings")
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.gradeSystemList,
+                    action: \.destination.gradeSystemList
+                )
+            ) {
+                GradeSystemListView(store: $0)
+            }
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.appIconList,
+                    action: \.destination.appIconList
+                )
+            ) {
+                AppIconListView(store: $0)
+            }
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.about,
+                    action: \.destination.about
+                )
+            ) {
+                AboutView(store: $0)
             }
         }
         .preferredColorScheme(.dark)
@@ -81,17 +79,14 @@ private extension SettingsView {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("")
-            .sheet(isPresented: .constant(true)) {
-                SettingsView(
-                    store: Store(
-                        initialState: Settings.State()
-                    ) {
-                        Settings()
-                    }
-                )
+#Preview {
+    Text("").sheet(isPresented: .constant(true)) {
+        SettingsView(
+            store: Store(
+                initialState: Settings.State()
+            ) {
+                Settings()
             }
+        )
     }
 }

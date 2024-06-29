@@ -26,8 +26,6 @@ struct AppIconView: View {
     }
 }
 
-struct AppIconView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppIconView(iconName: nil)
-    }
+#Preview {
+    AppIconView(iconName: nil)
 }

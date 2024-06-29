@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct SummaryDiagram {
+    @ObservableState
     struct State: Equatable {
         var viewState: ViewState<[Model], DataError> = .loading
         

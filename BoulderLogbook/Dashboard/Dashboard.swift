@@ -10,13 +10,15 @@ import ComposableArchitecture
 
 @Reducer
 struct Dashboard {
+    @ObservableState
     struct State: Equatable {
-        var sections: IdentifiedArrayOf<DashboardSection.State> = []
+        @Presents var entryDetail: EntryDetail.State?
+        var sections: [Logbook.Section] = []
         var diagramPage = DiagramPage.State()
         var gradeSystems: [GradeSystem] = []
 
         var numberOfEntries: Int {
-            sections.reduce(into: 0, { $0 += $1.entryDetailStates.count})
+            sections.reduce(into: 0, { $0 += $1.entries.count})
         }
     }
     
@@ -26,11 +28,17 @@ struct Dashboard {
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSections
         case receiveSections(TaskResult<[Logbook.Section]>)
-        case dashboardSection(IdentifiedActionOf<DashboardSection>)
+        case delete(Logbook.Section.Entry.ID)
+        case deleteDidFinish(TaskResult<EntryClientResponse>)
+        case edit(Logbook.Section.Entry)
+        case setNavigation(Logbook.Section.Entry)
+        case entryDetail(PresentationAction<EntryDetail.Action>)
         case diagramPage(DiagramPage.Action)
+
+        enum EntryClientResponse { case finished }
     }
-    @Dependency(\.logbookEntryClient) var logbookEntryClient
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(LogbookEntryClient.self) var logbookEntryClient
+    @Dependency(GradeSystemClient.self) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         Scope(state: \.diagramPage, action: /Action.diagramPage) {
@@ -73,30 +81,44 @@ struct Dashboard {
                 }
                 
             case let .receiveSections(.success(sections)):
-                state.sections = .init(
-                    uniqueElements: sections.map { section in
-                        DashboardSection.State(
-                            date: section.date,
-                            entries: section.entries,
-                            gradeSystems: state.gradeSystems
-                        )
-                    }.sorted(
-                        by: { $0.date > $1.date }
-                    )
+                state.sections = sections.sorted(
+                    by: { $0.date > $1.date }
                 )
                 
-            case .dashboardSection(.element(_, .deleteDidFinish(_))):
+            case let .delete(id),
+                 let .entryDetail(.presented(.delete(id))):
+                return .run { send in
+                    await send(
+                        .deleteDidFinish(
+                            TaskResult {
+                                await logbookEntryClient.deleteEntry(id)
+                                return .finished
+                            }
+                        )
+                    )
+                }
+
+            case .deleteDidFinish:
+                state.entryDetail = nil
                 return .merge(
                     .send(.fetchSections),
                     .send(.diagramPage(.fetchEntries))
                 )
                 
+            case let .setNavigation(entry):
+                if let system = state.gradeSystems.first(where: { $0.id == entry.gradeSystem }) {
+                    state.entryDetail = EntryDetail.State(
+                        entry: entry,
+                        gradeSystem: system
+                    )
+                }
+
             default: ()
             }
             return .none
         }
-        .forEach(\.sections, action: \.dashboardSection) {
-            DashboardSection()
+        .ifLet(\.$entryDetail, action: \.entryDetail) {
+            EntryDetail()
         }
     }
 }

@@ -12,21 +12,19 @@ import ComposableArchitecture
 struct SessionDiagramView: View {
     let store: StoreOf<SessionDiagram>
     @ScaledMetric var size: CGFloat = 1
-    
+
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            switch viewStore.viewState {
-            case .loading:
-                LoadingIndicator()
-                    .frame(maxWidth: .infinity)
+        switch store.viewState {
+        case .loading:
+            LoadingIndicator()
+                .frame(maxWidth: .infinity)
 
-            case let .idle(models):
-                barChart(models: models)
+        case let .idle(models):
+            barChart(models: models)
 
-            case let .error(message):
-                EmptyMessageView(message: message)
-                    .frame(maxWidth: .infinity)
-            }
+        case let .error(message):
+            EmptyMessageView(message: message)
+                .frame(maxWidth: .infinity)
         }
     }
 }
@@ -72,48 +70,46 @@ extension SessionDiagramView {
     }
 }
 
-struct SessionDiagramView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            PlainSection("Loading") {
-                SessionDiagramView(
-                    store: Store(
-                        initialState: SessionDiagram.State()
-                    ) {
-                        SessionDiagram()
-                    }
-                )
-                .frame(height: 200)
-            }
-            PlainSection("Diagram") {
-                SessionDiagramView(
-                    store: Store(
-                        initialState: SessionDiagram.State(
-                            viewState: .idle([
-                                .init(date: "Apr", count: 12),
-                                .init(date: "May", count: 1),
-                                .init(date: "Jun", count: 6),
-                                .init(date: "Jul", count: 10)
-                            ])
-                        )
-                    ) {
-                        SessionDiagram()
-                    }
-                )
-                .frame(height: 200)
-            }
-            PlainSection("Empty") {
-                SessionDiagramView(
-                    store: Store(
-                        initialState: SessionDiagram.State(
-                            viewState: .error("No sessions available!")
-                        )
-                    ) {
-                        SessionDiagram()
-                    }
-                )
-                .frame(height: 200)
-            }
+#Preview {
+    PlainList {
+        PlainSection("Loading") {
+            SessionDiagramView(
+                store: Store(
+                    initialState: SessionDiagram.State()
+                ) {
+                    SessionDiagram()
+                }
+            )
+            .frame(height: 200)
+        }
+        PlainSection("Diagram") {
+            SessionDiagramView(
+                store: Store(
+                    initialState: SessionDiagram.State(
+                        viewState: .idle([
+                            .init(date: "Apr", count: 12),
+                            .init(date: "May", count: 1),
+                            .init(date: "Jun", count: 6),
+                            .init(date: "Jul", count: 10)
+                        ])
+                    )
+                ) {
+                    SessionDiagram()
+                }
+            )
+            .frame(height: 200)
+        }
+        PlainSection("Empty") {
+            SessionDiagramView(
+                store: Store(
+                    initialState: SessionDiagram.State(
+                        viewState: .error("No sessions available!")
+                    )
+                ) {
+                    SessionDiagram()
+                }
+            )
+            .frame(height: 200)
         }
     }
 }

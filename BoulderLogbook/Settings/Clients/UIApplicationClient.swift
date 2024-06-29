@@ -14,13 +14,6 @@ struct UIApplicationClient {
     var currentIconName: () async -> String?
 }
 
-extension DependencyValues {
-    var uiApplicationClient: UIApplicationClient {
-        get { self[UIApplicationClient.self] }
-        set { self[UIApplicationClient.self] = newValue }
-    }
-}
-
 extension UIApplicationClient: DependencyKey {
     static let liveValue: Self = {
         return Self(

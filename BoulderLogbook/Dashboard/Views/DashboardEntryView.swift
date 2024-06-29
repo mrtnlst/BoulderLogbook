@@ -28,17 +28,15 @@ struct DashboardEntryView: View {
     }
 }
 
-struct DashboardEntryView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            DashboardEntryView(
-                entry: [Logbook.Section.Entry].samples[0],
-                gradeSystem: .mandala
-            )
-            DashboardEntryView(
-                entry: [Logbook.Section.Entry].samples[3],
-                gradeSystem: .mandala
-            )
-        }
+#Preview {
+    PlainList {
+        DashboardEntryView(
+            entry: [Logbook.Section.Entry].samples[0],
+            gradeSystem: .mandala
+        )
+        DashboardEntryView(
+            entry: [Logbook.Section.Entry].samples[3],
+            gradeSystem: .mandala
+        )
     }
 }

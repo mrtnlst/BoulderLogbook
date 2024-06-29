@@ -10,40 +10,27 @@ import ComposableArchitecture
 
 @Reducer
 struct AppReducer {
-    @Reducer
-    struct Destination {
-        enum State: Equatable {
-            case settings(Settings.State)
-            case entryForm(EntryForm.State)
-        }
-        enum Action {
-            case settings(Settings.Action)
-            case entryForm(EntryForm.Action)
-        }
-        var body: some ReducerOf<Self> {
-            Scope(state: \.settings, action: \.settings) {
-                Settings()
-            }
-            Scope(state: \.entryForm, action: \.entryForm) {
-                EntryForm()
-            }
-        }
+    @Reducer(state: .equatable)
+    enum Destination {
+        case settings(Settings)
+        case entryForm(EntryForm)
     }
     
+    @ObservableState
     struct State: Equatable {
-        @PresentationState var destination: Destination.State?
+        @Presents var destination: Destination.State?
         var dashboard = Dashboard.State()
     }
     
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         case dashboard(Dashboard.Action)
-        case presentEntryForm
+        case presentEntryForm(EntryForm.State?)
         case presentSettings
         case presentGradeSystemList
         case presentGradeSystemConfiguration
     }
-    @Dependency(\.logbookEntryClient) var entryClient
+    @Dependency(LogbookEntryClient.self) var entryClient
 
     var body: some Reducer<State, Action> {
         Scope(state: \.dashboard, action: /Action.dashboard) {
@@ -51,8 +38,8 @@ struct AppReducer {
         }
         Reduce { state, action in
             switch action {
-            case .presentEntryForm:
-                state.destination = .entryForm(EntryForm.State())
+            case let .presentEntryForm(entryFormState):
+                state.destination = .entryForm(entryFormState ?? EntryForm.State())
 
             case .presentSettings:
                 state.destination = .settings(Settings.State())
@@ -75,21 +62,29 @@ struct AppReducer {
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                 
-            case let .dashboard(.dashboardSection(.element(_, .edit(entry)))):
-                state.destination = .entryForm(
-                    .init(
-                        id: entry.id,
-                        date: entry.date,
-                        notes: entry.notes,
-                        tops: entry.tops.normal(),
-                        attempts: entry.tops.filter { $0.isAttempt },
-                        flashs: entry.tops.filter { $0.wasFlash },
-                        onsights: entry.tops.filter { $0.wasOnsight },
-                        selectedSystem: entry.gradeSystem,
-                        isEditing: true
-                    )
+            case let .dashboard(.edit(entry)),
+                 let .dashboard(.entryDetail(.presented(.edit(entry)))):
+                state.dashboard.entryDetail = nil
+                return .concatenate(
+                    .run { send in try await Task.sleep(for: .milliseconds(100))
+                        await send(
+                            .presentEntryForm(
+                                .init(
+                                    id: entry.id,
+                                    date: entry.date,
+                                    notes: entry.notes,
+                                    tops: entry.tops.normal(),
+                                    attempts: entry.tops.filter { $0.isAttempt },
+                                    flashs: entry.tops.filter { $0.wasFlash },
+                                    onsights: entry.tops.filter { $0.wasOnsight },
+                                    selectedSystem: entry.gradeSystem,
+                                    isEditing: true
+                                )
+                            )
+                        )
+                    }
                 )
- 
+
             case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))))):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
@@ -116,8 +111,6 @@ struct AppReducer {
             }
             return .none
         }
-        .ifLet(\.$destination, action: \.destination) {
-          Destination()
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 }

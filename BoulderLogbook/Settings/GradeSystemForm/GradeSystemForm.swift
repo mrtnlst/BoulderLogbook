@@ -10,12 +10,13 @@ import ComposableArchitecture
 
 @Reducer
 struct GradeSystemForm {
+    @ObservableState
     struct State: Equatable {
         let id: UUID
-        @BindingState var name: String
-        @BindingState var grades: [Grade]
-        @BindingState var focusedField: Field?
-        @PresentationState var colorPicker: ColorPickerFeature.State?
+        var name: String
+        var grades: [Grade]
+        var focusedField: Field?
+        @Presents var colorPicker: ColorPickerFeature.State?
 
         enum Field: Hashable {
             case name
@@ -48,7 +49,7 @@ struct GradeSystemForm {
         enum ClientResponse { case finished }
     }
     
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(GradeSystemClient.self) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()

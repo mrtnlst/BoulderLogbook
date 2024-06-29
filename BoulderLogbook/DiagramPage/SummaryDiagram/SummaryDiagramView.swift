@@ -11,26 +11,24 @@ import Charts
 
 struct SummaryDiagramView: View {
     let store: StoreOf<SummaryDiagram>
-    
-    var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            switch viewStore.viewState {
-            case .loading:
-                LoadingIndicator()
-                    .frame(maxWidth: .infinity)
-                
-            case let .idle(models):
-                barChart(models: models)
 
-            case let .error(error):
-                let action: () -> Void = { viewStore.send(.didPressEmptyView) }
-                
-                EmptyMessageView(
-                    message: error?.text,
-                    action: error == .noGradeSystem ? action : nil
-                )
+    var body: some View {
+        switch store.viewState {
+        case .loading:
+            LoadingIndicator()
                 .frame(maxWidth: .infinity)
-            }
+
+        case let .idle(models):
+            barChart(models: models)
+
+        case let .error(error):
+            let action: () -> Void = { store.send(.didPressEmptyView) }
+
+            EmptyMessageView(
+                message: error?.text,
+                action: error == .noGradeSystem ? action : nil
+            )
+            .frame(maxWidth: .infinity)
         }
     }
 }
@@ -88,7 +86,7 @@ private extension SummaryDiagramView {
         }
         .padding(.top, 4)
     }
-    
+
     @ChartContentBuilder func barMark(
         value: Int,
         grade: Grade,
@@ -110,98 +108,96 @@ private extension SummaryDiagramView {
     }
 }
 
-struct SummaryDiagramView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            PlainSection("Loading") {
-                SummaryDiagramView(
-                    store: Store(initialState: .init()) {
-                        SummaryDiagram()
-                    }
-                )
-                .frame(height: 170)
-            }
-            PlainSection("Diagram") {
-                SummaryDiagramView(
-                    store: Store(
-                        initialState: SummaryDiagram.State(
-                            viewState: .idle([
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaBlue,
-                                    tops: 3,
-                                    attempts: 0,
-                                    flash: 0,
-                                    onsight: 0
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaRed,
-                                    tops: 3,
-                                    attempts: 0,
-                                    flash: 2,
-                                    onsight: 2
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaOrange,
-                                    tops: 0,
-                                    attempts: 0,
-                                    flash: 1,
-                                    onsight: 2
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaBlack,
-                                    tops: 0,
-                                    attempts: 0,
-                                    flash: 0,
-                                    onsight: 0
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaWhite,
-                                    tops: 1,
-                                    attempts: 3,
-                                    flash: 0,
-                                    onsight: 0
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaYellow,
-                                    tops: 0,
-                                    attempts: 0,
-                                    flash: 0,
-                                    onsight: 0
-                                ),
-                                SummaryDiagram.Model(
-                                    gradeSystem: .mandala,
-                                    grade: Grade.mandalaPurple,
-                                    tops: 1,
-                                    attempts: 4,
-                                    flash: 3,
-                                    onsight: 0
-                                )
-                            ])
-                        )
-                    ) {
-                        SummaryDiagram()
-                    }
-                )
-                .frame(height: 200)
-            }
-            PlainSection("Empty") {
-                SummaryDiagramView(
-                    store: Store(
-                        initialState: .init(
-                            viewState: .error(.noEntries)
-                        )
-                    ) {
-                        SummaryDiagram()
-                    }
-                )
-                .frame(height: 170)
-            }
+#Preview {
+    PlainList {
+        PlainSection("Loading") {
+            SummaryDiagramView(
+                store: Store(initialState: .init()) {
+                    SummaryDiagram()
+                }
+            )
+            .frame(height: 170)
+        }
+        PlainSection("Diagram") {
+            SummaryDiagramView(
+                store: Store(
+                    initialState: SummaryDiagram.State(
+                        viewState: .idle([
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaBlue,
+                                tops: 3,
+                                attempts: 0,
+                                flash: 0,
+                                onsight: 0
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaRed,
+                                tops: 3,
+                                attempts: 0,
+                                flash: 2,
+                                onsight: 2
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaOrange,
+                                tops: 0,
+                                attempts: 0,
+                                flash: 1,
+                                onsight: 2
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaBlack,
+                                tops: 0,
+                                attempts: 0,
+                                flash: 0,
+                                onsight: 0
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaWhite,
+                                tops: 1,
+                                attempts: 3,
+                                flash: 0,
+                                onsight: 0
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaYellow,
+                                tops: 0,
+                                attempts: 0,
+                                flash: 0,
+                                onsight: 0
+                            ),
+                            SummaryDiagram.Model(
+                                gradeSystem: .mandala,
+                                grade: Grade.mandalaPurple,
+                                tops: 1,
+                                attempts: 4,
+                                flash: 3,
+                                onsight: 0
+                            )
+                        ])
+                    )
+                ) {
+                    SummaryDiagram()
+                }
+            )
+            .frame(height: 200)
+        }
+        PlainSection("Empty") {
+            SummaryDiagramView(
+                store: Store(
+                    initialState: .init(
+                        viewState: .error(.noEntries)
+                    )
+                ) {
+                    SummaryDiagram()
+                }
+            )
+            .frame(height: 170)
         }
     }
 }

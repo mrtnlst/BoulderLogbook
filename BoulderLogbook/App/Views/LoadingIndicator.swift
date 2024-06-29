@@ -20,10 +20,8 @@ struct LoadingIndicator: View {
     }
 }
 
-struct LoadingIndicator_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            LoadingIndicator()
-        }
+#Preview {
+    PlainList {
+        LoadingIndicator()
     }
 }

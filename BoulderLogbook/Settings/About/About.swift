@@ -17,7 +17,7 @@ struct About {
         case openTCA
     }
     
-    @Dependency(\.uiApplicationClient) var uiApplicationClient
+    @Dependency(UIApplicationClient.self) var uiApplicationClient
     
     func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {

@@ -41,13 +41,6 @@ extension LogbookEntryService {
     }
 }
 
-extension DependencyValues {
-    var logbookEntryClient: LogbookEntryClient {
-        get { self[LogbookEntryClient.self] }
-        set { self[LogbookEntryClient.self] = newValue }
-    }
-}
-
 extension LogbookEntryClient: DependencyKey {
     static let liveValue = BoulderLogbookApp.dependencies.logbookEntryService.toClient()
      static let previewValue: Self = {

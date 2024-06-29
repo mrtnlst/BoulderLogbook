@@ -10,10 +10,11 @@ import ComposableArchitecture
 
 @Reducer
 struct TopCountDiagram {
+    @ObservableState
     struct State: Equatable {
         var viewState: ViewState<[Top], String> = .loading
         var gradeSystem: GradeSystem?
-        @BindingState var selectedSegment: Segment = .week
+        var selectedSegment: Segment = .week
     }
     
     enum Action: Equatable, BindableAction {
@@ -68,7 +69,7 @@ struct TopCountDiagram {
                     state.viewState = .idle(tops)
                 }
                 
-            case .binding(\.$selectedSegment):
+            case .binding(\.selectedSegment):
                 return .send(.fetchData)
                 
             default: ()

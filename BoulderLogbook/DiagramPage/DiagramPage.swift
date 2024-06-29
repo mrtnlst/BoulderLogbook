@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct DiagramPage {
+    @ObservableState
     struct State: Equatable {
         var entries: [Logbook.Section.Entry] = []
         var gradeSystems: [GradeSystem] = []
@@ -19,7 +20,7 @@ struct DiagramPage {
         var sessionDiagram = SessionDiagram.State()
         var summaryDiagram = SummaryDiagram.State()
         
-        @BindingState var selectedTab: Tab = .topCount
+        var selectedTab: Tab = .topCount
         
         enum Tab: Int, Hashable, CaseIterable {
             case topCount
@@ -42,8 +43,8 @@ struct DiagramPage {
     }
     
     @Dependency(\.diagramPageClient) var diagramPageClient
-    @Dependency(\.logbookEntryClient) var entryClient
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(LogbookEntryClient.self) var entryClient
+    @Dependency(GradeSystemClient.self) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -102,7 +103,7 @@ struct DiagramPage {
             case .topCountDiagram(.fetchData):
                 return .send(.topCountDiagram(.receiveData(state.entries, state.selectedGradeSystem)))
                 
-            case .binding(\.$selectedTab):
+            case .binding(\.selectedTab):
                 return .run { [tab = state.selectedTab] _ in
                     diagramPageClient.saveSelectedDiagram(tab.rawValue)
                 }

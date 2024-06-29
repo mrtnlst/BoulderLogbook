@@ -10,34 +10,16 @@ import ComposableArchitecture
 
 @Reducer
 struct Settings {
-    @Reducer
-    struct Destination {
-        enum State: Equatable {
-            case gradeSystemList(GradeSystemList.State)
-            case appIconList(AppIconList.State)
-            case about(About.State)
-        }
-        
-        enum Action: Equatable {
-            case gradeSystemList(GradeSystemList.Action)
-            case appIconList(AppIconList.Action)
-            case about(About.Action)
-        }
-        var body: some ReducerOf<Self> {
-            Scope(state: \.gradeSystemList, action: \.gradeSystemList) {
-                GradeSystemList()
-            }
-            Scope(state: \.appIconList, action: \.appIconList) {
-                AppIconList()
-            }
-            Scope(state: \.about, action: \.about) {
-                About()
-            }
-        }
+    @Reducer(state: .equatable)
+    enum Destination {
+        case gradeSystemList(GradeSystemList)
+        case appIconList(AppIconList)
+        case about(About)
     }
     
+    @ObservableState
     struct State: Equatable {
-        @PresentationState var destination: Destination.State?
+        @Presents var destination: Destination.State?
     }
     
     enum Action {
@@ -50,7 +32,7 @@ struct Settings {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(\.logbookEntryClient) var entryClient
+    @Dependency(LogbookEntryClient.self) var entryClient
     
     var body: some Reducer<State, Action> {
        Reduce { state, action in
@@ -82,8 +64,6 @@ struct Settings {
             }
             return .none
         }
-       .ifLet(\.$destination, action: \.destination) {
-         Destination()
-       }
+       .ifLet(\.$destination, action: \.destination)
     }
 }

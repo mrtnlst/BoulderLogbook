@@ -44,17 +44,15 @@ struct EmptyMessageView: View {
     }
 }
 
-struct EmptyMessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            PlainSection("Empty") {
-                EmptyMessageView(message: "No entries available")
-                    .frame(maxWidth: .infinity)
-            }
-            PlainSection("More Text") {
-                EmptyMessageView(message: "Create or select grade system from Settings!", action: {})
-                    .frame(maxWidth: .infinity)
-            }
+#Preview {
+    PlainList {
+        PlainSection("Empty") {
+            EmptyMessageView(message: "No entries available")
+                .frame(maxWidth: .infinity)
+        }
+        PlainSection("More Text") {
+            EmptyMessageView(message: "Create or select grade system from Settings!", action: {})
+                .frame(maxWidth: .infinity)
         }
     }
 }

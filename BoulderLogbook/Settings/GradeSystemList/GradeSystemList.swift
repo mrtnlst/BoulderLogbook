@@ -10,35 +10,26 @@ import ComposableArchitecture
 
 @Reducer
 struct GradeSystemList {
-    @Reducer
-    struct Destination {
-        enum State: Equatable {
-            case gradeSystemForm(GradeSystemForm.State)
-            case confirmationDialog(ConfirmationDialogState<Action.Confirmation>)
-        }
-        enum Action: Equatable {
-            case gradeSystemForm(GradeSystemForm.Action)
-            case confirmationDialog(PresentationAction<Confirmation>)
-            
-            enum Confirmation {
-                case delete
-            }
-        }
-        var body: some ReducerOf<Self> {
-            Scope(state: \.gradeSystemForm, action: \.gradeSystemForm) {
-                GradeSystemForm()
-            }
+    @Reducer(state: .equatable)
+    enum Destination {
+        case gradeSystemForm(GradeSystemForm)
+        case confirmationDialog(ConfirmationDialogState<Confirmation>)
+
+        @CasePathable
+        enum Confirmation {
+            case delete
         }
     }
     
+    @ObservableState
     struct State: Equatable {
-        @PresentationState var destination: Destination.State?
+        @Presents var destination: Destination.State?
         var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
         var systemToDelete: GradeSystem?
     }
     
-    enum Action: Equatable {
+    enum Action {
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchGradeSystems
@@ -56,9 +47,9 @@ struct GradeSystemList {
         enum ClientResponse { case finished }
     }
     
-    @Dependency(\.gradeSystemClient) var client
+    @Dependency(GradeSystemClient.self) var client
     
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -102,8 +93,9 @@ struct GradeSystemList {
                     }
                 )
 
-            case .destination(.presented(.confirmationDialog(.dismiss))):
-                state.destination = nil
+                // FIXME:
+//            case .destination(.presented(.confirmationDialog(.dismiss)))):
+//                state.destination = nil
 
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {
@@ -127,7 +119,7 @@ struct GradeSystemList {
                 state.systemToDelete = system
                 return .send(.presentConfirmation)
                 
-            case .destination(.presented(.confirmationDialog(.presented(.delete)))):
+            case .destination(.presented(.confirmationDialog(.delete))):
                 guard let systemToDelete = state.systemToDelete else {
                     return .none
                 }
@@ -161,9 +153,7 @@ struct GradeSystemList {
             }
             return .none
         }
-        .ifLet(\.$destination, action: \.destination) {
-          Destination()
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
 

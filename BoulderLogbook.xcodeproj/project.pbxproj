@@ -12,7 +12,6 @@
 		5B049E592BF0DD0D00A70A50 /* CoreDataStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E582BF0DD0D00A70A50 /* CoreDataStorageMock.swift */; };
 		5B049E5D2BF0E15800A70A50 /* GradeSystemServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E5C2BF0E15800A70A50 /* GradeSystemServiceTests.swift */; };
 		5B049E5F2BF0E16600A70A50 /* LogbookEntryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B049E5E2BF0E16600A70A50 /* LogbookEntryServiceTests.swift */; };
-		5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A806B2896DA4900530B01 /* DashboardSectionView.swift */; };
 		5B1A806E2896E3F700530B01 /* Color+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A806D2896E3F700530B01 /* Color+Additions.swift */; };
 		5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */; };
 		5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* Logbook.swift */; };
@@ -62,7 +61,6 @@
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFAFC2B8E9649008D34CA /* Dependencies.swift */; };
-		A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961AB5C29827D8700AD89DD /* DashboardSection.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
 		A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B07E412868579900AA6274 /* Assets.xcassets */; };
 		A9B07E7D2868582700AA6274 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A9B07E7C2868582700AA6274 /* ComposableArchitecture */; };
@@ -103,7 +101,6 @@
 		5B049E582BF0DD0D00A70A50 /* CoreDataStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageMock.swift; sourceTree = "<group>"; };
 		5B049E5C2BF0E15800A70A50 /* GradeSystemServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemServiceTests.swift; sourceTree = "<group>"; };
 		5B049E5E2BF0E16600A70A50 /* LogbookEntryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryServiceTests.swift; sourceTree = "<group>"; };
-		5B1A806B2896DA4900530B01 /* DashboardSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionView.swift; sourceTree = "<group>"; };
 		5B1A806D2896E3F700530B01 /* Color+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Additions.swift"; sourceTree = "<group>"; };
 		5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEntryView.swift; sourceTree = "<group>"; };
 		5B1A807F28A7D6BF00530B01 /* Logbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
@@ -154,7 +151,6 @@
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
 		A9435D8529826D6B001DC22B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A94CFAFC2B8E9649008D34CA /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
-		A961AB5C29827D8700AD89DD /* DashboardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSection.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
 		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9B07E462868579900AA6274 /* BoulderLogbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoulderLogbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,8 +221,10 @@
 		5B1A807E28A04E8200530B01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B6B2C632BF149D400A17549 /* CreditsView.swift */,
 				5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */,
 				5BD8298928B647CC0053BE8E /* EntryColorView.swift */,
+				5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -445,22 +443,10 @@
 			children = (
 				A9C3005129828948001B51C4 /* Dashboard.swift */,
 				A9B07E7F2868588700AA6274 /* DashboardView.swift */,
-				5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */,
-				5B6B2C632BF149D400A17549 /* CreditsView.swift */,
-				A9C300542982907D001B51C4 /* DashboardSection */,
+				5B1A807E28A04E8200530B01 /* Views */,
 				A9CE6761288004D300027885 /* EntryDetail */,
 			);
 			path = Dashboard;
-			sourceTree = "<group>";
-		};
-		A9C300542982907D001B51C4 /* DashboardSection */ = {
-			isa = PBXGroup;
-			children = (
-				A961AB5C29827D8700AD89DD /* DashboardSection.swift */,
-				5B1A806B2896DA4900530B01 /* DashboardSectionView.swift */,
-				5B1A807E28A04E8200530B01 /* Views */,
-			);
-			path = DashboardSection;
 			sourceTree = "<group>";
 		};
 		A9C300592982929C001B51C4 /* EntryForm */ = {
@@ -548,7 +534,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					5B049E4B2BF0CF1B00A70A50 = {
 						CreatedOnToolsVersion = 15.2;
@@ -620,7 +606,6 @@
 			files = (
 				A9C3005229828948001B51C4 /* Dashboard.swift in Sources */,
 				A9CA60022B989B2900C04BCC /* LogbookSectionMO.swift in Sources */,
-				5B1A806C2896DA4900530B01 /* DashboardSectionView.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
@@ -649,7 +634,6 @@
 				5B6B2C622BF1472C00A17549 /* TotalAmountView.swift in Sources */,
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
-				A961AB5D29827D8700AD89DD /* DashboardSection.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
@@ -967,7 +951,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.5.6;
+				minimumVersion = 1.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

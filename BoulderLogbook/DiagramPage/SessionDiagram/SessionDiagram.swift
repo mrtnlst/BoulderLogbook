@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct SessionDiagram {
+    @ObservableState
     struct State: Equatable {
         var viewState: ViewState<[Model], String> = .loading
     }

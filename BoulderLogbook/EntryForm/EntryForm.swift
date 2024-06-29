@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct EntryForm {
+    @ObservableState
     struct State: Equatable {
         let id: UUID
         var tops: [Top]
@@ -18,10 +19,9 @@ struct EntryForm {
         var onsights: [Top]
         var gradeSystems: [GradeSystem] = []
         var isEditing: Bool
-
-        @BindingState var date: Date
-        @BindingState var notes: String
-        @BindingState var selectedSystemId: UUID?
+        var date: Date
+        var notes: String
+        var selectedSystemId: UUID?
         /// Temporary store selected value and assign after available systems are fetched. Avoids Picker warning in console.
         fileprivate var tempSelectedSystemId: UUID?
         
@@ -30,7 +30,11 @@ struct EntryForm {
         var selectedSystem: GradeSystem? {
             gradeSystems.first(where: { $0.id == selectedSystemId })
         }
-        
+
+        var isSaveButtonDisabled: Bool {
+            selectedSystemId == nil || tops.isEmpty
+        }
+
         init(
             id: UUID = UUID(),
             date: Date = .now,
@@ -72,8 +76,8 @@ struct EntryForm {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(\.logbookEntryClient) var entryClient
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
+    @Dependency(LogbookEntryClient.self) var entryClient
+    @Dependency(GradeSystemClient.self) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -195,7 +199,7 @@ struct EntryForm {
                     )
                 }
                 
-            case .binding(\.$selectedSystemId):
+            case .binding(\.selectedSystemId):
                 state.tops.removeAll()
                 state.attempts.removeAll()
                 state.flashs.removeAll()

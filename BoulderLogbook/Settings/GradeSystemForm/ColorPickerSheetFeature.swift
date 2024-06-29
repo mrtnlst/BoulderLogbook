@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct ColorPickerFeature {
+    @ObservableState
     struct State: Equatable {
         var grade: Grade
     }

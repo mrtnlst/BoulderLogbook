@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct EntryDetail {
+    @ObservableState
     struct State: Equatable, Identifiable {
         let id: UUID
         let entry: Logbook.Section.Entry

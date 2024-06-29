@@ -42,24 +42,22 @@ struct EntryColorView: View {
     }
 }
 
-struct EntryColorView_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            EntryColorView(
-                tops: [
-                    .sample1,
-                    .sample2,
-                    .sample2,
-                    .sample3,
-                    .sample4,
-                    .sample5,
-                    .sample6,
-                    .sample7,
-                    .sample7,
-                    .sample7
-                ],
-                gradeSystem: .mandala
-            )
-        }
+#Preview {
+    List {
+        EntryColorView(
+            tops: [
+                .sample1,
+                .sample2,
+                .sample2,
+                .sample3,
+                .sample4,
+                .sample5,
+                .sample6,
+                .sample7,
+                .sample7,
+                .sample7
+            ],
+            gradeSystem: .mandala
+        )
     }
 }

@@ -38,13 +38,6 @@ extension GradeSystemService {
     }
 }
 
-extension DependencyValues {
-    var gradeSystemClient: GradeSystemClient {
-        get { self[GradeSystemClient.self] }
-        set { self[GradeSystemClient.self] = newValue }
-    }
-}
-
 extension GradeSystemClient: DependencyKey {
     static let liveValue = BoulderLogbookApp.dependencies.gradeSystemService.toClient()
     static let previewValue: Self = {

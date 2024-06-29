@@ -72,15 +72,13 @@ extension RectangularButton {
     }
 }
 
-struct RectangularButton_Previews: PreviewProvider {
-    static var previews: some View {
-        PlainList {
-            PlainSection("Buttons") {
-                RectangularButton.save {}
-                RectangularButton.delete {}
-                RectangularButton.edit {}
-                RectangularButton.cancel {}
-            }
+#Preview {
+    PlainList {
+        PlainSection("Buttons") {
+            RectangularButton.save {}
+            RectangularButton.delete {}
+            RectangularButton.edit {}
+            RectangularButton.cancel {}
         }
     }
 }

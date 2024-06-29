@@ -9,46 +9,91 @@ import SwiftUI
 import ComposableArchitecture
 
 struct DashboardView: View {
-    let store: StoreOf<Dashboard>
+    @Bindable var store: StoreOf<Dashboard>
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            PlainList {
-                DiagramPageView(
-                    store: store.scope(
-                        state: \.diagramPage,
-                        action: \.diagramPage
-                    )
+        PlainList {
+            DiagramPageView(
+                store: store.scope(
+                    state: \.diagramPage,
+                    action: \.diagramPage
                 )
-                ForEachStore(
-                    store.scope(
-                        state: \.sections,
-                        action: \.dashboardSection
-                    )
-                ) { sectionStore in
-                    DashboardSectionView(store: sectionStore)
-                }
-                TotalAmountView(amount: viewStore.numberOfEntries)
-                CreditsView()
+            )
+            ForEach(store.sections, id: \.date) {
+                section($0)
             }
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
-            .navigationTitle("Dashboard")
+            TotalAmountView(amount: store.numberOfEntries)
+            CreditsView()
+        }
+        .onAppear {
+            store.send(.onAppear)
+        }
+        .navigationTitle("Dashboard")
+        .navigationDestination(
+            item: $store.scope(state: \.entryDetail, action: \.entryDetail)
+        ) {
+            EntryDetailView(store: $0)
         }
     }
 }
 
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            DashboardView(
-                store: Store(
-                    initialState: Dashboard.State()
+private extension DashboardView {
+    func section(_ section: Logbook.Section) -> some View {
+        PlainSection {
+            ForEach(section.entries) { entry in
+                if let gradeSystem = store.gradeSystems.first(
+                    where: { $0.id == entry.gradeSystem }
                 ) {
-                    Dashboard()
+                    row(entry: entry, gradeSystem: gradeSystem)
                 }
+            }
+        } header: {
+            Text(
+                section.date,
+                format: .dateTime.year().month(.wide)
+            )
+            .font(.title3)
+            .fontWeight(.semibold)
+        }
+    }
+
+    func row(
+        entry: Logbook.Section.Entry,
+        gradeSystem: GradeSystem
+    ) -> some View {
+        Button {
+            store.send(.setNavigation(entry))
+        } label: {
+            DashboardEntryView(
+                entry: entry,
+                gradeSystem: gradeSystem
             )
         }
+        .swipeActions {
+            Button(role: .destructive) {
+                store.send(.delete(entry.id))
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            .tint(.araError)
+            Button {
+                store.send(.edit(entry))
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.araWarning)
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        DashboardView(
+            store: Store(
+                initialState: Dashboard.State()
+            ) {
+                Dashboard()
+            }
+        )
     }
 }
