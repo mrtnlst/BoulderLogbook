@@ -45,7 +45,8 @@ struct EntryDetail {
             case .onAppear:
                 return .send(.summaryDiagram(.receiveData([state.entry], state.gradeSystem)))
                 
-            case .edit:
+            case .edit,
+                 .delete :
                 return .run { _ in await dismiss() }
                 
             default: ()

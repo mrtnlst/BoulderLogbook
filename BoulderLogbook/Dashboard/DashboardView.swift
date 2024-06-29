@@ -30,10 +30,19 @@ struct DashboardView: View {
         }
         .navigationTitle("Dashboard")
         .navigationDestination(
-            item: $store.scope(state: \.entryDetail, action: \.entryDetail)
+            item: $store.scope(
+                state: \.destination?.entryDetail,
+                action: \.destination.entryDetail
+            )
         ) {
             EntryDetailView(store: $0)
         }
+        .confirmationDialog(
+            $store.scope(
+                state: \.destination?.confirmationDialog,
+                action: \.destination.confirmationDialog
+            )
+        )
     }
 }
 
@@ -70,7 +79,7 @@ private extension DashboardView {
             )
         }
         .swipeActions {
-            Button(role: .destructive) {
+            Button {
                 store.send(.delete(entry.id))
             } label: {
                 Label("Delete", systemImage: "trash")

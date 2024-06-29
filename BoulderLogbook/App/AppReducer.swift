@@ -63,10 +63,10 @@ struct AppReducer {
                 )
                 
             case let .dashboard(.edit(entry)),
-                 let .dashboard(.entryDetail(.presented(.edit(entry)))):
-                state.dashboard.entryDetail = nil
+                 let .dashboard(.destination(.presented(.entryDetail(.edit(entry))))):
                 return .concatenate(
-                    .run { send in try await Task.sleep(for: .milliseconds(100))
+                    .run { send in 
+                        try await Task.sleep(for: .milliseconds(100))
                         await send(
                             .presentEntryForm(
                                 .init(
