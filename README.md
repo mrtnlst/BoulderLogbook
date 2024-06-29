@@ -15,4 +15,9 @@ A logbook to track you boulder sessions.
 
 ## Compatibility
 
-* 🚀 Requires iOS 16 and Xcode 14
+* 🚀 Requires iOS 17 and Xcode 15
+
+## Credits
+
+* Build using the phenomenal [Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture)
+
