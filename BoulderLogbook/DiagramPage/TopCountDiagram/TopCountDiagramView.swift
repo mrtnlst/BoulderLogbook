@@ -85,6 +85,7 @@ extension TopCountDiagramView {
                     .foregroundStyle(.primaryText.opacity(0.4))
             }
         }
+        .dynamicTypeSize(...DynamicTypeSize.xxLarge)
     }
 }
 
