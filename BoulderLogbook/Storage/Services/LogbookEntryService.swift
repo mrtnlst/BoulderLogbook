@@ -37,7 +37,11 @@ final class LogbookEntryService {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 let sections: [LogbookSectionMO] = storage.fetch(on: backgroundContext)
-                continuation.resume(returning: sections.map { $0.toLogbookSection() })
+                continuation.resume(
+                    returning: sections
+                        .map { $0.toLogbookSection() }
+                        .sorted(by: { $0.date > $1.date })
+                )
             }
         }
     }

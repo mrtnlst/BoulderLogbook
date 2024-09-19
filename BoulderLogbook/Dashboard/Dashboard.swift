@@ -95,9 +95,7 @@ struct Dashboard {
                 }
                 
             case let .receiveSections(.success(sections)):
-                state.sections = sections.sorted(
-                    by: { $0.date > $1.date }
-                )
+                state.sections = sections
 
             case let .delete(id),
                  let .destination(.presented(.entryDetail(.delete(id)))) :

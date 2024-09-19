@@ -17,7 +17,9 @@ extension LogbookSectionMO {
     func toLogbookSection() -> Logbook.Section {
         .init(
             date: date,
-            entries: entries.map { $0.toLogbookEntry() }
+            entries: entries
+                .map { $0.toLogbookEntry() }
+                .sorted(by: { $0.date > $1.date })
         )
     }
 }
