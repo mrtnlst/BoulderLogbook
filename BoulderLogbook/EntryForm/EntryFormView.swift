@@ -81,11 +81,12 @@ extension EntryFormView {
                             let count = store.tops.count(for: grade)
                             + store.flashs.count(for: grade)
                             + store.onsights.count(for: grade)
-                            HStack(alignment: .firstTextBaseline) {
+                            VStack(alignment: .leading) {
                                 Text("Tops: \(count)")
                                     .foregroundStyle(.primaryText)
-                                Text("A: \(store.attempts.count(for: grade))")
+                                Text(grade.name)
                                     .foregroundStyle(.tertiaryText)
+                                    .font(.caption)
                             }
                         } icon: {
                             Image(systemName: "triangle.fill")
