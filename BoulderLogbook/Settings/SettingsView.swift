@@ -31,7 +31,6 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(
                 item: $store.scope(
                     state: \.destination?.gradeSystemList,

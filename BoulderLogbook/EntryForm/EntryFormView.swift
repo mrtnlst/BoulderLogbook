@@ -21,7 +21,6 @@ struct EntryFormView: View {
                 PlainSection { buttons() }
             }
             .navigationTitle(store.isEditing ? "Update Entry" : "New Entry")
-            .navigationBarTitleDisplayMode(.inline)
             .scrollDismissesKeyboard(.interactively)
             .onAppear { store.send(.onAppear) }
         }
