@@ -37,7 +37,7 @@ struct PlainPicker<SelectionValue, Content>: View where SelectionValue: Hashable
 }
 
 #Preview {
-    @State var selection = "Hello"
+    @Previewable @State var selection = "Hello"
     let choices = ["Hello", "World", "Swift"]
     return PlainList {
         PlainPicker(
