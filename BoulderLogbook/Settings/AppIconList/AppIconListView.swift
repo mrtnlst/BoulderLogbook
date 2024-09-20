@@ -39,6 +39,7 @@ extension AppIconListView {
                     .fontWeight(.medium)
                 Spacer()
                 AppIconView(iconName: icon.name)
+                AppIconView(iconName: icon.darkAppearance)
 
                 let isClassicSelected = icon == .classic && store.currentIconName == nil
                 let isAlternativeSelected = icon.fileName == store.currentIconName

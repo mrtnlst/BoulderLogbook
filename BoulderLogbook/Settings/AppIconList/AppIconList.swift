@@ -32,7 +32,11 @@ struct AppIconList {
                 case .midnight: return "Midnight"
                 }
             }
-            
+
+            var darkAppearance: String {
+                name + " Dark"
+            }
+
             var resourceName: String {
                 switch self {
                 case .classic: return "AppIcon"
