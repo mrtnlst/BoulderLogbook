@@ -15,10 +15,10 @@ struct AboutView: View {
         PlainList {
             PlainSection {
                 VStack(alignment: .center) {
-                    AppIconView(iconName: "AppIcon")
+                    AppIconView(iconName: "Classic Icon")
                     Text("Boulder Logbook")
                         .font(.headline)
-                    Text("1.1.0")
+                    Text("1.2.1")
                         .font(.caption)
                 }
                 .frame(maxWidth: .infinity)
