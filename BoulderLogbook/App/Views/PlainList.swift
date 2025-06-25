@@ -20,11 +20,6 @@ struct PlainList<Content: View>: View {
         .listStyle(.plain)
         .background(Color.background)
         .foregroundStyle(.primaryText)
-        .toolbarBackground(
-            Color.background,
-            for: .navigationBar
-        )
-        .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .listRowSpacing(0)
         .listSectionSpacing(16)

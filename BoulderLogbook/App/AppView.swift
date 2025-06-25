@@ -19,7 +19,7 @@ struct AppView: View {
             )
         )
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .bottomBar) {
                 Button {
                     store.send(.presentSettings)
                 } label: {
@@ -27,7 +27,8 @@ struct AppView: View {
                         .fontWeight(.bold)
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .bottomBar) {
                 Button {
                     store.send(.presentEntryForm(nil))
                 } label: {

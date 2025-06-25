@@ -55,6 +55,13 @@ struct SettingsView: View {
             ) {
                 AboutView(store: $0)
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(role: .close) {
+                        store.send(.dismiss)
+                    }
+                }
+            }
         }
         .preferredColorScheme(.dark)
     }

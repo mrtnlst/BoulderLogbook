@@ -34,7 +34,8 @@ struct GradeSystemListView: View {
         }
         .navigationTitle("Grade Systems")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+            ToolbarItem(placement: .bottomBar) {
                 Button {
                     store.send(.presentGradeSystemForm)
                 } label: {
