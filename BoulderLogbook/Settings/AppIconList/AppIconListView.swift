@@ -12,11 +12,13 @@ struct AppIconListView: View {
     let store: StoreOf<AppIconList>
 
     var body: some View {
-        PlainList {
+        PlainList(hideSeperator: false) {
             PlainSection {
-                appIconRow(for: .classic)
+                appIconRow(for: .default)
+//                appIconRow(for: .jelly)
             }
-            PlainSection("App Icon Pack") {
+            PlainSection("Classic Icons") {
+                appIconRow(for: .classic)
                 appIconRow(for: .aurora)
                 appIconRow(for: .darkBerry)
                 appIconRow(for: .lemon)
@@ -42,9 +44,9 @@ extension AppIconListView {
                 AppIconView(iconName: icon.name)
                 AppIconView(iconName: icon.darkAppearance)
 
-                let isClassicSelected = icon == .classic && store.currentIconName == nil
+                let isDefaultSelected = icon == .default && store.currentIconName == nil
                 let isAlternativeSelected = icon.fileName == store.currentIconName
-                let isSelected = isClassicSelected || isAlternativeSelected
+                let isSelected = isDefaultSelected || isAlternativeSelected
                 Image(systemName: isSelected ? "checkmark.circle" : "circle")
                     .foregroundStyle(isSelected ? .success : .primaryText)
             }

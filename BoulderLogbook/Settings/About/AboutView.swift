@@ -18,7 +18,7 @@ struct AboutView: View {
                     AppIconView(iconName: "Classic Icon")
                     Text("Boulder Logbook")
                         .font(.headline)
-                    Text("1.2.1")
+                    Text("1.3.0")
                         .font(.caption)
                 }
                 .frame(maxWidth: .infinity)

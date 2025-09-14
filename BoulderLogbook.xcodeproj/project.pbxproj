@@ -55,6 +55,7 @@
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3C2A484BFB00E486DC /* LICENSE */; };
 		5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */; };
+		5BFAD9B92E772E7A001D086D /* Default.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAD9B72E772E7A001D086D /* Default.icon */; };
 		5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
 		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
@@ -144,6 +145,7 @@
 		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageClient.swift; sourceTree = "<group>"; };
+		5BFAD9B72E772E7A001D086D /* Default.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Default.icon; sourceTree = "<group>"; };
 		5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -348,6 +350,14 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		5BFAD9BA2E772E7F001D086D /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				5BFAD9B72E772E7A001D086D /* Default.icon */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		A9B07E392868579500AA6274 = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				5B390D722C304C1100C7CF33 /* Info.plist */,
+				5BFAD9BA2E772E7F001D086D /* Icons */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A94CFAFC2B8E9649008D34CA /* Dependencies.swift */,
 				A9BE3A4A2B8D15AE004DD728 /* Storage */,
@@ -576,6 +587,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFAD9B92E772E7A001D086D /* Default.icon in Resources */,
 				5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */,
 				A936856328686CAC00E34B6C /* README.md in Resources */,
 				A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */,
@@ -851,9 +863,10 @@
 		A9B07E702868579900AA6274 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_1 AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
+				ASSETCATALOG_COMPILER_APPICON_NAME = Default;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4853CED358;
@@ -871,7 +884,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
 				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;
@@ -884,9 +897,10 @@
 		A9B07E712868579900AA6274 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_1 AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
+				ASSETCATALOG_COMPILER_APPICON_NAME = Default;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4853CED358;
@@ -904,7 +918,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlist.BoulderLogbook;
 				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;

@@ -21,6 +21,8 @@ struct AppIconList {
             case lemon
             case fairyDust
             case midnight
+            case `default`
+//            case jelly
 
             var name: String {
                 switch self {
@@ -30,6 +32,8 @@ struct AppIconList {
                 case .lemon: return "Lemon"
                 case .fairyDust: return "Fairy Dust"
                 case .midnight: return "Midnight"
+                case .default: return "Default"
+//                case .jelly: return "Jelly"
                 }
             }
 
@@ -39,18 +43,20 @@ struct AppIconList {
 
             var resourceName: String {
                 switch self {
-                case .classic: return "AppIcon"
+                case .classic: return "AppIcon_1"
                 case .aurora: return "AppIcon_2"
                 case .darkBerry: return "AppIcon_3"
                 case .lemon: return "AppIcon_4"
                 case .fairyDust: return "AppIcon_5"
                 case .midnight: return "AppIcon_6"
+                case .default: return "Default"
+//                case .jelly: return "Jelly"
                 }
             }
             
             var fileName: String? {
                 switch self {
-                case .classic: return nil
+                case .default: return nil
                 default: return resourceName
                 }
             }
