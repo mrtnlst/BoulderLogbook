@@ -19,23 +19,7 @@ struct AppView: View {
             )
         )
         .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                Button {
-                    store.send(.presentSettings)
-                } label: {
-                    Image(systemName: "gear")
-                        .fontWeight(.bold)
-                }
-            }
-            ToolbarSpacer(.flexible, placement: .bottomBar)
-            ToolbarItem(placement: .bottomBar) {
-                Button {
-                    store.send(.presentEntryForm(nil))
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.bold)
-                }
-            }
+            toolbarContent()
         }
         .sheet(
             item: $store.scope(
@@ -52,6 +36,27 @@ struct AppView: View {
             )
         ) {
             SettingsView(store: $0)
+        }
+    }
+}
+
+private extension AppView {
+    @ToolbarContentBuilder
+    func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .bottomBar) {
+            Button {
+                store.send(.presentSettings)
+            } label: {
+                Label("Settings", systemImage: "gear")
+            }
+        }
+        ToolbarSpacer(.flexible, placement: .bottomBar)
+        ToolbarItem(placement: .bottomBar) {
+            Button {
+                store.send(.presentEntryForm(nil))
+            } label: {
+                Label("Add entry", systemImage: "plus")
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ extension Color {
     }
 }
 
-extension Color: Codable {
+extension Color: @retroactive Codable {
     enum CodingKeys: String, CodingKey {
         case red, green, blue
     }

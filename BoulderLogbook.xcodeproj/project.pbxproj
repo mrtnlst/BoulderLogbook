@@ -46,7 +46,6 @@
 		5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */; };
 		5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD4207298829D600B84BA0 /* GradeSystemFormView.swift */; };
 		5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD4209298829DB00B84BA0 /* GradeSystemForm.swift */; };
-		5BDD420D2988319E00B84BA0 /* RectangularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD420C2988319E00B84BA0 /* RectangularButton.swift */; };
 		5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */; };
 		5BDD421229885FA600B84BA0 /* Collection+safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD421129885FA600B84BA0 /* Collection+safe.swift */; };
 		5BE273F92B5862C90004DD27 /* PlainPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE273F82B5862C90004DD27 /* PlainPicker.swift */; };
@@ -136,7 +135,6 @@
 		5BDD4201298708E700B84BA0 /* GradeSystemClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemClient.swift; sourceTree = "<group>"; };
 		5BDD4207298829D600B84BA0 /* GradeSystemFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemFormView.swift; sourceTree = "<group>"; };
 		5BDD4209298829DB00B84BA0 /* GradeSystemForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemForm.swift; sourceTree = "<group>"; };
-		5BDD420C2988319E00B84BA0 /* RectangularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButton.swift; sourceTree = "<group>"; };
 		5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+zero.swift"; sourceTree = "<group>"; };
 		5BDD421129885FA600B84BA0 /* Collection+safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+safe.swift"; sourceTree = "<group>"; };
 		5BE273F82B5862C90004DD27 /* PlainPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainPicker.swift; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 				5B6DB37A2A51EB95006265F0 /* AppIconView.swift */,
 				5B6DB3722A519C08006265F0 /* EmptyMessageView.swift */,
 				5B6DB3702A5193E4006265F0 /* LoadingIndicator.swift */,
-				5BDD420C2988319E00B84BA0 /* RectangularButton.swift */,
 				5BE273F82B5862C90004DD27 /* PlainPicker.swift */,
 				5BE273FA2B5870C60004DD27 /* PlainList.swift */,
 				5B60B50A2B60562B00917DB5 /* PlainSection.swift */,
@@ -638,7 +635,6 @@
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
 				5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */,
-				5BDD420D2988319E00B84BA0 /* RectangularButton.swift in Sources */,
 				5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
 				A9CA5FFC2B9896A300C04BCC /* LogbookEntryService.swift in Sources */,

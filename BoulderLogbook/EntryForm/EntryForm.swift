@@ -48,7 +48,7 @@ struct EntryForm {
         ) {
             self.id = id
             self.date = date
-            self.notes = notes ?? notesPlaceHolder
+            self.notes = notes ?? ""
             self.tops = tops
             self.attempts = attempts
             self.flashs = flashs
@@ -180,7 +180,7 @@ struct EntryForm {
                 let entry = Logbook.Section.Entry(
                     id: state.id,
                     date: state.date,
-                    notes: state.notes == state.notesPlaceHolder ? nil : state.notes,
+                    notes: state.notes.isEmpty ? nil : state.notes,
                     tops: state.tops + state.attempts + state.flashs + state.onsights,
                     gradeSystem: gradeSystemId
                 )

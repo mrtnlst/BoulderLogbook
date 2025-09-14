@@ -13,23 +13,25 @@ struct DashboardEntryView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            EntryColorView(
-                tops: entry.tops,
-                gradeSystem: gradeSystem
-            )
-            .frame(minHeight: 18)
+            HStack {
+                EntryColorView(
+                    tops: entry.tops,
+                    gradeSystem: gradeSystem
+                )
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondaryText)
+            }
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
                 .foregroundStyle(.primaryText)
                 .padding(.leading, 2)
         }
-        .padding(.vertical, 8)
         .listRowBackground(Color.rowBackground)
     }
 }
 
 #Preview {
-    PlainList {
+    PlainList(hideSeperator: false) {
         DashboardEntryView(
             entry: [Logbook.Section.Entry].samples[0],
             gradeSystem: .mandala

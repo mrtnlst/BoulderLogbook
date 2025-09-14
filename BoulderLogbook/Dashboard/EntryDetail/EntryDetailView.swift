@@ -1,5 +1,5 @@
 //
-//  EntryView.swift
+//  EntryDetailView.swift
 //  BoulderLogbook
 //
 //  Created by Martin List on 14.07.22.
@@ -33,12 +33,11 @@ struct EntryDetailView: View {
                     EmptyView()
                 }
             }
-            PlainSection {
-                buttons()
-            }
         }
         .onAppear { store.send(.onAppear) }
         .navigationTitle(Text(store.entry.date, style: .date))
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar { toolbarContent() }
     }
 }
 
@@ -57,15 +56,23 @@ extension EntryDetailView {
             .foregroundStyle(.primaryText)
     }
 
-    @ViewBuilder
-    func buttons() -> some View {
-        RectangularButton.edit {
-            store.send(.edit(store.entry))
+    @ToolbarContentBuilder
+        func toolbarContent() -> some ToolbarContent {
+            ToolbarItem {
+                Button {
+                    store.send(.edit(store.entry))
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+            }
+            ToolbarSpacer(.fixed)
+            ToolbarItem {
+                Button(role: .destructive) {
+                    store.send(.delete(store.entry.id))
+                }
+                .tint(.araError)
+            }
         }
-        RectangularButton.delete {
-            store.send(.delete(store.entry.id))
-        }
-    }
 }
 
 #Preview {

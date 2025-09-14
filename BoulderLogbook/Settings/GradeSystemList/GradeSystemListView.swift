@@ -33,14 +33,14 @@ struct GradeSystemListView: View {
             GradeSystemFormView(store: $0)
         }
         .navigationTitle("Grade Systems")
+        .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarSpacer(.flexible, placement: .bottomBar)
             ToolbarItem(placement: .bottomBar) {
                 Button {
                     store.send(.presentGradeSystemForm)
                 } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.bold)
+                    Label("Add grade system", systemImage: "plus")
                 }
             }
         }

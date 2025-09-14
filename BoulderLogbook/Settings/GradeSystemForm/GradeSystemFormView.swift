@@ -23,19 +23,11 @@ struct GradeSystemFormView: View {
                 } header: {
                     Text("Drag to set difficulty order")
                 }
-                PlainSection {
-                    buttons()
-                }
             }
             .bind($store.focusedField, to: $focusedField)
             .navigationTitle("New Grade System")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    if store.grades.count > 1 {
-                        EditButton()
-                    }
-                }
-            }
+            .toolbarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent() }
             .sheet(
                 item: $store.scope(
                     state: \.colorPicker,
@@ -94,23 +86,30 @@ extension GradeSystemFormView {
                     store.send(.addGrade)
                 }
                 .autocorrectionDisabled()
+                
+                Image(systemName: "line.3.horizontal")
+                    .foregroundStyle(.secondaryText)
             }
         }
         .onMove { store.send(.moveGrade($0, $1)) }
         .onDelete { store.send(.deleteGrade($0)) }
     }
-    
-    @ViewBuilder
-    func buttons() -> some View {
-        RectangularButton.save {
-            focusedField = nil
-            store.send(.save)
-        }
-        .disabled(store.name.isEmpty)
 
-        RectangularButton.cancel {
-            focusedField = nil
-            store.send(.cancel)
+    @ToolbarContentBuilder
+    func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button(role: .close) {
+                focusedField = nil
+                store.send(.cancel)
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(role: .confirm) {
+                focusedField = nil
+                store.send(.save)
+            }
+            .tint(.araPrimary)
+            .disabled(store.name.isEmpty)
         }
     }
 }

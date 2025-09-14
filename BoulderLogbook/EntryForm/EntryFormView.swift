@@ -18,11 +18,12 @@ struct EntryFormView: View {
                 PlainSection { tops() }
                 PlainSection { datePicker() }
                 PlainSection { notes() }
-                PlainSection { buttons() }
             }
             .navigationTitle(store.isEditing ? "Update Entry" : "New Entry")
+            .toolbarTitleDisplayMode(.inline)
             .scrollDismissesKeyboard(.interactively)
             .onAppear { store.send(.onAppear) }
+            .toolbar { toolbarContent() }
         }
         .preferredColorScheme(.dark)
     }
@@ -53,26 +54,24 @@ extension EntryFormView {
     func tops() -> some View {
         ForEach(store.selectedSystem?.grades ?? []) { grade in
             DisclosureGroup {
-                VStack {
-                    stepper(
-                        title: "Attempt: \(store.attempts.count(for: grade))",
-                        icon: "figure.fall",
-                        color: grade.color,
-                        value: $store[attempts: grade]
-                    )
-                    stepper(
-                        title: "Flash: \(store.flashs.count(for: grade))",
-                        icon: "bolt.fill",
-                        color: grade.color,
-                        value: $store[flashs: grade]
-                    )
-                    stepper(
-                        title: "Onsight: \(store.onsights.count(for: grade))",
-                        icon: "eye.fill",
-                        color: grade.color,
-                        value: $store[onsights: grade]
-                    )
-                }
+                stepper(
+                    title: "Attempt: \(store.attempts.count(for: grade))",
+                    icon: "figure.fall",
+                    color: grade.color,
+                    value: $store[attempts: grade]
+                )
+                stepper(
+                    title: "Flash: \(store.flashs.count(for: grade))",
+                    icon: "bolt.fill",
+                    color: grade.color,
+                    value: $store[flashs: grade]
+                )
+                stepper(
+                    title: "Onsight: \(store.onsights.count(for: grade))",
+                    icon: "eye.fill",
+                    color: grade.color,
+                    value: $store[onsights: grade]
+                )
             } label: {
                 Stepper(
                     value: $store[tops: grade],
@@ -132,29 +131,40 @@ extension EntryFormView {
             .foregroundStyle(.primaryText)
         }
     }
-    
-    @MainActor 
+
+    @ViewBuilder
     func notes() -> some View {
         let isNotEdited = store.notes == store.notesPlaceHolder
-        return TextEditor(text: $store.notes)
-            .textEditorStyle(.plain)
-            .foregroundStyle(isNotEdited ? .secondaryText : .primaryText)
-            .onTapGesture {
-                if isNotEdited {
-                    store.send(.binding(.set(\.notes, "")))
-                }
+        ZStack(alignment: .topLeading) {
+            if store.notes.isEmpty {
+                Text(store.notesPlaceHolder)
+                    .foregroundStyle(.tertiary)
+                    .padding(EdgeInsets(top: 7, leading: 5, bottom: 0, trailing: 0))
             }
+            TextEditor(text: $store.notes)
+                .textEditorStyle(.plain)
+                .foregroundStyle(isNotEdited ? .secondaryText : .primaryText)
+                .onTapGesture {
+                    if isNotEdited {
+                        store.send(.binding(.set(\.notes, "")))
+                    }
+                }
+        }
     }
     
-    @ViewBuilder 
-    func buttons() -> some View {
-        RectangularButton.save {
-            store.send(.save)
+    @ToolbarContentBuilder
+    func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button(role: .close) {
+                store.send(.cancel)
+            }
         }
-        .disabled(store.isSaveButtonDisabled)
-
-        RectangularButton.cancel {
-            store.send(.cancel)
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(role: .confirm) {
+                store.send(.save)
+            }
+            .tint(.araPrimary)
+            .disabled(store.isSaveButtonDisabled)
         }
     }
 }
@@ -188,12 +198,15 @@ extension StoreOf<EntryForm> {
 }
 
 #Preview {
-    EntryFormView(
-        store: Store(
-            initialState: EntryForm.State()
-        ) {
-            EntryForm()
-                .dependency(GradeSystemClient.previewValue)
+    Text("Text")
+        .sheet(isPresented: .constant(true)) {
+            EntryFormView(
+                store: Store(
+                    initialState: EntryForm.State()
+                ) {
+                    EntryForm()
+                        .dependency(GradeSystemClient.previewValue)
+                }
+            )
         }
-    )
 }

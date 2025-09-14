@@ -42,6 +42,7 @@ struct AboutView: View {
             }
         }
         .navigationTitle("About")
+        .toolbarTitleDisplayMode(.inline)
     }
 }
 

@@ -31,6 +31,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .toolbarTitleDisplayMode(.inlineLarge)
             .navigationDestination(
                 item: $store.scope(
                     state: \.destination?.gradeSystemList,
@@ -56,7 +57,7 @@ struct SettingsView: View {
                 AboutView(store: $0)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem {
                     Button(role: .close) {
                         store.send(.dismiss)
                     }

@@ -32,10 +32,6 @@ struct ColorPickerSheet: View {
             }
             .padding()
         }
-        .background {
-            Color.araRowBackground
-                .ignoresSafeArea(.all)
-        }
     }
 }
 

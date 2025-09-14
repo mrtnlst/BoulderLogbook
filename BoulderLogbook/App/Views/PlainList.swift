@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct PlainList<Content: View>: View {
+    var hideSeperator: Bool
     @ViewBuilder let content: () -> Content
+
+    init(
+        hideSeperator: Bool = true,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.hideSeperator = hideSeperator
+        self.content = content
+    }
 
     var body: some View {
         List {
             content()
                 .listRowBackground(Color.rowBackground)
                 .foregroundStyle(.primaryText)
-                .listRowSeparator(.hidden)
+                .listRowSeparator(hideSeperator ? .hidden : .visible)
+                .listRowSeparatorTint(.araBackground)
+                .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
         .background(Color.background)
@@ -27,7 +38,7 @@ struct PlainList<Content: View>: View {
 }
 
 #Preview {
-    PlainList {
+    PlainList(hideSeperator: false) {
         PlainSection("Section 1") {
             Label("Date", systemImage: "calendar")
             Label("Gears", systemImage: "gear")
@@ -39,10 +50,6 @@ struct PlainList<Content: View>: View {
         PlainSection {
             Label("Date", systemImage: "calendar")
             Label("Gears", systemImage: "gear")
-        }
-        PlainSection {
-            RectangularButton.save {}
-            RectangularButton.cancel {}
         }
     }
 }

@@ -12,7 +12,7 @@ struct DashboardView: View {
     @Bindable var store: StoreOf<Dashboard>
     
     var body: some View {
-        PlainList {
+        PlainList(hideSeperator: false) {
             DiagramPageView(
                 store: store.scope(
                     state: \.diagramPage,
@@ -29,6 +29,7 @@ struct DashboardView: View {
             store.send(.onAppear)
         }
         .navigationTitle("Dashboard")
+        .toolbarTitleDisplayMode(.inlineLarge)
         .navigationDestination(
             item: $store.scope(
                 state: \.destination?.entryDetail,

@@ -25,6 +25,7 @@ struct AppIconListView: View {
             }
         }
         .navigationTitle("App Icons")
+        .toolbarTitleDisplayMode(.inline)
         .onAppear { store.send(.onAppear) }
     }
 }

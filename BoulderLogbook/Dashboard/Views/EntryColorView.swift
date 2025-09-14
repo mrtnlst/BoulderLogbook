@@ -25,6 +25,7 @@ struct EntryColorView: View {
             }
         }
         .cornerRadius(8)
+        .frame(minHeight: 36)
     }
     
     @ViewBuilder func colorSegment(for grade: Grade, and width: CGFloat) -> some View {
