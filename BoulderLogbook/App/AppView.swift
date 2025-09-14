@@ -43,20 +43,30 @@ struct AppView: View {
 private extension AppView {
     @ToolbarContentBuilder
     func toolbarContent() -> some ToolbarContent {
-        ToolbarItem(placement: .bottomBar) {
+        ToolbarItem(placement: toolbarPlacement) {
             Button {
                 store.send(.presentSettings)
             } label: {
                 Label("Settings", systemImage: "gear")
             }
         }
-        ToolbarSpacer(.flexible, placement: .bottomBar)
-        ToolbarItem(placement: .bottomBar) {
+        if #available(iOS 26, *) {
+            ToolbarSpacer(.flexible, placement: .bottomBar)
+        }
+        ToolbarItem(placement: toolbarPlacement) {
             Button {
                 store.send(.presentEntryForm(nil))
             } label: {
                 Label("Add entry", systemImage: "plus")
             }
+        }
+    }
+    
+    var toolbarPlacement: ToolbarItemPlacement {
+        if #available(iOS 26, *) {
+            return .bottomBar
+        } else {
+            return .topBarTrailing
         }
     }
 }

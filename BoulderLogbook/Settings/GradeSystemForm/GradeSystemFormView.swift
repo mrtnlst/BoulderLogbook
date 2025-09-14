@@ -98,18 +98,38 @@ extension GradeSystemFormView {
     @ToolbarContentBuilder
     func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Button(role: .close) {
-                focusedField = nil
-                store.send(.cancel)
+            if #available(iOS 26, *) {
+                Button(role: .close) {
+                    focusedField = nil
+                    store.send(.cancel)
+                }
+            } else {
+                Button {
+                    focusedField = nil
+                    store.send(.cancel)
+                } label: {
+                    Label("Close", systemImage: "xmark")
+                }
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            Button(role: .confirm) {
-                focusedField = nil
-                store.send(.save)
+            if #available(iOS 26, *) {
+                Button(role: .confirm) {
+                    focusedField = nil
+                    store.send(.save)
+                }
+                .tint(.araPrimary)
+                .disabled(store.name.isEmpty)
+            } else {
+                Button {
+                    focusedField = nil
+                    store.send(.save)
+                } label: {
+                    Label("Save", systemImage: "checkmark")
+                }
+                .tint(.araPrimary)
+                .disabled(store.name.isEmpty)
             }
-            .tint(.araPrimary)
-            .disabled(store.name.isEmpty)
         }
     }
 }

@@ -22,6 +22,7 @@ struct BoulderLogbookApp: App {
             NavigationStack {
                 AppView(store: Self.store)
             }
+            .tint(.toolbarButtonColor)
             .preferredColorScheme(.dark)
         }
     }

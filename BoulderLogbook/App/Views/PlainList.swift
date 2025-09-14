@@ -32,8 +32,6 @@ struct PlainList<Content: View>: View {
         .background(Color.background)
         .foregroundStyle(.primaryText)
         .toolbarColorScheme(.dark, for: .navigationBar)
-        .listRowSpacing(0)
-        .listSectionSpacing(16)
     }
 }
 

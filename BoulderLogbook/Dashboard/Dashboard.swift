@@ -55,7 +55,7 @@ struct Dashboard {
     @Dependency(\.dismiss) var dismiss
 
     var body: some ReducerOf<Self> {
-        Scope(state: \.diagramPage, action: /Action.diagramPage) {
+        Scope(state: \.diagramPage, action: \.diagramPage) {
             DiagramPage()
         }
         Reduce { state, action in

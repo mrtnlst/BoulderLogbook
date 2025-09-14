@@ -37,7 +37,7 @@ struct EntryDetail {
     @Dependency(\.dismiss) var dismiss
 
     var body: some ReducerOf<Self> {
-        Scope(state: \.summaryDiagram, action: /Action.summaryDiagram) {
+        Scope(state: \.summaryDiagram, action: \.summaryDiagram) {
             SummaryDiagram()
         }
         Reduce { state, action in

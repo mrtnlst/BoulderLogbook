@@ -35,8 +35,10 @@ struct GradeSystemListView: View {
         .navigationTitle("Grade Systems")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarSpacer(.flexible, placement: .bottomBar)
-            ToolbarItem(placement: .bottomBar) {
+            if #available(iOS 26, *) {
+                ToolbarSpacer(.flexible, placement: .bottomBar)
+            }
+            ToolbarItem(placement: toolbarPlacement) {
                 Button {
                     store.send(.presentGradeSystemForm)
                 } label: {
@@ -86,6 +88,14 @@ extension GradeSystemListView {
             Label("Edit", systemImage: "pencil")
         }
         .tint(.araWarning)
+    }
+    
+    var toolbarPlacement: ToolbarItemPlacement {
+        if #available(iOS 26, *) {
+            return .bottomBar
+        } else {
+            return .topBarTrailing
+        }
     }
 }
 

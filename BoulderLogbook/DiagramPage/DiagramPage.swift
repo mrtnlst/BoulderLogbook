@@ -48,13 +48,13 @@ struct DiagramPage {
     
     var body: some Reducer<State, Action> {
         BindingReducer()
-        Scope(state: \.topCountDiagram, action: /Action.topCountDiagram) {
+        Scope(state: \.topCountDiagram, action: \.topCountDiagram) {
             TopCountDiagram()
         }
-        Scope(state: \.sessionDiagram, action: /Action.sessionDiagram) {
+        Scope(state: \.sessionDiagram, action: \.sessionDiagram) {
             SessionDiagram()
         }
-        Scope(state: \.summaryDiagram, action: /Action.summaryDiagram) {
+        Scope(state: \.summaryDiagram, action: \.summaryDiagram) {
             SummaryDiagram()
         }
         Reduce { state, action in

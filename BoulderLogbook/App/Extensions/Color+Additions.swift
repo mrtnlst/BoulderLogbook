@@ -108,3 +108,14 @@ extension Color {
             && Int((color1Components?.green ?? 0) * 1000) == Int((color2Components?.green ?? 0) * 1000)
     }
 }
+
+// MARK: - iOS 26
+extension Color {
+    static var toolbarButtonColor: Color? {
+        if #available(iOS 26, *) {
+            return nil
+        } else {
+            return .araTextPrimary
+        }
+    }
+}

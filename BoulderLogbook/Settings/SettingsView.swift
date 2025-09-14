@@ -57,9 +57,15 @@ struct SettingsView: View {
                 AboutView(store: $0)
             }
             .toolbar {
-                ToolbarItem {
+                if #available(iOS 26, *) {
                     Button(role: .close) {
                         store.send(.dismiss)
+                    }
+                } else {
+                    Button {
+                        store.send(.dismiss)
+                    } label: {
+                        Label("Close", systemImage: "xmark")
                     }
                 }
             }

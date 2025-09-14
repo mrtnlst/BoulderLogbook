@@ -25,7 +25,7 @@ struct EntryColorView: View {
             }
         }
         .cornerRadius(8)
-        .frame(minHeight: 36)
+        .frame(minHeight: minHeight)
     }
     
     @ViewBuilder func colorSegment(for grade: Grade, and width: CGFloat) -> some View {
@@ -39,6 +39,16 @@ struct EntryColorView: View {
                     .font(.caption.weight(.regular))
                     .foregroundStyle(grade.color.isBright ? Color.black : Color.white)
             }
+        }
+    }
+}
+
+private extension EntryColorView {
+    var minHeight: CGFloat {
+        if #available(iOS 26, *) {
+            return 36
+        } else {
+            return 18
         }
     }
 }

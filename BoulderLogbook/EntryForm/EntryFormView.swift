@@ -155,16 +155,34 @@ extension EntryFormView {
     @ToolbarContentBuilder
     func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Button(role: .close) {
-                store.send(.cancel)
+            if #available(iOS 26, *) {
+                Button(role: .close) {
+                    store.send(.cancel)
+                }
+            } else {
+                Button {
+                    store.send(.cancel)
+                } label: {
+                    Label("Close", systemImage: "xmark")
+                }
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            Button(role: .confirm) {
-                store.send(.save)
+            if #available(iOS 26, *) {
+                Button(role: .confirm) {
+                    store.send(.save)
+                }
+                .tint(.araPrimary)
+                .disabled(store.isSaveButtonDisabled)
+            } else {
+                Button {
+                    store.send(.save)
+                } label: {
+                    Label("Save", systemImage: "checkmark")
+                }
+                .tint(.araPrimary)
+                .disabled(store.isSaveButtonDisabled)
             }
-            .tint(.araPrimary)
-            .disabled(store.isSaveButtonDisabled)
         }
     }
 }

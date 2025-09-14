@@ -26,7 +26,18 @@ struct DashboardEntryView: View {
                 .foregroundStyle(.primaryText)
                 .padding(.leading, 2)
         }
+        .padding(.vertical, verticalPadding)
         .listRowBackground(Color.rowBackground)
+    }
+}
+
+extension DashboardEntryView {
+    var verticalPadding: CGFloat {
+        if #available(iOS 26, *) {
+            return 0
+        } else {
+            return 8
+        }
     }
 }
 

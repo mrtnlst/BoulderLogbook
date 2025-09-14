@@ -65,10 +65,14 @@ extension EntryDetailView {
                     Label("Edit", systemImage: "pencil")
                 }
             }
-            ToolbarSpacer(.fixed)
+            if #available(iOS 26, *) {
+                ToolbarSpacer(.fixed)
+            }
             ToolbarItem {
-                Button(role: .destructive) {
+                Button {
                     store.send(.delete(store.entry.id))
+                } label: {
+                    Label("Delete", systemImage: "trash")
                 }
                 .tint(.araError)
             }

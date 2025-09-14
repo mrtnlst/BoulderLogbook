@@ -27,7 +27,7 @@ struct ColorPickerSheet: View {
                             .font(.largeTitle)
                             .fontWeight(.bold)
                     }
-                    .accentColor(color)
+                    .tint(color)
                 }
             }
             .padding()

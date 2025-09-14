@@ -33,7 +33,7 @@ struct AppReducer {
     @Dependency(LogbookEntryClient.self) var entryClient
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.dashboard, action: /Action.dashboard) {
+        Scope(state: \.dashboard, action: \.dashboard) {
             Dashboard()
         }
         Reduce { state, action in
