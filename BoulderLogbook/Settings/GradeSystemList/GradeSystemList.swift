@@ -13,7 +13,7 @@ struct GradeSystemList {
     @Reducer(state: .equatable)
     enum Destination {
         case gradeSystemForm(GradeSystemForm)
-        case confirmationDialog(ConfirmationDialogState<Confirmation>)
+        case confirmationDialog(AlertState<Confirmation>)
 
         @CasePathable
         enum Confirmation {
@@ -82,7 +82,7 @@ struct GradeSystemList {
             case .presentConfirmation:
                 let name = state.systemToDelete?.name ?? ""
                 state.destination = .confirmationDialog(
-                    ConfirmationDialogState {
+                    AlertState {
                         TextState("Warning")
                     } actions: {
                         ButtonState(role: .destructive, action: .delete) {
@@ -92,10 +92,6 @@ struct GradeSystemList {
                         TextState("Deleting \(name) removes all of its logbook entries!")
                     }
                 )
-
-                // FIXME:
-//            case .destination(.presented(.confirmationDialog(.dismiss)))):
-//                state.destination = nil
 
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {

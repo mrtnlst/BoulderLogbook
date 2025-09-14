@@ -13,7 +13,7 @@ struct Dashboard {
     @Reducer(state: .equatable)
     enum Destination {
         case entryDetail(EntryDetail)
-        case confirmationDialog(ConfirmationDialogState<Confirmation>)
+        case confirmationDialog(AlertState<Confirmation>)
 
         @CasePathable
         enum Confirmation {
@@ -107,7 +107,7 @@ struct Dashboard {
 
             case .showDeletionConfirmation:
                 state.destination = .confirmationDialog(
-                    ConfirmationDialogState {
+                    AlertState {
                         TextState("Warning")
                     } actions: {
                         ButtonState(role: .destructive, action: .delete) {

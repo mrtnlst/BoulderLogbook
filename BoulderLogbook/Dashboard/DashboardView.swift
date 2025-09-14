@@ -38,7 +38,7 @@ struct DashboardView: View {
         ) {
             EntryDetailView(store: $0)
         }
-        .confirmationDialog(
+        .alert(
             $store.scope(
                 state: \.destination?.confirmationDialog,
                 action: \.destination.confirmationDialog

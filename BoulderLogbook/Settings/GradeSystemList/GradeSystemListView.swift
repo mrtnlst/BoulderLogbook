@@ -18,7 +18,7 @@ struct GradeSystemListView: View {
                     .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
             }
         }
-        .confirmationDialog(
+        .alert(
             $store.scope(
                 state: \.destination?.confirmationDialog,
                 action: \.destination.confirmationDialog
