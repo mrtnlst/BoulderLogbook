@@ -33,6 +33,7 @@ struct PlainSection<Content: View, Header: View>: View {
                 .listRowBackground(Color.background)
             content()
         }
+        .listSectionSpacing(.custom(listSectionSpacing))
     }
 }
 
@@ -42,6 +43,12 @@ extension PlainSection {
         @ViewBuilder content: @escaping () -> Content
     ) where Header == EmptyView {
         self.init(title, content: content, header: nil)
+    }
+}
+
+private extension PlainSection {
+    var listSectionSpacing: CGFloat {
+        title == nil && header == nil ? 32 : 0
     }
 }
 

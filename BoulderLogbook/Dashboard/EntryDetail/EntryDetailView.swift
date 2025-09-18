@@ -25,8 +25,6 @@ struct EntryDetailView: View {
             }
             PlainSection {
                 gradesSystem(name: store.gradeSystem.name)
-            }
-            PlainSection {
                 if let notes = store.entry.notes {
                     self.notes(text: notes)
                 } else {
