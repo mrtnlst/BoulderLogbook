@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -53,16 +53,12 @@
 		5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB332A48372B00E486DC /* AboutView.swift */; };
 		5BFAAB362A48400900E486DC /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB352A48400900E486DC /* About.swift */; };
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
-		5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3C2A484BFB00E486DC /* LICENSE */; };
 		5BFAAB3F2A484E0800E486DC /* DiagramPageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */; };
-		5BFAD9B92E772E7A001D086D /* Default.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5BFAD9B72E772E7A001D086D /* Default.icon */; };
 		5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
-		A936856328686CAC00E34B6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A936856228686CAC00E34B6C /* README.md */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFAFC2B8E9649008D34CA /* Dependencies.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
-		A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B07E412868579900AA6274 /* Assets.xcassets */; };
 		A9B07E7D2868582700AA6274 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A9B07E7C2868582700AA6274 /* ComposableArchitecture */; };
 		A9B07E992868588700AA6274 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E7F2868588700AA6274 /* DashboardView.swift */; };
 		A9B07EAB2868588700AA6274 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E8B2868588700AA6274 /* AppView.swift */; };
@@ -145,14 +141,12 @@
 		5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5BFAAB3E2A484E0800E486DC /* DiagramPageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramPageClient.swift; sourceTree = "<group>"; };
-		5BFAD9B72E772E7A001D086D /* Default.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Default.icon; sourceTree = "<group>"; };
 		5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
 		A94CFAFC2B8E9649008D34CA /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoulderLogbookApp.swift; sourceTree = "<group>"; };
-		A9B07E412868579900AA6274 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9B07E462868579900AA6274 /* BoulderLogbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoulderLogbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B07E7F2868588700AA6274 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A9B07E8B2868588700AA6274 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -174,6 +168,10 @@
 		A9CA60012B989B2900C04BCC /* LogbookSectionMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookSectionMO.swift; sourceTree = "<group>"; };
 		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B5DAE852E7C7D330040246D /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5B049E492BF0CF1B00A70A50 /* Frameworks */ = {
@@ -350,14 +348,6 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		5BFAD9BA2E772E7F001D086D /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				5BFAD9B72E772E7A001D086D /* Default.icon */,
-			);
-			path = Icons;
-			sourceTree = "<group>";
-		};
 		A9B07E392868579500AA6274 = {
 			isa = PBXGroup;
 			children = (
@@ -373,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				5B390D722C304C1100C7CF33 /* Info.plist */,
-				5BFAD9BA2E772E7F001D086D /* Icons */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A94CFAFC2B8E9649008D34CA /* Dependencies.swift */,
 				A9BE3A4A2B8D15AE004DD728 /* Storage */,
@@ -382,7 +371,7 @@
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
-				A9B07E412868579900AA6274 /* Assets.xcassets */,
+				5B5DAE852E7C7D330040246D /* Resources */,
 			);
 			path = BoulderLogbook;
 			sourceTree = "<group>";
@@ -526,6 +515,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				5B5DAE852E7C7D330040246D /* Resources */,
+			);
 			name = BoulderLogbook;
 			packageProductDependencies = (
 				A9B07E7C2868582700AA6274 /* ComposableArchitecture */,
@@ -587,10 +579,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BFAD9B92E772E7A001D086D /* Default.icon in Resources */,
-				5BFAAB3D2A484BFB00E486DC /* LICENSE in Resources */,
-				A936856328686CAC00E34B6C /* README.md in Resources */,
-				A9B07E6B2868579900AA6274 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,7 +851,6 @@
 		A9B07E702868579900AA6274 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_1 AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
 				ASSETCATALOG_COMPILER_APPICON_NAME = Default;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
@@ -897,7 +884,6 @@
 		A9B07E712868579900AA6274 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon_1 AppIcon_3 AppIcon_2 AppIcon_5 AppIcon_4 AppIcon_6";
 				ASSETCATALOG_COMPILER_APPICON_NAME = Default;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;

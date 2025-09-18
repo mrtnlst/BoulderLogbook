@@ -14,9 +14,7 @@ struct AppIconView: View {
     var body: some View {
         if let iconName = iconName, let icon = UIImage(named: iconName) {
             Image(uiImage: icon)
-                .resizable()
-                .frame(width: 60, height: 60)
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .aspectRatio(contentMode: .fit)
                 .shadow(radius: 4)
         } else {
             Image(systemName: "app.dashed")

@@ -15,10 +15,8 @@ struct AppIconListView: View {
         PlainList(hideSeperator: false) {
             PlainSection {
                 appIconRow(for: .default)
-//                appIconRow(for: .jelly)
             }
             PlainSection("Classic Icons") {
-                appIconRow(for: .classic)
                 appIconRow(for: .aurora)
                 appIconRow(for: .darkBerry)
                 appIconRow(for: .lemon)
