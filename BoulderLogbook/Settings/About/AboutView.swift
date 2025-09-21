@@ -15,7 +15,7 @@ struct AboutView: View {
         PlainList {
             PlainSection {
                 VStack(alignment: .center) {
-                    AppIconView(iconName: "Classic Icon")
+                    AppIconView(iconName: "Default")
                     Text("Boulder Logbook")
                         .font(.headline)
                     Text("1.3.0")
