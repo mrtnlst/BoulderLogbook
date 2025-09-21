@@ -27,7 +27,6 @@ struct DashboardEntryView: View {
                 .padding(.leading, 2)
         }
         .padding(.vertical, verticalPadding)
-        .listRowBackground(Color.rowBackground)
     }
 }
 

@@ -71,7 +71,7 @@ private extension DashboardView {
         entry: Logbook.Section.Entry,
         gradeSystem: GradeSystem
     ) -> some View {
-        Button {
+        PlainRowButton {
             store.send(.setNavigation(entry))
         } label: {
             DashboardEntryView(

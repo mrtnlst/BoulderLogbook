@@ -54,7 +54,7 @@ struct GradeSystemListView: View {
 
 extension GradeSystemListView {
     func selectionRow(gradeSystem: GradeSystem) -> some View {
-        Button {
+        PlainRowButton {
             store.send(.saveSelected(gradeSystem.id))
         } label: {
             let isSelected = store.selectedSystem?.id == gradeSystem.id

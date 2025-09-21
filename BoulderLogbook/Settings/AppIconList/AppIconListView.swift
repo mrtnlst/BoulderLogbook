@@ -32,7 +32,7 @@ struct AppIconListView: View {
 
 extension AppIconListView {
     func appIconRow(for icon: AppIconList.State.Icon) -> some View {
-        Button {
+        PlainRowButton {
             store.send(.selectAppIcon(icon.fileName))
         } label: {
             HStack {

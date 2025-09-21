@@ -47,7 +47,12 @@ private extension AppView {
             Button {
                 store.send(.presentSettings)
             } label: {
-                Label("Settings", systemImage: "gear")
+                if #available(iOS 26, *) {
+                    Label("Settings", systemImage: "gear")
+                } else {
+                    Image(systemName: "gear")
+                        .fontWeight(.bold)
+                }
             }
         }
         if #available(iOS 26, *) {
@@ -57,7 +62,12 @@ private extension AppView {
             Button {
                 store.send(.presentEntryForm(nil))
             } label: {
-                Label("Add entry", systemImage: "plus")
+                if #available(iOS 26, *) {
+                    Label("Add entry", systemImage: "plus")
+                } else {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                }
             }
         }
     }
@@ -72,11 +82,13 @@ private extension AppView {
 }
 
 #Preview {
-    AppView(
-        store: Store(
-            initialState: AppReducer.State()
-        ) {
-            AppReducer()
-        }
-    )
+    NavigationStack {
+        AppView(
+            store: Store(
+                initialState: AppReducer.State()
+            ) {
+                AppReducer()
+            }
+        )
+    }
 }

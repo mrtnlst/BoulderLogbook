@@ -14,17 +14,17 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             PlainList {
-                Button {
+                PlainRowButton {
                     store.send(.setGradeSystemListNavigation)
                 } label: {
                     listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
                 }
-                Button {
+                PlainRowButton {
                     store.send(.setAppIconListNavigation)
                 } label: {
                     listItem(title: "App Icons", image: "app.dashed")
                 }
-                Button {
+                PlainRowButton {
                     store.send(.setAboutNavigation)
                 } label: {
                     listItem(title: "About", image: "info.circle")

@@ -48,7 +48,7 @@ private extension EntryColorView {
         if #available(iOS 26, *) {
             return 36
         } else {
-            return 18
+            return 24
         }
     }
 }
