@@ -42,7 +42,7 @@ extension DashboardEntryView {
 }
 
 #Preview {
-    PlainList(hideSeperator: false) {
+    PlainList {
         DashboardEntryView(
             entry: [Logbook.Section.Entry].samples[0],
             gradeSystem: .mandala

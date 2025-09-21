@@ -12,7 +12,7 @@ struct DashboardView: View {
     @Bindable var store: StoreOf<Dashboard>
     
     var body: some View {
-        PlainList(hideSeperator: false) {
+        PlainList {
             DiagramPageView(
                 store: store.scope(
                     state: \.diagramPage,

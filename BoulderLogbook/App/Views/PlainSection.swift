@@ -48,7 +48,7 @@ extension PlainSection {
 
 private extension PlainSection {
     var listSectionSpacing: CGFloat {
-        title == nil && header == nil ? 32 : 0
+        title == nil && header == nil ? 16 : 0
     }
 }
 

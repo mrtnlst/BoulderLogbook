@@ -12,7 +12,7 @@ struct AppIconListView: View {
     let store: StoreOf<AppIconList>
 
     var body: some View {
-        PlainList(hideSeperator: false) {
+        PlainList {
             PlainSection {
                 appIconRow(for: .default)
             }
