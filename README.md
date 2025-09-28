@@ -15,7 +15,7 @@ A logbook to track you boulder sessions.
 
 ## Compatibility
 
-* 🚀 Requires iOS 17 and Xcode 15
+* 🚀 Requires iOS 18 and Xcode 26
 
 ## Credits
 
