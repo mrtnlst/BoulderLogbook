@@ -12,6 +12,7 @@ import ComposableArchitecture
 struct Dashboard {
     @Reducer(state: .equatable)
     enum Destination {
+        case entryForm(EntryForm)
         case entryDetail(EntryDetail)
         case confirmationDialog(AlertState<Confirmation>)
 
@@ -46,6 +47,7 @@ struct Dashboard {
         case edit(Logbook.Section.Entry)
         case setNavigation(Logbook.Section.Entry)
         case diagramPage(DiagramPage.Action)
+        case presentEntryForm(EntryForm.State?)
         case destination(PresentationAction<Destination.Action>)
 
         enum EntryClientResponse { case finished }
@@ -146,6 +148,39 @@ struct Dashboard {
                         EntryDetail.State(
                             entry: entry,
                             gradeSystem: system
+                        )
+                    )
+                }
+            case let .presentEntryForm(entryFormState):
+                state.destination = .entryForm(entryFormState ?? EntryForm.State())
+
+            case .destination(.presented(.entryForm(.cancel))):
+                state.destination = nil
+                
+            case .destination(.presented(.entryForm(.saveDidFinish))):
+                state.destination = nil
+                return .merge(
+                    .send(.fetchSections),
+                    .send(.diagramPage(.fetchEntries))
+                )
+                
+            case let .edit(entry),
+                let .destination(.presented(.entryDetail(.edit(entry)))):
+                return .run { send in
+                    try await Task.sleep(for: .milliseconds(100))
+                    await send(
+                        .presentEntryForm(
+                            .init(
+                                id: entry.id,
+                                date: entry.date,
+                                notes: entry.notes,
+                                tops: entry.tops.normal(),
+                                attempts: entry.tops.filter { $0.isAttempt },
+                                flashs: entry.tops.filter { $0.wasFlash },
+                                onsights: entry.tops.filter { $0.wasOnsight },
+                                selectedSystem: entry.gradeSystem,
+                                isEditing: true
+                            )
                         )
                     )
                 }

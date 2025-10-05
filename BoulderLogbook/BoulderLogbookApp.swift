@@ -19,11 +19,7 @@ struct BoulderLogbookApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                AppView(store: Self.store)
-            }
-            .tint(.toolbarButtonColor)
-            .preferredColorScheme(.dark)
+            AppView(store: Self.store)
         }
     }
 }

@@ -28,13 +28,11 @@ struct Settings {
         case setAppIconListNavigation
         case setAboutNavigation
         case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
-        case dismiss
 
         enum EntryClientResponse { case finished }
     }
     
     @Dependency(LogbookEntryClient.self) var entryClient
-    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
        Reduce { state, action in
@@ -61,9 +59,6 @@ struct Settings {
 
             case .setAboutNavigation:
                 state.destination = .about(.init())
-
-            case .dismiss:
-                return .run { _ in await dismiss() }
 
             default: ()
             }

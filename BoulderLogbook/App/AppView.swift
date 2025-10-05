@@ -12,72 +12,45 @@ struct AppView: View {
     @Bindable var store: StoreOf<AppReducer>
 
     var body: some View {
-        DashboardView(
-            store: store.scope(
-                state: \.dashboard,
-                action: \.dashboard
-            )
-        )
-        .toolbar {
-            toolbarContent()
-        }
-        .sheet(
-            item: $store.scope(
-                state: \.destination?.entryForm,
-                action:  \.destination.entryForm
-            )
-        ) {
-            EntryFormView(store: $0)
-        }
-        .sheet(
-            item: $store.scope(
-                state: \.destination?.settings,
-                action: \.destination.settings
-            )
-        ) {
-            SettingsView(store: $0)
-        }
-    }
-}
-
-private extension AppView {
-    @ToolbarContentBuilder
-    func toolbarContent() -> some ToolbarContent {
-        ToolbarItem(placement: toolbarPlacement) {
-            Button {
-                store.send(.presentSettings)
-            } label: {
-                if #available(iOS 26, *) {
-                    Label("Settings", systemImage: "gear")
-                } else {
-                    Image(systemName: "gear")
-                        .fontWeight(.bold)
+        TabView(selection: $store.tab.sending(\.didChangeTab)) {
+            Tab(
+                AppTab.training.rawValue,
+                systemImage: AppTab.training.symbol,
+                value: AppTab.training
+            ) {
+                DashboardView(
+                    store: store.scope(
+                        state: \.dashboard,
+                        action: \.dashboard
+                    )
+                )
+            }
+            Tab(
+                AppTab.exercise.rawValue,
+                systemImage: AppTab.exercise.symbol,
+                value: AppTab.exercise
+            ) {
+                NavigationStack {
+                    Text("Coming Soon")
+                        .navigationTitle("Exercise")
+                        .toolbarTitleDisplayMode(.inlineLarge)
                 }
             }
-        }
-        if #available(iOS 26, *) {
-            ToolbarSpacer(.flexible, placement: .bottomBar)
-        }
-        ToolbarItem(placement: toolbarPlacement) {
-            Button {
-                store.send(.presentEntryForm(nil))
-            } label: {
-                if #available(iOS 26, *) {
-                    Label("Add entry", systemImage: "plus")
-                } else {
-                    Image(systemName: "plus")
-                        .fontWeight(.bold)
-                }
+            Tab(
+                AppTab.settings.rawValue,
+                systemImage: AppTab.settings.symbol,
+                value: AppTab.settings
+            ) {
+                SettingsView(
+                    store: store.scope(
+                        state: \.settings,
+                        action: \.settings
+                    )
+                )
             }
         }
-    }
-    
-    var toolbarPlacement: ToolbarItemPlacement {
-        if #available(iOS 26, *) {
-            return .bottomBar
-        } else {
-            return .topBarTrailing
-        }
+        .tint(.toolbarButtonColor)
+        .preferredColorScheme(.dark)
     }
 }
 
