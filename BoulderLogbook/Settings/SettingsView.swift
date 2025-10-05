@@ -56,19 +56,6 @@ struct SettingsView: View {
             ) {
                 AboutView(store: $0)
             }
-            .toolbar {
-                if #available(iOS 26, *) {
-                    Button(role: .close) {
-                        store.send(.dismiss)
-                    }
-                } else {
-                    Button {
-                        store.send(.dismiss)
-                    } label: {
-                        Label("Close", systemImage: "xmark")
-                    }
-                }
-            }
         }
         .preferredColorScheme(.dark)
     }

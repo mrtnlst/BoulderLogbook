@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,14 @@
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
 		5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
+		5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C32F9E67A100E2A644 /* Aurora.icon */; };
+		5B50B0CD2F9E67A100E2A644 /* Dark Berry.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */; };
+		5B50B0CE2F9E67A100E2A644 /* Default.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C52F9E67A100E2A644 /* Default.icon */; };
+		5B50B0CF2F9E67A100E2A644 /* Fairy Dust.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C62F9E67A100E2A644 /* Fairy Dust.icon */; };
+		5B50B0D02F9E67A100E2A644 /* Lemon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C72F9E67A100E2A644 /* Lemon.icon */; };
+		5B50B0D12F9E67A100E2A644 /* Midnight.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C82F9E67A100E2A644 /* Midnight.icon */; };
+		5B50B0D22F9E67A100E2A644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */; };
+		5B5836872E928C3D0054B408 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5836862E928C3D0054B408 /* AppTab.swift */; };
 		5B5DAEB22E7FF2520040246D /* PlainRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */; };
 		5B60B50B2B60562B00917DB5 /* PlainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60B50A2B60562B00917DB5 /* PlainSection.swift */; };
 		5B6B2C622BF1472C00A17549 /* TotalAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */; };
@@ -105,6 +113,14 @@
 		5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+Additions.swift"; sourceTree = "<group>"; };
 		5B390D722C304C1100C7CF33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
+		5B50B0C32F9E67A100E2A644 /* Aurora.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Aurora.icon; sourceTree = "<group>"; };
+		5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "Dark Berry.icon"; sourceTree = "<group>"; };
+		5B50B0C52F9E67A100E2A644 /* Default.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Default.icon; sourceTree = "<group>"; };
+		5B50B0C62F9E67A100E2A644 /* Fairy Dust.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "Fairy Dust.icon"; sourceTree = "<group>"; };
+		5B50B0C72F9E67A100E2A644 /* Lemon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Lemon.icon; sourceTree = "<group>"; };
+		5B50B0C82F9E67A100E2A644 /* Midnight.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Midnight.icon; sourceTree = "<group>"; };
+		5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B5836862E928C3D0054B408 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRowButton.swift; sourceTree = "<group>"; };
 		5B60B50A2B60562B00917DB5 /* PlainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSection.swift; sourceTree = "<group>"; };
 		5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalAmountView.swift; sourceTree = "<group>"; };
@@ -171,10 +187,6 @@
 		A9CE6763288004E400027885 /* EntryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		5B5DAE852E7C7D330040246D /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		5B049E492BF0CF1B00A70A50 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -227,6 +239,28 @@
 				5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5B50B0C92F9E67A100E2A644 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				5B50B0C32F9E67A100E2A644 /* Aurora.icon */,
+				5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */,
+				5B50B0C52F9E67A100E2A644 /* Default.icon */,
+				5B50B0C62F9E67A100E2A644 /* Fairy Dust.icon */,
+				5B50B0C72F9E67A100E2A644 /* Lemon.icon */,
+				5B50B0C82F9E67A100E2A644 /* Midnight.icon */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		5B50B0CB2F9E67A100E2A644 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B50B0C92F9E67A100E2A644 /* Icons */,
+				5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		5B6B93122A5365C90013D634 /* Clients */ = {
@@ -374,7 +408,7 @@
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
-				5B5DAE852E7C7D330040246D /* Resources */,
+				5B50B0CB2F9E67A100E2A644 /* Resources */,
 			);
 			path = BoulderLogbook;
 			sourceTree = "<group>";
@@ -393,6 +427,7 @@
 			children = (
 				A9C3005A298292F8001B51C4 /* AppReducer.swift */,
 				A9B07E8B2868588700AA6274 /* AppView.swift */,
+				5B5836862E928C3D0054B408 /* AppTab.swift */,
 				5B1A80772896EBD100530B01 /* Extensions */,
 				A9B07E8C2868588700AA6274 /* Models */,
 				5BE273F72B585C4B0004DD27 /* Styles */,
@@ -518,9 +553,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				5B5DAE852E7C7D330040246D /* Resources */,
-			);
 			name = BoulderLogbook;
 			packageProductDependencies = (
 				A9B07E7C2868582700AA6274 /* ComposableArchitecture */,
@@ -582,6 +614,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */,
+				5B50B0CD2F9E67A100E2A644 /* Dark Berry.icon in Resources */,
+				5B50B0CE2F9E67A100E2A644 /* Default.icon in Resources */,
+				5B50B0CF2F9E67A100E2A644 /* Fairy Dust.icon in Resources */,
+				5B50B0D02F9E67A100E2A644 /* Lemon.icon in Resources */,
+				5B50B0D12F9E67A100E2A644 /* Midnight.icon in Resources */,
+				5B50B0D22F9E67A100E2A644 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +702,7 @@
 				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
 				5BDD42002987086800B84BA0 /* Top.swift in Sources */,
+				5B5836872E928C3D0054B408 /* AppTab.swift in Sources */,
 				A9CA60002B989A7300C04BCC /* LogbookEntryMO.swift in Sources */,
 				5BDD41F629868F9F00B84BA0 /* GradeSystem.swift in Sources */,
 				5B6D397E299ACCA400299CCA /* TopCountDiagram.swift in Sources */,

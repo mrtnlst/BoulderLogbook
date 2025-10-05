@@ -29,20 +29,23 @@ struct GradeSystemList {
         var systemToDelete: GradeSystem?
     }
     
-    enum Action {
+    enum Action: ViewAction {
+        enum View {
+            case onAppear
+            case presentGradeSystemForm
+            case setSystemToDelete(GradeSystem)
+            case edit(UUID)
+        }
         case destination(PresentationAction<Destination.Action>)
-        case onAppear
         case fetchGradeSystems
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case fetchSelectedSystem
         case receiveSelectedSystem(TaskResult<GradeSystem?>)
-        case presentGradeSystemForm
         case presentConfirmation
         case saveSelected(UUID)
         case saveSelectedDidFinish(TaskResult<ClientResponse>)
-        case setSystemToDelete(GradeSystem)
         case delete(UUID)
-        case edit(UUID)
+        case view(View)
         
         enum ClientResponse { case finished }
     }
@@ -52,7 +55,7 @@ struct GradeSystemList {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 return .send(.fetchGradeSystems)
                 
             case .fetchGradeSystems:
@@ -76,7 +79,7 @@ struct GradeSystemList {
             case let .receiveSelectedSystem(.success(selected)):
                 state.selectedSystem = selected
 
-            case .presentGradeSystemForm:
+            case .view(.presentGradeSystemForm):
                 state.destination = .gradeSystemForm(GradeSystemForm.State())
                 
             case .presentConfirmation:
@@ -111,7 +114,7 @@ struct GradeSystemList {
             case .saveSelectedDidFinish(_):
                 return .send(.fetchSelectedSystem)
                 
-            case let .setSystemToDelete(system):
+            case let .view(.setSystemToDelete(system)):
                 state.systemToDelete = system
                 return .send(.presentConfirmation)
                 
@@ -127,7 +130,7 @@ struct GradeSystemList {
                     .send(.fetchGradeSystems)
                 )
                 
-            case let .edit(id):
+            case let .view(.edit(id)):
                 guard let gradeSystem = state.gradeSystems.first (where: { $0.id == id }) else {
                     return .none
                 }

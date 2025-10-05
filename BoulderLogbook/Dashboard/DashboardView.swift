@@ -12,38 +12,51 @@ struct DashboardView: View {
     @Bindable var store: StoreOf<Dashboard>
     
     var body: some View {
-        PlainList {
-            DiagramPageView(
-                store: store.scope(
-                    state: \.diagramPage,
-                    action: \.diagramPage
+        NavigationStack {
+            PlainList {
+                DiagramPageView(
+                    store: store.scope(
+                        state: \.diagramPage,
+                        action: \.diagramPage
+                    )
+                )
+                ForEach(store.sections, id: \.date) {
+                    section($0)
+                }
+                TotalAmountView(amount: store.numberOfEntries)
+                CreditsView()
+            }
+            .onAppear {
+                store.send(.onAppear)
+            }
+            .navigationTitle("Training")
+            .toolbarTitleDisplayMode(.inlineLarge)
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.entryDetail,
+                    action: \.destination.entryDetail
+                )
+            ) {
+                EntryDetailView(store: $0)
+            }
+            .toolbar {
+                toolbarContent()
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.destination?.entryForm,
+                    action:  \.destination.entryForm
+                )
+            ) {
+                EntryFormView(store: $0)
+            }
+            .alert(
+                $store.scope(
+                    state: \.destination?.confirmationDialog,
+                    action: \.destination.confirmationDialog
                 )
             )
-            ForEach(store.sections, id: \.date) {
-                section($0)
-            }
-            TotalAmountView(amount: store.numberOfEntries)
-            CreditsView()
         }
-        .onAppear {
-            store.send(.onAppear)
-        }
-        .navigationTitle("Dashboard")
-        .toolbarTitleDisplayMode(.inlineLarge)
-        .navigationDestination(
-            item: $store.scope(
-                state: \.destination?.entryDetail,
-                action: \.destination.entryDetail
-            )
-        ) {
-            EntryDetailView(store: $0)
-        }
-        .alert(
-            $store.scope(
-                state: \.destination?.confirmationDialog,
-                action: \.destination.confirmationDialog
-            )
-        )
     }
 }
 
@@ -92,6 +105,22 @@ private extension DashboardView {
                 Label("Edit", systemImage: "pencil")
             }
             .tint(.araWarning)
+        }
+    }
+    
+    @ToolbarContentBuilder
+    func toolbarContent() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                store.send(.presentEntryForm(nil))
+            } label: {
+                if #available(iOS 26, *) {
+                    Label("Add entry", systemImage: "plus")
+                } else {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                }
+            }
         }
     }
 }

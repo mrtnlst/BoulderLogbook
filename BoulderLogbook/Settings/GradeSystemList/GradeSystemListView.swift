@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: GradeSystemList.self)
 struct GradeSystemListView: View {
     @Bindable var store: StoreOf<GradeSystemList>
 
@@ -15,9 +16,15 @@ struct GradeSystemListView: View {
         PlainList {
             ForEach(store.gradeSystems) { gradeSystem in
                 selectionRow(gradeSystem: gradeSystem)
-                    .swipeActions { swipeButtons(gradeSystem: gradeSystem) }
+                    .swipeActions {
+                        swipeButtons(gradeSystem: gradeSystem)
+                    }
             }
         }
+        .navigationTitle("Grade Systems")
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar { toolbarContent }
+        .onAppear { send(.onAppear) }
         .alert(
             $store.scope(
                 state: \.destination?.confirmationDialog,
@@ -32,27 +39,10 @@ struct GradeSystemListView: View {
         ) {
             GradeSystemFormView(store: $0)
         }
-        .navigationTitle("Grade Systems")
-        .toolbarTitleDisplayMode(.inline)
-        .toolbar {
-            if #available(iOS 26, *) {
-                ToolbarSpacer(.flexible, placement: .bottomBar)
-            }
-            ToolbarItem(placement: toolbarPlacement) {
-                Button {
-                    store.send(.presentGradeSystemForm)
-                } label: {
-                    Label("Add grade system", systemImage: "plus")
-                }
-            }
-        }
-        .onAppear {
-            store.send(.onAppear)
-        }
     }
 }
 
-extension GradeSystemListView {
+private extension GradeSystemListView {
     func selectionRow(gradeSystem: GradeSystem) -> some View {
         PlainRowButton {
             store.send(.saveSelected(gradeSystem.id))
@@ -77,24 +67,27 @@ extension GradeSystemListView {
     @ViewBuilder
     func swipeButtons(gradeSystem: GradeSystem) -> some View {
         Button {
-            store.send(.setSystemToDelete(gradeSystem))
+            send(.setSystemToDelete(gradeSystem))
         } label: {
             Label("Delete", systemImage: "trash")
         }
         .tint(.araError)
         Button {
-            store.send(.edit(gradeSystem.id))
+            send(.edit(gradeSystem.id))
         } label: {
             Label("Edit", systemImage: "pencil")
         }
         .tint(.araWarning)
     }
     
-    var toolbarPlacement: ToolbarItemPlacement {
-        if #available(iOS 26, *) {
-            return .bottomBar
-        } else {
-            return .topBarTrailing
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                send(.presentGradeSystemForm)
+            } label: {
+                Label("Add grade system", systemImage: "plus")
+            }
         }
     }
 }

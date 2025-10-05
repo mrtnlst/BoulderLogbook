@@ -10,25 +10,19 @@ import ComposableArchitecture
 
 @Reducer
 struct AppReducer {
-    @Reducer(state: .equatable)
-    enum Destination {
-        case settings(Settings)
-        case entryForm(EntryForm)
-    }
-    
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
         var dashboard = Dashboard.State()
+        var settings = Settings.State()
+        var tab: AppTab = .training
     }
     
     enum Action {
-        case destination(PresentationAction<Destination.Action>)
         case dashboard(Dashboard.Action)
-        case presentEntryForm(EntryForm.State?)
-        case presentSettings
+        case settings(Settings.Action)
         case presentGradeSystemList
         case presentGradeSystemConfiguration
+        case didChangeTab(AppTab)
     }
     @Dependency(LogbookEntryClient.self) var entryClient
 
@@ -36,81 +30,47 @@ struct AppReducer {
         Scope(state: \.dashboard, action: \.dashboard) {
             Dashboard()
         }
+        Scope(state: \.settings, action: \.settings) {
+           Settings()
+        }
         Reduce { state, action in
             switch action {
-            case let .presentEntryForm(entryFormState):
-                state.destination = .entryForm(entryFormState ?? EntryForm.State())
-
-            case .presentSettings:
-                state.destination = .settings(Settings.State())
 
             case .presentGradeSystemList:
-                state.destination = .settings(Settings.State())
-                return .send(.destination(.presented(.settings(.setGradeSystemListNavigation))))
+                return .send(.settings(.setGradeSystemListNavigation))
 
             case .presentGradeSystemConfiguration:
-                state.destination = .settings(Settings.State())
-                return .send(.destination(.presented(.settings(.setGradeSystemListNavigation))))
+                return .send(.settings(.setGradeSystemListNavigation))
 
-            case .destination(.presented(.entryForm(.cancel))):
-                state.destination = nil
-                
-            case .destination(.presented(.entryForm(.saveDidFinish))):
-                state.destination = nil
-                return .merge(
-                    .send(.dashboard(.fetchSections)),
-                    .send(.dashboard(.diagramPage(.fetchEntries)))
-                )
-                
-            case let .dashboard(.edit(entry)),
-                 let .dashboard(.destination(.presented(.entryDetail(.edit(entry))))):
-                return .concatenate(
-                    .run { send in 
-                        try await Task.sleep(for: .milliseconds(100))
-                        await send(
-                            .presentEntryForm(
-                                .init(
-                                    id: entry.id,
-                                    date: entry.date,
-                                    notes: entry.notes,
-                                    tops: entry.tops.normal(),
-                                    attempts: entry.tops.filter { $0.isAttempt },
-                                    flashs: entry.tops.filter { $0.wasFlash },
-                                    onsights: entry.tops.filter { $0.wasOnsight },
-                                    selectedSystem: entry.gradeSystem,
-                                    isEditing: true
-                                )
-                            )
-                        )
-                    }
-                )
-
-            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))))):
+            case .settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
                     .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
                 )
                 
-            case .destination(.presented(.settings(.deleteEntriesDidFinish))):
+            case .settings(.deleteEntriesDidFinish):
                 return .merge(
                     .send(.dashboard(.fetchGradeSystems)),
                     .send(.dashboard(.diagramPage(.fetchEntries)))
                 )
                                 
-            case .destination(.presented(.settings(.destination(.presented(.gradeSystemList(.saveSelectedDidFinish)))))):
+            case .settings(.destination(.presented(.gradeSystemList(.saveSelectedDidFinish)))):
                 return .send(.dashboard(.diagramPage(.fetchEntries)))
                 
             case .dashboard(.diagramPage(.topCountDiagram(.didPressEmptyView))),
                  .dashboard(.diagramPage(.summaryDiagram(.didPressEmptyView))):
+                state.tab = .settings
                 if !state.dashboard.gradeSystems.isEmpty {
                     return .send(.presentGradeSystemConfiguration)
                 }
                 return .send(.presentGradeSystemList)
+                
+            case let .didChangeTab(tab):
+                state.tab = tab
 
             default: ()
             }
             return .none
         }
-        .ifLet(\.$destination, action: \.destination)
     }
 }
