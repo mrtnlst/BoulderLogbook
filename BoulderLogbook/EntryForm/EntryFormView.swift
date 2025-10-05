@@ -172,7 +172,6 @@ extension EntryFormView {
                 Button(role: .confirm) {
                     store.send(.save)
                 }
-                .tint(.araPrimary)
                 .disabled(store.isSaveButtonDisabled)
             } else {
                 Button {
@@ -180,8 +179,9 @@ extension EntryFormView {
                 } label: {
                     Label("Save", systemImage: "checkmark")
                 }
-                .tint(.araPrimary)
                 .disabled(store.isSaveButtonDisabled)
+                .buttonStyle(.borderedProminent)
+                .tint(.araAccent)
             }
         }
     }

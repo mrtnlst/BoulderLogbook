@@ -40,14 +40,15 @@ struct TopCountDiagramView: View {
 extension TopCountDiagramView {
     @MainActor
     func picker() -> some View {
-        PlainPicker(
-            title: "Pick the number of sessions displayed in the chart!",
+        Picker(
+            "Pick the number of sessions displayed in the chart!",
             selection: $store.selectedSegment
         ) {
             ForEach(TopCountDiagram.Segment.allCases, id: \.self) { segment in
                 Text(segment.rawValue)
             }
         }
+        .pickerStyle(.segmented)
         .disabled($store.gradeSystem.wrappedValue == nil ? true : false)
     }
     

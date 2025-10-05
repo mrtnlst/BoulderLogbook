@@ -118,7 +118,6 @@ extension GradeSystemFormView {
                     focusedField = nil
                     store.send(.save)
                 }
-                .tint(.araPrimary)
                 .disabled(store.name.isEmpty)
             } else {
                 Button {
@@ -127,8 +126,9 @@ extension GradeSystemFormView {
                 } label: {
                     Label("Save", systemImage: "checkmark")
                 }
-                .tint(.araPrimary)
                 .disabled(store.name.isEmpty)
+                .buttonStyle(.borderedProminent)
+                .tint(.araAccent)
             }
         }
     }
