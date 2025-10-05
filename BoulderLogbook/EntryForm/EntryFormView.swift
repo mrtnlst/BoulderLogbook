@@ -80,7 +80,7 @@ extension EntryFormView {
                             let count = store.tops.count(for: grade)
                             + store.flashs.count(for: grade)
                             + store.onsights.count(for: grade)
-                            VStack(alignment: .leading) {
+                            HStack {
                                 Text("Tops: \(count)")
                                     .foregroundStyle(.primaryText)
                                 Text(grade.name)
