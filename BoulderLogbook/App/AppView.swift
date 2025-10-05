@@ -14,9 +14,9 @@ struct AppView: View {
     var body: some View {
         TabView(selection: $store.tab.sending(\.didChangeTab)) {
             Tab(
-                AppTab.training.rawValue,
-                systemImage: AppTab.training.symbol,
-                value: AppTab.training
+                AppTab.sessions.rawValue,
+                systemImage: AppTab.sessions.symbol,
+                value: AppTab.sessions
             ) {
                 DashboardView(
                     store: store.scope(

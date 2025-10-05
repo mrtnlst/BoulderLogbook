@@ -6,12 +6,12 @@
 //
 
 enum AppTab: String, CaseIterable {
-    case training = "Training"
+    case sessions = "Sessions"
     case settings = "Settings"
     
     var symbol: String {
         switch self {
-        case .training:
+        case .sessions:
             return "figure.play"
         case .settings:
             return "gear"
