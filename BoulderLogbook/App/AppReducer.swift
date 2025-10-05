@@ -14,7 +14,7 @@ struct AppReducer {
     struct State: Equatable {
         var dashboard = Dashboard.State()
         var settings = Settings.State()
-        var tab: AppTab = .training
+        var tab: AppTab = .sessions
     }
     
     enum Action {

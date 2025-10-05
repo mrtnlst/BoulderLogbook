@@ -14,9 +14,9 @@ struct AppView: View {
     var body: some View {
         TabView(selection: $store.tab.sending(\.didChangeTab)) {
             Tab(
-                AppTab.training.rawValue,
-                systemImage: AppTab.training.symbol,
-                value: AppTab.training
+                AppTab.sessions.rawValue,
+                systemImage: AppTab.sessions.symbol,
+                value: AppTab.sessions
             ) {
                 DashboardView(
                     store: store.scope(
@@ -26,13 +26,13 @@ struct AppView: View {
                 )
             }
             Tab(
-                AppTab.exercise.rawValue,
-                systemImage: AppTab.exercise.symbol,
-                value: AppTab.exercise
+                AppTab.training.rawValue,
+                systemImage: AppTab.training.symbol,
+                value: AppTab.training
             ) {
                 NavigationStack {
                     Text("Coming Soon")
-                        .navigationTitle("Exercise")
+                        .navigationTitle("Training")
                         .toolbarTitleDisplayMode(.inlineLarge)
                 }
             }

@@ -29,7 +29,7 @@ struct DashboardView: View {
             .onAppear {
                 store.send(.onAppear)
             }
-            .navigationTitle("Training")
+            .navigationTitle("Sessions")
             .toolbarTitleDisplayMode(.inlineLarge)
             .navigationDestination(
                 item: $store.scope(
