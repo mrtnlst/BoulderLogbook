@@ -155,4 +155,3 @@ struct GradeSystemList {
         .ifLet(\.$destination, action: \.destination)
     }
 }
-

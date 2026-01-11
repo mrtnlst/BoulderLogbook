@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24512" systemVersion="25C56" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Exercise" representedClassName="ExerciseMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+        <relationship name="trainings" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Training" inverseName="exercise" inverseEntity="Training"/>
+    </entity>
     <entity name="Grade" representedClassName="GradeMO" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Binary"/>
         <attribute name="difficulty" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -24,6 +30,11 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LogbookEntry" inverseName="section" inverseEntity="LogbookEntry"/>
     </entity>
+    <entity name="Result" representedClassName="ResultMO" syncable="YES">
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <attribute name="repititions" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="training" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Training" inverseName="result" inverseEntity="Training"/>
+    </entity>
     <entity name="Top" representedClassName="TopMO" syncable="YES">
         <attribute name="grade" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -31,5 +42,11 @@
         <attribute name="wasFlash" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="wasOnsight" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LogbookEntry" inverseName="tops" inverseEntity="LogbookEntry"/>
+    </entity>
+    <entity name="Training" representedClassName="TrainingMO" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="trainings" inverseEntity="Exercise"/>
+        <relationship name="result" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Result" inverseName="training" inverseEntity="Result"/>
     </entity>
 </model>

@@ -117,6 +117,7 @@ final class GradeSystemService {
                     return
                 }
                 storage.delete(object: system, from: backgroundContext)
+                storage.save(on: backgroundContext)
                 continuation.resume()
             }
         }

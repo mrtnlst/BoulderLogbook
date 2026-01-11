@@ -20,6 +20,11 @@ struct SettingsView: View {
                     listItem(title: "Grade Systems", image: "square.fill.text.grid.1x2")
                 }
                 PlainRowButton {
+                    store.send(.setExerciseListNavigation)
+                } label: {
+                    listItem(title: "Exercises", image: ExerciseSymbol.traditionalStrength.rawValue)
+                }
+                PlainRowButton {
                     store.send(.setAppIconListNavigation)
                 } label: {
                     listItem(title: "App Icons", image: "app.dashed")
@@ -39,6 +44,14 @@ struct SettingsView: View {
                 )
             ) {
                 GradeSystemListView(store: $0)
+            }
+            .navigationDestination(
+                item: $store.scope(
+                    state: \.destination?.exerciseList,
+                    action: \.destination.exerciseList
+                )
+            ) {
+                ExerciseListView(store: $0)
             }
             .navigationDestination(
                 item: $store.scope(

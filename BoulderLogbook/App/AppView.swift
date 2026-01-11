@@ -30,11 +30,12 @@ struct AppView: View {
                 systemImage: AppTab.training.symbol,
                 value: AppTab.training
             ) {
-                NavigationStack {
-                    Text("Coming Soon")
-                        .navigationTitle("Training")
-                        .toolbarTitleDisplayMode(.inlineLarge)
-                }
+                TrainingView(
+                    store: store.scope(
+                        state: \.training,
+                        action: \.training
+                    )
+                )
             }
             Tab(
                 AppTab.settings.rawValue,

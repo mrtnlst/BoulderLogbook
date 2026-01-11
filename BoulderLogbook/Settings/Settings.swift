@@ -13,6 +13,7 @@ struct Settings {
     @Reducer(state: .equatable)
     enum Destination {
         case gradeSystemList(GradeSystemList)
+        case exerciseList(ExerciseListFeature)
         case appIconList(AppIconList)
         case about(About)
     }
@@ -25,6 +26,7 @@ struct Settings {
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         case setGradeSystemListNavigation
+        case setExerciseListNavigation
         case setAppIconListNavigation
         case setAboutNavigation
         case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
@@ -53,6 +55,9 @@ struct Settings {
                 
             case .setGradeSystemListNavigation:
                 state.destination = .gradeSystemList(.init())
+                
+            case .setExerciseListNavigation:
+                state.destination = .exerciseList(.init())
    
             case .setAppIconListNavigation:
                 state.destination = .appIconList(.init())

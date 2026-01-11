@@ -65,7 +65,9 @@ extension CoreDataStorageType {
         on context: NSManagedObjectContext
     ) {
         do {
-            try context.save()
+            if context.hasChanges {
+                try context.save()
+            }
         } catch {
             debugPrint(error.localizedDescription)
         }
