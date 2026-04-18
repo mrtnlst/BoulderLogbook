@@ -141,7 +141,7 @@ struct EntryForm {
                 }
 
             case let .attemptStepperChanged(value, grade):
-                if value > state.attempts.count {
+                if value > state.attempts.count(for: grade) {
                     state.attempts.append(
                         Top(grade: grade.id, isAttempt: true)
                     )
@@ -152,7 +152,7 @@ struct EntryForm {
                 }
 
             case let .flashStepperChanged(value, grade):
-                if value > state.flashs.count {
+                if value > state.flashs.count(for: grade) {
                     state.flashs.append(
                         Top(grade: grade.id, wasFlash: true)
                     )
@@ -163,7 +163,7 @@ struct EntryForm {
                 }
 
             case let .onsightStepperChanged(value, grade):
-                if value > state.onsights.count {
+                if value > state.onsights.count(for: grade) {
                     state.onsights.append(
                         Top(grade: grade.id, wasOnsight: true)
                     )
