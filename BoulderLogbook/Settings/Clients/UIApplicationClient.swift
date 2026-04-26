@@ -6,12 +6,13 @@
 //
 
 import UIKit
-import Dependencies
+import ComposableArchitecture
 
+@DependencyClient
 struct UIApplicationClient {
-    var openLink: (String) async -> ()
-    var setAlternateIconName: (String?) async -> ()
-    var currentIconName: () async -> String?
+    var openLink: @Sendable (String) async -> ()
+    var setAlternateIconName: @Sendable (String?) async -> ()
+    var currentIconName: @Sendable () async -> String? = { nil }
 }
 
 extension UIApplicationClient: DependencyKey {

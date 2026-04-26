@@ -12,17 +12,6 @@ fileprivate extension String {
     static let backupEntries = "backup-entries"
 }
 
-protocol LogbookEntryServiceType: Sendable {
-    func fetchAvailableSections() async -> [Logbook.Section]
-    func fetchAvailableEntries() async -> [Logbook.Section.Entry]
-    func saveEntry(_ entry: Logbook.Section.Entry) async
-    func updateEntry(_ entry: Logbook.Section.Entry) async
-    func deleteEntry(for id: Logbook.Section.Entry.ID) async
-    func deleteEntries(of gradeSystem: GradeSystem.ID) async
-    func migrateLogbookEntries() async
-    func saveBackupEntries() async
-}
-
 final actor LogbookEntryService: LogbookEntryServiceType {
     private let storage: CoreDataStorageType
     private let backgroundContext: NSManagedObjectContext
@@ -74,7 +63,11 @@ final actor LogbookEntryService: LogbookEntryServiceType {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(LogbookSectionMO.date), date as NSDate)
-                if let existingSection: LogbookSectionMO = storage.fetch(predicate: predicate, on: backgroundContext).first {
+                if let existingSection: LogbookSectionMO = storage.fetch(
+                    type: LogbookSectionMO.self,
+                    predicate: predicate,
+                    on: backgroundContext
+                ).first {
                     let entryMO = entry.toLogbookEntryMO(into: backgroundContext)
                     existingSection.entries.insert(entryMO)
                 } else {
@@ -90,7 +83,11 @@ final actor LogbookEntryService: LogbookEntryServiceType {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(LogbookEntryMO.id), entry.id as NSUUID)
-                guard let entryMO: LogbookEntryMO = storage.fetch(predicate: predicate, on: backgroundContext).first else {
+                guard let entryMO: LogbookEntryMO = storage.fetch(
+                    type: LogbookEntryMO.self,
+                    predicate: predicate,
+                    on: backgroundContext
+                ).first else {
                     continuation.resume()
                     return
                 }
@@ -119,7 +116,11 @@ final actor LogbookEntryService: LogbookEntryServiceType {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(LogbookEntryMO.id), id as NSUUID)
-                guard let entryMO: LogbookEntryMO = storage.fetch(predicate: predicate, on: backgroundContext).first else {
+                guard let entryMO: LogbookEntryMO = storage.fetch(
+                    type: LogbookEntryMO.self,
+                    predicate: predicate,
+                    on: backgroundContext
+                ).first else {
                     continuation.resume()
                     return
                 }

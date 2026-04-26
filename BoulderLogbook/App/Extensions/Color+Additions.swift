@@ -68,7 +68,7 @@ extension Color {
 
 // MARK: - araAll
 extension Color {
-    static var araAll: [Color] = [
+    static let araAll: [Color] = [
         .araMidGray,
         .araDarkBlue,
         .araBlue,

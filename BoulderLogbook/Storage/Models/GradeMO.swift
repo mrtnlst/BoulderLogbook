@@ -26,3 +26,5 @@ extension GradeMO {
         )
     }
 }
+
+extension GradeMO: @unchecked Sendable {}

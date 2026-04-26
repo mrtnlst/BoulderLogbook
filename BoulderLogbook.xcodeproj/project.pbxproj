@@ -25,6 +25,14 @@
 		5B50B0D02F9E67A100E2A644 /* Lemon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C72F9E67A100E2A644 /* Lemon.icon */; };
 		5B50B0D12F9E67A100E2A644 /* Midnight.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C82F9E67A100E2A644 /* Midnight.icon */; };
 		5B50B0D22F9E67A100E2A644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */; };
+		5B50B0D42F9E7DFE00E2A644 /* Grade+samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0D32F9E7DFE00E2A644 /* Grade+samples.swift */; };
+		5B50B0D72F9E7E4900E2A644 /* GradeSystem+samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0D62F9E7E4900E2A644 /* GradeSystem+samples.swift */; };
+		5B50B0D92F9E7EEB00E2A644 /* Top+toTopMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0D82F9E7EEB00E2A644 /* Top+toTopMO.swift */; };
+		5B50B0DB2F9E7F1800E2A644 /* Top+samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0DA2F9E7F1800E2A644 /* Top+samples.swift */; };
+		5B50B0DD2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0DC2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift */; };
+		5B50B0DF2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0DE2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift */; };
+		5B50B0E82F9E815200E2A644 /* GradeSystemServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0E52F9E815200E2A644 /* GradeSystemServiceType.swift */; };
+		5B50B0E92F9E815200E2A644 /* LogbookEntryServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0E62F9E815200E2A644 /* LogbookEntryServiceType.swift */; };
 		5B5836872E928C3D0054B408 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5836862E928C3D0054B408 /* AppTab.swift */; };
 		5B5DAEB22E7FF2520040246D /* PlainRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */; };
 		5B60B50B2B60562B00917DB5 /* PlainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60B50A2B60562B00917DB5 /* PlainSection.swift */; };
@@ -119,6 +127,14 @@
 		5B50B0C72F9E67A100E2A644 /* Lemon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Lemon.icon; sourceTree = "<group>"; };
 		5B50B0C82F9E67A100E2A644 /* Midnight.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Midnight.icon; sourceTree = "<group>"; };
 		5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B50B0D32F9E7DFE00E2A644 /* Grade+samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+samples.swift"; sourceTree = "<group>"; };
+		5B50B0D62F9E7E4900E2A644 /* GradeSystem+samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GradeSystem+samples.swift"; sourceTree = "<group>"; };
+		5B50B0D82F9E7EEB00E2A644 /* Top+toTopMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Top+toTopMO.swift"; sourceTree = "<group>"; };
+		5B50B0DA2F9E7F1800E2A644 /* Top+samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Top+samples.swift"; sourceTree = "<group>"; };
+		5B50B0DC2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook.Section+toLogbookSectionMO.swift"; sourceTree = "<group>"; };
+		5B50B0DE2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook.Section.Entry+toLogbookEntryMO.swift"; sourceTree = "<group>"; };
+		5B50B0E52F9E815200E2A644 /* GradeSystemServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemServiceType.swift; sourceTree = "<group>"; };
+		5B50B0E62F9E815200E2A644 /* LogbookEntryServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryServiceType.swift; sourceTree = "<group>"; };
 		5B5836862E928C3D0054B408 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRowButton.swift; sourceTree = "<group>"; };
 		5B60B50A2B60562B00917DB5 /* PlainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSection.swift; sourceTree = "<group>"; };
@@ -223,7 +239,10 @@
 				5BDD41ED2986819600B84BA0 /* Color+Codable.swift */,
 				5B1A808128A7DA0D00530B01 /* Date+Additions.swift */,
 				5BDD420F29884E0C00B84BA0 /* EdgeInsets+zero.swift */,
+				5B50B0DE2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift */,
+				5B50B0DC2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift */,
 				5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */,
+				5B50B0D82F9E7EEB00E2A644 /* Top+toTopMO.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -259,6 +278,17 @@
 				5B50B0CA2F9E67A100E2A644 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5B50B0D52F9E7E1700E2A644 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				5B50B0D32F9E7DFE00E2A644 /* Grade+samples.swift */,
+				5B50B0D62F9E7E4900E2A644 /* GradeSystem+samples.swift */,
+				5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */,
+				5B50B0DA2F9E7F1800E2A644 /* Top+samples.swift */,
+			);
+			path = Samples;
 			sourceTree = "<group>";
 		};
 		5B6B93122A5365C90013D634 /* Clients */ = {
@@ -423,10 +453,11 @@
 			isa = PBXGroup;
 			children = (
 				A9C3005A298292F8001B51C4 /* AppReducer.swift */,
-				A9B07E8B2868588700AA6274 /* AppView.swift */,
 				5B5836862E928C3D0054B408 /* AppTab.swift */,
+				A9B07E8B2868588700AA6274 /* AppView.swift */,
 				5B1A80772896EBD100530B01 /* Extensions */,
 				A9B07E8C2868588700AA6274 /* Models */,
+				5B50B0D52F9E7E1700E2A644 /* Samples */,
 				5BE273F72B585C4B0004DD27 /* Styles */,
 				5BDD420E298831A400B84BA0 /* Views */,
 			);
@@ -439,7 +470,6 @@
 				A9BE3A542B8D1B3A004DD728 /* Grade.swift */,
 				5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */,
 				5B1A807F28A7D6BF00530B01 /* Logbook.swift */,
-				5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */,
 				5BDD41FF2987086800B84BA0 /* Top.swift */,
 				5B6DB3742A51AD20006265F0 /* ViewState.swift */,
 			);
@@ -494,7 +524,9 @@
 			isa = PBXGroup;
 			children = (
 				A9BE3A522B8D1856004DD728 /* GradeSystemService.swift */,
+				5B50B0E52F9E815200E2A644 /* GradeSystemServiceType.swift */,
 				A9CA5FFB2B9896A300C04BCC /* LogbookEntryService.swift */,
+				5B50B0E62F9E815200E2A644 /* LogbookEntryServiceType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -655,6 +687,7 @@
 				5B6DB3792A51E5E9006265F0 /* AppIconListView.swift in Sources */,
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
+				5B50B0DD2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift in Sources */,
 				5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */,
 				A9BE3A502B8D1774004DD728 /* GradeMO.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
@@ -662,6 +695,7 @@
 				5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */,
 				A9BE3A552B8D1B3A004DD728 /* Grade.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
+				5B50B0D72F9E7E4900E2A644 /* GradeSystem+samples.swift in Sources */,
 				A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */,
 				A9B07EAB2868588700AA6274 /* AppView.swift in Sources */,
 				A9BE3A532B8D1856004DD728 /* GradeSystemService.swift in Sources */,
@@ -672,6 +706,8 @@
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
+				5B50B0E82F9E815200E2A644 /* GradeSystemServiceType.swift in Sources */,
+				5B50B0E92F9E815200E2A644 /* LogbookEntryServiceType.swift in Sources */,
 				5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */,
 				5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
@@ -683,6 +719,7 @@
 				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
 				A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */,
 				5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */,
+				5B50B0DF2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift in Sources */,
 				5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */,
 				5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */,
 				5B6D3977299AC7B100299CCA /* DiagramPage.swift in Sources */,
@@ -695,8 +732,11 @@
 				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
 				A9BE3A422B87721D004DD728 /* ColorPickerSheet.swift in Sources */,
+				5B50B0DB2F9E7F1800E2A644 /* Top+samples.swift in Sources */,
+				5B50B0D92F9E7EEB00E2A644 /* Top+toTopMO.swift in Sources */,
 				5B6D3985299C215E00299CCA /* SessionDiagramView.swift in Sources */,
 				5BDD41F02986850700B84BA0 /* Settings.swift in Sources */,
+				5B50B0D42F9E7DFE00E2A644 /* Grade+samples.swift in Sources */,
 				5BDD42002987086800B84BA0 /* Top.swift in Sources */,
 				5B5836872E928C3D0054B408 /* AppTab.swift in Sources */,
 				A9CA60002B989A7300C04BCC /* LogbookEntryMO.swift in Sources */,
@@ -916,7 +956,7 @@
 				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -949,7 +989,7 @@
 				PRODUCT_NAME = BoulderLogbook;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};

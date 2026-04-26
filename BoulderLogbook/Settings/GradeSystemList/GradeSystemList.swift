@@ -50,7 +50,7 @@ struct GradeSystemList {
         enum ClientResponse { case finished }
     }
     
-    @Dependency(GradeSystemClient.self) var client
+    @Dependency(\.gradeSystemClient) var client
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in

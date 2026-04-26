@@ -12,7 +12,7 @@ extension Logbook {
 }
 
 extension Logbook.Section {
-    static var samples: [Logbook.Section] = [
+    static let samples: [Logbook.Section] = [
         Logbook.Section(
             date: Date(timeIntervalSince1970: 1656626401),
             entries: Array([Logbook.Section.Entry].samples[0...4])

@@ -33,3 +33,5 @@ extension GradeSystemMO {
         )
     }
 }
+
+extension GradeSystemMO: @unchecked Sendable {}

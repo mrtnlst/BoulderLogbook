@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import CoreData
 
-struct Logbook: Equatable {
-    struct Section: Equatable {
-        struct Entry: Identifiable, Equatable, Hashable, Codable {
+struct Logbook {
+    struct Section {
+        struct Entry {
             public let id: UUID
             var date: Date
             var notes: String?
@@ -50,28 +49,12 @@ struct Logbook: Equatable {
     var sections: [Section]
 }
 
-extension Logbook.Section {
-    func toLogbookSectionMO(into context: NSManagedObjectContext) -> LogbookSectionMO {
-        let sectionMO: LogbookSectionMO = LogbookSectionMO(context: context)
-        sectionMO.date = date
-        for entry in entries {
-            let entryMO = entry.toLogbookEntryMO(into: context)
-            entryMO.section = sectionMO
-        }
-        return sectionMO
-    }
-}
-
-extension Logbook.Section.Entry {
-    func toLogbookEntryMO(into context: NSManagedObjectContext) -> LogbookEntryMO {
-        let entryMO: LogbookEntryMO = LogbookEntryMO(context: context)
-        entryMO.id = id
-        entryMO.date = date
-        entryMO.notes = notes
-        entryMO.gradeSystem = gradeSystem
-        tops.forEach { top in
-            top.toTopMO(into: context, entry: entryMO)
-        }
-        return entryMO
-    }
-}
+extension Logbook: Sendable {}
+extension Logbook: Equatable {}
+extension Logbook.Section: Sendable {}
+extension Logbook.Section: Equatable {}
+extension Logbook.Section.Entry: Sendable {}
+extension Logbook.Section.Entry: Identifiable {}
+extension Logbook.Section.Entry: Equatable {}
+extension Logbook.Section.Entry: Hashable {}
+extension Logbook.Section.Entry: Codable {}

@@ -7,16 +7,16 @@
 
 import CoreData
 
-protocol CoreDataStorageType {
+protocol CoreDataStorageType: Sendable {
     var storeContainer: NSPersistentContainer { get }
     var mainContext: NSManagedObjectContext { get }
-    func fetch<T: NSManagedObject>(predicate: NSPredicate?, on context: NSManagedObjectContext) -> [T]
+    func fetch<T: NSManagedObject>(type: T.Type, predicate: NSPredicate?, on context: NSManagedObjectContext) -> [T]
     func insert<T: NSManagedObject>(into context: NSManagedObjectContext) -> T
     func delete(object: NSManagedObject, from context: NSManagedObjectContext)
     func save(on context: NSManagedObjectContext)
 }
 
-final class CoreDataStorage: CoreDataStorageType {
+final class CoreDataStorage: CoreDataStorageType, @unchecked Sendable {
     static let shared = CoreDataStorage()
     let storeContainer: NSPersistentContainer
 
@@ -36,12 +36,13 @@ extension CoreDataStorageType {
     }
 
     func fetch<T: NSManagedObject>(
+        type: T.Type = T.self,
         predicate: NSPredicate? = nil,
         on context: NSManagedObjectContext
     ) -> [T] {
-        let request = T.fetchRequest()
+        let request = type.fetchRequest()
         request.predicate = predicate
-
+        
         do {
             let result = try context.fetch(request)
             return result as? [T] ?? []

@@ -13,16 +13,6 @@ fileprivate extension String {
     static let defaultGradeSystems = "default-grade-systems"
 }
 
-protocol GradeSystemServiceType: Sendable {
-    func fetchAvailableSystems() async -> [GradeSystem]
-    func fetchSelectedSystem() async -> GradeSystem?
-    func saveSystem(_ system: GradeSystem) async
-    func saveSelectedSystem(for id: UUID) async
-    func deleteSystem(for id: UUID) async
-    func saveDefaultSystems() async
-    func migrateGradeSystems() async
-}
-
 final actor GradeSystemService: GradeSystemServiceType {
     private let storage: CoreDataStorageType
     private let backgroundContext: NSManagedObjectContext
@@ -63,6 +53,7 @@ final actor GradeSystemService: GradeSystemServiceType {
         return await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 let gradeSystem: GradeSystemMO? = storage.fetch(
+                    type: GradeSystemMO.self,
                     predicate: .init(
                         format: "%K == %@", #keyPath(GradeSystemMO.id), decodedData as NSUUID
                     ),
@@ -77,6 +68,7 @@ final actor GradeSystemService: GradeSystemServiceType {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 if let gradeSystem: GradeSystemMO = storage.fetch(
+                    type: GradeSystemMO.self,
                     predicate: .init(
                         format: "%K == %@", #keyPath(GradeSystemMO.id), system.id as NSUUID
                     ),
@@ -118,6 +110,7 @@ final actor GradeSystemService: GradeSystemServiceType {
         await withCheckedContinuation { continuation in
             backgroundContext.performAndWait {
                 guard let system: GradeSystemMO = storage.fetch(
+                    type: GradeSystemMO.self,
                     predicate: .init(
                         format: "%K == %@", #keyPath(GradeSystemMO.id), id as NSUUID
                     ),

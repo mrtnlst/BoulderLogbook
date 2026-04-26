@@ -32,7 +32,7 @@ struct Settings {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(LogbookEntryClient.self) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
 
     var body: some Reducer<State, Action> {
        Reduce { state, action in

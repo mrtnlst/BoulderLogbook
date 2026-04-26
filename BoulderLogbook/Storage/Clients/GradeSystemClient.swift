@@ -19,28 +19,8 @@ struct GradeSystemClient {
     var migrateGradeSystems: @Sendable () async -> Void = {}
 }
 
-extension GradeSystemServiceType {
-    func toClient() -> GradeSystemClient {
-        .init {
-            await self.fetchAvailableSystems()
-        } fetchSelectedSystem: {
-            await self.fetchSelectedSystem()
-        } saveSystem: {
-            await self.saveSystem($0)
-        } deleteSystem: {
-            await self.deleteSystem(for: $0)
-        } saveSelectedSystem: {
-            await self.saveSelectedSystem(for: $0)
-        } saveDefaultSystems: {
-            await self.saveDefaultSystems()
-        } migrateGradeSystems: {
-            await self.migrateGradeSystems()
-        }
-    }
-}
-
 extension GradeSystemClient: DependencyKey {
-    static var liveValue: Self = BoulderLogbookApp.dependencies.gradeSystemService.toClient()
+    static let liveValue = Self()
 
     static let previewValue: Self = {
         return Self(
@@ -53,4 +33,11 @@ extension GradeSystemClient: DependencyKey {
             migrateGradeSystems: {}
         )
     }()
+}
+
+extension DependencyValues {
+    var gradeSystemClient: GradeSystemClient {
+        get { self[GradeSystemClient.self] }
+        set { self[GradeSystemClient.self] = newValue }
+    }
 }

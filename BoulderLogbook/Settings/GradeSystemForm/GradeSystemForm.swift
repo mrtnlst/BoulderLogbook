@@ -49,7 +49,7 @@ struct GradeSystemForm {
         enum ClientResponse { case finished }
     }
     
-    @Dependency(GradeSystemClient.self) var gradeSystemClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()

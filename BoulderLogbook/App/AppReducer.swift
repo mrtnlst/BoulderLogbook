@@ -24,7 +24,7 @@ struct AppReducer {
         case presentGradeSystemConfiguration
         case didChangeTab(AppTab)
     }
-    @Dependency(LogbookEntryClient.self) var entryClient
+    @Dependency(\.logbookEntryClient) var entryClient
 
     var body: some Reducer<State, Action> {
         Scope(state: \.dashboard, action: \.dashboard) {

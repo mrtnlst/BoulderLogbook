@@ -76,8 +76,8 @@ struct EntryForm {
         enum EntryClientResponse { case finished }
     }
     
-    @Dependency(LogbookEntryClient.self) var entryClient
-    @Dependency(GradeSystemClient.self) var gradeSystemClient
+    @Dependency(\.logbookEntryClient) var entryClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()

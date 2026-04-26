@@ -6,45 +6,24 @@
 //
 
 import Foundation
-import Dependencies
+import ComposableArchitecture
 
+@DependencyClient
 struct LogbookEntryClient {
-    var fetchEntries: () async -> [Logbook.Section.Entry]
-    var fetchSections: () async -> [Logbook.Section]
-    var saveEntry: (Logbook.Section.Entry) async -> Void
-    var updateEntry: (Logbook.Section.Entry) async -> Void
-    var saveBackupEntries: () async -> Void
-    var deleteEntry: (UUID) async -> Void
-    var deleteEntries: (UUID) async -> Void
-    var migrateEntries: () async -> Void
-}
-
-extension LogbookEntryServiceType {
-    func toClient() -> LogbookEntryClient {
-        LogbookEntryClient {
-            await self.fetchAvailableEntries()
-        } fetchSections: {
-            await self.fetchAvailableSections()
-        } saveEntry: {
-            await self.saveEntry($0)
-        } updateEntry: {
-            await self.updateEntry($0)
-        } saveBackupEntries: {
-            await self.saveBackupEntries()
-        } deleteEntry: {
-            await self.deleteEntry(for: $0)
-        } deleteEntries: {
-            await self.deleteEntries(of: $0)
-        } migrateEntries: {
-            await self.migrateLogbookEntries()
-        }
-    }
+    var fetchEntries: @Sendable () async -> [Logbook.Section.Entry] = { [] }
+    var fetchSections: @Sendable () async -> [Logbook.Section] = { [] }
+    var saveEntry: @Sendable (Logbook.Section.Entry) async -> Void
+    var updateEntry: @Sendable (Logbook.Section.Entry) async -> Void
+    var saveBackupEntries: @Sendable () async -> Void
+    var deleteEntry: @Sendable (UUID) async -> Void
+    var deleteEntries: @Sendable (UUID) async -> Void
+    var migrateEntries: @Sendable () async -> Void
 }
 
 extension LogbookEntryClient: DependencyKey {
-    static let liveValue = BoulderLogbookApp.dependencies.logbookEntryService.toClient()
-     static let previewValue: Self = {
-         return LogbookEntryClient(
+    static let liveValue = Self()
+    static let previewValue: Self = {
+        LogbookEntryClient(
             fetchEntries: { .samples },
             fetchSections: {
                 let dictionary = Dictionary(grouping: [Logbook.Section.Entry].samples, by: \.date.yearMonthDate)
@@ -62,6 +41,13 @@ extension LogbookEntryClient: DependencyKey {
             deleteEntry: { _ in },
             deleteEntries: { _ in },
             migrateEntries: { }
-         )
-     }()
+        )
+    }()
+}
+
+extension DependencyValues {
+    var logbookEntryClient: LogbookEntryClient {
+        get { self[LogbookEntryClient.self] }
+        set { self[LogbookEntryClient.self] = newValue }
+    }
 }

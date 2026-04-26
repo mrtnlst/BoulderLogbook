@@ -28,3 +28,5 @@ extension TopMO {
         )
     }
 }
+
+extension TopMO: @unchecked Sendable {}

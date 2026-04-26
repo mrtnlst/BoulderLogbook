@@ -52,8 +52,8 @@ struct Dashboard {
 
         enum EntryClientResponse { case finished }
     }
-    @Dependency(LogbookEntryClient.self) var logbookEntryClient
-    @Dependency(GradeSystemClient.self) var gradeSystemClient
+    @Dependency(\.logbookEntryClient) var logbookEntryClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some ReducerOf<Self> {

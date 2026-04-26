@@ -42,9 +42,9 @@ struct DiagramPage {
         case binding(BindingAction<State>)
     }
     
-    @Dependency(DiagramPageClient.self) var diagramPageClient
-    @Dependency(LogbookEntryClient.self) var entryClient
-    @Dependency(GradeSystemClient.self) var gradeSystemClient
+    @Dependency(\.diagramPageClient) var diagramPageClient
+    @Dependency(\.logbookEntryClient) var entryClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
     
     var body: some Reducer<State, Action> {
         BindingReducer()

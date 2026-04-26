@@ -36,3 +36,10 @@ extension DiagramPageClient: DependencyKey {
         )
     }()
 }
+
+extension DependencyValues {
+    var diagramPageClient: DiagramPageClient {
+        get { self[DiagramPageClient.self] }
+        set { self[DiagramPageClient.self] = newValue }
+    }
+}

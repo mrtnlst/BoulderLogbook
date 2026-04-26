@@ -23,3 +23,5 @@ extension LogbookSectionMO {
         )
     }
 }
+
+extension LogbookSectionMO: @unchecked Sendable {}

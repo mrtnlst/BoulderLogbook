@@ -15,6 +15,9 @@ struct BoulderLogbookApp: App {
         initialState: AppReducer.State()
     ) {
         AppReducer()
+    } withDependencies: {
+        $0.gradeSystemClient = BoulderLogbookApp.dependencies.gradeSystemService.toClient()
+        $0.logbookEntryClient = BoulderLogbookApp.dependencies.logbookEntryService.toClient()
     }
 
     var body: some Scene {
