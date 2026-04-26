@@ -6,19 +6,20 @@
 //
 
 import Foundation
-import Dependencies
+import ComposableArchitecture
 
+@DependencyClient
 struct GradeSystemClient {
-    var fetchAvailableSystems: () async -> [GradeSystem]
-    var fetchSelectedSystem: () async -> GradeSystem?
-    var saveSystem: (GradeSystem) async -> Void
-    var deleteSystem: (UUID) async -> ()
-    var saveSelectedSystem: (UUID) -> Void
-    var saveDefaultSystems: () async -> Void
-    var migrateGradeSystems: () async -> Void
+    var fetchAvailableSystems: @Sendable () async -> [GradeSystem] = { [] }
+    var fetchSelectedSystem: @Sendable () async -> GradeSystem? = { nil }
+    var saveSystem: @Sendable (GradeSystem) async -> Void = { _ in }
+    var deleteSystem: @Sendable (UUID) async -> () = { _ in }
+    var saveSelectedSystem: @Sendable (UUID) async -> Void = { _ in }
+    var saveDefaultSystems: @Sendable () async -> Void = {}
+    var migrateGradeSystems: @Sendable () async -> Void = {}
 }
 
-extension GradeSystemService {
+extension GradeSystemServiceType {
     func toClient() -> GradeSystemClient {
         .init {
             await self.fetchAvailableSystems()
@@ -29,7 +30,7 @@ extension GradeSystemService {
         } deleteSystem: {
             await self.deleteSystem(for: $0)
         } saveSelectedSystem: {
-            self.saveSelectedSystem(for: $0)
+            await self.saveSelectedSystem(for: $0)
         } saveDefaultSystems: {
             await self.saveDefaultSystems()
         } migrateGradeSystems: {
@@ -39,7 +40,8 @@ extension GradeSystemService {
 }
 
 extension GradeSystemClient: DependencyKey {
-    static let liveValue = BoulderLogbookApp.dependencies.gradeSystemService.toClient()
+    static var liveValue: Self = BoulderLogbookApp.dependencies.gradeSystemService.toClient()
+
     static let previewValue: Self = {
         return Self(
             fetchAvailableSystems: { [.mandala, .kletterarena] },
@@ -52,4 +54,3 @@ extension GradeSystemClient: DependencyKey {
         )
     }()
 }
-

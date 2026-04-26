@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Top: Codable, Equatable, Identifiable, Hashable {
     let id: UUID
@@ -46,6 +47,18 @@ extension [Top] {
         return self.map { $0.grade }.compactMap { gradeId in
             system?.grades.first(where: { $0.id == gradeId }) ?? nil
         }
+    }
+}
+
+extension Top {
+    func toTopMO(into context: NSManagedObjectContext, entry: LogbookEntryMO) {
+        let topMO: TopMO = TopMO(context: context)
+        topMO.id = id
+        topMO.grade = grade
+        topMO.wasAttempt = isAttempt
+        topMO.wasFlash = wasFlash
+        topMO.wasOnsight = wasOnsight
+        topMO.entry = entry
     }
 }
 

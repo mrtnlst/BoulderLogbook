@@ -42,7 +42,7 @@ struct DiagramPage {
         case binding(BindingAction<State>)
     }
     
-    @Dependency(\.diagramPageClient) var diagramPageClient
+    @Dependency(DiagramPageClient.self) var diagramPageClient
     @Dependency(LogbookEntryClient.self) var entryClient
     @Dependency(GradeSystemClient.self) var gradeSystemClient
     

@@ -19,11 +19,13 @@ struct ColorPickerFeature {
         case didSelectColor(Color, Grade)
     }
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case let .didSelectColor(color, _):
-            state.grade.color = color
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case let .didSelectColor(color, _):
+                state.grade.color = color
+            }
+            return .none
         }
-        return .none
     }
 }

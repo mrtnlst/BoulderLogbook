@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct Settings {
-    @Reducer(state: .equatable)
+    @Reducer
     enum Destination {
         case gradeSystemList(GradeSystemList)
         case appIconList(AppIconList)
@@ -18,7 +18,7 @@ struct Settings {
     }
     
     @ObservableState
-    struct State: Equatable {
+    struct State {
         @Presents var destination: Destination.State?
     }
     

@@ -6,27 +6,20 @@
 //
 
 import Foundation
-import Dependencies
+import ComposableArchitecture
 
+@DependencyClient
 struct DiagramPageClient {
-    var fetchSelectedDiagram: () -> (Int?)
-    var saveSelectedDiagram: (Int) -> ()
-}
-
-extension DependencyValues {
-    var diagramPageClient: DiagramPageClient {
-        get { self[DiagramPageClient.self] }
-        set { self[DiagramPageClient.self] = newValue }
-    }
+    var fetchSelectedDiagram: @Sendable () -> (Int?) = { nil }
+    var saveSelectedDiagram: @Sendable (Int) -> () = { _ in }
 }
 
 extension DiagramPageClient: DependencyKey {
     static let liveValue: Self = {
-        let defaults = UserDefaults.standard
         let selectedDiagramKey = "diagram-page-selected"
         return Self(
             fetchSelectedDiagram: {
-                guard let encodedData = defaults.object(forKey: selectedDiagramKey) as? Data,
+                guard let encodedData = UserDefaults.standard.object(forKey: selectedDiagramKey) as? Data,
                       let decodedData = try? JSONDecoder().decode(Int.self, from: encodedData)
                 else {
                     return nil
@@ -35,9 +28,9 @@ extension DiagramPageClient: DependencyKey {
             },
             saveSelectedDiagram: { id in
                 if let data = try? JSONEncoder().encode(id) {
-                    defaults.set(data, forKey: selectedDiagramKey)
+                    UserDefaults.standard.set(data, forKey: selectedDiagramKey)
                 } else {
-                    defaults.set(nil, forKey: selectedDiagramKey)
+                    UserDefaults.standard.set(nil, forKey: selectedDiagramKey)
                 }
             }
         )

@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct AppReducer {
     @ObservableState
-    struct State: Equatable {
+    struct State {
         var dashboard = Dashboard.State()
         var settings = Settings.State()
         var tab: AppTab = .sessions

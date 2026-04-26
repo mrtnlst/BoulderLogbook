@@ -13,13 +13,13 @@ struct LogbookEntryClient {
     var fetchSections: () async -> [Logbook.Section]
     var saveEntry: (Logbook.Section.Entry) async -> Void
     var updateEntry: (Logbook.Section.Entry) async -> Void
-    var saveBackupEntries: () -> Void
+    var saveBackupEntries: () async -> Void
     var deleteEntry: (UUID) async -> Void
     var deleteEntries: (UUID) async -> Void
     var migrateEntries: () async -> Void
 }
 
-extension LogbookEntryService {
+extension LogbookEntryServiceType {
     func toClient() -> LogbookEntryClient {
         LogbookEntryClient {
             await self.fetchAvailableEntries()
@@ -30,7 +30,7 @@ extension LogbookEntryService {
         } updateEntry: {
             await self.updateEntry($0)
         } saveBackupEntries: {
-            self.saveBackupEntries()
+            await self.saveBackupEntries()
         } deleteEntry: {
             await self.deleteEntry(for: $0)
         } deleteEntries: {

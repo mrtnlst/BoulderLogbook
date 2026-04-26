@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Logbook: Equatable {
     struct Section: Equatable {
@@ -47,4 +48,30 @@ struct Logbook: Equatable {
         var entries: [Entry]
     }
     var sections: [Section]
+}
+
+extension Logbook.Section {
+    func toLogbookSectionMO(into context: NSManagedObjectContext) -> LogbookSectionMO {
+        let sectionMO: LogbookSectionMO = LogbookSectionMO(context: context)
+        sectionMO.date = date
+        for entry in entries {
+            let entryMO = entry.toLogbookEntryMO(into: context)
+            entryMO.section = sectionMO
+        }
+        return sectionMO
+    }
+}
+
+extension Logbook.Section.Entry {
+    func toLogbookEntryMO(into context: NSManagedObjectContext) -> LogbookEntryMO {
+        let entryMO: LogbookEntryMO = LogbookEntryMO(context: context)
+        entryMO.id = id
+        entryMO.date = date
+        entryMO.notes = notes
+        entryMO.gradeSystem = gradeSystem
+        tops.forEach { top in
+            top.toTopMO(into: context, entry: entryMO)
+        }
+        return entryMO
+    }
 }

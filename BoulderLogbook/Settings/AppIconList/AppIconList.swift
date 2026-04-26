@@ -66,31 +66,33 @@ struct AppIconList {
     
     @Dependency(UIApplicationClient.self) var uiApplicationClient
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case .onAppear:
-            return .run { send in await send(.fetchCurrentIconName) }
-            
-        case .fetchCurrentIconName:
-            return .run { send in 
-                await send(
-                    .receiveCurrentIconName(
-                        TaskResult { await uiApplicationClient.currentIconName() }
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return .run { send in await send(.fetchCurrentIconName) }
+                
+            case .fetchCurrentIconName:
+                return .run { send in 
+                    await send(
+                        .receiveCurrentIconName(
+                            TaskResult { await uiApplicationClient.currentIconName() }
+                        )
                     )
+                }
+                
+            case let .receiveCurrentIconName(.success(iconName)):
+                state.currentIconName = iconName
+                
+            case let .selectAppIcon(iconName):
+                return .merge(
+                    .run { _ in await uiApplicationClient.setAlternateIconName(iconName) },
+                    .run { send in await send(.fetchCurrentIconName) }
                 )
+                
+            default: ()
             }
-            
-        case let .receiveCurrentIconName(.success(iconName)):
-            state.currentIconName = iconName
-            
-        case let .selectAppIcon(iconName):
-            return .merge(
-                .run { _ in await uiApplicationClient.setAlternateIconName(iconName) },
-                .run { send in await send(.fetchCurrentIconName) }
-            )
-            
-        default: ()
+            return .none
         }
-        return .none
     }
 }

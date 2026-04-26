@@ -19,15 +19,17 @@ struct About {
     
     @Dependency(UIApplicationClient.self) var uiApplicationClient
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case .openMartin:
-            let urlString = "https://iosdev.space/@mrtnlst"
-            return .run { _ in await uiApplicationClient.openLink(urlString) }
-            
-        case .openTCA:
-            let urlString = "https://github.com/pointfreeco/swift-composable-architecture/"
-            return .run { _ in await uiApplicationClient.openLink(urlString) }
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .openMartin:
+                let urlString = "https://iosdev.space/@mrtnlst"
+                return .run { _ in await uiApplicationClient.openLink(urlString) }
+                
+            case .openTCA:
+                let urlString = "https://github.com/pointfreeco/swift-composable-architecture/"
+                return .run { _ in await uiApplicationClient.openLink(urlString) }
+            }
         }
     }
 }

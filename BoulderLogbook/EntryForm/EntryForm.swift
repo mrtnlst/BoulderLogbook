@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct EntryForm {
     @ObservableState
-    struct State: Equatable {
+    struct State {
         let id: UUID
         var tops: [Top]
         var attempts: [Top]
@@ -106,7 +106,7 @@ struct EntryForm {
                         .receiveSelectedSystem(TaskResult { await gradeSystemClient.fetchSelectedSystem() })
                     )
                 }
-                
+
             case let .receiveAvailableSystems(.success(gradeSystems)):
                 if state.gradeSystems.isEmpty {
                     state.gradeSystems = gradeSystems

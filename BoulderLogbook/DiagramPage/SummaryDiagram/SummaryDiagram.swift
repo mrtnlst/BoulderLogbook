@@ -43,41 +43,43 @@ struct SummaryDiagram {
         var maxValue: Int { [tops, attempts, flash, onsight].reduce(0, +) }
     }
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case let .receiveData(entries, gradeSystem):
-            guard let gradeSystem = gradeSystem else {
-                state.viewState = .error(.noGradeSystem)
-                return .none
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case let .receiveData(entries, gradeSystem):
+                guard let gradeSystem = gradeSystem else {
+                    state.viewState = .error(.noGradeSystem)
+                    return .none
+                }
+                guard !entries.isEmpty else {
+                    state.viewState = .error(.noEntries)
+                    return .none
+                }
+                let filteredTops = entries
+                    .filter({ $0.gradeSystem == gradeSystem.id })
+                    .sorted(by: { $0.date > $1.date })
+                    .prefix(1)
+                    .reduce(into: [], { $0.append(contentsOf: $1.tops) })
+                guard !filteredTops.isEmpty else {
+                    state.viewState = .error(.noEntries)
+                    return .none
+                }
+                let models = gradeSystem.grades.compactMap { grade in
+                    let topsOfGrade = filteredTops.filter({ $0.grade == grade.id })
+                    return Model(
+                        gradeSystem: gradeSystem,
+                        grade: grade,
+                        tops: topsOfGrade.normal().count,
+                        attempts: topsOfGrade.filter({ $0.isAttempt }).count,
+                        flash: topsOfGrade.filter({ $0.wasFlash }).count,
+                        onsight: topsOfGrade.filter({ $0.wasOnsight }).count
+                    )
+                }
+                state.viewState = .idle(models)
+                
+            default: ()
             }
-            guard !entries.isEmpty else {
-                state.viewState = .error(.noEntries)
-                return .none
-            }
-            let filteredTops = entries
-                .filter({ $0.gradeSystem == gradeSystem.id })
-                .sorted(by: { $0.date > $1.date })
-                .prefix(1)
-                .reduce(into: [], { $0.append(contentsOf: $1.tops) })
-            guard !filteredTops.isEmpty else {
-                state.viewState = .error(.noEntries)
-                return .none
-            }
-            let models = gradeSystem.grades.compactMap { grade in
-                let topsOfGrade = filteredTops.filter({ $0.grade == grade.id })
-                return Model(
-                    gradeSystem: gradeSystem,
-                    grade: grade,
-                    tops: topsOfGrade.normal().count,
-                    attempts: topsOfGrade.filter({ $0.isAttempt }).count,
-                    flash: topsOfGrade.filter({ $0.wasFlash }).count,
-                    onsight: topsOfGrade.filter({ $0.wasOnsight }).count
-                )
-            }
-            state.viewState = .idle(models)
-            
-        default: ()
+            return .none
         }
-        return .none
     }
 }

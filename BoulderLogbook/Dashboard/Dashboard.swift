@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 @Reducer
 struct Dashboard {
-    @Reducer(state: .equatable)
+    @Reducer
     enum Destination {
         case entryForm(EntryForm)
         case entryDetail(EntryDetail)
@@ -23,7 +23,7 @@ struct Dashboard {
     }
 
     @ObservableState
-    struct State: Equatable {
+    struct State {
         @Presents var destination: Destination.State?
         var sections: [Logbook.Section] = []
         var diagramPage = DiagramPage.State()
@@ -66,7 +66,7 @@ struct Dashboard {
 #if targetEnvironment(simulator)
                 return .concatenate(
                     .run { _ in await gradeSystemClient.saveDefaultSystems() },
-                    .run { _ in logbookEntryClient.saveBackupEntries() },
+                    .run { _ in await logbookEntryClient.saveBackupEntries() },
                     .run { _ in await logbookEntryClient.migrateEntries() },
                     .send(.fetchGradeSystems)
                 )

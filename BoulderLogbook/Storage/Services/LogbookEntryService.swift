@@ -12,7 +12,18 @@ fileprivate extension String {
     static let backupEntries = "backup-entries"
 }
 
-final class LogbookEntryService {
+protocol LogbookEntryServiceType: Sendable {
+    func fetchAvailableSections() async -> [Logbook.Section]
+    func fetchAvailableEntries() async -> [Logbook.Section.Entry]
+    func saveEntry(_ entry: Logbook.Section.Entry) async
+    func updateEntry(_ entry: Logbook.Section.Entry) async
+    func deleteEntry(for id: Logbook.Section.Entry.ID) async
+    func deleteEntries(of gradeSystem: GradeSystem.ID) async
+    func migrateLogbookEntries() async
+    func saveBackupEntries() async
+}
+
+final actor LogbookEntryService: LogbookEntryServiceType {
     private let storage: CoreDataStorageType
     private let backgroundContext: NSManagedObjectContext
     private let defaults: UserDefaults
@@ -64,10 +75,10 @@ final class LogbookEntryService {
             backgroundContext.performAndWait {
                 let predicate = NSPredicate(format: "%K == %@", #keyPath(LogbookSectionMO.date), date as NSDate)
                 if let existingSection: LogbookSectionMO = storage.fetch(predicate: predicate, on: backgroundContext).first {
-                    let entryMO = insertEntry(entry, into: backgroundContext)
+                    let entryMO = entry.toLogbookEntryMO(into: backgroundContext)
                     existingSection.entries.insert(entryMO)
                 } else {
-                    insertSection(for: date, and: [entry], into: backgroundContext)
+                    _ = Logbook.Section(date: date, entries: [entry]).toLogbookSectionMO(into: backgroundContext)
                 }
                 storage.save(on: backgroundContext)
                 continuation.resume()
@@ -165,7 +176,7 @@ final class LogbookEntryService {
                     guard !availableSections.contains(where: { $0.date == section.date }) else {
                         continue
                     }
-                    insertSection(for: section.date, and: section.entries, into: backgroundContext)
+                    _ = section.toLogbookSectionMO(into: backgroundContext)
                 }
                 storage.save(on: backgroundContext)
                 continuation.resume()
@@ -173,48 +184,12 @@ final class LogbookEntryService {
         }
     }
 
-    func saveBackupEntries() {
+    func saveBackupEntries() async {
         guard !defaults.bool(forKey: .backupEntries) else {
             return
         }
         let data = try? JSONEncoder().encode([Logbook.Section.Entry].samples)
         defaults.set(data, forKey: .entries)
         defaults.set(true, forKey: .backupEntries)
-    }
-}
-
-private extension LogbookEntryService {
-    func insertSection(
-        for date: Date,
-        and entries: [Logbook.Section.Entry],
-        into context: NSManagedObjectContext
-    ) {
-        let sectionMO: LogbookSectionMO = storage.insert(into: context)
-        sectionMO.date = date
-        for entry in entries {
-            let entryMO = insertEntry(entry, into: context)
-            entryMO.section = sectionMO
-        }
-    }
-
-    func insertEntry(
-        _ entry: Logbook.Section.Entry,
-        into context: NSManagedObjectContext
-    ) -> LogbookEntryMO {
-        let entryMO: LogbookEntryMO = storage.insert(into: context)
-        entryMO.id = entry.id
-        entryMO.date = entry.date
-        entryMO.notes = entry.notes
-        entryMO.gradeSystem = entry.gradeSystem
-        entry.tops.forEach { top in
-            let topMO: TopMO = storage.insert(into: context)
-            topMO.id = top.id
-            topMO.grade = top.grade
-            topMO.wasAttempt = top.isAttempt
-            topMO.wasFlash = top.wasFlash
-            topMO.wasOnsight = top.wasOnsight
-            topMO.entry = entryMO
-        }
-        return entryMO
     }
 }

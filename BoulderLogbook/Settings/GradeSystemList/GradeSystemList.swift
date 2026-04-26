@@ -10,11 +10,11 @@ import ComposableArchitecture
 
 @Reducer
 struct GradeSystemList {
-    @Reducer(state: .equatable)
+    @Reducer
     enum Destination {
         case gradeSystemForm(GradeSystemForm)
         case confirmationDialog(AlertState<Confirmation>)
-
+        
         @CasePathable
         enum Confirmation {
             case delete
@@ -22,7 +22,7 @@ struct GradeSystemList {
     }
     
     @ObservableState
-    struct State: Equatable {
+    struct State {
         @Presents var destination: Destination.State?
         var gradeSystems: [GradeSystem] = []
         var selectedSystem: GradeSystem?
@@ -78,7 +78,7 @@ struct GradeSystemList {
                 
             case let .receiveSelectedSystem(.success(selected)):
                 state.selectedSystem = selected
-
+                
             case .view(.presentGradeSystemForm):
                 state.destination = .gradeSystemForm(GradeSystemForm.State())
                 
@@ -95,7 +95,7 @@ struct GradeSystemList {
                         TextState("Deleting \(name) removes all of its logbook entries!")
                     }
                 )
-
+                
             case let .saveSelected(selected):
                 guard state.selectedSystem?.id != selected else {
                     return .none
@@ -104,7 +104,7 @@ struct GradeSystemList {
                     await send(
                         .saveSelectedDidFinish(
                             TaskResult {
-                                client.saveSelectedSystem(selected)
+                                await client.saveSelectedSystem(selected)
                                 return .finished
                             }
                         )
@@ -123,7 +123,7 @@ struct GradeSystemList {
                     return .none
                 }
                 return .send(.delete(systemToDelete.id))
-
+                
             case let .delete(id):
                 return .concatenate(
                     .run { _ in await client.deleteSystem(id) },
@@ -140,7 +140,7 @@ struct GradeSystemList {
                     grades: gradeSystem.grades
                 )
                 state.destination = .gradeSystemForm(formState)
-
+                
             case .destination(.presented(.gradeSystemForm(.cancel))):
                 state.destination = nil
                 

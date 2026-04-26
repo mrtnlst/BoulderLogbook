@@ -27,22 +27,24 @@ struct SessionDiagram {
     
     @Dependency(\.calendar) var calendar
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case let .receiveEntries(entries):
-            if entries.isEmpty {
-                state.viewState = .error("No sessions available!")
-            } else {
-                let models = monthRangesOfPastYear(using: calendar).map { monthRange in
-                    let sessionCount = entries.filter { monthRange.contains($0.date) }.count
-                    let monthIndex = calendar.component(.month, from: monthRange.lowerBound) - 1
-                    let monthSymbol = calendar.shortMonthSymbols[monthIndex]
-                    return Model(date: monthSymbol, count: sessionCount)
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case let .receiveEntries(entries):
+                if entries.isEmpty {
+                    state.viewState = .error("No sessions available!")
+                } else {
+                    let models = monthRangesOfPastYear(using: calendar).map { monthRange in
+                        let sessionCount = entries.filter { monthRange.contains($0.date) }.count
+                        let monthIndex = calendar.component(.month, from: monthRange.lowerBound) - 1
+                        let monthSymbol = calendar.shortMonthSymbols[monthIndex]
+                        return Model(date: monthSymbol, count: sessionCount)
+                    }
+                    state.viewState = .idle(models)
                 }
-                state.viewState = .idle(models)
             }
+            return .none
         }
-        return .none
     }
 }
 

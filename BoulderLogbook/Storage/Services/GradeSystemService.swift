@@ -13,7 +13,17 @@ fileprivate extension String {
     static let defaultGradeSystems = "default-grade-systems"
 }
 
-final class GradeSystemService {
+protocol GradeSystemServiceType: Sendable {
+    func fetchAvailableSystems() async -> [GradeSystem]
+    func fetchSelectedSystem() async -> GradeSystem?
+    func saveSystem(_ system: GradeSystem) async
+    func saveSelectedSystem(for id: UUID) async
+    func deleteSystem(for id: UUID) async
+    func saveDefaultSystems() async
+    func migrateGradeSystems() async
+}
+
+final actor GradeSystemService: GradeSystemServiceType {
     private let storage: CoreDataStorageType
     private let backgroundContext: NSManagedObjectContext
     private let defaults: UserDefaults
@@ -96,7 +106,7 @@ final class GradeSystemService {
         }
     }
 
-    func saveSelectedSystem(for id: UUID) {
+    func saveSelectedSystem(for id: UUID) async {
         let data = try? encoder.encode(id)
         defaults.set(data, forKey: .selectedGradeSystemKey)
     }
