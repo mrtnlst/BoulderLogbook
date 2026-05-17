@@ -17,14 +17,14 @@ struct PlainList<Content: View>: View {
     var body: some View {
         List {
             content()
-                .listRowBackground(Color.rowBackground)
+                .listRowBackground(Color.rowBackground.opacity(0.8))
                 .foregroundStyle(.primaryText)
                 .listRowSeparator(.visible)
                 .listRowSeparatorTint(.araBackground)
                 .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
-        .background(Color.background)
+        .background(BoulderWall())
         .foregroundStyle(.primaryText)
         .toolbarColorScheme(.dark, for: .navigationBar)
     }

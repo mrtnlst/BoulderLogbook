@@ -27,10 +27,10 @@ struct PlainSection<Content: View, Header: View>: View {
             if let title {
                 Text(title)
                     .fontWeight(.semibold)
-                    .listRowBackground(Color.background)
+                    .listRowBackground(Color.background.opacity(0.8))
             }
             header?()
-                .listRowBackground(Color.background)
+                .listRowBackground(Color.background.opacity(0.8))
             content()
         }
         .listSectionSpacing(.custom(listSectionSpacing))
