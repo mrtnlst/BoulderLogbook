@@ -13,12 +13,14 @@ struct AppReducer {
     @ObservableState
     struct State {
         var dashboard = Dashboard.State()
+        var insights = InsightsFeature.State()
         var settings = Settings.State()
         var tab: AppTab = .sessions
     }
     
     enum Action {
         case dashboard(Dashboard.Action)
+        case insights(InsightsFeature.Action)
         case settings(Settings.Action)
         case presentGradeSystemList
         case presentGradeSystemConfiguration
@@ -29,6 +31,9 @@ struct AppReducer {
     var body: some Reducer<State, Action> {
         Scope(state: \.dashboard, action: \.dashboard) {
             Dashboard()
+        }
+        Scope(state: \.insights, action: \.insights) {
+            InsightsFeature()
         }
         Scope(state: \.settings, action: \.settings) {
            Settings()

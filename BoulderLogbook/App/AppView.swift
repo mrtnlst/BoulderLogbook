@@ -25,6 +25,20 @@ struct AppView: View {
                     )
                 )
             }
+            
+            Tab(
+                AppTab.insights.rawValue,
+                systemImage: AppTab.insights.symbol,
+                value: AppTab.insights
+            ) {
+                InsightsView(
+                    store: store.scope(
+                        state: \.insights,
+                        action: \.insights
+                    )
+                )
+            }
+
             Tab(
                 AppTab.settings.rawValue,
                 systemImage: AppTab.settings.symbol,

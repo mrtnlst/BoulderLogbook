@@ -16,6 +16,8 @@
 		5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */; };
 		5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A807F28A7D6BF00530B01 /* Logbook.swift */; };
 		5B1A808228A7DA0D00530B01 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1A808128A7DA0D00530B01 /* Date+Additions.swift */; };
+		5B2355B92FD4392100147E88 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2355B82FD4392100147E88 /* InsightsView.swift */; };
+		5B2355BB2FD439CD00147E88 /* InsightsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2355BA2FD439CD00147E88 /* InsightsFeature.swift */; };
 		5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C32F9E67A100E2A644 /* Aurora.icon */; };
@@ -117,6 +119,8 @@
 		5B1A807C28A04E7F00530B01 /* DashboardEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardEntryView.swift; sourceTree = "<group>"; };
 		5B1A807F28A7D6BF00530B01 /* Logbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logbook.swift; sourceTree = "<group>"; };
 		5B1A808128A7DA0D00530B01 /* Date+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
+		5B2355B82FD4392100147E88 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		5B2355BA2FD439CD00147E88 /* InsightsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsFeature.swift; sourceTree = "<group>"; };
 		5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+Additions.swift"; sourceTree = "<group>"; };
 		5B390D722C304C1100C7CF33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
@@ -256,6 +260,15 @@
 				5B6B2C612BF1472C00A17549 /* TotalAmountView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5B2355BC2FD58D2300147E88 /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				5B2355B82FD4392100147E88 /* InsightsView.swift */,
+				5B2355BA2FD439CD00147E88 /* InsightsFeature.swift */,
+			);
+			path = Insights;
 			sourceTree = "<group>";
 		};
 		5B50B0C92F9E67A100E2A644 /* Icons */ = {
@@ -435,6 +448,7 @@
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9C300592982929C001B51C4 /* EntryForm */,
 				5BDD41F129868A9A00B84BA0 /* Settings */,
+				5B2355BC2FD58D2300147E88 /* Insights */,
 				5B50B0CB2F9E67A100E2A644 /* Resources */,
 			);
 			path = BoulderLogbook;
@@ -673,6 +687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9C3005229828948001B51C4 /* Dashboard.swift in Sources */,
+				5B2355B92FD4392100147E88 /* InsightsView.swift in Sources */,
 				A9CA60022B989B2900C04BCC /* LogbookSectionMO.swift in Sources */,
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
@@ -711,6 +726,7 @@
 				5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */,
 				5B6D397C299AC84D00299CCA /* DiagramPageView.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
+				5B2355BB2FD439CD00147E88 /* InsightsFeature.swift in Sources */,
 				A9CA5FFC2B9896A300C04BCC /* LogbookEntryService.swift in Sources */,
 				5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
