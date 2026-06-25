@@ -24,4 +24,15 @@ extension TimeSegment {
             return nil
         }
     }
+    
+    var description: String {
+        switch self {
+        case .month:
+            return "this month"
+        case .year:
+            return "this year"
+        case .all:
+            return "of all time"
+        }
+    }
 }

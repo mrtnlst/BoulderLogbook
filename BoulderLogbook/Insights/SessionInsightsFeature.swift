@@ -64,7 +64,7 @@ extension SessionInsightsFeature {
                 Date.distantPast
             }
             let count = state.entries.count { $0.date > startDate }
-            insightText = String(format: insightText, "\(count)", "this \(segment.rawValue.lowercased())")
+            insightText = String(format: insightText, "\(count)", segment.description)
         }
         state.sessionCountInsight = insightText
     }

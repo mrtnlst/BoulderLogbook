@@ -49,7 +49,8 @@ extension AscendInsightsFeature {
             state.gradeWithMostAscendsInsight = "No grade system available!"
             return
         }
-        let startDate = if let calendarComponent = state.timeSegment.calendarComponent { calendar.dateInterval(of: calendarComponent, for: .now)?.start ?? .now
+        let segment = state.timeSegment
+        let startDate = if let calendarComponent = segment.calendarComponent { calendar.dateInterval(of: calendarComponent, for: .now)?.start ?? .now
         } else {
             Date.distantPast
         }
@@ -63,13 +64,8 @@ extension AscendInsightsFeature {
         let ascendsPerGrade = gradeSystem.grades.reduce(into: [Grade: Int]()) { partialResult, grade in
             partialResult[grade] = tops.count(for: grade)
         }
-        if let element = ascendsPerGrade.max(by: { $0.value < $1.value }) {
-            let time = switch state.timeSegment {
-            case .all: "of all time"
-            case .year: "this year"
-            case .month: "this month"
-            }
-            state.gradeWithMostAscendsInsight = "\(element.key.name) is your most ascended grade \(time) with \(element.value) ascends."
+        if let element = ascendsPerGrade.max(by: { $0.value < $1.value }), element.value > 0 {
+            state.gradeWithMostAscendsInsight = "\(element.key.name) is your most ascended grade \(segment.description) with \(element.value) ascends."
         } else {
             state.gradeWithMostAscendsInsight = "No entries available!"
         }
