@@ -13,13 +13,21 @@ struct SessionInsightsView: View {
     
     var body: some View {
         Label {
-            Text(store.sessionCountInsight)
+            if let sessionCountInsight = store.sessionCountInsight {
+                Text(sessionCountInsight)
+            } else {
+                LoadingIndicator()
+            }
         } icon: {
             Image(systemName: "waveform")
                 .foregroundStyle(Color.araLightBlue)
         }
         Label {
-            Text(store.mostCommonWeekdayInsight)
+            if let mostCommonWeekdayInsight = store.mostCommonWeekdayInsight {
+                Text(mostCommonWeekdayInsight)
+            } else {
+                LoadingIndicator()
+            }
         } icon: {
             Image(systemName: "calendar")
                 .foregroundStyle(Color.araLightRed)

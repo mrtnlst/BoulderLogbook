@@ -14,8 +14,8 @@ struct SessionInsightsFeature {
     struct State {
         internal var timeSegment: TimeSegment
         internal var entries: [Logbook.Section.Entry] = []
-        var sessionCountInsight: String = "No data available!"
-        var mostCommonWeekdayInsight: String = "No data available!"
+        var sessionCountInsight: String?
+        var mostCommonWeekdayInsight: String?
     }
     
     enum Action {
@@ -34,7 +34,7 @@ struct SessionInsightsFeature {
             case let .entriesDidChange(newValue):
                 state.entries = newValue
             }
-            updateInsightText(&state)
+            updateSessionCountInsight(&state)
             updateMostCommonWeekdayInsight(in: &state)
             return .none
         }
@@ -42,25 +42,9 @@ struct SessionInsightsFeature {
 }
 
 extension SessionInsightsFeature {
-    func updateInsightText(_ state: inout SessionInsightsFeature.State) {
-        var insightText: String = "You went to the gym %@ times in %@."
+    func updateSessionCountInsight(_ state: inout SessionInsightsFeature.State) {
+        var insightText: String = "You went to the gym %@ times %@."
         switch state.timeSegment {
-        case .month:
-            let monthAgoCalendar = calendar.date(byAdding: .month, value: -1, to: .now) ?? .now
-            let count = state.entries.count { $0.date > monthAgoCalendar }
-            insightText = String(
-                format: insightText,
-                "\(count)",
-                "the last \(state.timeSegment.rawValue.lowercased())"
-            )
-        case .year:
-            let yearAgoCalendar = calendar.date(byAdding: .year, value: -1, to: .now) ?? .now
-            let count = state.entries.count { $0.date > yearAgoCalendar }
-            insightText = String(
-                format: insightText,
-                "\(count)",
-                "the last \(state.timeSegment.rawValue.lowercased())"
-            )
         case .all:
             // Displays number of years between oldest entry and now.
             // The entry's starting date is moved to the 1st of Jan.
@@ -73,6 +57,14 @@ extension SessionInsightsFeature {
                 "\(state.entries.count)",
                 "over the last \(components.year ?? 0) years"
             )
+        default:
+            let segment = state.timeSegment
+            let startDate = if let calendarComponent = state.timeSegment.calendarComponent { calendar.dateInterval(of: calendarComponent, for: .now)?.start ?? .now
+            } else {
+                Date.distantPast
+            }
+            let count = state.entries.count { $0.date > startDate }
+            insightText = String(format: insightText, "\(count)", "this \(segment.rawValue.lowercased())")
         }
         state.sessionCountInsight = insightText
     }

@@ -13,7 +13,6 @@ struct InsightsFeature {
     @ObservableState
     struct State {
         var selectedSegment: TimeSegment
-        var isLoading: Bool = true
         var sessionInsights: SessionInsightsFeature.State
         var ascendInsights: AscendInsightsFeature.State
         internal var entries: [Logbook.Section.Entry] = []
@@ -33,6 +32,7 @@ struct InsightsFeature {
         }
         case fetchEntries
         case receiveEntries(Result<[Logbook.Section.Entry], Never>)
+        case fetchGradeSystem
         case receiveGradeSystem(GradeSystem?)
         case sessionInsights(SessionInsightsFeature.Action)
         case ascendInsights(AscendInsightsFeature.Action)
@@ -69,15 +69,20 @@ struct InsightsFeature {
                 state.entries = entries
                 return .merge(
                     .run { send in
-                        await send(.receiveGradeSystem(await gradeSystemClient.fetchSelectedSystem()))
+                        await send(.fetchGradeSystem)
                     },
                     .run { send in
                         await send(.sessionInsights(.entriesDidChange(entries)))
                     }
                 )
+                
+            case .fetchGradeSystem:
+                return .run { send in
+                    await send(.receiveGradeSystem(await gradeSystemClient.fetchSelectedSystem()))
+                }
+
             case let .receiveGradeSystem(gradeSystem):
                 state.gradeSystem = gradeSystem
-                state.isLoading = false
                 return .run { [entries = state.entries] send in
                     await send(.ascendInsights(.receiveValues(gradeSystem, entries)))
                 }

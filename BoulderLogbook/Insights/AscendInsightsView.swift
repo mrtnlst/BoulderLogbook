@@ -10,9 +10,14 @@ import ComposableArchitecture
 
 struct AscendInsightsView: View {
     let store: StoreOf<AscendInsightsFeature>
+    
     var body: some View {
         Label {
-            Text(store.gradeWithMostAscendsInsight)
+            if let gradeWithMostAscendsInsight = store.gradeWithMostAscendsInsight {
+                Text(gradeWithMostAscendsInsight)
+            } else {
+                LoadingIndicator()
+            }
         } icon: {
             Image(systemName: "chart.bar.xaxis.descending")
                 .symbolRenderingMode(.palette)

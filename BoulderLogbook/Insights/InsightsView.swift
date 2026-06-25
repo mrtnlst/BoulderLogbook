@@ -16,13 +16,7 @@ struct InsightsView: View {
         NavigationStack {
             VStack {
                 picker
-
-                if store.isLoading {
-                    LoadingIndicator()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    listView
-                }
+                listView
             }
             .background(Color.araBackground)
             .navigationTitle("Insights")

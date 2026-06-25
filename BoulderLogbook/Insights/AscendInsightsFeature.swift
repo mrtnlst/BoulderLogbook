@@ -15,7 +15,7 @@ struct AscendInsightsFeature {
         internal var timeSegment: TimeSegment
         internal var entries: [Logbook.Section.Entry] = []
         internal var gradeSystem: GradeSystem?
-        var gradeWithMostAscendsInsight: String = "No data available!"
+        var gradeWithMostAscendsInsight: String?
     }
     
     enum Action {
@@ -49,15 +49,14 @@ extension AscendInsightsFeature {
             state.gradeWithMostAscendsInsight = "No grade system available!"
             return
         }
-        let filterValue = switch state.timeSegment {
-        case .all: Int.max
-        case .year: 365
-        case .month: 31
+        let startDate = if let calendarComponent = state.timeSegment.calendarComponent { calendar.dateInterval(of: calendarComponent, for: .now)?.start ?? .now
+        } else {
+            Date.distantPast
         }
+
         let filteredEntries = state.entries.filter({ $0.gradeSystem == gradeSystem.id })
         let tops = filteredEntries
-            .sorted(by: { $0.date > $1.date })
-            .prefix(filterValue)
+            .filter { $0.date > startDate }
             .reduce(into: [], { $0.append(contentsOf: $1.tops) })
             .successful()
         
