@@ -66,8 +66,8 @@ extension AscendInsightsFeature {
         if let element = ascendsPerGrade.max(by: { $0.value < $1.value }) {
             let time = switch state.timeSegment {
             case .all: "of all time"
-            case .year: "in the last year"
-            case .month: "in the last month"
+            case .year: "this year"
+            case .month: "this month"
             }
             state.gradeWithMostAscendsInsight = "\(element.key.name) is your most ascended grade \(time) with \(element.value) ascends."
         } else {
