@@ -10,109 +10,91 @@ import ComposableArchitecture
 
 @Reducer
 struct InsightsFeature {
-    enum TimeSegment: String, Hashable, CaseIterable {
-        case month = "Month"
-        case year = "Year"
-        case all = "All time"
-    }
-    
     @ObservableState
     struct State {
-        var selectedSegment: TimeSegment = .month
-        var sessionCountViewState: ViewState<String, String> = .loading
-        var mostCommonWeekdayViewState: ViewState<String, Never> = .loading
+        var selectedSegment: TimeSegment
+        var isLoading: Bool = true
+        var sessionInsights: SessionInsightsFeature.State
+        var ascendInsights: AscendInsightsFeature.State
         internal var entries: [Logbook.Section.Entry] = []
+        internal var gradeSystem: GradeSystem?
+        
+        init() {
+            let initalTimeSegment = TimeSegment.month
+            selectedSegment = initalTimeSegment
+            sessionInsights = .init(timeSegment: initalTimeSegment)
+            ascendInsights = .init(timeSegment: initalTimeSegment)
+        }
     }
-    
+
     enum Action: BindableAction, ViewAction {
         enum View {
             case task
         }
         case fetchEntries
         case receiveEntries(Result<[Logbook.Section.Entry], Never>)
+        case receiveGradeSystem(GradeSystem?)
+        case sessionInsights(SessionInsightsFeature.Action)
+        case ascendInsights(AscendInsightsFeature.Action)
         case binding(BindingAction<State>)
         case view(View)
     }
     
     @Dependency(\.calendar) var calendar
     @Dependency(\.logbookEntryClient) var entryClient
+    @Dependency(\.gradeSystemClient) var gradeSystemClient
 
     var body: some ReducerOf<Self> {
         BindingReducer()
-
+        Scope(state: \.sessionInsights, action: \.sessionInsights) {
+            SessionInsightsFeature()
+        }
+        Scope(state: \.ascendInsights, action: \.ascendInsights) {
+            AscendInsightsFeature()
+        }
         Reduce { state, action in
             switch action {
             case .view(.task):
                 return .run { send in
-                    await send(.receiveEntries(Result { await entryClient.fetchEntries() }))
+                    await send(
+                        .receiveEntries(
+                            Result {
+                                await entryClient.fetchEntries()
+                            }
+                        )
+                    )
                 }
 
             case let .receiveEntries(.success(entries)):
                 state.entries = entries
-                updateSessionInsight(in: &state)
-                updateMostCommonWeekdayInsight(in: &state)
-            
+                return .merge(
+                    .run { send in
+                        await send(.receiveGradeSystem(await gradeSystemClient.fetchSelectedSystem()))
+                    },
+                    .run { send in
+                        await send(.sessionInsights(.entriesDidChange(entries)))
+                    }
+                )
+            case let .receiveGradeSystem(gradeSystem):
+                state.gradeSystem = gradeSystem
+                state.isLoading = false
+                return .run { [entries = state.entries] send in
+                    await send(.ascendInsights(.receiveValues(gradeSystem, entries)))
+                }
+
             case .binding(\.selectedSegment):
-                updateSessionInsight(in: &state)
+                return .merge(
+                    .run { [segment = state.selectedSegment] send in
+                        await send(.sessionInsights(.timeSegmentDidChange(segment)))
+                    },
+                    .run { [segment = state.selectedSegment] send in
+                        await send(.ascendInsights(.timeSegmentDidChange(segment)))
+                    }
+                )
 
             default: ()
             }
             return .none
-        }
-    }
-}
-
-private extension InsightsFeature {
-    func updateSessionInsight(
-        in state: inout InsightsFeature.State
-    ) {
-        var insightText: String = "You went to the gym %@ times in %@."
-        switch state.selectedSegment {
-        case .month:
-            let monthAgoCalendar = calendar.date(byAdding: .month, value: -1, to: .now) ?? .now
-            let count = state.entries.count { $0.date > monthAgoCalendar }
-            insightText = String(
-                format: insightText,
-                "\(count)",
-                "the last \(state.selectedSegment.rawValue.lowercased())"
-            )
-        case .year:
-            let yearAgoCalendar = calendar.date(byAdding: .year, value: -1, to: .now) ?? .now
-            let count = state.entries.count { $0.date > yearAgoCalendar }
-            insightText = String(
-                format: insightText,
-                "\(count)",
-                "the last \(state.selectedSegment.rawValue.lowercased())"
-            )
-        case .all:
-            // Displays number of years between oldest entry and now.
-            // The entry's starting date is moved to the 1st of Jan.
-            let oldestEntry = state.entries.min(by: { $0.date < $1.date })?.date ?? .now
-            let oldestEntryComponents = calendar.dateComponents([.year], from: oldestEntry)
-            let startingDate = calendar.date(from: oldestEntryComponents) ?? .now
-            let components = calendar.dateComponents([.year], from: startingDate, to: .now)
-            insightText = String(
-                format: insightText,
-                "\(state.entries.count)",
-                "over the last \(components.year ?? 0) years"
-            )
-        }
-        state.sessionCountViewState = .idle(insightText)
-    }
-    
-    func updateMostCommonWeekdayInsight(
-        in state: inout InsightsFeature.State
-    ) {
-        let entriesPerWeekday = state.entries.reduce(into: [Int: Int]()) { partialResult, entry in
-            let weekday = calendar.component(.weekday, from: entry.date)
-            let numberOfEntries = partialResult[weekday] ?? 0
-            partialResult[weekday] = numberOfEntries + 1
-        }
-        if let element = entriesPerWeekday.max(by: { $0.value < $1.value }),
-           let weekday = DateFormatter().weekdaySymbols[safe: element.key - 1] {
-            state.mostCommonWeekdayViewState = .idle(
-                "Your most common day to workout is \(weekday) with \(element.value) times."
-            )
         }
     }
 }

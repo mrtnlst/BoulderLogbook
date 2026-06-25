@@ -16,9 +16,12 @@ struct InsightsView: View {
         NavigationStack {
             VStack {
                 picker
-                PlainList {
-                    sessionCount
-                    mostCommonWeekday
+
+                if store.isLoading {
+                    LoadingIndicator()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    listView
                 }
             }
             .background(Color.araBackground)
@@ -36,48 +39,32 @@ private extension InsightsView {
             "Select time frame",
             selection: $store.selectedSegment
         ) {
-            ForEach(InsightsFeature.TimeSegment.allCases, id: \.self) { segment in
+            ForEach(TimeSegment.allCases, id: \.self) { segment in
                 Text(segment.rawValue)
             }
         }
         .pickerStyle(.segmented)
+        .padding(.horizontal, 10)
     }
-    
-    @ViewBuilder
-    var sessionCount: some View {
-        switch store.sessionCountViewState {
-        case .loading:
-            LoadingIndicator()
-                .frame(maxWidth: .infinity)
-        case let .idle(message):
-            Label {
-                Text(message)
-            } icon: {
-                Image(systemName: "sum")
-                    .foregroundStyle(Color.araLightRed)
-            }
-        case let .error(message):
-            EmptyMessageView(message: message)
-                .frame(maxWidth: .infinity)
-        }
-    }
-    
-    @ViewBuilder
-    var mostCommonWeekday: some View {
-        switch store.mostCommonWeekdayViewState {
-        case .loading:
-            LoadingIndicator()
-                .frame(maxWidth: .infinity)
-        case let .idle(message):
-            Label {
-                Text(message)
-            } icon: {
-                Image(systemName: "calendar.day.timeline.left")
-                    .foregroundStyle(Color.araLightBlue)
-            }
 
-        case .error:
-            EmptyView()
+    var listView: some View {
+        PlainList {
+            PlainSection("Sessions") {
+                SessionInsightsView(
+                    store: store.scope(
+                        state: \.sessionInsights,
+                        action: \.sessionInsights
+                    )
+                )
+            }
+            PlainSection("Ascends") {
+                AscendInsightsView(
+                    store: store.scope(
+                        state: \.ascendInsights,
+                        action: \.ascendInsights
+                    )
+                )
+            }
         }
     }
 }
@@ -93,7 +80,12 @@ private extension InsightsView {
                 let aMonthAgo: TimeInterval = -2678400
                 let aYearAgo: TimeInterval = -31536000
                 $0.logbookEntryClient.fetchEntries = {
-                    [
+                    do {
+                        try await Task.sleep(for: .seconds(1))
+                    } catch {
+                        
+                    }
+                    return [
                         .init(date: .now, gradeSystem: GradeSystem.mandala.id),
                         .init(date: .now, gradeSystem: GradeSystem.mandala.id),
                         .init(date: .now.addingTimeInterval(aMonthAgo), gradeSystem: GradeSystem.mandala.id),

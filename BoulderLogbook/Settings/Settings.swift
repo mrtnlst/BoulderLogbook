@@ -28,14 +28,14 @@ struct Settings {
         case setAppIconListNavigation
         case setAboutNavigation
         case deleteEntriesDidFinish(TaskResult<EntryClientResponse>)
-
+        
         enum EntryClientResponse { case finished }
     }
     
     @Dependency(\.logbookEntryClient) var entryClient
-
+    
     var body: some Reducer<State, Action> {
-       Reduce { state, action in
+        Reduce { state, action in
             switch action {
             case let .destination(.presented(.gradeSystemList(.delete(id)))):
                 return .merge(
@@ -53,17 +53,17 @@ struct Settings {
                 
             case .setGradeSystemListNavigation:
                 state.destination = .gradeSystemList(.init())
-   
+                
             case .setAppIconListNavigation:
                 state.destination = .appIconList(.init())
-
+                
             case .setAboutNavigation:
                 state.destination = .about(.init())
-
+                
             default: ()
             }
             return .none
         }
-       .ifLet(\.$destination, action: \.destination)
+        .ifLet(\.$destination, action: \.destination)
     }
 }
