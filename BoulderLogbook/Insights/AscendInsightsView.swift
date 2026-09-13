@@ -36,7 +36,7 @@ private extension AscendInsightsView {
                         Text("None")
                             .tag(Grade?.none)
                         ForEach(grades) {
-                            Text($0.name)
+                            Text("Grade \($0.name)")
                                 .tag($0)
                         }
                     }

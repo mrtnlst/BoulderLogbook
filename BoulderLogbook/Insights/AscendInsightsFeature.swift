@@ -156,7 +156,7 @@ extension AscendInsightsFeature {
         default: segment.description
         }
         state.selectedAscends = .selectedAscends(
-            insight: "You ascended \(grade.name) \(topsForGrade) times \(timeDescription)."
+            insight: "Grade \(grade.name) was ascended \(topsForGrade) times \(timeDescription)."
         )
     }
     
