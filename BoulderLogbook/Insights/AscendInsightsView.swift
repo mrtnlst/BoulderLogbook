@@ -8,20 +8,45 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: AscendInsightsFeature.self)
 struct AscendInsightsView: View {
-    let store: StoreOf<AscendInsightsFeature>
+    @Bindable var store: StoreOf<AscendInsightsFeature>
     
     var body: some View {
+        Group {
+            InsightView(model: store.mostAscends)
+            selectedAscendsView
+        }
+        .task { send(.task) }
+    }
+}
+
+private extension AscendInsightsView {
+    var selectedAscendsView: some View {
         Label {
-            if let gradeWithMostAscendsInsight = store.gradeWithMostAscendsInsight {
-                Text(gradeWithMostAscendsInsight)
+            if let grades = store.gradeSystem?.grades,
+               let insight = store.selectedAscends.insight {
+                HStack {
+                    Text(insight)
+                    Spacer()
+                    Picker(
+                        "",
+                        selection: $store.selectedAscendedGrade.sending(\.setSelectedGrade)
+                    ) {
+                        Text("None")
+                            .tag(Grade?.none)
+                        ForEach(grades) {
+                            Text($0.name)
+                                .tag($0)
+                        }
+                    }
+                    .tint(.accent)
+                }
             } else {
                 LoadingIndicator()
             }
         } icon: {
-            Image(systemName: "chart.bar.xaxis.descending")
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(Color.araLightYellow, Color.white)
+            Image(systemName: store.selectedAscends.systemImage)
         }
     }
 }

@@ -13,6 +13,12 @@ struct GradeSystem {
     let grades: [Grade]
 }
 
+extension GradeSystem {
+    func grade(for id: Grade.ID?) -> Grade? {
+        grades.first(where: { $0.id == id })
+    }
+}
+
 extension GradeSystem: Sendable {}
 extension GradeSystem: Equatable {}
 extension GradeSystem: Codable {}

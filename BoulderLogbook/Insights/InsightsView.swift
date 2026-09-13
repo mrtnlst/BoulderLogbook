@@ -73,6 +73,9 @@ private extension InsightsView {
             withDependencies: {
                 let aMonthAgo: TimeInterval = -2678400
                 let aYearAgo: TimeInterval = -31536000
+                $0.gradeSystemClient.fetchSelectedSystem = {
+                    .mandala
+                }
                 $0.logbookEntryClient.fetchEntries = {
                     do {
                         try await Task.sleep(for: .seconds(1))
@@ -80,7 +83,11 @@ private extension InsightsView {
                         
                     }
                     return [
-                        .init(date: .now, gradeSystem: GradeSystem.mandala.id),
+                        .init(
+                            date: .now,
+                            tops: [.sample1, .sample1, .sample2],
+                            gradeSystem: GradeSystem.mandala.id
+                        ),
                         .init(date: .now, gradeSystem: GradeSystem.mandala.id),
                         .init(date: .now.addingTimeInterval(aMonthAgo), gradeSystem: GradeSystem.mandala.id),
                         .init(date: .now.addingTimeInterval(aMonthAgo), gradeSystem: GradeSystem.mandala.id),

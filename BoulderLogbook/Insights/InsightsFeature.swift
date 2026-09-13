@@ -12,17 +12,25 @@ import ComposableArchitecture
 struct InsightsFeature {
     @ObservableState
     struct State {
-        var selectedSegment: TimeSegment
+        @Shared var selectedSegment: TimeSegment
+        @Shared internal var entries: [Logbook.Section.Entry]
+        @Shared internal var gradeSystem: GradeSystem?
         var sessionInsights: SessionInsightsFeature.State
         var ascendInsights: AscendInsightsFeature.State
-        internal var entries: [Logbook.Section.Entry] = []
-        internal var gradeSystem: GradeSystem?
         
         init() {
-            let initalTimeSegment = TimeSegment.month
-            selectedSegment = initalTimeSegment
-            sessionInsights = .init(timeSegment: initalTimeSegment)
-            ascendInsights = .init(timeSegment: initalTimeSegment)
+            self._selectedSegment = Shared(value: .month)
+            self._entries = Shared(value: [])
+            self._gradeSystem = Shared(value: nil)
+            sessionInsights = .init(
+                timeSegment: self._selectedSegment,
+                entries: self._entries
+            )
+            ascendInsights = .init(
+                timeSegment: self._selectedSegment,
+                entries: self._entries,
+                gradeSystem: self._gradeSystem
+            )
         }
     }
 
@@ -66,15 +74,10 @@ struct InsightsFeature {
                 }
 
             case let .receiveEntries(.success(entries)):
-                state.entries = entries
-                return .merge(
-                    .run { send in
-                        await send(.fetchGradeSystem)
-                    },
-                    .run { send in
-                        await send(.sessionInsights(.entriesDidChange(entries)))
-                    }
-                )
+                state.$entries.withLock { $0 = entries }
+                return .run { send in
+                    await send(.fetchGradeSystem)
+                }
                 
             case .fetchGradeSystem:
                 return .run { send in
@@ -82,20 +85,9 @@ struct InsightsFeature {
                 }
 
             case let .receiveGradeSystem(gradeSystem):
-                state.gradeSystem = gradeSystem
-                return .run { [entries = state.entries] send in
-                    await send(.ascendInsights(.receiveValues(gradeSystem, entries)))
+                state.$gradeSystem.withLock {
+                    $0 = gradeSystem
                 }
-
-            case .binding(\.selectedSegment):
-                return .merge(
-                    .run { [segment = state.selectedSegment] send in
-                        await send(.sessionInsights(.timeSegmentDidChange(segment)))
-                    },
-                    .run { [segment = state.selectedSegment] send in
-                        await send(.ascendInsights(.timeSegmentDidChange(segment)))
-                    }
-                )
 
             default: ()
             }

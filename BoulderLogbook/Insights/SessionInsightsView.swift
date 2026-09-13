@@ -8,29 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: SessionInsightsFeature.self)
 struct SessionInsightsView: View {
     let store: StoreOf<SessionInsightsFeature>
     
     var body: some View {
-        Label {
-            if let sessionCountInsight = store.sessionCountInsight {
-                Text(sessionCountInsight)
-            } else {
-                LoadingIndicator()
-            }
-        } icon: {
-            Image(systemName: "waveform")
-                .foregroundStyle(Color.araLightBlue)
+        Group {
+            InsightView(model: store.sessionCountInsight)
+            InsightView(model: store.mostCommonWeekdayInsight)
         }
-        Label {
-            if let mostCommonWeekdayInsight = store.mostCommonWeekdayInsight {
-                Text(mostCommonWeekdayInsight)
-            } else {
-                LoadingIndicator()
-            }
-        } icon: {
-            Image(systemName: "calendar")
-                .foregroundStyle(Color.araLightRed)
-        }
+        .task { send(.task) }
     }
 }

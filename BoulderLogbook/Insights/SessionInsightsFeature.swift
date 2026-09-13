@@ -10,17 +10,33 @@ import ComposableArchitecture
 
 @Reducer
 struct SessionInsightsFeature {
+    private enum EffectId {
+        case taskEffect
+    }
+
     @ObservableState
     struct State {
-        internal var timeSegment: TimeSegment
-        internal var entries: [Logbook.Section.Entry] = []
-        var sessionCountInsight: String?
-        var mostCommonWeekdayInsight: String?
+        @Shared internal var timeSegment: TimeSegment
+        @Shared internal var entries: [Logbook.Section.Entry]
+        var sessionCountInsight: InsightModel = .sessionCount()
+        var mostCommonWeekdayInsight: InsightModel = .mostCommonWeekday()
+        
+        init(
+            timeSegment: Shared<TimeSegment>,
+            entries: Shared<[Logbook.Section.Entry]>
+        ) {
+            self._timeSegment = timeSegment
+            self._entries = entries
+        }
     }
     
-    enum Action {
-        case timeSegmentDidChange(TimeSegment)
-        case entriesDidChange([Logbook.Section.Entry])
+    enum Action: ViewAction {
+        enum View {
+            case task
+        }
+        case didUpdateTimeSegment
+        case didUpdateEntries
+        case view(View)
     }
 
     @Dependency(\.calendar) var calendar
@@ -28,14 +44,28 @@ struct SessionInsightsFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .timeSegmentDidChange(newValue):
-                state.timeSegment = newValue
+            case .view(.task):
+                return .merge(
+                    .publisher {
+                        state.$timeSegment.publisher.map { _ in
+                            Action.didUpdateTimeSegment
+                        }
+                    },
+                    .publisher {
+                        state.$entries.publisher.map { _ in
+                            Action.didUpdateEntries
+                        }
+                    }
+                )
+                .cancellable(id: EffectId.taskEffect, cancelInFlight: true)
             
-            case let .entriesDidChange(newValue):
-                state.entries = newValue
+            case .didUpdateTimeSegment:
+                updateSessionCountInsight(&state)
+                
+            case .didUpdateEntries:
+                updateSessionCountInsight(&state)
+                updateMostCommonWeekdayInsight(in: &state)
             }
-            updateSessionCountInsight(&state)
-            updateMostCommonWeekdayInsight(in: &state)
             return .none
         }
     }
@@ -66,7 +96,7 @@ extension SessionInsightsFeature {
             let count = state.entries.count { $0.date > startDate }
             insightText = String(format: insightText, "\(count)", segment.description)
         }
-        state.sessionCountInsight = insightText
+        state.sessionCountInsight = .sessionCount(insight: insightText)
     }
     
     func updateMostCommonWeekdayInsight(
@@ -79,9 +109,11 @@ extension SessionInsightsFeature {
         }
         if let element = entriesPerWeekday.max(by: { $0.value < $1.value }),
            let weekday = DateFormatter().weekdaySymbols[safe: element.key - 1] {
-            state.mostCommonWeekdayInsight = "Your most common day to workout is \(weekday) with \(element.value) times."
+            state.mostCommonWeekdayInsight = .mostCommonWeekday(
+                insight: "Your most common day to workout is \(weekday) with \(element.value) times."
+            )
         } else {
-            state.mostCommonWeekdayInsight = "No data available!"
+            state.mostCommonWeekdayInsight = .mostCommonWeekday(insight: "No data available!")
         }
     }
 }
