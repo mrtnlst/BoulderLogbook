@@ -9,6 +9,51 @@ import Foundation
 
 extension Logbook {
     static let sample = Logbook(sections: Logbook.Section.samples)
+    
+    static let sample2 = Logbook(
+        sections: (1...12).map {
+            let date = Calendar.current.date(
+                byAdding: .weekOfYear,
+                value: -1 * $0,
+                to: .now
+            )!
+            var tops: [Top] = []
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top1)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top2)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top3)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top4)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top5)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top6)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top7)
+            }
+            for _ in 1...Int.random(in: 1...10) {
+                tops.append(.top8)
+            }
+            return .init(
+                date: date,
+                entries: [
+                    .init(
+                        date: date,
+                        tops: tops,
+                        gradeSystem: GradeSystem.mandala2.id
+                    )
+                ]
+            )
+        }
+    )
 }
 
 extension Logbook.Section {

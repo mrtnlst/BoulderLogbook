@@ -47,6 +47,16 @@ extension [Top] {
             system?.grades.first(where: { $0.id == gradeId }) ?? nil
         }
     }
+    
+    func highestGrade(for system: GradeSystem?) -> Grade? {
+        successful()
+            .map { $0.grade }
+            .compactMap { gradeId in
+                system?.grades.first(where: { $0.id == gradeId }) ?? nil
+            }
+            .sorted(by: { $0.difficulty > $1.difficulty })
+            .first
+    }
 }
 
 extension Top: Sendable {}

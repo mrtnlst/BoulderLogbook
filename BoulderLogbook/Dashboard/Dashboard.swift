@@ -27,6 +27,8 @@ struct Dashboard {
         var trends: TrendsFeature.State
         @Presents var destination: Destination.State?
         @Shared var sections: [Logbook.Section]
+        @Shared(.fileStorage(.defaultGradeSystem)) var defaultGradeSystem: GradeSystem?
+        @Shared(.fileStorage(.focusGrade)) var focusGrade: Grade?
         var gradeSystems: [GradeSystem] = []
         var entryToDelete: Logbook.Section.Entry.ID?
 
@@ -69,6 +71,9 @@ struct Dashboard {
             switch action {
             case .onAppear:
 #if targetEnvironment(simulator)
+                state.$defaultGradeSystem.withLock {
+                    $0 = .mandala2
+                }
                 return .concatenate(
                     .run { _ in await gradeSystemClient.saveDefaultSystems() },
                     .run { _ in await logbookEntryClient.saveBackupEntries() },

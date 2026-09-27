@@ -19,17 +19,14 @@ struct EmptyMessageView: View {
     
     var body: some View {
         let label = HStack(spacing: 16) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 7 * size)
-                    .frame(width: 28 * size, height: 28 * size)
-                    .foregroundStyle(.error)
-                Image(systemName: "exclamationmark")
-                    .foregroundStyle(.primaryText)
-            }
+            Image(systemName: "exclamationmark.square.fill")
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color.araTextPrimary, .error)
+                .font(.title)
             Text(message ?? "")
+                .font(.callout)
+                .fontWeight(.medium)
         }
-            .font(.callout)
-            .fontWeight(.medium)
         
         if let action = action {
             Button {

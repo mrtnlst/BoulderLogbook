@@ -10,14 +10,44 @@ import SwiftUI
 struct DashboardEntryView: View {
     let entry: Logbook.Section.Entry
     let gradeSystem: GradeSystem
+    let focusGrade: Grade?
     
+    var focusGradeText: String {
+        if let focusGrade {
+            "\(entry.tops.count(for: focusGrade))⨉"
+        } else {
+            "-"
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                EntryColorView(
-                    tops: entry.tops,
-                    gradeSystem: gradeSystem
-                )
+                VStack(alignment: .center) {
+                    Text("Total Ascends")
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                    Text("\(entry.tops.count)⨉")
+                        .font(.title)
+                        .foregroundStyle(Color.araLightYellow)
+                }
+                VStack {
+                    Text("Highest Grade")
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                    Text("\(entry.tops.highestGrade(for: gradeSystem)?.name ?? "-")")
+                        .font(.title)
+                        .foregroundStyle(Color.araBlue)
+                }
+                VStack {
+                    Text("Focus Grade")
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                    Text(focusGradeText)
+                        .font(.title)
+                        .foregroundStyle(Color.araPurple)
+                }
+                Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.secondaryText)
             }
@@ -43,12 +73,26 @@ extension DashboardEntryView {
 #Preview {
     PlainList {
         DashboardEntryView(
-            entry: [Logbook.Section.Entry].samples[0],
-            gradeSystem: .mandala
+            entry: .init(
+                date: .now,
+                tops: [
+                    .top1, .top1, .top2, .top4, .top5, .top6, .top8
+                ],
+                gradeSystem: GradeSystem.mandala2.id
+            ),
+            gradeSystem: .mandala2,
+            focusGrade: .mandala7
         )
         DashboardEntryView(
-            entry: [Logbook.Section.Entry].samples[3],
-            gradeSystem: .mandala
+            entry: .init(
+                date: Date.now.addingTimeInterval(-3600),
+                tops: [
+                    .top1, .top3, .top3, .top4, .top5, .top6, .top7, .top7
+                ],
+                gradeSystem: GradeSystem.mandala2.id
+            ),
+            gradeSystem: .mandala2,
+            focusGrade: nil
         )
     }
 }

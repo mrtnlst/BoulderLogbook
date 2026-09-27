@@ -76,30 +76,13 @@ extension SessionDiagramView {
 }
 
 #Preview {
-    PlainList {
-        PlainSection("Diagram") {
-            SessionDiagramView(
-                store: Store(
-                    initialState: SessionDiagram.State(
-                        entries: Shared(value: .samples)
-                    )
-                ) {
-                    SessionDiagram()
-                }
+    SessionDiagramView(
+        store: Store(
+            initialState: SessionDiagram.State(
+                entries: Shared(value: .samples)
             )
-            .frame(height: 200)
+        ) {
+            SessionDiagram()
         }
-        PlainSection("Empty") {
-            SessionDiagramView(
-                store: Store(
-                    initialState: SessionDiagram.State(
-                        entries: Shared(value: [])
-                    )
-                ) {
-                    SessionDiagram()
-                }
-            )
-            .frame(height: 200)
-        }
-    }
+    )
 }

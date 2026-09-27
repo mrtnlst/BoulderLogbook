@@ -34,7 +34,8 @@ struct PlainRowButton<Label: View>: View {
             PlainRowButton(action: {}) {
                 DashboardEntryView(
                     entry: Logbook.Section.samples.first!.entries.first!,
-                    gradeSystem: .mandala
+                    gradeSystem: .mandala,
+                    focusGrade: nil
                 )
             }
         }

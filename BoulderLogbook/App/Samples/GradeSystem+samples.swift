@@ -21,10 +21,19 @@ extension GradeSystem {
             .mandalaPurple
         ]
     )
-
-    static let kletterarena: GradeSystem = GradeSystem(
-        id: UUID(),
-        name: "Kletterarena",
-        grades: []
+    
+    static let mandala2: GradeSystem = GradeSystem(
+        id: UUID(uuidString: "22222222-ED9E-4224-ADC6-3DEF6D067D13")!,
+        name: "Mandala 2",
+        grades: [
+            .mandala1,
+            .mandala2,
+            .mandala3,
+            .mandala4,
+            .mandala5,
+            .mandala6,
+            .mandala7,
+            .mandala8
+        ]
     )
 }

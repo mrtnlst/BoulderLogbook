@@ -95,7 +95,8 @@ private extension DashboardView {
         } label: {
             DashboardEntryView(
                 entry: entry,
-                gradeSystem: gradeSystem
+                gradeSystem: gradeSystem,
+                focusGrade: store.focusGrade
             )
         }
         .swipeActions {

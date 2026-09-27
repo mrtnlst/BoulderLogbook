@@ -96,47 +96,17 @@ extension TopCountDiagramView {
 }
 
 #Preview {
-    PlainList {
-        PlainSection("Loading") {
-//            TopCountDiagramView(
-//                store: Store(
-//                    initialState: TopCountDiagram.State(
-//                    )
-//                ) {
-//                    TopCountDiagram()
-//                }
-//            )
-//            .frame(height: 170)
+    TopCountDiagramView(
+        store: Store(
+            initialState: TopCountDiagram.State(
+                entries: Shared(
+                    value: .samples
+                ),
+                gradeSystem: Shared(value: .mandala)
+            )
+        ) {
+            TopCountDiagram()
         }
-        PlainSection("Diagram") {
-//            TopCountDiagramView(
-//                store: Store(
-//                    initialState: TopCountDiagram.State(
-//                        viewState: .idle([
-//                            .sample1,
-//                            .sample1,
-//                            .sample5,
-//                            .sample6
-//                        ]),
-//                        gradeSystem: .mandala
-//                    )
-//                ) {
-//                    TopCountDiagram()
-//                }
-//            )
-//            .frame(height: 170)
-        }
-        PlainSection("Empty") {
-//            TopCountDiagramView(
-//                store: Store(
-//                    initialState: TopCountDiagram.State(
-//                        viewState: .error("No entries available!")
-//                    )
-//                ) {
-//                    TopCountDiagram()
-//                }
-//            )
-//            .frame(height: 170)
-        }
-    }
+    )
+    .navigationTitle("Diagram")
 }

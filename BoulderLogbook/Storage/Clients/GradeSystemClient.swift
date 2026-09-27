@@ -24,7 +24,7 @@ extension GradeSystemClient: DependencyKey {
 
     static let previewValue: Self = {
         return Self(
-            fetchAvailableSystems: { [.mandala, .kletterarena] },
+            fetchAvailableSystems: { [.mandala, .mandala2] },
             fetchSelectedSystem: { GradeSystem.mandala },
             saveSystem: { _ in },
             deleteSystem: { _ in },

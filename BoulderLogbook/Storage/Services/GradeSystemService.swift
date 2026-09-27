@@ -99,6 +99,7 @@ final actor GradeSystemService: GradeSystemServiceType {
         }
     }
 
+    @available(*, deprecated, message: "Use @Shared .defaultGradeSystem")
     func saveSelectedSystem(for id: UUID) async {
         let data = try? encoder.encode(id)
         defaults.set(data, forKey: .selectedGradeSystemKey)
@@ -133,10 +134,10 @@ final actor GradeSystemService: GradeSystemServiceType {
         }
 
         let availableSystems = await fetchAvailableSystems()
-        guard !availableSystems.contains(where: { $0.id == GradeSystem.mandala.id }) else {
+        guard !availableSystems.contains(where: { $0.id == GradeSystem.mandala2.id }) else {
             return
         }
-        await saveSystem(.mandala)
+        await saveSystem(.mandala2)
         defaults.set(true, forKey: .defaultGradeSystems)
     }
 

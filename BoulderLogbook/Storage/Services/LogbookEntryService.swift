@@ -189,7 +189,13 @@ final actor LogbookEntryService: LogbookEntryServiceType {
         guard !defaults.bool(forKey: .backupEntries) else {
             return
         }
-        let data = try? JSONEncoder().encode([Logbook.Section.Entry].samples)
+        let data = try? JSONEncoder().encode(
+            Logbook.sample2.sections.reduce(
+                into: [Logbook.Section.Entry]()
+            ) {
+                $0.append(contentsOf: $1.entries)
+            }
+        )
         defaults.set(data, forKey: .entries)
         defaults.set(true, forKey: .backupEntries)
     }
