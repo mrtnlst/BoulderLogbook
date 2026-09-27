@@ -9,31 +9,37 @@ import SwiftUI
 import Charts
 import ComposableArchitecture
 
+@ViewAction(for: TopCountDiagram.self)
 struct TopCountDiagramView: View {
     @Bindable var store: StoreOf<TopCountDiagram>
 
     var body: some View {
-        switch store.viewState {
-        case .loading:
-            LoadingIndicator()
+        PlainList {
+            switch store.viewState {
+            case .loading:
+                LoadingIndicator()
+                    .frame(maxWidth: .infinity)
+                
+            case let .idle(tops):
+                VStack {
+                    picker()
+                        .padding(.bottom, 4)
+                    barChart(
+                        grades: store.gradeSystem?.grades ?? [],
+                        tops: tops
+                    )
+                    .frame(height: 300)
+                }
+                
+            case let .error(message):
+                EmptyMessageView(message: message) {
+                    send(.didPressEmptyView)
+                }
                 .frame(maxWidth: .infinity)
-
-        case let .idle(tops):
-            VStack {
-                picker()
-                    .padding(.bottom, 4)
-                barChart(
-                    grades: store.gradeSystem?.grades ?? [],
-                    tops: tops
-                )
             }
-
-        case let .error(message):
-            EmptyMessageView(message: message) {
-                store.send(.didPressEmptyView)
-            }
-            .frame(maxWidth: .infinity)
         }
+        .task { send(.task) }
+        .navigationTitle("Details")
     }
 }
 
@@ -42,14 +48,13 @@ extension TopCountDiagramView {
     func picker() -> some View {
         Picker(
             "Pick the number of sessions displayed in the chart!",
-            selection: $store.selectedSegment
+            selection: $store.selectedSegment.sending(\.setSegment)
         ) {
             ForEach(TopCountDiagram.Segment.allCases, id: \.self) { segment in
                 Text(segment.rawValue)
             }
         }
         .pickerStyle(.segmented)
-        .disabled($store.gradeSystem.wrappedValue == nil ? true : false)
     }
     
     @ViewBuilder func barChart(grades: [Grade], tops: [Top]) -> some View {
@@ -93,45 +98,45 @@ extension TopCountDiagramView {
 #Preview {
     PlainList {
         PlainSection("Loading") {
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(
-                    )
-                ) {
-                    TopCountDiagram()
-                }
-            )
-            .frame(height: 170)
+//            TopCountDiagramView(
+//                store: Store(
+//                    initialState: TopCountDiagram.State(
+//                    )
+//                ) {
+//                    TopCountDiagram()
+//                }
+//            )
+//            .frame(height: 170)
         }
         PlainSection("Diagram") {
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(
-                        viewState: .idle([
-                            .sample1,
-                            .sample1,
-                            .sample5,
-                            .sample6
-                        ]),
-                        gradeSystem: .mandala
-                    )
-                ) {
-                    TopCountDiagram()
-                }
-            )
-            .frame(height: 170)
+//            TopCountDiagramView(
+//                store: Store(
+//                    initialState: TopCountDiagram.State(
+//                        viewState: .idle([
+//                            .sample1,
+//                            .sample1,
+//                            .sample5,
+//                            .sample6
+//                        ]),
+//                        gradeSystem: .mandala
+//                    )
+//                ) {
+//                    TopCountDiagram()
+//                }
+//            )
+//            .frame(height: 170)
         }
         PlainSection("Empty") {
-            TopCountDiagramView(
-                store: Store(
-                    initialState: TopCountDiagram.State(
-                        viewState: .error("No entries available!")
-                    )
-                ) {
-                    TopCountDiagram()
-                }
-            )
-            .frame(height: 170)
+//            TopCountDiagramView(
+//                store: Store(
+//                    initialState: TopCountDiagram.State(
+//                        viewState: .error("No entries available!")
+//                    )
+//                ) {
+//                    TopCountDiagram()
+//                }
+//            )
+//            .frame(height: 170)
         }
     }
 }

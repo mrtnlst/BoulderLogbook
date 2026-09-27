@@ -53,7 +53,8 @@ struct EntryForm {
             self.attempts = attempts
             self.flashs = flashs
             self.onsights = onsights
-            self.tempSelectedSystemId = selectedSystem
+            @Shared(.fileStorage(.defaultGradeSystem)) var gradeSystem: GradeSystem?
+            self.tempSelectedSystemId = selectedSystem ?? gradeSystem?.id
             self.isEditing = isEditing
         }
     }
@@ -61,9 +62,7 @@ struct EntryForm {
     enum Action: BindableAction {
         case onAppear
         case fetchAvailableSystems
-        case fetchSelectedSystem
         case receiveAvailableSystems(TaskResult<[GradeSystem]>)
-        case receiveSelectedSystem(TaskResult<GradeSystem?>)
         case topStepperChanged(Int, Grade)
         case attemptStepperChanged(Int, Grade)
         case flashStepperChanged(Int, Grade)
@@ -85,25 +84,14 @@ struct EntryForm {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .concatenate(
-                    .send(.fetchAvailableSystems),
-                    .send(.fetchSelectedSystem)
-                )
+                return .run{ send in
+                    await send(.fetchAvailableSystems)
+                }
                 
             case .fetchAvailableSystems:
                 return .run { send in
                     await send(
                         .receiveAvailableSystems(TaskResult { await gradeSystemClient.fetchAvailableSystems() })
-                    )
-                }
-                
-            case .fetchSelectedSystem:
-                guard state.selectedSystemId == nil else {
-                    return .none
-                }
-                return .run { send in
-                    await send(
-                        .receiveSelectedSystem(TaskResult { await gradeSystemClient.fetchSelectedSystem() })
                     )
                 }
 
@@ -119,14 +107,6 @@ struct EntryForm {
                 if let tempSelectedSystemId = state.tempSelectedSystemId {
                     state.selectedSystemId = tempSelectedSystemId
                     state.tempSelectedSystemId = nil
-                }
-                
-            case let .receiveSelectedSystem(.success(selected)):
-                guard state.selectedSystemId == nil else {
-                    return .none
-                }
-                if let selected {
-                    state.selectedSystemId = selected.id
                 }
                 
             case let .topStepperChanged(value, grade):

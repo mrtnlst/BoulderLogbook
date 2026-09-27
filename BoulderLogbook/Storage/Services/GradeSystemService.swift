@@ -45,6 +45,7 @@ final actor GradeSystemService: GradeSystemServiceType {
         }
     }
 
+    @available(*, deprecated, message: "Use @Shared .defaultGradeSystem")
     func fetchSelectedSystem() async -> GradeSystem? {
         guard let encodedData = defaults.object(forKey: .selectedGradeSystemKey) as? Data,
               let decodedData = try? decoder.decode(UUID.self, from: encodedData) else {

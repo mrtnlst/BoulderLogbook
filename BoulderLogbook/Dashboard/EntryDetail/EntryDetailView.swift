@@ -32,7 +32,6 @@ struct EntryDetailView: View {
                 }
             }
         }
-        .onAppear { store.send(.onAppear) }
         .navigationTitle(Text(store.entry.date, style: .date))
         .toolbarTitleDisplayMode(.inline)
         .toolbar { toolbarContent() }

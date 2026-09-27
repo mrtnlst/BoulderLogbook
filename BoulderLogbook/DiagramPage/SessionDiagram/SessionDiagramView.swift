@@ -9,23 +9,28 @@ import SwiftUI
 import Charts
 import ComposableArchitecture
 
+@ViewAction(for: SessionDiagram.self)
 struct SessionDiagramView: View {
     let store: StoreOf<SessionDiagram>
-    @ScaledMetric var size: CGFloat = 1
 
     var body: some View {
-        switch store.viewState {
-        case .loading:
-            LoadingIndicator()
-                .frame(maxWidth: .infinity)
-
-        case let .idle(models):
-            barChart(models: models)
-
-        case let .error(message):
-            EmptyMessageView(message: message)
-                .frame(maxWidth: .infinity)
+        PlainList {
+            switch store.viewState {
+            case .loading:
+                LoadingIndicator()
+                    .frame(maxWidth: .infinity)
+                
+            case let .idle(models):
+                barChart(models: models)
+                    .frame(height: 300)
+                
+            case let .error(message):
+                EmptyMessageView(message: message)
+                    .frame(maxWidth: .infinity)
+            }
         }
+        .task { send(.task) }
+        .navigationTitle("Details")
     }
 }
 
@@ -72,26 +77,11 @@ extension SessionDiagramView {
 
 #Preview {
     PlainList {
-        PlainSection("Loading") {
-            SessionDiagramView(
-                store: Store(
-                    initialState: SessionDiagram.State()
-                ) {
-                    SessionDiagram()
-                }
-            )
-            .frame(height: 200)
-        }
         PlainSection("Diagram") {
             SessionDiagramView(
                 store: Store(
                     initialState: SessionDiagram.State(
-                        viewState: .idle([
-                            .init(date: "Apr", count: 12),
-                            .init(date: "May", count: 1),
-                            .init(date: "Jun", count: 6),
-                            .init(date: "Jul", count: 10)
-                        ])
+                        entries: Shared(value: .samples)
                     )
                 ) {
                     SessionDiagram()
@@ -103,7 +93,7 @@ extension SessionDiagramView {
             SessionDiagramView(
                 store: Store(
                     initialState: SessionDiagram.State(
-                        viewState: .error("No sessions available!")
+                        entries: Shared(value: [])
                     )
                 ) {
                     SessionDiagram()

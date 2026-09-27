@@ -31,7 +31,7 @@ private extension InsightsView {
     var picker: some View {
         Picker(
             "Select time frame",
-            selection: $store.selectedSegment
+            selection: $store.selectedSegment.sending(\.setTimeSegment)
         ) {
             ForEach(TimeSegment.allCases, id: \.self) { segment in
                 Text(segment.rawValue)
@@ -59,6 +59,22 @@ private extension InsightsView {
                     )
                 )
             }
+        }
+        .navigationDestination(
+            item: $store.scope(
+                \.destination?.sessionsDiagram,
+                 action: \.destination.sessionsDiagram
+            )
+        ) {
+            SessionDiagramView(store: $0)
+        }
+        .navigationDestination(
+            item: $store.scope(
+                \.destination?.topCountDiagram,
+                 action: \.destination.topCountDiagram
+            )
+        ) {
+            TopCountDiagramView(store: $0)
         }
     }
 }

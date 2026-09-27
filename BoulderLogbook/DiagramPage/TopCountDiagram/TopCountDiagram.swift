@@ -12,16 +12,27 @@ import ComposableArchitecture
 struct TopCountDiagram {
     @ObservableState
     struct State: Equatable {
-        var viewState: ViewState<[Top], String> = .loading
-        var gradeSystem: GradeSystem?
+        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var gradeSystem: GradeSystem?
         var selectedSegment: Segment = .week
+        var viewState: ViewState<[Top], String> = .loading
+        
+        init(
+            entries: Shared<[Logbook.Section.Entry]>,
+            gradeSystem: Shared<GradeSystem?>
+        ) {
+            self._entries = entries
+            self._gradeSystem = gradeSystem
+        }
     }
     
-    enum Action: Equatable, BindableAction {
-        case binding(BindingAction<State>)
-        case fetchData
-        case receiveData([Logbook.Section.Entry], GradeSystem?)
-        case didPressEmptyView
+    enum Action: Equatable, ViewAction {
+        enum View {
+            case task
+            case didPressEmptyView
+        }
+        case setSegment(Segment)
+        case view(View)
     }
     
     enum Segment: String, Equatable, CaseIterable {
@@ -39,17 +50,14 @@ struct TopCountDiagram {
     }
     
     var body: some Reducer<State, Action> {
-        BindingReducer()
-        
         Reduce { state, action in
             switch action {
-            case let .receiveData(entries, gradeSystem):
-                state.gradeSystem = gradeSystem
-                guard let gradeSystem = gradeSystem else {
+            case .view(.task):
+                guard let gradeSystem = state.gradeSystem else {
                     state.viewState = .error("Create or select a Grade System for your Diagrams!")
                     return .none
                 }
-                let filteredEntries = entries.filter({ $0.gradeSystem == gradeSystem.id })
+                let filteredEntries = state.entries.filter({ $0.gradeSystem == gradeSystem.id })
                 
                 var tops: [Top] = []
                 if let value = state.selectedSegment.value {
@@ -59,7 +67,7 @@ struct TopCountDiagram {
                         .reduce(into: [], { $0.append(contentsOf: $1.tops) })
                         .successful()
                 } else {
-                 tops = filteredEntries
+                    tops = filteredEntries
                         .reduce(into: [], { $0.append(contentsOf: $1.tops) })
                         .successful()
                 }
@@ -69,8 +77,9 @@ struct TopCountDiagram {
                     state.viewState = .idle(tops)
                 }
                 
-            case .binding(\.selectedSegment):
-                return .send(.fetchData)
+            case let .setSegment(segment):
+                state.selectedSegment = segment
+                return .send(.view(.task))
                 
             default: ()
             }

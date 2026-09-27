@@ -11,6 +11,7 @@ struct InsightModel {
     let insight: String?
     let systemImage: String
     let foregroundStyle: Color?
+    let hasChevron: Bool
 }
 
 extension InsightModel {
@@ -18,7 +19,8 @@ extension InsightModel {
         Self(
             insight: insight,
             systemImage: "waveform",
-            foregroundStyle: .araLightBlue
+            foregroundStyle: .araLightBlue,
+            hasChevron: true
         )
     }
     
@@ -26,7 +28,8 @@ extension InsightModel {
         Self(
             insight: insight,
             systemImage: "calendar",
-            foregroundStyle: .araLightRed
+            foregroundStyle: .araLightRed,
+            hasChevron: false
         )
     }
     
@@ -34,7 +37,8 @@ extension InsightModel {
         Self(
             insight: insight,
             systemImage: "chart.bar.xaxis.descending",
-            foregroundStyle: .araLightYellow
+            foregroundStyle: .araLightYellow,
+            hasChevron: true
         )
     }
     
@@ -42,7 +46,8 @@ extension InsightModel {
         Self(
             insight: insight,
             systemImage: "flag.pattern.checkered",
-            foregroundStyle: nil
+            foregroundStyle: nil,
+            hasChevron: false
         )
     }
 }

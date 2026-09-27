@@ -14,11 +14,16 @@ struct GradeSystemListView: View {
 
     var body: some View {
         PlainList {
-            ForEach(store.gradeSystems) { gradeSystem in
-                selectionRow(gradeSystem: gradeSystem)
-                    .swipeActions {
-                        swipeButtons(gradeSystem: gradeSystem)
-                    }
+            PlainSection {
+                ForEach(store.gradeSystems) { gradeSystem in
+                    selectionRow(gradeSystem: gradeSystem)
+                        .swipeActions {
+                            swipeButtons(gradeSystem: gradeSystem)
+                        }
+                }
+            }
+            PlainSection("Insights & Trends") {
+                focusGradePicker
             }
         }
         .navigationTitle("Grade Systems")
@@ -45,9 +50,9 @@ struct GradeSystemListView: View {
 private extension GradeSystemListView {
     func selectionRow(gradeSystem: GradeSystem) -> some View {
         PlainRowButton {
-            store.send(.saveSelected(gradeSystem.id))
+            store.send(.saveSelected(gradeSystem))
         } label: {
-            let isSelected = store.selectedSystem?.id == gradeSystem.id
+            let isSelected = store.defaultGradeSystem?.id == gradeSystem.id
             HStack {
                 Text(gradeSystem.name)
                     .foregroundStyle(.primaryText)
@@ -89,6 +94,29 @@ private extension GradeSystemListView {
                 Label("Add grade system", systemImage: "plus")
             }
         }
+    }
+    
+    var focusGradePicker: some View {
+        Picker(selection: $store.focusedGrade.sending(\.setFocusGrade)) {
+            Text("None")
+                .tag(Grade?.none)
+            ForEach(store.defaultGradeSystem?.grades ?? []) {
+                Text($0.name)
+                    .tag($0)
+            }
+        } label: {
+            Label {
+                Text("Focus Grade")
+                    .foregroundStyle(.primaryText)
+                Text("Derived from default grade system")
+                    .foregroundStyle(.tertiaryText)
+            } icon: {
+                Image(systemName: "waveform.path.ecg.magnifyingglass")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(Color.araLightRed, .white)
+            }
+        }
+        .tint(.accent)
     }
 }
 

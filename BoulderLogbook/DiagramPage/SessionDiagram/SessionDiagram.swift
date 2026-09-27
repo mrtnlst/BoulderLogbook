@@ -12,11 +12,19 @@ import ComposableArchitecture
 struct SessionDiagram {
     @ObservableState
     struct State: Equatable {
+        @Shared var entries: [Logbook.Section.Entry]
         var viewState: ViewState<[Model], String> = .loading
+        
+        init(entries: Shared<[Logbook.Section.Entry]>) {
+            self._entries = entries
+        }
     }
             
-    enum Action: Equatable {
-        case receiveEntries([Logbook.Section.Entry])
+    enum Action: Equatable, ViewAction {
+        enum View {
+            case task
+        }
+        case view(View)
     }
     
     struct Model: Equatable, Identifiable {
@@ -30,12 +38,12 @@ struct SessionDiagram {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .receiveEntries(entries):
-                if entries.isEmpty {
+            case .view(.task):
+                if state.entries.isEmpty {
                     state.viewState = .error("No sessions available!")
                 } else {
                     let models = monthRangesOfPastYear(using: calendar).map { monthRange in
-                        let sessionCount = entries.filter { monthRange.contains($0.date) }.count
+                        let sessionCount = state.entries.filter { monthRange.contains($0.date) }.count
                         let monthIndex = calendar.component(.month, from: monthRange.lowerBound) - 1
                         let monthSymbol = calendar.shortMonthSymbols[monthIndex]
                         return Model(date: monthSymbol, count: sessionCount)

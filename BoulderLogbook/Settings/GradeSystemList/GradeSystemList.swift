@@ -24,8 +24,9 @@ struct GradeSystemList {
     @ObservableState
     struct State {
         @Presents var destination: Destination.State?
+        @Shared(.fileStorage(.focusGrade)) var focusedGrade: Grade?
+        @Shared(.fileStorage(.defaultGradeSystem)) var defaultGradeSystem: GradeSystem?
         var gradeSystems: [GradeSystem] = []
-        var selectedSystem: GradeSystem?
         var systemToDelete: GradeSystem?
     }
     
@@ -39,12 +40,10 @@ struct GradeSystemList {
         case destination(PresentationAction<Destination.Action>)
         case fetchGradeSystems
         case receiveGradeSystems(TaskResult<[GradeSystem]>)
-        case fetchSelectedSystem
-        case receiveSelectedSystem(TaskResult<GradeSystem?>)
         case presentConfirmation
-        case saveSelected(UUID)
-        case saveSelectedDidFinish(TaskResult<ClientResponse>)
+        case saveSelected(GradeSystem)
         case delete(UUID)
+        case setFocusGrade(Grade?)
         case view(View)
         
         enum ClientResponse { case finished }
@@ -67,17 +66,6 @@ struct GradeSystemList {
                 
             case let .receiveGradeSystems(.success(gradeSystems)):
                 state.gradeSystems = gradeSystems
-                return .send(.fetchSelectedSystem)
-                
-            case .fetchSelectedSystem:
-                return .run { send in
-                    await send(
-                        .receiveSelectedSystem(TaskResult { await client.fetchSelectedSystem() })
-                    )
-                }
-                
-            case let .receiveSelectedSystem(.success(selected)):
-                state.selectedSystem = selected
                 
             case .view(.presentGradeSystemForm):
                 state.destination = .gradeSystemForm(GradeSystemForm.State())
@@ -97,23 +85,13 @@ struct GradeSystemList {
                 )
                 
             case let .saveSelected(selected):
-                guard state.selectedSystem?.id != selected else {
+                guard state.defaultGradeSystem != selected else {
                     return .none
                 }
-                return .run { send in
-                    await send(
-                        .saveSelectedDidFinish(
-                            TaskResult {
-                                await client.saveSelectedSystem(selected)
-                                return .finished
-                            }
-                        )
-                    )
+                state.$defaultGradeSystem.withLock {
+                    $0 = selected
                 }
-                
-            case .saveSelectedDidFinish(_):
-                return .send(.fetchSelectedSystem)
-                
+
             case let .view(.setSystemToDelete(system)):
                 state.systemToDelete = system
                 return .send(.presentConfirmation)
@@ -129,6 +107,11 @@ struct GradeSystemList {
                     .run { _ in await client.deleteSystem(id) },
                     .send(.fetchGradeSystems)
                 )
+            
+            case let .setFocusGrade(grade):
+                state.$focusedGrade.withLock {
+                    $0 = grade
+                }
                 
             case let .view(.edit(id)):
                 guard let gradeSystem = state.gradeSystems.first (where: { $0.id == id }) else {

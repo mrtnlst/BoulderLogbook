@@ -24,14 +24,19 @@ struct Dashboard {
 
     @ObservableState
     struct State {
+        var trends: TrendsFeature.State
         @Presents var destination: Destination.State?
-        var sections: [Logbook.Section] = []
-        var diagramPage = DiagramPage.State()
+        @Shared var sections: [Logbook.Section]
         var gradeSystems: [GradeSystem] = []
         var entryToDelete: Logbook.Section.Entry.ID?
 
         var numberOfEntries: Int {
             sections.reduce(into: 0, { $0 += $1.entries.count})
+        }
+        
+        init() {
+            self._sections = Shared(value: [])
+            self.trends = .init(sections: self._sections)
         }
     }
     
@@ -46,8 +51,8 @@ struct Dashboard {
         case deleteDidFinish(TaskResult<EntryClientResponse>)
         case edit(Logbook.Section.Entry)
         case setNavigation(Logbook.Section.Entry)
-        case diagramPage(DiagramPage.Action)
         case presentEntryForm(EntryForm.State?)
+        case trends(TrendsFeature.Action)
         case destination(PresentationAction<Destination.Action>)
 
         enum EntryClientResponse { case finished }
@@ -57,8 +62,8 @@ struct Dashboard {
     @Dependency(\.dismiss) var dismiss
 
     var body: some ReducerOf<Self> {
-        Scope(state: \.diagramPage, action: \.diagramPage) {
-            DiagramPage()
+        Scope(state: \.trends, action: \.trends) {
+            TrendsFeature()
         }
         Reduce { state, action in
             switch action {
@@ -97,7 +102,9 @@ struct Dashboard {
                 }
                 
             case let .receiveSections(.success(sections)):
-                state.sections = sections
+                state.$sections.withLock {
+                    $0 = sections
+                }
 
             case let .delete(id),
                  let .destination(.presented(.entryDetail(.delete(id)))) :
@@ -137,10 +144,9 @@ struct Dashboard {
 
             case .deleteDidFinish:
                 state.destination = nil
-                return .merge(
-                    .send(.fetchSections),
-                    .send(.diagramPage(.fetchEntries))
-                )
+                return .run { send in
+                    await send(.fetchSections)
+                }
 
             case let .setNavigation(entry):
                 if let system = state.gradeSystems.first(where: { $0.id == entry.gradeSystem }) {
@@ -159,10 +165,9 @@ struct Dashboard {
                 
             case .destination(.presented(.entryForm(.saveDidFinish))):
                 state.destination = nil
-                return .merge(
-                    .send(.fetchSections),
-                    .send(.diagramPage(.fetchEntries))
-                )
+                return .run { send in
+                    await send(.fetchSections)
+                }
                 
             case let .edit(entry),
                 let .destination(.presented(.entryDetail(.edit(entry)))):

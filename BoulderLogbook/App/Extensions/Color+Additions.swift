@@ -57,8 +57,8 @@ extension Color {
 }
 
 extension Color {
-    static let mandalaBlue = araHint
-    static let mandalaRed = araError
+    static let mandalaBlue = araLightBlue
+    static let mandalaRed = araLightRed
     static let mandalaOrange = araYellow
     static let mandalaBlack = araOffBlack
     static let mandalaWhite = araTextPrimary

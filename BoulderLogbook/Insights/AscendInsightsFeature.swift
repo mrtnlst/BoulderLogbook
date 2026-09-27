@@ -8,10 +8,6 @@
 import SwiftUI
 import ComposableArchitecture
 
-private extension String {
-    static let storedKey = "selected-ascended-grade-id"
-}
-
 @Reducer
 struct AscendInsightsFeature {
     private enum EffectId {
@@ -20,14 +16,13 @@ struct AscendInsightsFeature {
 
     @ObservableState
     struct State {
-        @Shared internal var timeSegment: TimeSegment
-        @Shared internal var entries: [Logbook.Section.Entry]
-        @Shared internal var gradeSystem: GradeSystem?
-        @Shared(.appStorage(.storedKey)) internal var storedGradeId: UUID?
-        
+        @Shared var timeSegment: TimeSegment
+        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var gradeSystem: GradeSystem?
+        @Shared(.fileStorage(.focusGrade)) var focusGrade: Grade?
+
         var mostAscends: InsightModel = .mostAscends()
         var selectedAscends: InsightModel = .selectedAscends()
-        var selectedAscendedGrade: Grade?
 
         init(
             timeSegment: Shared<TimeSegment>,
@@ -43,8 +38,9 @@ struct AscendInsightsFeature {
     enum Action: ViewAction {
         enum View {
             case task
+            case didTapSelectFocusGrade
+            case didTapMostAscendsButton
         }
-        case setSelectedGrade(Grade?)
         case didUpdateSharedState
         case view(View)
     }
@@ -73,13 +69,11 @@ struct AscendInsightsFeature {
                 )
                 .cancellable(id: EffectId.taskEffect, cancelInFlight: true)
 
-            case let .setSelectedGrade(grade):
-                updateStoredGradeId(in: &state, with: grade?.id)
-                updateSelectedAscendedGrade(in: &state)
-
             case .didUpdateSharedState:
                 updateGradeWithMostAscends(in: &state)
                 updateSelectedAscendedGrade(in: &state)
+                
+            default: ()
             }
 
             return .none
@@ -132,12 +126,13 @@ extension AscendInsightsFeature {
             return
         }
 
-        guard let grade = gradeSystem.grade(for: state.storedGradeId) else {
-            updateStoredGradeId(in: &state, with: nil)
-            state.selectedAscends = .selectedAscends(insight: "No grade selected!")
+        guard let focusGrade = state.focusGrade, gradeSystem.grades.contains(focusGrade) else {
+            state.$focusGrade.withLock {
+                $0 = nil
+            }
+            state.selectedAscends = .selectedAscends(insight: "Select a focus grade!")
             return
         }
-        state.selectedAscendedGrade = grade
 
         let segment = state.timeSegment
         let startDate = if let calendarComponent = segment.calendarComponent { calendar.dateInterval(of: calendarComponent, for: .now)?.start ?? .now
@@ -150,22 +145,13 @@ extension AscendInsightsFeature {
             .filter { $0.date > startDate }
             .reduce(into: [], { $0.append(contentsOf: $1.tops) })
             .successful()
-        let topsForGrade = tops.count(for: grade)
+        let topsForGrade = tops.count(for: focusGrade)
         let timeDescription = switch segment {
         case .all: "in total"
         default: segment.description
         }
         state.selectedAscends = .selectedAscends(
-            insight: "Grade \(grade.name) was ascended \(topsForGrade) times \(timeDescription)."
+            insight: "Grade \(focusGrade.name) was ascended \(topsForGrade) times \(timeDescription)."
         )
-    }
-    
-    func updateStoredGradeId(
-        in state: inout AscendInsightsFeature.State,
-        with newValue: UUID?
-    ) {
-        state.$storedGradeId.withLock {
-            $0 = newValue
-        }
     }
 }

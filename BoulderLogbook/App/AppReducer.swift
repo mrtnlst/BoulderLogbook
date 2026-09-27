@@ -48,26 +48,24 @@ struct AppReducer {
                 return .send(.settings(.setGradeSystemListNavigation))
 
             case .settings(.destination(.presented(.gradeSystemList(.destination(.presented(.gradeSystemForm(.saveDidFinish))))))):
-                return .merge(
-                    .send(.dashboard(.fetchGradeSystems)),
-                    .send(.dashboard(.diagramPage(.fetchSelectedSystem)))
-                )
+                return .run { send in
+                    await send(.dashboard(.fetchGradeSystems))
+                }
                 
             case .settings(.deleteEntriesDidFinish):
-                return .merge(
-                    .send(.dashboard(.fetchGradeSystems)),
-                    .send(.dashboard(.diagramPage(.fetchEntries)))
-                )
+                return .run { send in
+                    await send(.dashboard(.fetchGradeSystems))
+                }
                                 
-            case .settings(.destination(.presented(.gradeSystemList(.saveSelectedDidFinish)))):
-                return .send(.dashboard(.diagramPage(.fetchEntries)))
-                
-            case .dashboard(.diagramPage(.topCountDiagram(.didPressEmptyView))),
-                 .dashboard(.diagramPage(.summaryDiagram(.didPressEmptyView))):
+            case .insights(.destination(.presented(.topCountDiagram(.view(.didPressEmptyView))))):
                 state.tab = .settings
                 if !state.dashboard.gradeSystems.isEmpty {
                     return .send(.presentGradeSystemConfiguration)
                 }
+                return .send(.presentGradeSystemList)
+                
+            case .insights(.ascendInsights(.view(.didTapSelectFocusGrade))):
+                state.tab = .settings
                 return .send(.presentGradeSystemList)
                 
             case let .didChangeTab(tab):

@@ -33,6 +33,7 @@ struct SessionInsightsFeature {
     enum Action: ViewAction {
         enum View {
             case task
+            case didTapSessionCountButton
         }
         case didUpdateTimeSegment
         case didUpdateEntries
@@ -65,6 +66,8 @@ struct SessionInsightsFeature {
             case .didUpdateEntries:
                 updateSessionCountInsight(&state)
                 updateMostCommonWeekdayInsight(in: &state)
+            
+            default: ()
             }
             return .none
         }

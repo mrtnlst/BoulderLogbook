@@ -12,8 +12,18 @@ import ComposableArchitecture
 struct SummaryDiagram {
     @ObservableState
     struct State: Equatable {
+        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var gradeSystem: GradeSystem?
         var viewState: ViewState<[Model], DataError> = .loading
         
+        init(
+            entries: Shared<[Logbook.Section.Entry]>,
+            gradeSystem: Shared<GradeSystem?>
+        ) {
+            self._entries = entries
+            self._gradeSystem = gradeSystem
+        }
+
         enum DataError {
             case noEntries
             case noGradeSystem
@@ -27,9 +37,12 @@ struct SummaryDiagram {
         }
     }
     
-    enum Action: Equatable {
-        case receiveData([Logbook.Section.Entry], GradeSystem?)
-        case didPressEmptyView
+    enum Action: Equatable, ViewAction {
+        enum View {
+            case task
+            case didPressEmptyView
+        }
+        case view(View)
     }
     
     struct Model: Identifiable, Equatable {
@@ -46,16 +59,16 @@ struct SummaryDiagram {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case let .receiveData(entries, gradeSystem):
-                guard let gradeSystem = gradeSystem else {
+            case .view(.task):
+                guard let gradeSystem = state.gradeSystem else {
                     state.viewState = .error(.noGradeSystem)
                     return .none
                 }
-                guard !entries.isEmpty else {
+                guard !state.entries.isEmpty else {
                     state.viewState = .error(.noEntries)
                     return .none
                 }
-                let filteredTops = entries
+                let filteredTops = state.entries
                     .filter({ $0.gradeSystem == gradeSystem.id })
                     .sorted(by: { $0.date > $1.date })
                     .prefix(1)

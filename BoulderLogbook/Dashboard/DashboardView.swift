@@ -14,12 +14,7 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             PlainList {
-                DiagramPageView(
-                    store: store.scope(
-                        state: \.diagramPage,
-                        action: \.diagramPage
-                    )
-                )
+                trendsView
                 ForEach(store.sections, id: \.date) {
                     section($0)
                 }
@@ -61,6 +56,17 @@ struct DashboardView: View {
 }
 
 private extension DashboardView {
+    var trendsView: some View {
+        PlainSection("Trends") {
+            TrendsView(
+                store: store.scope(
+                    \.trends,
+                     action: \.trends
+                )
+            )
+        }
+    }
+
     func section(_ section: Logbook.Section) -> some View {
         PlainSection {
             ForEach(section.entries) { entry in

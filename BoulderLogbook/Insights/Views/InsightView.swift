@@ -7,15 +7,33 @@
 
 import SwiftUI
 
-struct InsightView: View {
+struct InsightView<Accessory: View>: View {
     let model: InsightModel
+    @ViewBuilder let accessoryView: (() -> Accessory)?
 
+    init(
+        model: InsightModel,
+        accessoryView: (() -> Accessory)? = nil
+    ) {
+        self.model = model
+        self.accessoryView = accessoryView
+    }
+    
     var body: some View {
         Label {
-            if let sessionCountInsight = model.insight {
-                Text(sessionCountInsight)
-            } else {
-                LoadingIndicator()
+            HStack {
+                if let sessionCountInsight = model.insight {
+                    Text(sessionCountInsight)
+                } else {
+                    LoadingIndicator()
+                }
+                Spacer()
+                accessoryView?()
+                
+                if model.hasChevron {
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.secondaryText)
+                }
             }
         } icon: {
             let image = Image(systemName: model.systemImage)
@@ -26,6 +44,12 @@ struct InsightView: View {
                 image
             }
         }
+    }
+}
+
+extension InsightView {
+    init(model: InsightModel) where Accessory == EmptyView {
+        self.init(model: model,accessoryView: nil)
     }
 }
 

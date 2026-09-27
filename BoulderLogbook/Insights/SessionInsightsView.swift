@@ -14,7 +14,11 @@ struct SessionInsightsView: View {
     
     var body: some View {
         Group {
-            InsightView(model: store.sessionCountInsight)
+            PlainRowButton {
+                send(.didTapSessionCountButton)
+            } label: {
+                InsightView(model: store.sessionCountInsight)
+            }
             InsightView(model: store.mostCommonWeekdayInsight)
         }
         .task { send(.task) }

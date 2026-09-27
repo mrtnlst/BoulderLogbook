@@ -23,6 +23,9 @@ struct BoulderLogbookApp: App {
     var body: some Scene {
         WindowGroup {
             AppView(store: Self.store)
+                .task {
+                    await Self.dependencies.migrate()
+                }
         }
     }
 }

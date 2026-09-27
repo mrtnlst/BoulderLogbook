@@ -10,23 +10,30 @@ import ComposableArchitecture
 
 @Reducer
 struct InsightsFeature {
+    @Reducer
+    enum Destination {
+        case sessionsDiagram(SessionDiagram)
+        case topCountDiagram(TopCountDiagram)
+    }
+
     @ObservableState
     struct State {
+        @Presents var destination: Destination.State?
         @Shared var selectedSegment: TimeSegment
-        @Shared internal var entries: [Logbook.Section.Entry]
-        @Shared internal var gradeSystem: GradeSystem?
+        @Shared var entries: [Logbook.Section.Entry]
+        @Shared(.fileStorage(.defaultGradeSystem)) var gradeSystem: GradeSystem?
+        
         var sessionInsights: SessionInsightsFeature.State
         var ascendInsights: AscendInsightsFeature.State
         
         init() {
             self._selectedSegment = Shared(value: .month)
             self._entries = Shared(value: [])
-            self._gradeSystem = Shared(value: nil)
-            sessionInsights = .init(
+            self.sessionInsights = .init(
                 timeSegment: self._selectedSegment,
                 entries: self._entries
             )
-            ascendInsights = .init(
+            self.ascendInsights = .init(
                 timeSegment: self._selectedSegment,
                 entries: self._entries,
                 gradeSystem: self._gradeSystem
@@ -34,26 +41,22 @@ struct InsightsFeature {
         }
     }
 
-    enum Action: BindableAction, ViewAction {
+    enum Action: ViewAction {
         enum View {
             case task
         }
         case fetchEntries
         case receiveEntries(Result<[Logbook.Section.Entry], Never>)
-        case fetchGradeSystem
-        case receiveGradeSystem(GradeSystem?)
+        case setTimeSegment(TimeSegment)
         case sessionInsights(SessionInsightsFeature.Action)
         case ascendInsights(AscendInsightsFeature.Action)
-        case binding(BindingAction<State>)
+        case destination(PresentationAction<Destination.Action>)
         case view(View)
     }
     
-    @Dependency(\.calendar) var calendar
     @Dependency(\.logbookEntryClient) var entryClient
-    @Dependency(\.gradeSystemClient) var gradeSystemClient
 
     var body: some ReducerOf<Self> {
-        BindingReducer()
         Scope(state: \.sessionInsights, action: \.sessionInsights) {
             SessionInsightsFeature()
         }
@@ -72,26 +75,32 @@ struct InsightsFeature {
                         )
                     )
                 }
-
+                
+            case .sessionInsights(.view(.didTapSessionCountButton)):
+                state.destination = .sessionsDiagram(
+                    SessionDiagram.State(entries: state.$entries)
+                )
+                
+            case .ascendInsights(.view(.didTapMostAscendsButton)):
+                state.destination = .topCountDiagram(
+                    TopCountDiagram.State(
+                        entries: state.$entries,
+                        gradeSystem: state.$gradeSystem
+                    )
+                )
+                
             case let .receiveEntries(.success(entries)):
                 state.$entries.withLock { $0 = entries }
-                return .run { send in
-                    await send(.fetchGradeSystem)
+
+            case let .setTimeSegment(segment):
+                state.$selectedSegment.withLock {
+                    $0 = segment
                 }
                 
-            case .fetchGradeSystem:
-                return .run { send in
-                    await send(.receiveGradeSystem(await gradeSystemClient.fetchSelectedSystem()))
-                }
-
-            case let .receiveGradeSystem(gradeSystem):
-                state.$gradeSystem.withLock {
-                    $0 = gradeSystem
-                }
-
             default: ()
             }
             return .none
         }
+        .ifLet(\.$destination, action: \.destination)
     }
 }
