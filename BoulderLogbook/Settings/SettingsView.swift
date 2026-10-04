@@ -83,7 +83,9 @@ private extension SettingsView {
     Text("").sheet(isPresented: .constant(true)) {
         SettingsView(
             store: Store(
-                initialState: Settings.State()
+                initialState: Settings.State(
+                    gradeSystems: Shared(value: [.mandala2])
+                )
             ) {
                 Settings()
             }

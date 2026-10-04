@@ -16,17 +16,17 @@ struct SessionInsightsFeature {
 
     @ObservableState
     struct State {
-        @Shared internal var timeSegment: TimeSegment
-        @Shared internal var entries: [Logbook.Section.Entry]
+        @Shared var timeSegment: TimeSegment
+        @Shared var sections: [Logbook.Section]
         var sessionCountInsight: InsightModel = .sessionCount()
         var mostCommonWeekdayInsight: InsightModel = .mostCommonWeekday()
         
         init(
             timeSegment: Shared<TimeSegment>,
-            entries: Shared<[Logbook.Section.Entry]>
+            sections: Shared<[Logbook.Section]>
         ) {
             self._timeSegment = timeSegment
-            self._entries = entries
+            self._sections = sections
         }
     }
     
@@ -53,7 +53,7 @@ struct SessionInsightsFeature {
                         }
                     },
                     .publisher {
-                        state.$entries.publisher.map { _ in
+                        state.$sections.publisher.map { _ in
                             Action.didUpdateEntries
                         }
                     }
@@ -76,18 +76,19 @@ struct SessionInsightsFeature {
 
 extension SessionInsightsFeature {
     func updateSessionCountInsight(_ state: inout SessionInsightsFeature.State) {
+        let entries = state.sections.entries
         var insightText: String = "You went to the gym %@ times %@."
         switch state.timeSegment {
         case .all:
             // Displays number of years between oldest entry and now.
             // The entry's starting date is moved to the 1st of Jan.
-            let oldestEntry = state.entries.min(by: { $0.date < $1.date })?.date ?? .now
+            let oldestEntry = entries.min(by: { $0.date < $1.date })?.date ?? .now
             let oldestEntryComponents = calendar.dateComponents([.year], from: oldestEntry)
             let startingDate = calendar.date(from: oldestEntryComponents) ?? .now
             let components = calendar.dateComponents([.year], from: startingDate, to: .now)
             insightText = String(
                 format: insightText,
-                "\(state.entries.count)",
+                "\(entries.count)",
                 "over the last \(components.year ?? 0) years"
             )
         default:
@@ -96,7 +97,7 @@ extension SessionInsightsFeature {
             } else {
                 Date.distantPast
             }
-            let count = state.entries.count { $0.date > startDate }
+            let count = entries.count { $0.date > startDate }
             insightText = String(format: insightText, "\(count)", segment.description)
         }
         state.sessionCountInsight = .sessionCount(insight: insightText)
@@ -105,7 +106,8 @@ extension SessionInsightsFeature {
     func updateMostCommonWeekdayInsight(
         in state: inout SessionInsightsFeature.State
     ) {
-        let entriesPerWeekday = state.entries.reduce(into: [Int: Int]()) { partialResult, entry in
+        let entries = state.sections.entries
+        let entriesPerWeekday = entries.reduce(into: [Int: Int]()) { partialResult, entry in
             let weekday = calendar.component(.weekday, from: entry.date)
             let numberOfEntries = partialResult[weekday] ?? 0
             partialResult[weekday] = numberOfEntries + 1

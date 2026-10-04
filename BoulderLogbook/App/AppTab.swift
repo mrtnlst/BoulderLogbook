@@ -8,6 +8,7 @@
 enum AppTab: String, CaseIterable {
     case sessions = "Sessions"
     case insights = "Insights"
+    case history = "History"
     case settings = "Settings"
     
     var symbol: String {
@@ -16,6 +17,8 @@ enum AppTab: String, CaseIterable {
             return "figure.play"
         case .insights:
             return "lightbulb.max"
+        case .history:
+            return "text.book.closed"
         case .settings:
             return "gear"
         }

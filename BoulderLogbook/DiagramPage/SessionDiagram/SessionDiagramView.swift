@@ -79,7 +79,9 @@ extension SessionDiagramView {
     SessionDiagramView(
         store: Store(
             initialState: SessionDiagram.State(
-                entries: Shared(value: .samples)
+                sections: Shared(
+                    value: Logbook.sample2.sections
+                )
             )
         ) {
             SessionDiagram()

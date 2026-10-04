@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: AppReducer.self)
 struct AppView: View {
     @Bindable var store: StoreOf<AppReducer>
 
@@ -38,6 +39,19 @@ struct AppView: View {
                     )
                 )
             }
+            
+            Tab(
+                AppTab.history.rawValue,
+                systemImage: AppTab.history.symbol,
+                value: AppTab.history
+            ) {
+                HistoryView(
+                    store: store.scope(
+                        state: \.history,
+                        action: \.history
+                    )
+                )
+            }
 
             Tab(
                 AppTab.settings.rawValue,
@@ -54,6 +68,9 @@ struct AppView: View {
         }
         .tint(.toolbarButtonColor)
         .preferredColorScheme(.dark)
+        .onAppear {
+            send(.onAppear)
+        }
     }
 }
 

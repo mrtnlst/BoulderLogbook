@@ -49,6 +49,14 @@ struct Logbook {
     var sections: [Section]
 }
 
+extension [Logbook.Section] {
+    var entries: [Logbook.Section.Entry] {
+        reduce(into: [Logbook.Section.Entry]()) {
+            $0.append(contentsOf: $1.entries)
+        }
+    }
+}
+
 extension Logbook: Sendable {}
 extension Logbook: Equatable {}
 extension Logbook.Section: Sendable {}

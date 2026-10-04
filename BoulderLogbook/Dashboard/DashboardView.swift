@@ -15,25 +15,12 @@ struct DashboardView: View {
         NavigationStack {
             PlainList {
                 trendsView
-                ForEach(store.sections, id: \.date) {
-                    section($0)
-                }
-                TotalAmountView(amount: store.numberOfEntries)
-                CreditsView()
             }
             .onAppear {
                 store.send(.onAppear)
             }
-            .navigationTitle("Sessions")
+            .navigationTitle("Dashboard")
             .toolbarTitleDisplayMode(.inlineLarge)
-            .navigationDestination(
-                item: $store.scope(
-                    state: \.destination?.entryDetail,
-                    action: \.destination.entryDetail
-                )
-            ) {
-                EntryDetailView(store: $0)
-            }
             .toolbar {
                 toolbarContent()
             }
@@ -45,12 +32,6 @@ struct DashboardView: View {
             ) {
                 EntryFormView(store: $0)
             }
-            .alert(
-                $store.scope(
-                    state: \.destination?.confirmationDialog,
-                    action: \.destination.confirmationDialog
-                )
-            )
         }
     }
 }
@@ -67,54 +48,6 @@ private extension DashboardView {
         }
     }
 
-    func section(_ section: Logbook.Section) -> some View {
-        PlainSection {
-            ForEach(section.entries) { entry in
-                if let gradeSystem = store.gradeSystems.first(
-                    where: { $0.id == entry.gradeSystem }
-                ) {
-                    row(entry: entry, gradeSystem: gradeSystem)
-                }
-            }
-        } header: {
-            Text(
-                section.date,
-                format: .dateTime.year().month(.wide)
-            )
-            .font(.title3)
-            .fontWeight(.semibold)
-        }
-    }
-
-    func row(
-        entry: Logbook.Section.Entry,
-        gradeSystem: GradeSystem
-    ) -> some View {
-        PlainRowButton {
-            store.send(.setNavigation(entry))
-        } label: {
-            DashboardEntryView(
-                entry: entry,
-                gradeSystem: gradeSystem,
-                focusGrade: store.focusGrade
-            )
-        }
-        .swipeActions {
-            Button {
-                store.send(.delete(entry.id))
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
-            .tint(.araError)
-            Button {
-                store.send(.edit(entry))
-            } label: {
-                Label("Edit", systemImage: "pencil")
-            }
-            .tint(.araWarning)
-        }
-    }
-    
     @ToolbarContentBuilder
     func toolbarContent() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
@@ -136,7 +69,11 @@ private extension DashboardView {
     NavigationStack {
         DashboardView(
             store: Store(
-                initialState: Dashboard.State()
+                initialState: Dashboard.State(
+                    sections: Shared(
+                        value: Logbook.sample2.sections
+                    )
+                )
             ) {
                 Dashboard()
             }

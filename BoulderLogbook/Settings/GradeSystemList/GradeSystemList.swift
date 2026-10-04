@@ -24,49 +24,40 @@ struct GradeSystemList {
     @ObservableState
     struct State {
         @Presents var destination: Destination.State?
+        @Shared var gradeSystems: [GradeSystem]
         @Shared(.fileStorage(.focusGrade)) var focusedGrade: Grade?
         @Shared(.fileStorage(.defaultGradeSystem)) var defaultGradeSystem: GradeSystem?
-        var gradeSystems: [GradeSystem] = []
         var systemToDelete: GradeSystem?
+        
+        init(gradeSystems: Shared<[GradeSystem]>) {
+            self._gradeSystems = gradeSystems
+        }
     }
     
     enum Action: ViewAction {
+        enum Delegate {
+            case fetchGradeSystems
+        }
         enum View {
-            case onAppear
             case presentGradeSystemForm
             case setSystemToDelete(GradeSystem)
             case edit(UUID)
         }
-        case destination(PresentationAction<Destination.Action>)
-        case fetchGradeSystems
-        case receiveGradeSystems(TaskResult<[GradeSystem]>)
         case presentConfirmation
         case saveSelected(GradeSystem)
         case delete(UUID)
         case setFocusGrade(Grade?)
+        case delegate(Delegate)
         case view(View)
-        
-        enum ClientResponse { case finished }
+        case destination(PresentationAction<Destination.Action>)
     }
     
     @Dependency(\.gradeSystemClient) var client
-    
+    @Dependency(\.logbookEntryClient) var entryClient
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .view(.onAppear):
-                return .send(.fetchGradeSystems)
-                
-            case .fetchGradeSystems:
-                return .run { send in
-                    await send(
-                        .receiveGradeSystems(TaskResult { await client.fetchAvailableSystems() })
-                    )
-                }
-                
-            case let .receiveGradeSystems(.success(gradeSystems)):
-                state.gradeSystems = gradeSystems
-                
             case .view(.presentGradeSystemForm):
                 state.destination = .gradeSystemForm(GradeSystemForm.State())
                 
@@ -103,9 +94,21 @@ struct GradeSystemList {
                 return .send(.delete(systemToDelete.id))
                 
             case let .delete(id):
+                if state.defaultGradeSystem?.id == id {
+                    state.$defaultGradeSystem.withLock {
+                        $0 = nil
+                    }
+                    // Focus Grade is taken from default system.
+                    state.$focusedGrade.withLock {
+                        $0 = nil
+                    }
+                }
                 return .concatenate(
-                    .run { _ in await client.deleteSystem(id) },
-                    .send(.fetchGradeSystems)
+                    .run { _ in
+                        await client.deleteSystem(id)
+                        await entryClient.deleteEntries(id)
+                    },
+                    .send(.delegate(.fetchGradeSystems))
                 )
             
             case let .setFocusGrade(grade):
@@ -129,8 +132,8 @@ struct GradeSystemList {
                 
             case .destination(.presented(.gradeSystemForm(.saveDidFinish))):
                 state.destination = nil
-                return .send(.fetchGradeSystems)
-                
+                return .send(.delegate(.fetchGradeSystems))
+
             default: ()
             }
             return .none

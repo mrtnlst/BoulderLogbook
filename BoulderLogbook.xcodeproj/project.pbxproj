@@ -25,6 +25,8 @@
 		5B2355D02FED7BEF00147E88 /* AscendInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2355CF2FED7BEF00147E88 /* AscendInsightsView.swift */; };
 		5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */; };
 		5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831B30725CF0006B0D09 /* PlainChevron.swift */; };
+		5B34831E30725E67006B0D09 /* HistoryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831D30725E67006B0D09 /* HistoryFeature.swift */; };
+		5B34832030725E71006B0D09 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831F30725E71006B0D09 /* HistoryView.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C32F9E67A100E2A644 /* Aurora.icon */; };
 		5B50B0CD2F9E67A100E2A644 /* Dark Berry.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */; };
@@ -138,6 +140,8 @@
 		5B2355CF2FED7BEF00147E88 /* AscendInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendInsightsView.swift; sourceTree = "<group>"; };
 		5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+Additions.swift"; sourceTree = "<group>"; };
 		5B34831B30725CF0006B0D09 /* PlainChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainChevron.swift; sourceTree = "<group>"; };
+		5B34831D30725E67006B0D09 /* HistoryFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFeature.swift; sourceTree = "<group>"; };
+		5B34831F30725E71006B0D09 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		5B390D722C304C1100C7CF33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
 		5B50B0C32F9E67A100E2A644 /* Aurora.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Aurora.icon; sourceTree = "<group>"; };
@@ -296,6 +300,15 @@
 				5B6F0F4C3056AEAA0029EB05 /* Views */,
 			);
 			path = Insights;
+			sourceTree = "<group>";
+		};
+		5B34832130725E78006B0D09 /* HistoryFeature */ = {
+			isa = PBXGroup;
+			children = (
+				5B34831D30725E67006B0D09 /* HistoryFeature.swift */,
+				5B34831F30725E71006B0D09 /* HistoryView.swift */,
+			);
+			path = HistoryFeature;
 			sourceTree = "<group>";
 		};
 		5B50B0C92F9E67A100E2A644 /* Icons */ = {
@@ -503,15 +516,16 @@
 				5B390D722C304C1100C7CF33 /* Info.plist */,
 				A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */,
 				A94CFAFC2B8E9649008D34CA /* Dependencies.swift */,
-				A9BE3A4A2B8D15AE004DD728 /* Storage */,
 				A9B07E852868588700AA6274 /* App */,
 				A9C3005329829070001B51C4 /* Dashboard */,
 				5B6D397A299AC82A00299CCA /* DiagramPage */,
 				A9C300592982929C001B51C4 /* EntryForm */,
-				5BDD41F129868A9A00B84BA0 /* Settings */,
+				5B34832130725E78006B0D09 /* HistoryFeature */,
 				5B2355BC2FD58D2300147E88 /* Insights */,
-				5B71A7E8306017CE006D773D /* Trends */,
 				5B50B0CB2F9E67A100E2A644 /* Resources */,
+				5BDD41F129868A9A00B84BA0 /* Settings */,
+				A9BE3A4A2B8D15AE004DD728 /* Storage */,
+				5B71A7E8306017CE006D773D /* Trends */,
 			);
 			path = BoulderLogbook;
 			sourceTree = "<group>";
@@ -757,6 +771,7 @@
 				5B6B2C642BF149D400A17549 /* CreditsView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				A9BE3A4C2B8D15C1004DD728 /* CoreDataStorage.swift in Sources */,
+				5B34832030725E71006B0D09 /* HistoryView.swift in Sources */,
 				5B6DB3732A519C08006265F0 /* EmptyMessageView.swift in Sources */,
 				5B1A808028A7D6BF00530B01 /* Logbook.swift in Sources */,
 				A9435D8429826290001DC22B /* EntryDetail.swift in Sources */,
@@ -785,6 +800,7 @@
 				5B6B2C622BF1472C00A17549 /* TotalAmountView.swift in Sources */,
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
+				5B34831E30725E67006B0D09 /* HistoryFeature.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
 				5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,

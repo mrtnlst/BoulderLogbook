@@ -17,7 +17,7 @@ struct AscendInsightsFeature {
     @ObservableState
     struct State {
         @Shared var timeSegment: TimeSegment
-        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var sections: [Logbook.Section]
         @Shared var gradeSystem: GradeSystem?
         @Shared(.fileStorage(.focusGrade)) var focusGrade: Grade?
 
@@ -26,11 +26,11 @@ struct AscendInsightsFeature {
 
         init(
             timeSegment: Shared<TimeSegment>,
-            entries: Shared<[Logbook.Section.Entry]>,
+            sections: Shared<[Logbook.Section]>,
             gradeSystem: Shared<GradeSystem?>
         ) {
             self._timeSegment = timeSegment
-            self._entries = entries
+            self._sections = sections
             self._gradeSystem = gradeSystem
         }
     }
@@ -57,7 +57,7 @@ struct AscendInsightsFeature {
                         }
                     },
                     .publisher {
-                        state.$entries.publisher.map { _ in
+                        state.$sections.publisher.map { _ in
                             Action.didUpdateSharedState
                         }
                     },
@@ -95,7 +95,7 @@ extension AscendInsightsFeature {
             Date.distantPast
         }
 
-        let filteredEntries = state.entries.filter {
+        let filteredEntries = state.sections.entries.filter {
             $0.gradeSystem == gradeSystem.id
         }
         let tops = filteredEntries
@@ -127,9 +127,6 @@ extension AscendInsightsFeature {
         }
 
         guard let focusGrade = state.focusGrade, gradeSystem.grades.contains(focusGrade) else {
-            state.$focusGrade.withLock {
-                $0 = nil
-            }
             state.selectedAscends = .selectedAscends(insight: "Select a focus grade!")
             return
         }
@@ -140,7 +137,9 @@ extension AscendInsightsFeature {
             Date.distantPast
         }
         
-        let filteredEntries = state.entries.filter({ $0.gradeSystem == gradeSystem.id })
+        let filteredEntries = state.sections.entries.filter {
+            $0.gradeSystem == gradeSystem.id
+        }
         let tops = filteredEntries
             .filter { $0.date > startDate }
             .reduce(into: [], { $0.append(contentsOf: $1.tops) })

@@ -99,8 +99,8 @@ extension TopCountDiagramView {
     TopCountDiagramView(
         store: Store(
             initialState: TopCountDiagram.State(
-                entries: Shared(
-                    value: .samples
+                sections: Shared(
+                    value: Logbook.sample2.sections
                 ),
                 gradeSystem: Shared(value: .mandala)
             )

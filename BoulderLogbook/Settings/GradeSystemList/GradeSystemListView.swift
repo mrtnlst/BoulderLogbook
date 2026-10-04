@@ -29,7 +29,6 @@ struct GradeSystemListView: View {
         .navigationTitle("Grade Systems")
         .toolbarTitleDisplayMode(.inline)
         .toolbar { toolbarContent }
-        .onAppear { send(.onAppear) }
         .alert(
             $store.scope(
                 state: \.destination?.confirmationDialog,
@@ -124,7 +123,9 @@ private extension GradeSystemListView {
     NavigationView {
         GradeSystemListView(
             store: Store(
-                initialState: GradeSystemList.State()
+                initialState: GradeSystemList.State(
+                    gradeSystems: Shared(value: [.mandala2])
+                )
             ) {
                 GradeSystemList()
                     .dependency(GradeSystemClient.previewValue)

@@ -21,8 +21,15 @@ struct Grade {
     }
 }
 
+extension Grade: Equatable {
+    static func == (lhs: Grade, rhs: Grade) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.name == rhs.name &&
+        lhs.difficulty == rhs.difficulty
+    }
+}
+
 extension Grade: Sendable {}
-extension Grade: Equatable {}
 extension Grade: Codable {}
 extension Grade: Identifiable {}
 extension Grade: Hashable {}

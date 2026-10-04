@@ -12,16 +12,16 @@ import ComposableArchitecture
 struct TopCountDiagram {
     @ObservableState
     struct State: Equatable {
-        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var sections: [Logbook.Section]
         @Shared var gradeSystem: GradeSystem?
         var selectedSegment: Segment = .week
         var viewState: ViewState<[Top], String> = .loading
         
         init(
-            entries: Shared<[Logbook.Section.Entry]>,
+            sections: Shared<[Logbook.Section]>,
             gradeSystem: Shared<GradeSystem?>
         ) {
-            self._entries = entries
+            self._sections = sections
             self._gradeSystem = gradeSystem
         }
     }
@@ -57,7 +57,9 @@ struct TopCountDiagram {
                     state.viewState = .error("Create or select a Grade System for your Diagrams!")
                     return .none
                 }
-                let filteredEntries = state.entries.filter({ $0.gradeSystem == gradeSystem.id })
+                let filteredEntries = state.sections.entries.filter {
+                    $0.gradeSystem == gradeSystem.id
+                }
                 
                 var tops: [Top] = []
                 if let value = state.selectedSegment.value {

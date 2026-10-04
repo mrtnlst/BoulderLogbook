@@ -8,7 +8,6 @@
 import SwiftUI
 import ComposableArchitecture
 
-@ViewAction(for: InsightsFeature.self)
 struct InsightsView: View {
     @Bindable var store: StoreOf<InsightsFeature>
 
@@ -21,7 +20,6 @@ struct InsightsView: View {
             .background(Color.araBackground)
             .navigationTitle("Insights")
             .toolbarTitleDisplayMode(.inlineLarge)
-            .task { send(.task) }
         }
         .preferredColorScheme(.dark)
     }
@@ -82,7 +80,11 @@ private extension InsightsView {
 #Preview {
     InsightsView(
         store: Store(
-            initialState: .init(),
+            initialState: .init(
+                sections: Shared(
+                    value: Logbook.sample2.sections
+                )
+            ),
             reducer: {
                 InsightsFeature()
             },

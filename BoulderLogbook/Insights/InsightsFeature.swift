@@ -20,38 +20,32 @@ struct InsightsFeature {
     struct State {
         @Presents var destination: Destination.State?
         @Shared var selectedSegment: TimeSegment
-        @Shared var entries: [Logbook.Section.Entry]
+        @Shared var sections: [Logbook.Section]
         @Shared(.fileStorage(.defaultGradeSystem)) var gradeSystem: GradeSystem?
         
         var sessionInsights: SessionInsightsFeature.State
         var ascendInsights: AscendInsightsFeature.State
         
-        init() {
+        init(sections: Shared<[Logbook.Section]>) {
             self._selectedSegment = Shared(value: .month)
-            self._entries = Shared(value: [])
+            self._sections = sections
             self.sessionInsights = .init(
                 timeSegment: self._selectedSegment,
-                entries: self._entries
+                sections: self._sections
             )
             self.ascendInsights = .init(
                 timeSegment: self._selectedSegment,
-                entries: self._entries,
+                sections: self._sections,
                 gradeSystem: self._gradeSystem
             )
         }
     }
 
-    enum Action: ViewAction {
-        enum View {
-            case task
-        }
-        case fetchEntries
-        case receiveEntries(Result<[Logbook.Section.Entry], Never>)
+    enum Action {
         case setTimeSegment(TimeSegment)
         case sessionInsights(SessionInsightsFeature.Action)
         case ascendInsights(AscendInsightsFeature.Action)
         case destination(PresentationAction<Destination.Action>)
-        case view(View)
     }
     
     @Dependency(\.logbookEntryClient) var entryClient
@@ -65,32 +59,18 @@ struct InsightsFeature {
         }
         Reduce { state, action in
             switch action {
-            case .view(.task):
-                return .run { send in
-                    await send(
-                        .receiveEntries(
-                            Result {
-                                await entryClient.fetchEntries()
-                            }
-                        )
-                    )
-                }
-                
             case .sessionInsights(.view(.didTapSessionCountButton)):
                 state.destination = .sessionsDiagram(
-                    SessionDiagram.State(entries: state.$entries)
+                    SessionDiagram.State(sections: state.$sections)
                 )
                 
             case .ascendInsights(.view(.didTapMostAscendsButton)):
                 state.destination = .topCountDiagram(
                     TopCountDiagram.State(
-                        entries: state.$entries,
+                        sections: state.$sections,
                         gradeSystem: state.$gradeSystem
                     )
                 )
-                
-            case let .receiveEntries(.success(entries)):
-                state.$entries.withLock { $0 = entries }
 
             case let .setTimeSegment(segment):
                 state.$selectedSegment.withLock {

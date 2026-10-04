@@ -62,9 +62,7 @@ extension TrendsFeature {
             value: -1,
             to: currentWeekStart
         ) ?? .now
-        let entries = state.sections.reduce(into: [Logbook.Section.Entry]()) {
-            $0.append(contentsOf: $1.entries)
-        }
+        let entries = state.sections.entries
         let currentWeekEntries = entries.filter { $0.date > currentWeekStart }
         let previousWeekEntries = entries.filter {
             currentWeekStart > $0.date && $0.date > previousWeekStart
