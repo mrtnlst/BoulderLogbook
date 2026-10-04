@@ -23,33 +23,44 @@ struct DashboardEntryView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                VStack(alignment: .center) {
-                    Text("Total Ascends")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                    Text("\(entry.tops.count)⨉")
-                        .font(.title)
-                        .foregroundStyle(Color.araLightYellow)
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(minimum: 50, maximum: .infinity), alignment: .leading),
+                        GridItem(.flexible(minimum: 50, maximum: .infinity), alignment: .leading),
+                        GridItem(.flexible(minimum: 50, maximum: .infinity), alignment: .leading)
+                    ],
+                    spacing: 32
+                ) {
+                    VStack(alignment: .center) {
+                        Text("Total Ascends")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                        Text("\(entry.tops.count)⨉")
+                            .font(.title)
+                            .foregroundStyle(Color.araLightYellow)
+                    }
+                    VStack {
+                        Text("Highest Grade")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                        Text("\(entry.tops.highestGrade(for: gradeSystem)?.name ?? "-")")
+                            .font(.title)
+                            .foregroundStyle(Color.araBlue)
+                    }
+                    VStack {
+                        Text("Focus Grade")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                        Text(focusGradeText)
+                            .font(.title)
+                            .foregroundStyle(Color.araPurple)
+                    }
                 }
-                VStack {
-                    Text("Highest Grade")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                    Text("\(entry.tops.highestGrade(for: gradeSystem)?.name ?? "-")")
-                        .font(.title)
-                        .foregroundStyle(Color.araBlue)
-                }
-                VStack {
-                    Text("Focus Grade")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                    Text(focusGradeText)
-                        .font(.title)
-                        .foregroundStyle(Color.araPurple)
-                }
-                Spacer()
+                .frame(maxWidth: .infinity)
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.secondaryText)
+                    .font(.footnote)
+                    .fontWeight(.semibold)
             }
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
