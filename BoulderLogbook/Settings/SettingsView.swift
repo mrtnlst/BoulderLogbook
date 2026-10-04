@@ -68,8 +68,7 @@ private extension SettingsView {
                 HStack {
                     Text(title)
                     Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.primaryText)
+                    PlainChevron()
                 }
             },
             icon: {

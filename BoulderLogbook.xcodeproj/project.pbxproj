@@ -24,6 +24,7 @@
 		5B2355CE2FED7B0900147E88 /* AscendInsightsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2355CD2FED7B0900147E88 /* AscendInsightsFeature.swift */; };
 		5B2355D02FED7BEF00147E88 /* AscendInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2355CF2FED7BEF00147E88 /* AscendInsightsView.swift */; };
 		5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */; };
+		5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831B30725CF0006B0D09 /* PlainChevron.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C32F9E67A100E2A644 /* Aurora.icon */; };
 		5B50B0CD2F9E67A100E2A644 /* Dark Berry.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */; };
@@ -136,6 +137,7 @@
 		5B2355CD2FED7B0900147E88 /* AscendInsightsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendInsightsFeature.swift; sourceTree = "<group>"; };
 		5B2355CF2FED7BEF00147E88 /* AscendInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendInsightsView.swift; sourceTree = "<group>"; };
 		5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShapeStyle+Additions.swift"; sourceTree = "<group>"; };
+		5B34831B30725CF0006B0D09 /* PlainChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainChevron.swift; sourceTree = "<group>"; };
 		5B390D722C304C1100C7CF33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
 		5B50B0C32F9E67A100E2A644 /* Aurora.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Aurora.icon; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				5BE273FA2B5870C60004DD27 /* PlainList.swift */,
 				5B60B50A2B60562B00917DB5 /* PlainSection.swift */,
 				5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */,
+				5B34831B30725CF0006B0D09 /* PlainChevron.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				5BFAAB362A48400900E486DC /* About.swift in Sources */,
 				5B6D3980299ACCAF00299CCA /* TopCountDiagramView.swift in Sources */,
 				5B1A807D28A04E7F00530B01 /* DashboardEntryView.swift in Sources */,
+				5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
 				5B50B0E82F9E815200E2A644 /* GradeSystemServiceType.swift in Sources */,

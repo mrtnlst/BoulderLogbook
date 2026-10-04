@@ -31,8 +31,7 @@ struct InsightView<Accessory: View>: View {
                 accessoryView?()
                 
                 if model.hasChevron {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.secondaryText)
+                    PlainChevron()
                 }
             }
         } icon: {

@@ -57,10 +57,7 @@ struct DashboardEntryView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.secondaryText)
-                    .font(.footnote)
-                    .fontWeight(.semibold)
+                PlainChevron()
             }
             Text(entry.date, format: .dateTime.year().month().day().hour().minute())
                 .font(.footnote)
