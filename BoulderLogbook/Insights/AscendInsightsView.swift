@@ -26,7 +26,7 @@ struct AscendInsightsView: View {
                     Image(systemName: "gear")
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(Color.green)
+                .foregroundStyle(.accent)
             }
         }
         .task { send(.task) }
