@@ -27,6 +27,10 @@
 		5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831B30725CF0006B0D09 /* PlainChevron.swift */; };
 		5B34831E30725E67006B0D09 /* HistoryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831D30725E67006B0D09 /* HistoryFeature.swift */; };
 		5B34832030725E71006B0D09 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34831F30725E71006B0D09 /* HistoryView.swift */; };
+		5B348325307ABAD6006B0D09 /* AscendType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B348324307ABAD6006B0D09 /* AscendType.swift */; };
+		5B348327307ABB5F006B0D09 /* HorizontalSelectionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B348326307ABB5F006B0D09 /* HorizontalSelectionElement.swift */; };
+		5B348329307ABBFC006B0D09 /* HorizontalSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B348328307ABBFC006B0D09 /* HorizontalSelectionView.swift */; };
+		5B34832B307ABC64006B0D09 /* HorizontalSelectionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B34832A307ABC64006B0D09 /* HorizontalSelectionFeature.swift */; };
 		5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */; };
 		5B50B0CC2F9E67A100E2A644 /* Aurora.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C32F9E67A100E2A644 /* Aurora.icon */; };
 		5B50B0CD2F9E67A100E2A644 /* Dark Berry.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5B50B0C42F9E67A100E2A644 /* Dark Berry.icon */; };
@@ -43,6 +47,10 @@
 		5B50B0DF2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0DE2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift */; };
 		5B50B0E82F9E815200E2A644 /* GradeSystemServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0E52F9E815200E2A644 /* GradeSystemServiceType.swift */; };
 		5B50B0E92F9E815200E2A644 /* LogbookEntryServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B50B0E62F9E815200E2A644 /* LogbookEntryServiceType.swift */; };
+		5B57A652307BDF7E0026477D /* KeypadFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B57A651307BDF7E0026477D /* KeypadFeature.swift */; };
+		5B57A654307BDF850026477D /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B57A653307BDF850026477D /* KeypadView.swift */; };
+		5B57A656307C19230026477D /* KeypadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B57A655307C19230026477D /* KeypadKey.swift */; };
+		5B57A65B307D5A9E0026477D /* KeypadButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B57A65A307D5A9E0026477D /* KeypadButtonStyle.swift */; };
 		5B5836872E928C3D0054B408 /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5836862E928C3D0054B408 /* AppTab.swift */; };
 		5B5DAEB22E7FF2520040246D /* PlainRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */; };
 		5B60B50B2B60562B00917DB5 /* PlainSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B60B50A2B60562B00917DB5 /* PlainSection.swift */; };
@@ -86,6 +94,8 @@
 		5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFAAB3A2A48466B00E486DC /* UIApplicationClient.swift */; };
 		5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */; };
 		5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */; };
+		75826032307616F700C6CE52 /* NewEntryFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75826031307616F700C6CE52 /* NewEntryFeature.swift */; };
+		758260343076171200C6CE52 /* NewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758260333076171200C6CE52 /* NewEntryView.swift */; };
 		A9435D8429826290001DC22B /* EntryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9435D8329826290001DC22B /* EntryDetail.swift */; };
 		A94CFAFD2B8E9649008D34CA /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94CFAFC2B8E9649008D34CA /* Dependencies.swift */; };
 		A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B07E3F2868579600AA6274 /* BoulderLogbookApp.swift */; };
@@ -142,6 +152,10 @@
 		5B34831B30725CF0006B0D09 /* PlainChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainChevron.swift; sourceTree = "<group>"; };
 		5B34831D30725E67006B0D09 /* HistoryFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFeature.swift; sourceTree = "<group>"; };
 		5B34831F30725E71006B0D09 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		5B348324307ABAD6006B0D09 /* AscendType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscendType.swift; sourceTree = "<group>"; };
+		5B348326307ABB5F006B0D09 /* HorizontalSelectionElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSelectionElement.swift; sourceTree = "<group>"; };
+		5B348328307ABBFC006B0D09 /* HorizontalSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSelectionView.swift; sourceTree = "<group>"; };
+		5B34832A307ABC64006B0D09 /* HorizontalSelectionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSelectionFeature.swift; sourceTree = "<group>"; };
 		5B390D722C304C1100C7CF33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5B3CE9FA298C2C5200039FFF /* Logbook+sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook+sample.swift"; sourceTree = "<group>"; };
 		5B50B0C32F9E67A100E2A644 /* Aurora.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Aurora.icon; sourceTree = "<group>"; };
@@ -159,6 +173,10 @@
 		5B50B0DE2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logbook.Section.Entry+toLogbookEntryMO.swift"; sourceTree = "<group>"; };
 		5B50B0E52F9E815200E2A644 /* GradeSystemServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSystemServiceType.swift; sourceTree = "<group>"; };
 		5B50B0E62F9E815200E2A644 /* LogbookEntryServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryServiceType.swift; sourceTree = "<group>"; };
+		5B57A651307BDF7E0026477D /* KeypadFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadFeature.swift; sourceTree = "<group>"; };
+		5B57A653307BDF850026477D /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
+		5B57A655307C19230026477D /* KeypadKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadKey.swift; sourceTree = "<group>"; };
+		5B57A65A307D5A9E0026477D /* KeypadButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadButtonStyle.swift; sourceTree = "<group>"; };
 		5B5836862E928C3D0054B408 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
 		5B5DAEB12E7FF2520040246D /* PlainRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRowButton.swift; sourceTree = "<group>"; };
 		5B60B50A2B60562B00917DB5 /* PlainSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSection.swift; sourceTree = "<group>"; };
@@ -203,6 +221,8 @@
 		5BFAAB3C2A484BFB00E486DC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5BFD11C3298E54AB00BD41BF /* LogbookEntryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogbookEntryClient.swift; sourceTree = "<group>"; };
 		5BFD11C9298FB9EB00BD41BF /* Sequence+distinct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+distinct.swift"; sourceTree = "<group>"; };
+		75826031307616F700C6CE52 /* NewEntryFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryFeature.swift; sourceTree = "<group>"; };
+		758260333076171200C6CE52 /* NewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryView.swift; sourceTree = "<group>"; };
 		A936856228686CAC00E34B6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A9435D8329826290001DC22B /* EntryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDetail.swift; sourceTree = "<group>"; };
 		A94CFAFC2B8E9649008D34CA /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
@@ -344,6 +364,19 @@
 			path = Samples;
 			sourceTree = "<group>";
 		};
+		5B57A657307C19E70026477D /* NewEntry */ = {
+			isa = PBXGroup;
+			children = (
+				5B34832A307ABC64006B0D09 /* HorizontalSelectionFeature.swift */,
+				5B348328307ABBFC006B0D09 /* HorizontalSelectionView.swift */,
+				5B57A651307BDF7E0026477D /* KeypadFeature.swift */,
+				5B57A653307BDF850026477D /* KeypadView.swift */,
+				75826031307616F700C6CE52 /* NewEntryFeature.swift */,
+				758260333076171200C6CE52 /* NewEntryView.swift */,
+			);
+			path = NewEntry;
+			sourceTree = "<group>";
+		};
 		5B6B93122A5365C90013D634 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				5B2E29BA2B6E9A2F00C84633 /* ShapeStyle+Additions.swift */,
+				5B57A65A307D5A9E0026477D /* KeypadButtonStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -557,8 +591,11 @@
 		A9B07E8C2868588700AA6274 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5B348324307ABAD6006B0D09 /* AscendType.swift */,
 				A9BE3A542B8D1B3A004DD728 /* Grade.swift */,
 				5BDD41F529868F9F00B84BA0 /* GradeSystem.swift */,
+				5B348326307ABB5F006B0D09 /* HorizontalSelectionElement.swift */,
+				5B57A655307C19230026477D /* KeypadKey.swift */,
 				5B1A807F28A7D6BF00530B01 /* Logbook.swift */,
 				5BDD41FF2987086800B84BA0 /* Top.swift */,
 				5B6DB3742A51AD20006265F0 /* ViewState.swift */,
@@ -604,6 +641,7 @@
 		A9C300592982929C001B51C4 /* EntryForm */ = {
 			isa = PBXGroup;
 			children = (
+				5B57A657307C19E70026477D /* NewEntry */,
 				A9C300572982913F001B51C4 /* EntryForm.swift */,
 				A9B07E982868588700AA6274 /* EntryFormView.swift */,
 			);
@@ -768,6 +806,7 @@
 				5BDD41FA2986909300B84BA0 /* GradeSystemListView.swift in Sources */,
 				A9B07E672868579900AA6274 /* BoulderLogbookApp.swift in Sources */,
 				5BFAAB342A48372B00E486DC /* AboutView.swift in Sources */,
+				5B57A654307BDF850026477D /* KeypadView.swift in Sources */,
 				5B6B2C642BF149D400A17549 /* CreditsView.swift in Sources */,
 				5B6D3983299C215200299CCA /* SessionDiagram.swift in Sources */,
 				A9BE3A4C2B8D15C1004DD728 /* CoreDataStorage.swift in Sources */,
@@ -781,14 +820,17 @@
 				5B1A806E2896E3F700530B01 /* Color+Additions.swift in Sources */,
 				5B6DB3792A51E5E9006265F0 /* AppIconListView.swift in Sources */,
 				A9C300582982913F001B51C4 /* EntryForm.swift in Sources */,
+				5B348329307ABBFC006B0D09 /* HorizontalSelectionView.swift in Sources */,
 				5BADFAAE2A4728890010E9DB /* SummaryDiagramView.swift in Sources */,
 				5B50B0DD2F9E7F9800E2A644 /* Logbook.Section+toLogbookSectionMO.swift in Sources */,
+				5B57A656307C19230026477D /* KeypadKey.swift in Sources */,
 				5B71A7ED30602936006D773D /* URL+FileStorageKeys.swift in Sources */,
 				5B6DB3712A5193E4006265F0 /* LoadingIndicator.swift in Sources */,
 				A9BE3A502B8D1774004DD728 /* GradeMO.swift in Sources */,
 				5BDD41EE2986819600B84BA0 /* Color+Codable.swift in Sources */,
 				A9BE3A4E2B8D1713004DD728 /* GradeSystemMO.swift in Sources */,
 				5BFD11C4298E54AB00BD41BF /* LogbookEntryClient.swift in Sources */,
+				5B348327307ABB5F006B0D09 /* HorizontalSelectionElement.swift in Sources */,
 				A9BE3A552B8D1B3A004DD728 /* Grade.swift in Sources */,
 				5B2355D02FED7BEF00147E88 /* AscendInsightsView.swift in Sources */,
 				5BDD421029884E0C00B84BA0 /* EdgeInsets+zero.swift in Sources */,
@@ -805,14 +847,18 @@
 				5B34831C30725CF0006B0D09 /* PlainChevron.swift in Sources */,
 				A9CE6764288004E400027885 /* EntryDetailView.swift in Sources */,
 				5BD8298A28B647CC0053BE8E /* EntryColorView.swift in Sources */,
+				75826032307616F700C6CE52 /* NewEntryFeature.swift in Sources */,
 				5B50B0E82F9E815200E2A644 /* GradeSystemServiceType.swift in Sources */,
 				5B50B0E92F9E815200E2A644 /* LogbookEntryServiceType.swift in Sources */,
+				5B348325307ABAD6006B0D09 /* AscendType.swift in Sources */,
 				5BADFAAC2A47287A0010E9DB /* SummaryDiagram.swift in Sources */,
+				5B34832B307ABC64006B0D09 /* HorizontalSelectionFeature.swift in Sources */,
 				5B71A7FD306826B3006D773D /* TrendModel.swift in Sources */,
 				5BDD4202298708E700B84BA0 /* GradeSystemClient.swift in Sources */,
 				5B2355BB2FD439CD00147E88 /* InsightsFeature.swift in Sources */,
 				5B71A7FF3068275C006D773D /* Trend.swift in Sources */,
 				A9CA5FFC2B9896A300C04BCC /* LogbookEntryService.swift in Sources */,
+				5B57A652307BDF7E0026477D /* KeypadFeature.swift in Sources */,
 				5B6DB3772A51E5E1006265F0 /* AppIconList.swift in Sources */,
 				5BDD420A298829DB00B84BA0 /* GradeSystemForm.swift in Sources */,
 				5BDD4208298829D600B84BA0 /* GradeSystemFormView.swift in Sources */,
@@ -823,6 +869,7 @@
 				5B6DB3752A51AD20006265F0 /* ViewState.swift in Sources */,
 				A9BE3A442B8A1A85004DD728 /* ColorPickerSheetFeature.swift in Sources */,
 				5B2E29BB2B6E9A2F00C84633 /* ShapeStyle+Additions.swift in Sources */,
+				5B57A65B307D5A9E0026477D /* KeypadButtonStyle.swift in Sources */,
 				5B50B0DF2F9E7FC000E2A644 /* Logbook.Section.Entry+toLogbookEntryMO.swift in Sources */,
 				5BFD11CA298FB9EB00BD41BF /* Sequence+distinct.swift in Sources */,
 				5B3CE9FB298C2C5200039FFF /* Logbook+sample.swift in Sources */,
@@ -835,6 +882,7 @@
 				5B6F0F4B3056ACFC0029EB05 /* InsightView.swift in Sources */,
 				5BFAAB3B2A48466B00E486DC /* UIApplicationClient.swift in Sources */,
 				A9B07EBD2868588700AA6274 /* EntryFormView.swift in Sources */,
+				758260343076171200C6CE52 /* NewEntryView.swift in Sources */,
 				A9BE3A422B87721D004DD728 /* ColorPickerSheet.swift in Sources */,
 				5B50B0DB2F9E7F1800E2A644 /* Top+samples.swift in Sources */,
 				5B50B0D92F9E7EEB00E2A644 /* Top+toTopMO.swift in Sources */,

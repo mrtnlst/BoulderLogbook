@@ -33,3 +33,4 @@ extension Grade: Sendable {}
 extension Grade: Codable {}
 extension Grade: Identifiable {}
 extension Grade: Hashable {}
+extension Grade: HorizontalSelectionElement {}

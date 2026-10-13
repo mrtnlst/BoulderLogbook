@@ -12,23 +12,31 @@ import ComposableArchitecture
 struct Dashboard {
     @Reducer
     enum Destination {
-        case entryForm(EntryForm)
+        case newEntry(NewEntryFeature)
     }
 
     @ObservableState
     struct State {
         var trends: TrendsFeature.State
         @Presents var destination: Destination.State?
+        @Shared var gradeSystems: [GradeSystem]
+        @Shared(.fileStorage(.defaultGradeSystem)) var defaultGradeSystem: GradeSystem?
 
-        init(sections: Shared<[Logbook.Section]>) {
+        init(
+            sections: Shared<[Logbook.Section]>,
+            gradeSystems: Shared<[GradeSystem]>
+        ) {
             self.trends = .init(sections: sections)
+            self._gradeSystems = gradeSystems
         }
     }
     
-    enum Action {
-        case onAppear
-        case presentEntryForm(EntryForm.State?)
+    enum Action: ViewAction {
+        enum View {
+            case presentNewEntry
+        }
         case trends(TrendsFeature.Action)
+        case view(View)
         case destination(PresentationAction<Destination.Action>)
     }
 
@@ -38,16 +46,13 @@ struct Dashboard {
         }
         Reduce { state, action in
             switch action {
-            case .onAppear: ()
-
-            case let .presentEntryForm(entryFormState):
-                state.destination = .entryForm(entryFormState ?? EntryForm.State())
-
-            case .destination(.presented(.entryForm(.cancel))):
-                state.destination = nil
-                
-            case .destination(.presented(.entryForm(.saveDidFinish))):
-                state.destination = nil
+            case .view(.presentNewEntry):
+                state.destination = .newEntry(
+                    .init(
+                        selectedSystem: state.defaultGradeSystem,
+                        gradeSystems: state.gradeSystems
+                    )
+                )
 
             default: ()
             }

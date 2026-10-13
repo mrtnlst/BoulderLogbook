@@ -27,6 +27,18 @@ struct Top {
         self.wasFlash = wasFlash
         self.wasOnsight = wasOnsight
     }
+    
+    init(
+        id: UUID = UUID(),
+        grade: UUID = UUID(),
+        ascendType: AscendType = .redPoint
+    ) {
+        self.id = id
+        self.grade = grade
+        self.isAttempt = ascendType == .attempt
+        self.wasFlash = ascendType == .flash
+        self.wasOnsight = ascendType == .onsight
+    }
 }
 
 extension [Top] {
@@ -56,6 +68,21 @@ extension [Top] {
             }
             .sorted(by: { $0.difficulty > $1.difficulty })
             .first
+    }
+    
+    func filter(for ascendType: AscendType) -> [Top] {
+        self.filter {
+            switch ascendType {
+            case .redPoint:
+                true
+            case .flash:
+                !$0.isAttempt && $0.wasFlash && !$0.wasOnsight
+            case .onsight:
+                !$0.isAttempt && !$0.wasFlash && $0.wasOnsight
+            case .attempt:
+                $0.isAttempt && !$0.wasFlash && !$0.wasOnsight
+            }
+        }
     }
 }
 

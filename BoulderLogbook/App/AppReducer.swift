@@ -25,7 +25,10 @@ struct AppReducer {
         init() {
             self._sections = Shared(value: [])
             self._gradeSystems = Shared(value: [])
-            self.dashboard = .init(sections: self._sections)
+            self.dashboard = .init(
+                sections: self._sections,
+                gradeSystems: self._gradeSystems
+            )
             self.insights = .init(sections: self._sections)
             self.history = .init(
                 sections: self._sections,
@@ -129,7 +132,7 @@ struct AppReducer {
                 state.tab = .settings
                 return .send(.presentGradeSystemList)
                 
-            case .dashboard(.destination(.presented(.entryForm(.saveDidFinish)))),
+            case .dashboard(.destination(.presented(.newEntry(.saveDidFinish)))),
                  .history(.delegate(.fetchSections)):
                 return .run { send in
                     await send(.fetchSections)
